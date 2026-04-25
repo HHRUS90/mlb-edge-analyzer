@@ -2,6 +2,7 @@ import statsapi
 import pandas as pd
 import requests
 import os
+import csv
 from datetime import date, timedelta
 
 # --- CONFIGURATION ---
@@ -10,27 +11,21 @@ TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 ODDS_API_KEY = os.getenv('ODDS_API_KEY')
 CSV_FILE = 'prediction_history.csv'
 UNIT_SIZE = 100 
-HARD_STOP_THRESHOLD = 50 # Stop at 450 used (50 remaining)
+HARD_STOP_THRESHOLD = 50 
+
+# Ensure the CSV always has these exact columns
+COLUMNS = ['Date', 'Matchup', 'Predicted_Winner', 'Odds', 'Confidence', 'Result', 'Profit']
 
 def get_mlb_odds():
-    """Fetches odds and tracks API usage via response headers."""
-    if not ODDS_API_KEY: 
-        return {}, "API Key Missing", "N/A"
-    
+    if not ODDS_API_KEY: return {}, 0, 0, False
     url = "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/"
     params = {'apiKey': ODDS_API_KEY, 'regions': 'us', 'markets': 'h2h', 'oddsFormat': 'american'}
-    
     try:
         response = requests.get(url, params=params)
-        
-        # Pull usage stats from headers
         remaining = int(response.headers.get('x-requests-remaining', 0))
         used = int(response.headers.get('x-requests-used', 0))
-        
-        # Hard Stop Check
         if remaining < HARD_STOP_THRESHOLD:
-            return {}, used, remaining, True # True triggers the hard-stop alert
-
+            return {}, used, remaining, True
         data = response.json()
         odds_dict = {}
         for game in data:
@@ -38,23 +33,35 @@ def get_mlb_odds():
             bookie = game['bookmakers'][0]
             for outcome in bookie['markets'][0]['outcomes']:
                 odds_dict[f"{home}_{outcome['name']}"] = outcome['price']
-                
         return odds_dict, used, remaining, False
-    except Exception as e:
-        return {}, "Error", "Error", False
+    except: return {}, 0, 0, False
 
 def calculate_payout(odds, stake):
-    if odds > 0: return stake * (odds / 100)
-    return stake / (abs(odds) / 100)
+    try:
+        odds = float(odds)
+        if odds > 0: return stake * (odds / 100)
+        return stake / (abs(odds) / 100)
+    except: return 0.0
 
 def audit_and_stats():
     if not os.path.exists(CSV_FILE): return "No history yet.", ""
-    df = pd.read_csv(CSV_FILE)
-    yesterday = (date.today() - timedelta(days=1)).strftime("%m/%d/%Y")
     
+    try:
+        # Load CSV and force it to handle potential formatting errors
+        df = pd.read_csv(CSV_FILE, on_bad_lines='skip')
+        
+        # Ensure all required columns exist (handles transitions from old file versions)
+        for col in COLUMNS:
+            if col not in df.columns:
+                df[col] = 0.0 if col == 'Profit' else ('PENDING' if col == 'Result' else 'N/A')
+    except:
+        return "History file corrupted. Starting fresh.", ""
+
+    yesterday = (date.today() - timedelta(days=1)).strftime("%m/%d/%Y")
     updates_made = False
+
     for idx, row in df.iterrows():
-        if row['Result'] == 'PENDING':
+        if str(row['Result']) == 'PENDING':
             actual_games = statsapi.schedule(date=row['Date'])
             for g in actual_games:
                 matchup_str = f"{g['away_name']} @ {g['home_name']}"
@@ -64,7 +71,9 @@ def audit_and_stats():
                     df.at[idx, 'Profit'] = calculate_payout(row['Odds'], UNIT_SIZE) if df.at[idx, 'Result'] == 'WIN' else -UNIT_SIZE
                     updates_made = True
 
-    if updates_made: df.to_csv(CSV_FILE, index=False)
+    if updates_made:
+        df.to_csv(CSV_FILE, index=False, quoting=csv.QUOTE_NONNUMERIC)
+
     final_df = df[df['Result'].isin(['WIN', 'LOSS'])]
     if final_df.empty: return "Waiting for results...", ""
 
@@ -97,8 +106,6 @@ def send_telegram(message):
 def run_analysis():
     today = date.today().strftime("%m/%d/%Y")
     games = statsapi.schedule(date=today)
-    
-    # Odds fetching with hard-stop logic
     live_odds, used, remaining, hard_stop_triggered = get_mlb_odds()
     
     new_predictions = []
@@ -115,8 +122,6 @@ def run_analysis():
 
             h_e, a_e = get_smoothed_bvp(a_p_id, h_lineup), get_smoothed_bvp(h_p_id, a_lineup)
             winner = game['home_name'] if h_e > a_e else game['away_name']
-            
-            # Default to -110 if hard stop triggered or odds missing
             odds = live_odds.get(f"{game['home_name']}_{winner}", -110)
 
             new_predictions.append({
@@ -128,17 +133,15 @@ def run_analysis():
 
     if new_predictions:
         df_new = pd.DataFrame(new_predictions)
-        df_new.to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
+        file_exists = os.path.exists(CSV_FILE)
+        df_new.to_csv(CSV_FILE, mode='a', index=False, header=not file_exists, quoting=csv.QUOTE_NONNUMERIC)
 
     yesterday_msg, lifetime_msg = audit_and_stats()
     
-    # Construct Message
     usage_msg = f"💳 *API USAGE:* {used} Used | {remaining} Left"
-    if hard_stop_triggered:
-        usage_msg = "🚨 *API HARD STOP:* Quota low (<50). Using default -110 odds."
+    if hard_stop_triggered: usage_msg = "🚨 *API HARD STOP:* Quota low."
 
     msg = f"⚾ *MLB QUANT REPORT: {today}*\n\n{yesterday_msg}\n{lifetime_msg}\n{usage_msg}\n\n"
-    
     if new_predictions:
         best = max(new_predictions, key=lambda x: x['Confidence'])
         msg += f"🔥 *BEST BET:* {best['Matchup']}\n👉 {best['Predicted_Winner']} ({best['Odds']})\n\n*TODAY:* " + "".join([f"\n• {p['Matchup']}: {p['Predicted_Winner']}" for p in new_predictions])
