@@ -90,13 +90,19 @@ def run_analysis():
     best = max(results, key=lambda x: x['Confidence_Pct'])
     
     msg = f"⚾ *MLB DAILY EDGE: {today}*\n\n"
-    msg += f"🔥 *BEST BET:* {best['Predicted_Winner']} ({best['Confidence_Pct']}% Edge)\n\n"
+    
+    # Clearly state the matchup and the pick for the Best Bet
+    msg += f"🔥 *BEST BET:* {best['Matchup']}\n"
+    msg += f"👉 *Pick:* {best['Predicted_Winner']} ({best['Confidence_Pct']}% Edge)\n\n"
+    
     msg += "*ALL MATCHUPS:*\n"
     
+    # List everything, but add a star next to the Best Bet in the main list
     for r in results:
-        # Don't list the best bet twice
-        if r['Matchup'] != best['Matchup']:
-            msg += f"• {r['Matchup']}\n  👉 Edge: *{r['Predicted_Winner']}* ({r['Confidence_Pct']}%)\n\n"
+        if r['Matchup'] == best['Matchup']:
+            msg += f"• {r['Matchup']} 🌟\n  👉 Pick: {r['Predicted_Winner']} ({r['Confidence_Pct']}%)\n\n"
+        else:
+            msg += f"• {r['Matchup']}\n  👉 Pick: {r['Predicted_Winner']} ({r['Confidence_Pct']}%)\n\n"
     
     send_telegram(msg)
 
