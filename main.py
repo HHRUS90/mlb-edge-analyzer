@@ -30,53 +30,42 @@ def track_local_usage():
 def get_mlb_odds():
     usage_df, current_month = track_local_usage()
     local_calls = int(usage_df.loc[usage_df['Month'] == current_month, 'Calls'].values[0])
-
     if not ODDS_API_KEY or local_calls >= 450:
         return {}, "N/A", "N/A", True, local_calls
     
     url = "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/"
     params = {
         'apiKey': ODDS_API_KEY,
-        'bookmakers': 'fanduel', # <--- This tells the API to only return FanDuel
+        'bookmakers': 'fanduel', 
         'markets': 'h2h',
         'oddsFormat': 'american'
     }
-    
     try:
         response = requests.get(url, params=params)
         if response.status_code == 200:
             usage_df.loc[usage_df['Month'] == current_month, 'Calls'] += 1
             usage_df.to_csv(USAGE_FILE, index=False)
-        
         used = response.headers.get('x-requests-used', '0')
         remaining = response.headers.get('x-requests-remaining', '0')
-        
         data = response.json()
         odds_dict = {}
         for game in data:
             home = game['home_team']
-            
-            # Since we filtered by bookmakers=fanduel, FanDuel will be the only entry 
-            # in the list if they have odds posted for that game.
             if game.get('bookmakers'):
-                bookie = game['bookmakers'][0] 
+                bookie = game['bookmakers'][0]
                 for outcome in bookie['markets'][0]['outcomes']:
                     odds_dict[f"{home}_{outcome['name']}"] = outcome['price']
-        
         return odds_dict, used, remaining, False, local_calls + 1
     except:
         return {}, "0", "0", False, local_calls
 
 def format_odds(odds_val):
-    """Adds a plus sign to positive odds for display and CSV storage."""
     try:
         val = int(odds_val)
         return f"+{val}" if val > 0 else str(val)
-    except:
-        return str(odds_val)
+    except: return str(odds_val)
 
 def calculate_payout(odds_str, stake):
-    """Handles odds strings (like '+110') for payout calculations."""
     try:
         o = float(odds_str)
         if o > 0: return stake * (o / 100)
@@ -84,12 +73,16 @@ def calculate_payout(odds_str, stake):
     except: return 0.0
 
 def audit_and_stats():
-    if not os.path.exists(CSV_FILE): return "No history found.", ""
+    if not os.path.exists(CSV_FILE): return "N/A", "N/A", "N/A"
     try:
         df = pd.read_csv(CSV_FILE, on_bad_lines='skip')
-    except: return "Error reading history.", ""
-    yesterday = (date.today() - timedelta(days=1)).strftime("%m/%d/%Y")
+    except: return "Error", "Error", "Error"
+
+    today_str = date.today().strftime("%m/%d/%Y")
+    yesterday_str = (date.today() - timedelta(days=1)).strftime("%m/%d/%Y")
     updates_made = False
+
+    # Audit loop
     for idx, row in df.iterrows():
         if str(row.get('Result')) == 'PENDING':
             actual_games = statsapi.schedule(date=row['Date'])
@@ -100,16 +93,33 @@ def audit_and_stats():
                     df.at[idx, 'Result'] = 'WIN' if row['Predicted_Winner'] == winner else 'LOSS'
                     df.at[idx, 'Profit'] = calculate_payout(row['Odds'], UNIT_SIZE) if df.at[idx, 'Result'] == 'WIN' else -UNIT_SIZE
                     updates_made = True
+
     if updates_made:
         df.to_csv(CSV_FILE, index=False, quoting=csv.QUOTE_NONNUMERIC)
-    final_df = df[df['Result'].isin(['WIN', 'LOSS'])]
-    if final_df.empty: return "Waiting for first results...", ""
-    y_df = final_df[final_df['Date'] == yesterday]
-    y_wins, y_total = (y_df['Result'] == 'WIN').sum(), len(y_df)
-    y_text = f"📊 *YESTERDAY:* {y_wins}/{y_total} ({y_df['Profit'].sum():+.2f}$)" if y_total > 0 else "📊 *YESTERDAY:* No games finalized."
-    acc = ((final_df['Result'] == 'WIN').sum() / len(final_df)) * 100
-    stats_text = f"📈 *LIFETIME:* {acc:.1f}% Accuracy | *${final_df['Profit'].sum():,.2f}*"
-    return y_text, stats_text
+
+    def get_line_stats(target_df, label):
+        if target_df.empty: return f"📊 *{label}:* No results yet."
+        wins = (target_df['Result'] == 'WIN').sum()
+        total = len(target_df)
+        acc = (wins / total) * 100
+        profit = target_df['Profit'].sum()
+        return f"📊 *{label}:* {wins}/{total} ({acc:.1f}%) | {profit:+.2f}$"
+
+    finalized = df[df['Result'].isin(['WIN', 'LOSS'])]
+    
+    today_results = finalized[final_df['Date'] == today_str] if not finalized.empty else pd.DataFrame()
+    yesterday_results = finalized[finalized['Date'] == yesterday_str] if not finalized.empty else pd.DataFrame()
+    
+    today_msg = get_line_stats(today_results, "TODAY")
+    yesterday_msg = get_line_stats(yesterday_results, "YESTERDAY")
+    
+    if finalized.empty:
+        lifetime_msg = "📈 *LIFETIME:* 0% Accuracy | $0.00"
+    else:
+        l_acc = ((finalized['Result'] == 'WIN').sum() / len(finalized)) * 100
+        lifetime_msg = f"📈 *LIFETIME:* {l_acc:.1f}% Accuracy | *${finalized['Profit'].sum():,.2f}*"
+    
+    return today_msg, yesterday_msg, lifetime_msg
 
 def get_player_id_by_name(name):
     try:
@@ -132,8 +142,7 @@ def format_mst_time(utc_string):
         utc_time = datetime.strptime(utc_string, "%Y-%m-%dT%H:%M:%SZ")
         mst_time = utc_time - timedelta(hours=7)
         return mst_time.strftime("%I:%M %p")
-    except:
-        return "TBD"
+    except: return "TBD"
 
 def send_telegram(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
@@ -143,17 +152,14 @@ def run_analysis():
     today = date.today().strftime("%m/%d/%Y")
     games = statsapi.schedule(date=today)
     live_odds, api_used, api_remaining, hard_stop, local_calls = get_mlb_odds()
-    
     sorted_games = sorted(games, key=lambda x: x.get('game_datetime', ''))
     
-    new_predictions = []
-    display_list = []
+    new_predictions, display_list = [], []
+    history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
 
     for game in sorted_games:
         status = game.get('status', 'Scheduled').upper()
-        matchup = f"{game['away_name']} @ {game['home_name']}"
-        mst_time = format_mst_time(game.get('game_datetime'))
-        
+        matchup, mst_time = f"{game['away_name']} @ {game['home_name']}", format_mst_time(game.get('game_datetime'))
         game_info = {'matchup': matchup, 'time': mst_time, 'status': status, 'is_active': False}
 
         if any(x in status for x in ['POSTPONED', 'CANCELLED', 'DELAYED']):
@@ -161,58 +167,51 @@ def run_analysis():
             display_list.append(game_info)
             continue
             
+        # Check if we already predicted this game today to avoid duplicates
+        if not history_df.empty and not history_df[(history_df['Date'] == today) & (history_df['Matchup'] == matchup)].empty:
+            existing = history_df[(history_df['Date'] == today) & (history_df['Matchup'] == matchup)].iloc[0]
+            game_info.update({'is_active': True, 'winner': existing['Predicted_Winner'], 'odds': existing['Odds'], 'conf': existing['Confidence']})
+            display_list.append(game_info)
+            continue
+
         try:
             box = statsapi.boxscore_data(game['game_id'])
-            h_lineup, a_lineup = box.get('home', {}).get('battingOrder', []), box.get('away', {}).get('battingOrder', [])
-            
-            if not h_lineup or not a_lineup:
-                game_info['status'] = '⏳ LINEUPS PENDING'
-                display_list.append(game_info)
-                continue
+            h_l, a_l = box.get('home', {}).get('battingOrder', []), box.get('away', {}).get('battingOrder', [])
+            if not h_l or not a_l:
+                game_info['status'] = '⏳ LINEUPS PENDING'; display_list.append(game_info); continue
             
             h_p_id = game.get('home_probable_pitcher_id') or get_player_id_by_name(game.get('home_probable_pitcher'))
             a_p_id = game.get('away_probable_pitcher_id') or get_player_id_by_name(game.get('away_probable_pitcher'))
-            
             if not h_p_id or not a_p_id:
-                game_info['status'] = '🧢 PITCHERS PENDING'
-                display_list.append(game_info)
-                continue
+                game_info['status'] = '🧢 PITCHERS PENDING'; display_list.append(game_info); continue
 
-            h_e, a_e = get_smoothed_bvp(a_p_id, h_lineup), get_smoothed_bvp(h_p_id, a_lineup)
+            h_e, a_e = get_smoothed_bvp(a_p_id, h_l), get_smoothed_bvp(h_p_id, a_l)
             winner = game['home_name'] if h_e > a_e else game['away_name']
             conf = round(abs(h_e - a_e) * 100, 1)
-            raw_odds = live_odds.get(f"{game['home_name']}_{winner}", -110)
-            formatted_odds = format_odds(raw_odds)
+            f_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
 
-            new_predictions.append({
-                'Date': today, 'Matchup': matchup, 'Predicted_Winner': winner, 
-                'Odds': formatted_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0
-            })
-            
-            game_info.update({'is_active': True, 'winner': winner, 'odds': formatted_odds, 'conf': conf})
+            new_predictions.append({'Date': today, 'Matchup': matchup, 'Predicted_Winner': winner, 'Odds': f_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
+            game_info.update({'is_active': True, 'winner': winner, 'odds': f_odds, 'conf': conf})
             display_list.append(game_info)
-        except:
-            continue
+        except: continue
 
     if new_predictions:
-        df_new = pd.DataFrame(new_predictions)
-        file_exists = os.path.exists(CSV_FILE)
-        df_new.to_csv(CSV_FILE, mode='a', index=False, header=not file_exists, quoting=csv.QUOTE_NONNUMERIC)
+        pd.DataFrame(new_predictions).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE), quoting=csv.QUOTE_NONNUMERIC)
 
-    yesterday_msg, lifetime_msg = audit_and_stats()
+    t_msg, y_msg, l_msg = audit_and_stats()
     usage_msg = f"💳 *API USAGE*\n• Local Ticker: {local_calls}\n• API Reported: {api_used} Used | {api_remaining} Left"
 
-    msg = f"⚾ *MLB QUANT REPORT: {today}*\n\n{yesterday_msg}\n{lifetime_msg}\n\n{usage_msg}\n\n"
+    msg = f"⚾ *MLB QUANT REPORT: {today}*\n\n{t_msg}\n{y_msg}\n{l_msg}\n\n{usage_msg}\n\n"
     
-    active_preds = [g for g in display_list if g['is_active']]
+    active_preds = [g for g in display_list if g.get('is_active')]
     if active_preds:
         best = max(active_preds, key=lambda x: x['conf'])
         msg += f"🔥 *BEST BET:* {best['matchup']}\n👉 {best['winner']} ({best['odds']}) — {best['conf']}% Edge\n\n"
     
     msg += "*DAILY SCHEDULE (MST):*\n"
     for g in display_list:
-        if g['is_active']:
-            star = " 🌟" if g['matchup'] == (active_preds and best['matchup']) else ""
+        if g.get('is_active'):
+            star = " 🌟" if g['matchup'] == best['matchup'] else ""
             msg += f"• [{g['time']}] {g['matchup']}{star}\n  👉 Pick: {g['winner']} ({g['odds']}) — {g['conf']}% Edge\n\n"
         else:
             msg += f"• [{g['time']}] {g['matchup']}\n  {g['status']}\n\n"
