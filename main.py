@@ -3,6 +3,7 @@ import pandas as pd
 import requests
 import os
 import csv
+import sys
 from datetime import date, timedelta, datetime
 
 # --- CONFIGURATION ---
@@ -82,7 +83,6 @@ def audit_and_stats():
     yesterday_str = (date.today() - timedelta(days=1)).strftime("%m/%d/%Y")
     updates_made = False
 
-    # Audit loop
     for idx, row in df.iterrows():
         if str(row.get('Result')) == 'PENDING':
             actual_games = statsapi.schedule(date=row['Date'])
@@ -107,7 +107,8 @@ def audit_and_stats():
 
     finalized = df[df['Result'].isin(['WIN', 'LOSS'])]
     
-    today_results = finalized[final_df['Date'] == today_str] if not finalized.empty else pd.DataFrame()
+    # FIX: Using 'finalized' consistently here
+    today_results = finalized[finalized['Date'] == today_str] if not finalized.empty else pd.DataFrame()
     yesterday_results = finalized[finalized['Date'] == yesterday_str] if not finalized.empty else pd.DataFrame()
     
     today_msg = get_line_stats(today_results, "TODAY")
@@ -128,14 +129,20 @@ def get_player_id_by_name(name):
     except: return None
 
 def get_smoothed_bvp(pitcher_id, lineup_ids):
+    # Silence pybaseball output
+    original_stdout = sys.stdout
+    sys.stdout = open(os.devnull, 'w')
     try:
         from pybaseball import statcast_pitcher
         pitches = statcast_pitcher('2023-01-01', date.today().strftime("%Y-%m-%d"), pitcher_id)
+        sys.stdout = original_stdout # Restore stdout
         matchups = pitches[pitches['batter'].isin(lineup_ids)].dropna(subset=['events'])
         if matchups.empty: return 0.320
         on_base = matchups['events'].isin(['single','double','triple','home_run','walk','hit_by_pitch']).sum()
         return (on_base + 3.2) / (len(matchups) + 10)
-    except: return 0.320
+    except:
+        sys.stdout = original_stdout
+        return 0.320
 
 def format_mst_time(utc_string):
     try:
@@ -167,7 +174,6 @@ def run_analysis():
             display_list.append(game_info)
             continue
             
-        # Check if we already predicted this game today to avoid duplicates
         if not history_df.empty and not history_df[(history_df['Date'] == today) & (history_df['Matchup'] == matchup)].empty:
             existing = history_df[(history_df['Date'] == today) & (history_df['Matchup'] == matchup)].iloc[0]
             game_info.update({'is_active': True, 'winner': existing['Predicted_Winner'], 'odds': existing['Odds'], 'conf': existing['Confidence']})
@@ -211,7 +217,7 @@ def run_analysis():
     msg += "*DAILY SCHEDULE (MST):*\n"
     for g in display_list:
         if g.get('is_active'):
-            star = " 🌟" if g['matchup'] == best['matchup'] else ""
+            star = " 🌟" if g['matchup'] == (active_preds and best['matchup']) else ""
             msg += f"• [{g['time']}] {g['matchup']}{star}\n  👉 Pick: {g['winner']} ({g['odds']}) — {g['conf']}% Edge\n\n"
         else:
             msg += f"• [{g['time']}] {g['matchup']}\n  {g['status']}\n\n"
