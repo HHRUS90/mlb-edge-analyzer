@@ -2,12 +2,13 @@ name: MLB Daily Analysis
 
 on:
   schedule:
-    - cron: '30 14 * * *'
-  workflow_dispatch:
+    # Runs at 10:30 AM UTC (which is 6:30 AM ET)
+    # This ensures you have the morning report before the first games start
+    - cron: '30 10 * * *'
+  workflow_dispatch: # Allows you to trigger the bot manually for testing
 
-# We need this permission block to allow GitHub to push the CSV to the repo
 permissions:
-  contents: write
+  contents: write # Essential for the bot to save and push the CSV profit ledger
 
 jobs:
   analyze:
@@ -26,17 +27,25 @@ jobs:
         run: |
           pip install pandas requests mlb-statsapi pybaseball
 
-      - name: Run Script
+      - name: Run MLB Quant Script
         env:
+          # Connecting your GitHub Secrets to the Python Environment
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python main.py
 
-      - name: Commit and Push Prediction Log
+      - name: Commit and Push Prediction Ledger
         run: |
+          # Configure the virtual bot user
           git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action Bot"
+          git config --local user.name "MLB-Quant-Bot"
+          
+          # Add the ledger file (it will create it if it's the first run)
           git add prediction_history.csv
-          # The '|| true' prevents the workflow from crashing if no new games were added
-          git commit -m "Auto-update prediction history" || true
+          
+          # Only commit if there are actually changes to the file
+          git commit -m "Update MLB results and log today's picks [skip ci]" || echo "No changes to commit"
+          
+          # Push the updated CSV back to your repository
           git push
