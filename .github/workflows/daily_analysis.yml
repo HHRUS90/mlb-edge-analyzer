@@ -2,12 +2,11 @@ name: MLB Daily Analysis
 
 on:
   schedule:
-    # Runs at 10:30 AM UTC (6:30 AM ET)
     - cron: '30 10 * * *'
-  workflow_dispatch: # Allows you to trigger the bot manually for testing
+  workflow_dispatch: 
 
 permissions:
-  contents: write # Essential for the bot to save and push the CSV files
+  contents: write 
 
 jobs:
   analyze:
@@ -28,7 +27,6 @@ jobs:
 
       - name: Run MLB Quant Script
         env:
-          # Connecting your GitHub Secrets to the Python Environment
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
@@ -36,15 +34,8 @@ jobs:
 
       - name: Commit and Push Prediction Ledger and Usage Log
         run: |
-          # Configure the virtual bot user
           git config --local user.email "action@github.com"
           git config --local user.name "MLB-Quant-Bot"
-          
-          # Add the ledger and the new usage tracking file
           git add prediction_history.csv api_usage.csv
-          
-          # Commit only if there are changes
           git commit -m "Update MLB results, picks, and local API ticker [skip ci]" || echo "No changes to commit"
-          
-          # Push the updated CSVs back to your repository
           git push
