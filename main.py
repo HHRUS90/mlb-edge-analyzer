@@ -30,31 +30,55 @@ def track_local_usage():
 def get_mlb_odds():
     usage_df, current_month = track_local_usage()
     local_calls = int(usage_df.loc[usage_df['Month'] == current_month, 'Calls'].values[0])
+
     if not ODDS_API_KEY or local_calls >= 450:
         return {}, "N/A", "N/A", True, local_calls
+    
     url = "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/"
-    params = {'apiKey': ODDS_API_KEY, 'regions': 'us', 'markets': 'h2h', 'oddsFormat': 'american'}
+    params = {
+        'apiKey': ODDS_API_KEY,
+        'bookmakers': 'fanduel', # <--- This tells the API to only return FanDuel
+        'markets': 'h2h',
+        'oddsFormat': 'american'
+    }
+    
     try:
         response = requests.get(url, params=params)
         if response.status_code == 200:
             usage_df.loc[usage_df['Month'] == current_month, 'Calls'] += 1
             usage_df.to_csv(USAGE_FILE, index=False)
+        
         used = response.headers.get('x-requests-used', '0')
         remaining = response.headers.get('x-requests-remaining', '0')
+        
         data = response.json()
         odds_dict = {}
         for game in data:
             home = game['home_team']
-            bookie = game['bookmakers'][0]
-            for outcome in bookie['markets'][0]['outcomes']:
-                odds_dict[f"{home}_{outcome['name']}"] = outcome['price']
+            
+            # Since we filtered by bookmakers=fanduel, FanDuel will be the only entry 
+            # in the list if they have odds posted for that game.
+            if game.get('bookmakers'):
+                bookie = game['bookmakers'][0] 
+                for outcome in bookie['markets'][0]['outcomes']:
+                    odds_dict[f"{home}_{outcome['name']}"] = outcome['price']
+        
         return odds_dict, used, remaining, False, local_calls + 1
     except:
         return {}, "0", "0", False, local_calls
 
-def calculate_payout(odds, stake):
+def format_odds(odds_val):
+    """Adds a plus sign to positive odds for display and CSV storage."""
     try:
-        o = float(odds)
+        val = int(odds_val)
+        return f"+{val}" if val > 0 else str(val)
+    except:
+        return str(odds_val)
+
+def calculate_payout(odds_str, stake):
+    """Handles odds strings (like '+110') for payout calculations."""
+    try:
+        o = float(odds_str)
         if o > 0: return stake * (o / 100)
         return stake / (abs(o) / 100)
     except: return 0.0
@@ -132,7 +156,6 @@ def run_analysis():
         
         game_info = {'matchup': matchup, 'time': mst_time, 'status': status, 'is_active': False}
 
-        # Check for non-active statuses immediately
         if any(x in status for x in ['POSTPONED', 'CANCELLED', 'DELAYED']):
             game_info['status'] = f"🛑 {status}"
             display_list.append(game_info)
@@ -158,14 +181,15 @@ def run_analysis():
             h_e, a_e = get_smoothed_bvp(a_p_id, h_lineup), get_smoothed_bvp(h_p_id, a_lineup)
             winner = game['home_name'] if h_e > a_e else game['away_name']
             conf = round(abs(h_e - a_e) * 100, 1)
-            odds = live_odds.get(f"{game['home_name']}_{winner}", -110)
+            raw_odds = live_odds.get(f"{game['home_name']}_{winner}", -110)
+            formatted_odds = format_odds(raw_odds)
 
             new_predictions.append({
                 'Date': today, 'Matchup': matchup, 'Predicted_Winner': winner, 
-                'Odds': odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0
+                'Odds': formatted_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0
             })
             
-            game_info.update({'is_active': True, 'winner': winner, 'odds': odds, 'conf': conf})
+            game_info.update({'is_active': True, 'winner': winner, 'odds': formatted_odds, 'conf': conf})
             display_list.append(game_info)
         except:
             continue
