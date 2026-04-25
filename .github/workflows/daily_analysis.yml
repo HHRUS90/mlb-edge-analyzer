@@ -1,0 +1,30 @@
+name: MLB Daily Analysis
+
+on:
+  schedule:
+    # Runs at 14:30 UTC (10:30 AM ET)
+    - cron: '30 14 * * *'
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip' # Speeds up future runs
+
+      - name: Install Dependencies
+        run: |
+          pip install pandas requests mlb-statsapi pybaseball
+
+      - name: Run Script
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python main.py
