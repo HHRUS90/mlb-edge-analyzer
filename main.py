@@ -9,14 +9,6 @@ from pybaseball import statcast_pitcher, playerid_lookup
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
-def get_pitcher_id(name):
-    try:
-        last, first = name.split(', ')
-        lookup = playerid_lookup(last, first)
-        return lookup['key_mlbam'].values[0]
-    except:
-        return None
-
 def get_smoothed_bvp(pitcher_id, lineup_ids):
     start_date = '2023-01-01'
     end_date = date.today().strftime("%Y-%m-%d")
@@ -42,8 +34,6 @@ def send_telegram(message):
 def log_predictions(prediction_data):
     file_path = 'prediction_history.csv'
     df = pd.DataFrame(prediction_data)
-    
-    # If the file doesn't exist, include the header. Otherwise, append without header.
     file_exists = os.path.isfile(file_path)
     df.to_csv(file_path, mode='a', index=False, header=not file_exists)
 
@@ -54,13 +44,53 @@ def run_analysis():
 
     for game in games:
         gid = game['game_id']
+        status = game.get('status', 'Scheduled')
+        is_doubleheader = game.get('doubleheader', 'N') != 'N'
+        game_num = game.get('game_num', 1)
+        
+        matchup_name = f"{game['away_name']} @ {game['home_name']}"
+        if is_doubleheader:
+            matchup_name += f" (Game {game_num})"
+
+        # Check for non-active statuses
+        if any(x in status for x in ['Postponed', 'Cancelled', 'Delayed']):
+            results.append({
+                'Date': today,
+                'Matchup': matchup_name,
+                'Predicted_Winner': 'N/A',
+                'Confidence_Pct': 0,
+                'Status': status.upper()
+            })
+            continue
+            
         try:
             box = statsapi.boxscore_data(gid)
-            h_lineup = [p['person']['id'] for p in box['home']['battingOrder']]
-            a_lineup = [p['person']['id'] for p in box['away']['battingOrder']]
+            h_lineup = box.get('home', {}).get('battingOrder', [])
+            a_lineup = box.get('away', {}).get('battingOrder', [])
+            
+            # If no lineup, list as "Lineups Pending"
+            if not h_lineup or not a_lineup:
+                results.append({
+                    'Date': today,
+                    'Matchup': matchup_name,
+                    'Predicted_Winner': 'PENDING',
+                    'Confidence_Pct': 0,
+                    'Status': 'LINEUPS PENDING'
+                })
+                continue
             
             h_p_id = game.get('home_probable_pitcher_id')
             a_p_id = game.get('away_probable_pitcher_id')
+
+            if not h_p_id or not a_p_id:
+                results.append({
+                    'Date': today,
+                    'Matchup': matchup_name,
+                    'Predicted_Winner': 'PENDING',
+                    'Confidence_Pct': 0,
+                    'Status': 'PITCHER PENDING'
+                })
+                continue
 
             h_edge = get_smoothed_bvp(a_p_id, h_lineup)
             a_edge = get_smoothed_bvp(h_p_id, a_lineup)
@@ -70,9 +100,10 @@ def run_analysis():
 
             results.append({
                 'Date': today,
-                'Matchup': f"{game['away_name']} @ {game['home_name']}",
+                'Matchup': matchup_name,
                 'Predicted_Winner': winner,
                 'Confidence_Pct': round(confidence, 1),
+                'Status': 'ACTIVE',
                 'Home_Edge': round(h_edge, 3),
                 'Away_Edge': round(a_edge, 3)
             })
@@ -80,29 +111,30 @@ def run_analysis():
             continue
 
     if not results:
-        send_telegram("⚠️ *MLB Bot:* No confirmed lineups found yet.")
+        send_telegram("⚠️ *MLB Bot:* No games found for today's schedule.")
         return
 
-    # Log to CSV
-    log_predictions(results)
+    # Log to CSV (Filter only active predictions to keep history clean)
+    active_results = [r for r in results if r['Status'] == 'ACTIVE']
+    if active_results:
+        log_predictions(active_results)
 
     # Format the Telegram Message
-    best = max(results, key=lambda x: x['Confidence_Pct'])
+    msg = f"⚾ *MLB DAILY SLATE: {today}*\n\n"
     
-    msg = f"⚾ *MLB DAILY EDGE: {today}*\n\n"
-    
-    # Clearly state the matchup and the pick for the Best Bet
-    msg += f"🔥 *BEST BET:* {best['Matchup']}\n"
-    msg += f"👉 *Pick:* {best['Predicted_Winner']} ({best['Confidence_Pct']}% Edge)\n\n"
+    # Best Bet logic (only from active games)
+    if active_results:
+        best = max(active_results, key=lambda x: x['Confidence_Pct'])
+        msg += f"🔥 *BEST BET:* {best['Matchup']}\n"
+        msg += f"👉 *Pick:* {best['Predicted_Winner']} ({best['Confidence_Pct']}% Edge)\n\n"
     
     msg += "*ALL MATCHUPS:*\n"
-    
-    # List everything, but add a star next to the Best Bet in the main list
     for r in results:
-        if r['Matchup'] == best['Matchup']:
-            msg += f"• {r['Matchup']} 🌟\n  👉 Pick: {r['Predicted_Winner']} ({r['Confidence_Pct']}%)\n\n"
+        if r['Status'] == 'ACTIVE':
+            star = " 🌟" if (active_results and r['Matchup'] == best['Matchup']) else ""
+            msg += f"• {r['Matchup']}{star}\n  👉 Pick: {r['Predicted_Winner']} ({r['Confidence_Pct']}%)\n\n"
         else:
-            msg += f"• {r['Matchup']}\n  👉 Pick: {r['Predicted_Winner']} ({r['Confidence_Pct']}%)\n\n"
+            msg += f"• {r['Matchup']}\n  🚫 Status: *{r['Status']}*\n\n"
     
     send_telegram(msg)
 
