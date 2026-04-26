@@ -216,3 +216,15 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Cache folder for massive pitcher datasets (handled by GitHub Actions Cache instead)
+pitcher_cache/
+
+# Local CSV data files
+prediction_history.csv
+api_usage.csv
+
+# Python environment and byte-code
+__pycache__/
+*.pyc
+.env
