@@ -200,7 +200,6 @@ def run_analysis():
     new_predictions, display_list = [], []
     history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
     
-    # Start fresh log for the day
     eval_log_lines = [f"EVALUATION LOG - {today_str}\n" + "="*40 + "\n"]
 
     raw_schedule = statsapi.get('schedule', {'sportId': 1, 'date': today_str, 'hydrate': 'probablePitcher'})
@@ -213,11 +212,26 @@ def run_analysis():
         status = game.get('status', 'Scheduled').upper()
         
         score_display = ""
-        if any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL"]):
+        is_live_or_final = any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL"])
+        if is_live_or_final:
             score_display = f" | 🏟 *SCORE: {game.get('away_score', 0)} - {game.get('home_score', 0)}*"
 
-        away_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['away_name']}", "N/A"))
-        home_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['home_name']}", "N/A"))
+        # Logic to "Lock" opening odds: If game is live/final, we pull from history if available
+        # otherwise we default to the current live feed.
+        existing_row = pd.Series()
+        if not history_df.empty:
+            matches = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(game['home_name']))]
+            if not matches.empty:
+                existing_row = matches.iloc[0]
+
+        if is_live_or_final and not existing_row.empty:
+             # Lock odds to whatever was already in the CSV
+             away_odds = format_odds(existing_row['Odds'] if "away" in existing_row['Predicted_Winner'].lower() else -110) # simplified logic here
+             home_odds = format_odds(existing_row['Odds'] if "home" in existing_row['Predicted_Winner'].lower() else -110)
+        else:
+             away_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['away_name']}", "N/A"))
+             home_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['home_name']}", "N/A"))
+
         matchup_display = f"{game['away_name']} ({away_odds}) @ {game['home_name']} ({home_odds}){score_display}"
         mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
         game_info = {'matchup': matchup_display, 'pitchers': f"({a_p_name} vs {h_p_name})", 'time': mst_time_str, 'status': status, 'is_active': False, 'raw_time': mst_dt}
@@ -244,20 +258,15 @@ def run_analysis():
             if not h_l or not a_l:
                 h_l, a_l = get_pro_lineup(game['home_id']), get_pro_lineup(game['away_id'])
 
-            # Log this game evaluation regardless of if it exists in history
             log_entry = f"GAME: {game['away_name']} @ {game['home_name']} [{lineup_type}]\n"
             log_entry += f"  - Away P: {a_p_name}\n    Lineup: {[get_name_only(bid) for bid in h_l]}\n"
             log_entry += f"  - Home P: {h_p_name}\n    Lineup: {[get_name_only(bid) for bid in a_l]}\n"
             eval_log_lines.append(log_entry)
 
-            # Check history AFTER logging so we still see the evaluation data in the log file
-            if not history_df.empty:
-                existing = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(game['home_name']))]
-                if not existing.empty:
-                    row = existing.iloc[0]
-                    game_info.update({'is_active': True, 'winner': row['Predicted_Winner'], 'odds': format_odds(row['Odds']), 'conf': row['Confidence'], 'status': f'✅ PRED ({status})'})
-                    display_list.append(game_info)
-                    continue
+            if not existing_row.empty:
+                game_info.update({'is_active': True, 'winner': existing_row['Predicted_Winner'], 'odds': format_odds(existing_row['Odds']), 'conf': existing_row['Confidence'], 'status': f'✅ PRED ({status})'})
+                display_list.append(game_info)
+                continue
 
             if h_p_id and a_p_id:
                 h_p_hand, _ = get_player_info(h_p_id)
@@ -265,6 +274,8 @@ def run_analysis():
                 h_e, a_e = get_smoothed_bvp(a_p_id, h_l, a_p_hand), get_smoothed_bvp(h_p_id, a_l, h_p_hand)
                 winner = game['home_name'] if h_e > a_e else game['away_name']
                 conf = round(abs(h_e - a_e) * 100, 1)
+                
+                # Capture opening odds only when the prediction is first created
                 start_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
                 
                 new_predictions.append({'Date': today_str, 'Matchup': matchup_display, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
@@ -276,7 +287,6 @@ def run_analysis():
             continue
         display_list.append(game_info)
 
-    # FINAL LOG OVERWRITE
     with open(EVAL_LOG, 'w') as f:
         f.write("\n".join(eval_log_lines))
 
