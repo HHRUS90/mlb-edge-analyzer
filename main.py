@@ -102,7 +102,11 @@ def audit_and_stats():
         total = len(target_df)
         acc = (wins / total) * 100 if total > 0 else 0
         profit = target_df['Profit'].sum()
-        return f"📊 *{label}:* {wins}/{total} ({acc:.1f}%) | {profit:+.2f}$"
+        
+        # New Formatting Logic
+        profit_str = f"{'+$' if profit >= 0 else '-$'}{abs(profit):,.2f}"
+        
+        return f"📊 *{label}:* {wins}/{total} ({acc:.1f}%) | {profit_str}"
 
     finalized = df[df['Result'].isin(['WIN', 'LOSS'])]
     today_results = finalized[finalized['Date'] == today_str]
@@ -115,7 +119,9 @@ def audit_and_stats():
         l_msg = "📈 *LIFETIME:* N/A"
     else:
         l_acc = ((finalized['Result'] == 'WIN').sum() / len(finalized)) * 100
-        l_msg = f"📈 *LIFETIME:* {l_acc:.1f}% Accuracy | *${finalized['Profit'].sum():,.2f}*"
+        l_total_profit = finalized['Profit'].sum()
+        l_profit_str = f"{'+$' if l_total_profit >= 0 else '-$'}{abs(l_total_profit):,.2f}"
+        l_msg = f"📈 *LIFETIME:* {l_acc:.1f}% Accuracy | *{l_profit_str}*"
     
     return t_msg, y_msg, l_msg
 
@@ -130,7 +136,6 @@ def get_smoothed_bvp(pitcher_id, lineup_ids):
     sys.stdout = open(os.devnull, 'w')
     try:
         from pybaseball import statcast_pitcher
-        # Use fixed 2023 start to today in MST
         now_mst = get_mst_now()
         pitches = statcast_pitcher('2023-01-01', now_mst.strftime("%Y-%m-%d"), pitcher_id)
         sys.stdout = original_stdout
