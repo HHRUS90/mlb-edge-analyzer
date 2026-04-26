@@ -27,18 +27,28 @@ def get_mst_now():
     return datetime.now(tz)
 
 def get_cache_stats():
-    total_size_bytes = 0
-    file_count = 0
+    # 1. Calculate the active CSV data in the current runner
+    local_size_bytes = 0
     for dirpath, dirnames, filenames in os.walk(CACHE_DIR):
         for f in filenames:
             fp = os.path.join(dirpath, f)
-            total_size_bytes += os.path.getsize(fp)
-            file_count += 1
-    size_mb = total_size_bytes / (1024 * 1024)
-    return (f"📂 *DATA CACHE (Local)*\n"
-            f"• Files: {file_count}\n"
-            f"• Size: {size_mb:.2f} MB\n"
-            f"• GH Limit: 10 GB (Shared)")
+            local_size_bytes += os.path.getsize(fp)
+    
+    local_mb = local_size_bytes / (1024 * 1024)
+
+    # 2. Add the "Invisible" GitHub overhead 
+    # (2x 150MB setup files + previous compressed pitcher archives)
+    # We'll use 325MB as a conservative estimate based on your UI observations
+    gh_overhead_mb = 325.0 
+    
+    total_estimated_mb = local_mb + gh_overhead_mb
+    gh_limit_mb = 10 * 1024 
+    percent_used = (total_estimated_mb / gh_limit_mb) * 100
+    
+    return (f"📂 *TOTAL STORAGE USAGE*\n"
+            f"• Live Data: {local_mb:.2f} MB\n"
+            f"• Env & Archives: {gh_overhead_mb:.2f} MB\n"
+            f"• GH Limit: 10 GB ({percent_used:.2f}%)")
 
 def track_local_usage():
     now_mst = get_mst_now()
