@@ -16,7 +16,6 @@ USAGE_FILE = 'api_usage.csv'
 UNIT_SIZE = 100 
 
 def get_mst_now():
-    """Returns the current datetime in Mountain Time, accurately handling DST."""
     tz = pytz.timezone('America/Denver')
     return datetime.now(tz)
 
@@ -86,8 +85,8 @@ def audit_and_stats():
         if str(row.get('Result')) == 'PENDING':
             actual_games = statsapi.schedule(date=row['Date'])
             for g in actual_games:
-                # Doubleheader check using correct key 'doubleHeader'
-                dh_suffix = f" (Game {g.get('game_num')})" if g.get('doubleHeader') in ['Y','S'] else ""
+                # Library uses lowercase 'doubleheader' in the schedule dictionary
+                dh_suffix = f" (Game {g.get('game_num')})" if g.get('doubleheader') in ['Y','S'] else ""
                 matchup_str = f"{g['away_name']} @ {g['home_name']}{dh_suffix}"
                 
                 if matchup_str == row['Matchup'] and g['status'] == 'Final':
@@ -139,7 +138,6 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
         sys.stdout = original_stdout
         matchups = pitches[pitches['batter'].isin(lineup_ids)].dropna(subset=['events'])
         
-        # Platoon Adjustment
         default_obp = 0.310 if p_hand == 'L' else 0.320
         if matchups.empty: return default_obp
         
@@ -173,8 +171,8 @@ def run_analysis():
     for game in games:
         status = game.get('status', 'Scheduled').upper()
         
-        # FIXED: Correct capitalization for doubleHeader check
-        dh_type = game.get('doubleHeader')
+        # KEY CHANGE: The wrapper uses 'doubleheader' (lowercase)
+        dh_type = game.get('doubleheader')
         game_num = game.get('game_num')
         dh_label = f" (Game {game_num})" if dh_type in ['Y', 'S'] and game_num else ""
         
@@ -213,7 +211,6 @@ def run_analysis():
             winner = game['home_name'] if h_e > a_e else game['away_name']
             conf = round(abs(h_e - a_e) * 100, 1)
             
-            # Use home team name for odds key lookup
             f_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
 
             new_predictions.append({'Date': today_str, 'Matchup': matchup, 'Predicted_Winner': winner, 'Odds': f_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
