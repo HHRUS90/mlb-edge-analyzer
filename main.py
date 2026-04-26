@@ -50,9 +50,11 @@ def get_mlb_odds():
         odds_dict = {}
         for game in data:
             home = game['home_team']
+            away = game['away_team']
             if game.get('bookmakers'):
                 bookie = game['bookmakers'][0]
                 for outcome in bookie['markets'][0]['outcomes']:
+                    # Store odds for both teams to display in the matchup line
                     odds_dict[f"{home}_{outcome['name']}"] = outcome['price']
         return odds_dict, used, remaining, False, local_calls + 1
     except: return {}, "0", "0", False, local_calls
@@ -85,7 +87,6 @@ def audit_and_stats():
         if str(row.get('Result')) == 'PENDING':
             actual_games = statsapi.schedule(date=row['Date'])
             for g in actual_games:
-                # Library uses lowercase 'doubleheader' in the schedule dictionary
                 dh_suffix = f" (Game {g.get('game_num')})" if g.get('doubleheader') in ['Y','S'] else ""
                 matchup_str = f"{g['away_name']} @ {g['home_name']}{dh_suffix}"
                 
@@ -170,13 +171,17 @@ def run_analysis():
 
     for game in games:
         status = game.get('status', 'Scheduled').upper()
-        
-        # KEY CHANGE: The wrapper uses 'doubleheader' (lowercase)
         dh_type = game.get('doubleheader')
         game_num = game.get('game_num')
         dh_label = f" (Game {game_num})" if dh_type in ['Y', 'S'] and game_num else ""
         
-        matchup = f"{game['away_name']} @ {game['home_name']}{dh_label}"
+        # --- NEW ODDS DISPLAY LOGIC ---
+        # Get odds for both teams to show in the matchup line
+        away_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['away_name']}", "N/A"))
+        home_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['home_name']}", "N/A"))
+        
+        matchup = f"{game['away_name']} ({away_odds}) @ {game['home_name']} ({home_odds}){dh_label}"
+        # ------------------------------
         
         mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
         game_info = {'matchup': matchup, 'time': mst_time_str, 'status': status, 'is_active': False, 'raw_time': mst_dt}
@@ -184,10 +189,13 @@ def run_analysis():
         if any(x in status for x in ['POSTPONED', 'CANCELLED']):
             game_info['status'] = f"🛑 {status}"; display_list.append(game_info); continue
 
-        if not history_df.empty and not history_df[(history_df['Date'] == today_str) & (history_df['Matchup'] == matchup)].empty:
-            existing = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'] == matchup)].iloc[0]
-            game_info.update({'is_active': True, 'winner': existing['Predicted_Winner'], 'odds': existing['Odds'], 'conf': existing['Confidence']})
-            display_list.append(game_info); continue
+        # Check if we already predicted this game (prevents using In-Play live odds)
+        if not history_df.empty:
+            existing = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'] == matchup)]
+            if not existing.empty:
+                row = existing.iloc[0]
+                game_info.update({'is_active': True, 'winner': row['Predicted_Winner'], 'odds': row['Odds'], 'conf': row['Confidence']})
+                display_list.append(game_info); continue
 
         try:
             box = statsapi.boxscore_data(game['game_id'])
@@ -211,10 +219,11 @@ def run_analysis():
             winner = game['home_name'] if h_e > a_e else game['away_name']
             conf = round(abs(h_e - a_e) * 100, 1)
             
-            f_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
+            # Record the "Start Price"
+            start_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
 
-            new_predictions.append({'Date': today_str, 'Matchup': matchup, 'Predicted_Winner': winner, 'Odds': f_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
-            game_info.update({'is_active': True, 'winner': winner, 'odds': f_odds, 'conf': conf})
+            new_predictions.append({'Date': today_str, 'Matchup': matchup, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
+            game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf})
             display_list.append(game_info)
         except: continue
 
