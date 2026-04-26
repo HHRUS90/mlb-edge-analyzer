@@ -84,10 +84,9 @@ def audit_and_stats():
 
     for idx, row in df.iterrows():
         if str(row.get('Result')) == 'PENDING':
-            # Check date-specific results
             actual_games = statsapi.schedule(date=row['Date'])
             for g in actual_games:
-                # Doubleheader check in audit
+                # Doubleheader check using correct key 'doubleHeader'
                 dh_suffix = f" (Game {g.get('game_num')})" if g.get('doubleHeader') in ['Y','S'] else ""
                 matchup_str = f"{g['away_name']} @ {g['home_name']}{dh_suffix}"
                 
@@ -152,9 +151,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
 
 def format_mst_time(utc_string):
     try:
-        # Create aware UTC object
         utc_dt = datetime.strptime(utc_string, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=pytz.UTC)
-        # Convert to Denver time
         denver_dt = utc_dt.astimezone(pytz.timezone('America/Denver'))
         return denver_dt, denver_dt.strftime("%I:%M %p")
     except: return None, "TBD"
@@ -176,8 +173,11 @@ def run_analysis():
     for game in games:
         status = game.get('status', 'Scheduled').upper()
         
-        # Doubleheader detection
-        dh_label = f" (Game {game.get('game_num')})" if game.get('doubleHeader') in ['Y', 'S'] else ""
+        # FIXED: Correct capitalization for doubleHeader check
+        dh_type = game.get('doubleHeader')
+        game_num = game.get('game_num')
+        dh_label = f" (Game {game_num})" if dh_type in ['Y', 'S'] and game_num else ""
+        
         matchup = f"{game['away_name']} @ {game['home_name']}{dh_label}"
         
         mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
@@ -212,6 +212,8 @@ def run_analysis():
             
             winner = game['home_name'] if h_e > a_e else game['away_name']
             conf = round(abs(h_e - a_e) * 100, 1)
+            
+            # Use home team name for odds key lookup
             f_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
 
             new_predictions.append({'Date': today_str, 'Matchup': matchup, 'Predicted_Winner': winner, 'Odds': f_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
