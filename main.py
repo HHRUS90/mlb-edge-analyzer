@@ -8,14 +8,16 @@ import pytz
 from datetime import datetime, timedelta
 
 # --- CONFIGURATION ---
+ODDS_CALL_LIMIT = 450         # Monthly safety limit for Odds API calls
+UNIT_SIZE = 100               # Standard bet size for profit tracking
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 ODDS_API_KEY = os.getenv('ODDS_API_KEY')
 CSV_FILE = 'prediction_history.csv'
 USAGE_FILE = 'api_usage.csv' 
-UNIT_SIZE = 100 
 
 def get_mst_now():
+    """Returns the current datetime in Mountain Time, accurately handling DST."""
     tz = pytz.timezone('America/Denver')
     return datetime.now(tz)
 
@@ -35,8 +37,11 @@ def track_local_usage():
 def get_mlb_odds():
     usage_df, current_month = track_local_usage()
     local_calls = int(usage_df.loc[usage_df['Month'] == current_month, 'Calls'].values[0])
-    if not ODDS_API_KEY or local_calls >= 450:
+    
+    # Safety Check using Configuration Variable
+    if not ODDS_API_KEY or local_calls >= ODDS_CALL_LIMIT:
         return {}, "N/A", "N/A", True, local_calls
+        
     url = "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/"
     params = {'apiKey': ODDS_API_KEY, 'bookmakers': 'fanduel', 'markets': 'h2h', 'oddsFormat': 'american'}
     try:
@@ -54,7 +59,7 @@ def get_mlb_odds():
             if game.get('bookmakers'):
                 bookie = game['bookmakers'][0]
                 for outcome in bookie['markets'][0]['outcomes']:
-                    # Store odds for both teams to display in the matchup line
+                    # Store both teams' odds for the matchup display
                     odds_dict[f"{home}_{outcome['name']}"] = outcome['price']
         return odds_dict, used, remaining, False, local_calls + 1
     except: return {}, "0", "0", False, local_calls
@@ -87,10 +92,12 @@ def audit_and_stats():
         if str(row.get('Result')) == 'PENDING':
             actual_games = statsapi.schedule(date=row['Date'])
             for g in actual_games:
+                # Doubleheader check using 'doubleheader' lowercase key from the library
                 dh_suffix = f" (Game {g.get('game_num')})" if g.get('doubleheader') in ['Y','S'] else ""
                 matchup_str = f"{g['away_name']} @ {g['home_name']}{dh_suffix}"
                 
-                if matchup_str == row['Matchup'] and g['status'] == 'Final':
+                # We strip the odds display for the audit check to match CSV records
+                if matchup_str in row['Matchup'] and g['status'] == 'Final':
                     winner = g['winning_team']
                     df.at[idx, 'Result'] = 'WIN' if row['Predicted_Winner'] == winner else 'LOSS'
                     df.at[idx, 'Profit'] = calculate_payout(row['Odds'], UNIT_SIZE) if df.at[idx, 'Result'] == 'WIN' else -UNIT_SIZE
@@ -175,13 +182,11 @@ def run_analysis():
         game_num = game.get('game_num')
         dh_label = f" (Game {game_num})" if dh_type in ['Y', 'S'] and game_num else ""
         
-        # --- NEW ODDS DISPLAY LOGIC ---
-        # Get odds for both teams to show in the matchup line
+        # Display team names with their current Moneyline odds
         away_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['away_name']}", "N/A"))
         home_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['home_name']}", "N/A"))
         
         matchup = f"{game['away_name']} ({away_odds}) @ {game['home_name']} ({home_odds}){dh_label}"
-        # ------------------------------
         
         mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
         game_info = {'matchup': matchup, 'time': mst_time_str, 'status': status, 'is_active': False, 'raw_time': mst_dt}
@@ -189,7 +194,7 @@ def run_analysis():
         if any(x in status for x in ['POSTPONED', 'CANCELLED']):
             game_info['status'] = f"🛑 {status}"; display_list.append(game_info); continue
 
-        # Check if we already predicted this game (prevents using In-Play live odds)
+        # Check for existing prediction to avoid re-calculating or using in-play odds
         if not history_df.empty:
             existing = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'] == matchup)]
             if not existing.empty:
@@ -219,7 +224,7 @@ def run_analysis():
             winner = game['home_name'] if h_e > a_e else game['away_name']
             conf = round(abs(h_e - a_e) * 100, 1)
             
-            # Record the "Start Price"
+            # Store the starting price for the winner
             start_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
 
             new_predictions.append({'Date': today_str, 'Matchup': matchup, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
