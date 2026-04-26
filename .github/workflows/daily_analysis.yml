@@ -21,7 +21,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install statsapi pandas requests pybaseball pytz
+          pip install mlb-statsapi pandas requests pybaseball pytz
 
       - name: Run MLB Analysis
         env:
