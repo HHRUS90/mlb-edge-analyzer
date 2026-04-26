@@ -78,7 +78,8 @@ def get_mlb_odds():
 
 def format_odds(odds_val):
     try:
-        val = int(odds_val)
+        if odds_val == "N/A": return "N/A"
+        val = int(float(odds_val))
         return f"+{val}" if val > 0 else str(val)
     except: return str(odds_val)
 
@@ -165,8 +166,6 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
 
 def get_pro_lineup(team_id):
     try:
-        now_mst = get_mst_now()
-        today_iso = now_mst.strftime("%Y-%m-%d")
         roster = statsapi.get('team_roster', {'teamId': team_id})['roster']
         healthy_ids = [p['person']['id'] for p in roster if p.get('status', {}).get('code') == 'A' and "Injured" not in p.get('status', {}).get('description', '')]
         leaders = statsapi.team_leader_data(team_id, 'gamesPlayed', limit=20)
@@ -201,11 +200,11 @@ def run_analysis():
     new_predictions, display_list = [], []
     history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
     
-    # Initialize Log (This will effectively overwrite daily)
+    # Start fresh log for the day
     eval_log_lines = [f"EVALUATION LOG - {today_str}\n" + "="*40 + "\n"]
 
     raw_schedule = statsapi.get('schedule', {'sportId': 1, 'date': today_str, 'hydrate': 'probablePitcher'})
-    raw_games_map = {rg['gamePk']: rg for date_obj in raw_schedule.get('dates', []) for rg in date_obj.get('games', [])}
+    raw_games_map = {rg['gamePk']: rg for d in raw_schedule.get('dates', []) for rg in d.get('games', [])}
 
     for game in games:
         rg = raw_games_map.get(game['game_id'], {})
@@ -214,7 +213,7 @@ def run_analysis():
         status = game.get('status', 'Scheduled').upper()
         
         score_display = ""
-        if any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL", "COMPLETED"]):
+        if any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL"]):
             score_display = f" | 🏟 *SCORE: {game.get('away_score', 0)} - {game.get('home_score', 0)}*"
 
         away_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['away_name']}", "N/A"))
@@ -223,16 +222,8 @@ def run_analysis():
         mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
         game_info = {'matchup': matchup_display, 'pitchers': f"({a_p_name} vs {h_p_name})", 'time': mst_time_str, 'status': status, 'is_active': False, 'raw_time': mst_dt}
 
-        if not history_df.empty:
-            existing = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(game['home_name']))]
-            if not existing.empty:
-                row = existing.iloc[0]
-                game_info.update({'is_active': True, 'winner': row['Predicted_Winner'], 'odds': row['Odds'], 'conf': row['Confidence'], 'status': f'✅ PRED ({status})'})
-                display_list.append(game_info); continue
-
         try:
             box = statsapi.boxscore_data(game['game_id'])
-            
             def get_name_only(pid):
                 for team in ['home', 'away']:
                     p_info = box.get(team, {}).get('players', {}).get(f"ID{pid}")
@@ -241,11 +232,9 @@ def run_analysis():
 
             h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id')
             if not h_p_id and box.get('home', {}).get('pitchers'): h_p_id = box['home']['pitchers'][0]
-            
             a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id')
             if not a_p_id and box.get('away', {}).get('pitchers'): a_p_id = box['away']['pitchers'][0]
 
-            # SYNC NAMES (Fixes Blank Name issue)
             if h_p_id: h_p_name = get_name_only(h_p_id)
             if a_p_id: a_p_name = get_name_only(a_p_id)
             game_info['pitchers'] = f"({a_p_name} vs {h_p_name})"
@@ -255,16 +244,24 @@ def run_analysis():
             if not h_l or not a_l:
                 h_l, a_l = get_pro_lineup(game['home_id']), get_pro_lineup(game['away_id'])
 
+            # Log this game evaluation regardless of if it exists in history
+            log_entry = f"GAME: {game['away_name']} @ {game['home_name']} [{lineup_type}]\n"
+            log_entry += f"  - Away P: {a_p_name}\n    Lineup: {[get_name_only(bid) for bid in h_l]}\n"
+            log_entry += f"  - Home P: {h_p_name}\n    Lineup: {[get_name_only(bid) for bid in a_l]}\n"
+            eval_log_lines.append(log_entry)
+
+            # Check history AFTER logging so we still see the evaluation data in the log file
+            if not history_df.empty:
+                existing = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(game['home_name']))]
+                if not existing.empty:
+                    row = existing.iloc[0]
+                    game_info.update({'is_active': True, 'winner': row['Predicted_Winner'], 'odds': format_odds(row['Odds']), 'conf': row['Confidence'], 'status': f'✅ PRED ({status})'})
+                    display_list.append(game_info)
+                    continue
+
             if h_p_id and a_p_id:
                 h_p_hand, _ = get_player_info(h_p_id)
                 a_p_hand, _ = get_player_info(a_p_id)
-                
-                # Log writing
-                log_entry = f"GAME: {game['away_name']} @ {game['home_name']} [{lineup_type}]\n"
-                log_entry += f"  - Away P: {a_p_name}\n    Lineup: {[get_name_only(bid) for bid in h_l]}\n"
-                log_entry += f"  - Home P: {h_p_name}\n    Lineup: {[get_name_only(bid) for bid in a_l]}\n"
-                eval_log_lines.append(log_entry)
-
                 h_e, a_e = get_smoothed_bvp(a_p_id, h_l, a_p_hand), get_smoothed_bvp(h_p_id, a_l, h_p_hand)
                 winner = game['home_name'] if h_e > a_e else game['away_name']
                 conf = round(abs(h_e - a_e) * 100, 1)
@@ -272,9 +269,8 @@ def run_analysis():
                 
                 new_predictions.append({'Date': today_str, 'Matchup': matchup_display, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
                 game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf, 'status': f"{lineup_type} ({status})"})
-            else: 
+            else:
                 game_info['status'] = f'⏳ DATA ({status})'
-                eval_log_lines.append(f"MISSING DATA: {game['home_name']} (P-IDs: {a_p_id} vs {h_p_id})")
         except Exception as e:
             eval_log_lines.append(f"ERROR: {game['home_name']} - {str(e)}")
             continue
