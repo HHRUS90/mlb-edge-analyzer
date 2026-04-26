@@ -4,7 +4,7 @@ import requests
 import os
 import csv
 import sys
-from datetime import date, timedelta, datetime
+from datetime import datetime, timedelta
 
 # --- CONFIGURATION ---
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
@@ -13,11 +13,14 @@ ODDS_API_KEY = os.getenv('ODDS_API_KEY')
 CSV_FILE = 'prediction_history.csv'
 USAGE_FILE = 'api_usage.csv' 
 UNIT_SIZE = 100 
-HARD_STOP_THRESHOLD = 50 
+
+def get_mst_now():
+    """Returns the current datetime object in MST (UTC-7)."""
+    return datetime.utcnow() - timedelta(hours=7)
 
 def track_local_usage():
-    today = date.today()
-    current_month = today.strftime("%Y-%m")
+    now_mst = get_mst_now()
+    current_month = now_mst.strftime("%Y-%m")
     if not os.path.exists(USAGE_FILE):
         with open(USAGE_FILE, 'w') as f:
             f.write("Month,Calls\n")
@@ -35,12 +38,7 @@ def get_mlb_odds():
         return {}, "N/A", "N/A", True, local_calls
     
     url = "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/"
-    params = {
-        'apiKey': ODDS_API_KEY,
-        'bookmakers': 'fanduel', 
-        'markets': 'h2h',
-        'oddsFormat': 'american'
-    }
+    params = {'apiKey': ODDS_API_KEY, 'bookmakers': 'fanduel', 'markets': 'h2h', 'oddsFormat': 'american'}
     try:
         response = requests.get(url, params=params)
         if response.status_code == 200:
@@ -74,13 +72,14 @@ def calculate_payout(odds_str, stake):
     except: return 0.0
 
 def audit_and_stats():
-    if not os.path.exists(CSV_FILE): return "N/A", "N/A", "N/A"
+    if not os.path.exists(CSV_FILE): return "📊 *TODAY:* N/A", "📊 *YESTERDAY:* N/A", "📈 *LIFETIME:* N/A"
     try:
-        df = pd.read_csv(CSV_FILE, on_bad_lines='skip')
+        df = pd.read_csv(CSV_FILE)
     except: return "Error", "Error", "Error"
 
-    today_str = date.today().strftime("%m/%d/%Y")
-    yesterday_str = (date.today() - timedelta(days=1)).strftime("%m/%d/%Y")
+    now_mst = get_mst_now()
+    today_str = now_mst.strftime("%m/%d/%Y")
+    yesterday_str = (now_mst - timedelta(days=1)).strftime("%m/%d/%Y")
     updates_made = False
 
     for idx, row in df.iterrows():
@@ -95,32 +94,30 @@ def audit_and_stats():
                     updates_made = True
 
     if updates_made:
-        df.to_csv(CSV_FILE, index=False, quoting=csv.QUOTE_NONNUMERIC)
+        df.to_csv(CSV_FILE, index=False)
 
     def get_line_stats(target_df, label):
-        if target_df.empty: return f"📊 *{label}:* No results yet."
+        if target_df.empty: return f"📊 *{label}:* N/A"
         wins = (target_df['Result'] == 'WIN').sum()
         total = len(target_df)
-        acc = (wins / total) * 100
+        acc = (wins / total) * 100 if total > 0 else 0
         profit = target_df['Profit'].sum()
         return f"📊 *{label}:* {wins}/{total} ({acc:.1f}%) | {profit:+.2f}$"
 
     finalized = df[df['Result'].isin(['WIN', 'LOSS'])]
+    today_results = finalized[finalized['Date'] == today_str]
+    yesterday_results = finalized[finalized['Date'] == yesterday_str]
     
-    # FIX: Using 'finalized' consistently here
-    today_results = finalized[finalized['Date'] == today_str] if not finalized.empty else pd.DataFrame()
-    yesterday_results = finalized[finalized['Date'] == yesterday_str] if not finalized.empty else pd.DataFrame()
-    
-    today_msg = get_line_stats(today_results, "TODAY")
-    yesterday_msg = get_line_stats(yesterday_results, "YESTERDAY")
+    t_msg = get_line_stats(today_results, "TODAY")
+    y_msg = get_line_stats(yesterday_results, "YESTERDAY")
     
     if finalized.empty:
-        lifetime_msg = "📈 *LIFETIME:* 0% Accuracy | $0.00"
+        l_msg = "📈 *LIFETIME:* N/A"
     else:
         l_acc = ((finalized['Result'] == 'WIN').sum() / len(finalized)) * 100
-        lifetime_msg = f"📈 *LIFETIME:* {l_acc:.1f}% Accuracy | *${finalized['Profit'].sum():,.2f}*"
+        l_msg = f"📈 *LIFETIME:* {l_acc:.1f}% Accuracy | *${finalized['Profit'].sum():,.2f}*"
     
-    return today_msg, yesterday_msg, lifetime_msg
+    return t_msg, y_msg, l_msg
 
 def get_player_id_by_name(name):
     try:
@@ -129,13 +126,14 @@ def get_player_id_by_name(name):
     except: return None
 
 def get_smoothed_bvp(pitcher_id, lineup_ids):
-    # Silence pybaseball output
     original_stdout = sys.stdout
     sys.stdout = open(os.devnull, 'w')
     try:
         from pybaseball import statcast_pitcher
-        pitches = statcast_pitcher('2023-01-01', date.today().strftime("%Y-%m-%d"), pitcher_id)
-        sys.stdout = original_stdout # Restore stdout
+        # Use fixed 2023 start to today in MST
+        now_mst = get_mst_now()
+        pitches = statcast_pitcher('2023-01-01', now_mst.strftime("%Y-%m-%d"), pitcher_id)
+        sys.stdout = original_stdout
         matchups = pitches[pitches['batter'].isin(lineup_ids)].dropna(subset=['events'])
         if matchups.empty: return 0.320
         on_base = matchups['events'].isin(['single','double','triple','home_run','walk','hit_by_pitch']).sum()
@@ -148,16 +146,18 @@ def format_mst_time(utc_string):
     try:
         utc_time = datetime.strptime(utc_string, "%Y-%m-%dT%H:%M:%SZ")
         mst_time = utc_time - timedelta(hours=7)
-        return mst_time.strftime("%I:%M %p")
-    except: return "TBD"
+        return mst_time, mst_time.strftime("%I:%M %p")
+    except: return None, "TBD"
 
 def send_telegram(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     requests.post(url, data={'chat_id': TELEGRAM_CHAT_ID, 'text': message, 'parse_mode': 'Markdown'})
 
 def run_analysis():
-    today = date.today().strftime("%m/%d/%Y")
-    games = statsapi.schedule(date=today)
+    now_mst = get_mst_now()
+    today_str = now_mst.strftime("%m/%d/%Y")
+    
+    games = statsapi.schedule(date=today_str)
     live_odds, api_used, api_remaining, hard_stop, local_calls = get_mlb_odds()
     sorted_games = sorted(games, key=lambda x: x.get('game_datetime', ''))
     
@@ -166,16 +166,18 @@ def run_analysis():
 
     for game in sorted_games:
         status = game.get('status', 'Scheduled').upper()
-        matchup, mst_time = f"{game['away_name']} @ {game['home_name']}", format_mst_time(game.get('game_datetime'))
-        game_info = {'matchup': matchup, 'time': mst_time, 'status': status, 'is_active': False}
+        matchup = f"{game['away_name']} @ {game['home_name']}"
+        mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
+        
+        game_info = {'matchup': matchup, 'time': mst_time_str, 'status': status, 'is_active': False}
 
         if any(x in status for x in ['POSTPONED', 'CANCELLED', 'DELAYED']):
             game_info['status'] = f"🛑 {status}"
             display_list.append(game_info)
             continue
             
-        if not history_df.empty and not history_df[(history_df['Date'] == today) & (history_df['Matchup'] == matchup)].empty:
-            existing = history_df[(history_df['Date'] == today) & (history_df['Matchup'] == matchup)].iloc[0]
+        if not history_df.empty and not history_df[(history_df['Date'] == today_str) & (history_df['Matchup'] == matchup)].empty:
+            existing = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'] == matchup)].iloc[0]
             game_info.update({'is_active': True, 'winner': existing['Predicted_Winner'], 'odds': existing['Odds'], 'conf': existing['Confidence']})
             display_list.append(game_info)
             continue
@@ -183,8 +185,14 @@ def run_analysis():
         try:
             box = statsapi.boxscore_data(game['game_id'])
             h_l, a_l = box.get('home', {}).get('battingOrder', []), box.get('away', {}).get('battingOrder', [])
+            
             if not h_l or not a_l:
-                game_info['status'] = '⏳ LINEUPS PENDING'; display_list.append(game_info); continue
+                time_diff = mst_dt - now_mst if mst_dt else timedelta(hours=5)
+                if time_diff.total_seconds() > 14400: # 4 hours
+                    game_info['status'] = '📅 SCHEDULED'
+                else:
+                    game_info['status'] = '⏳ LINEUPS PENDING'
+                display_list.append(game_info); continue
             
             h_p_id = game.get('home_probable_pitcher_id') or get_player_id_by_name(game.get('home_probable_pitcher'))
             a_p_id = game.get('away_probable_pitcher_id') or get_player_id_by_name(game.get('away_probable_pitcher'))
@@ -196,7 +204,7 @@ def run_analysis():
             conf = round(abs(h_e - a_e) * 100, 1)
             f_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
 
-            new_predictions.append({'Date': today, 'Matchup': matchup, 'Predicted_Winner': winner, 'Odds': f_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
+            new_predictions.append({'Date': today_str, 'Matchup': matchup, 'Predicted_Winner': winner, 'Odds': f_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
             game_info.update({'is_active': True, 'winner': winner, 'odds': f_odds, 'conf': conf})
             display_list.append(game_info)
         except: continue
@@ -207,7 +215,7 @@ def run_analysis():
     t_msg, y_msg, l_msg = audit_and_stats()
     usage_msg = f"💳 *API USAGE*\n• Local Ticker: {local_calls}\n• API Reported: {api_used} Used | {api_remaining} Left"
 
-    msg = f"⚾ *MLB QUANT REPORT: {today}*\n\n{t_msg}\n{y_msg}\n{l_msg}\n\n{usage_msg}\n\n"
+    msg = f"⚾ *MLB QUANT REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n{l_msg}\n\n{usage_msg}\n\n"
     
     active_preds = [g for g in display_list if g.get('is_active')]
     if active_preds:
@@ -217,7 +225,7 @@ def run_analysis():
     msg += "*DAILY SCHEDULE (MST):*\n"
     for g in display_list:
         if g.get('is_active'):
-            star = " 🌟" if g['matchup'] == (active_preds and best['matchup']) else ""
+            star = " 🌟" if active_preds and g['matchup'] == best['matchup'] else ""
             msg += f"• [{g['time']}] {g['matchup']}{star}\n  👉 Pick: {g['winner']} ({g['odds']}) — {g['conf']}% Edge\n\n"
         else:
             msg += f"• [{g['time']}] {g['matchup']}\n  {g['status']}\n\n"
