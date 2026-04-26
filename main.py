@@ -34,9 +34,7 @@ def get_cache_stats():
             fp = os.path.join(dirpath, f)
             total_size_bytes += os.path.getsize(fp)
             file_count += 1
-    
     size_mb = total_size_bytes / (1024 * 1024)
-    # Note: This only tracks the CSVs, not the GitHub "Action Cache" overhead
     return (f"📂 *DATA CACHE (Local)*\n"
             f"• Files: {file_count}\n"
             f"• Size: {size_mb:.2f} MB\n"
@@ -82,7 +80,7 @@ def get_mlb_odds():
 
 def format_odds(odds_val):
     try:
-        if odds_val == "N/A": return "N/A"
+        if odds_val == "N/A" or odds_val is None: return "N/A"
         val = int(float(odds_val))
         return f"+{val}" if val > 0 else str(val)
     except: return str(odds_val)
@@ -115,6 +113,7 @@ def audit_and_stats():
                     df.at[idx, 'Profit'] = calculate_payout(row['Odds'], UNIT_SIZE) if df.at[idx, 'Result'] == 'WIN' else -UNIT_SIZE
                     updates_made = True
     if updates_made: df.to_csv(CSV_FILE, index=False)
+    
     def get_line_stats(target_df, label):
         if target_df.empty: return f"📊 *{label}:* N/A"
         wins = (target_df['Result'] == 'WIN').sum()
@@ -123,9 +122,11 @@ def audit_and_stats():
         profit = target_df['Profit'].sum()
         p_str = f"{'+$' if profit >= 0 else '-$'}{abs(profit):,.2f}"
         return f"📊 *{label}:* {wins}/{total} ({acc:.1f}%) | {p_str}"
+    
     finalized = df[df['Result'].isin(['WIN', 'LOSS'])]
     t_msg = get_line_stats(finalized[finalized['Date'] == today_str], "TODAY")
     y_msg = get_line_stats(finalized[finalized['Date'] == yesterday_str], "YESTERDAY")
+    
     l_msg = "📈 *LIFETIME:* N/A"
     if not finalized.empty:
         df['Date_DT'] = pd.to_datetime(df['Date'], format='%m/%d/%Y')
@@ -205,7 +206,6 @@ def run_analysis():
     history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
     
     eval_log_lines = [f"EVALUATION LOG - {today_str}\n" + "="*40 + "\n"]
-
     raw_schedule = statsapi.get('schedule', {'sportId': 1, 'date': today_str, 'hydrate': 'probablePitcher'})
     raw_games_map = {rg['gamePk']: rg for d in raw_schedule.get('dates', []) for rg in d.get('games', [])}
 
@@ -214,28 +214,28 @@ def run_analysis():
         h_p_name = game.get('home_probable_pitcher') or "TBD"
         a_p_name = game.get('away_probable_pitcher') or "TBD"
         status = game.get('status', 'Scheduled').upper()
-        
-        score_display = ""
         is_live_or_final = any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL"])
-        if is_live_or_final:
-            score_display = f" | 🏟 *SCORE: {game.get('away_score', 0)} - {game.get('home_score', 0)}*"
-
-        # Logic to "Lock" opening odds: If game is live/final, we pull from history if available
-        # otherwise we default to the current live feed.
+        
+        # Check history FIRST for this specific game
         existing_row = pd.Series()
         if not history_df.empty:
             matches = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(game['home_name']))]
             if not matches.empty:
                 existing_row = matches.iloc[0]
 
+        # GET ODDS (Prioritize Locking for Live Games)
         if is_live_or_final and not existing_row.empty:
-             # Lock odds to whatever was already in the CSV
-             away_odds = format_odds(existing_row['Odds'] if "away" in existing_row['Predicted_Winner'].lower() else -110) # simplified logic here
-             home_odds = format_odds(existing_row['Odds'] if "home" in existing_row['Predicted_Winner'].lower() else -110)
+             # Lock odds to the opening snapshot stored in the CSV
+             # We assume -110 if only one team's odds were captured, but we try to be accurate
+             pred_winner = existing_row['Predicted_Winner']
+             fixed_odds = format_odds(existing_row['Odds'])
+             away_odds = fixed_odds if pred_winner == game['away_name'] else "N/A"
+             home_odds = fixed_odds if pred_winner == game['home_name'] else "N/A"
         else:
              away_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['away_name']}", "N/A"))
              home_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['home_name']}", "N/A"))
 
+        score_display = f" | 🏟 *SCORE: {game.get('away_score', 0)} - {game.get('home_score', 0)}*" if is_live_or_final else ""
         matchup_display = f"{game['away_name']} ({away_odds}) @ {game['home_name']} ({home_odds}){score_display}"
         mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
         game_info = {'matchup': matchup_display, 'pitchers': f"({a_p_name} vs {h_p_name})", 'time': mst_time_str, 'status': status, 'is_active': False, 'raw_time': mst_dt}
@@ -262,10 +262,7 @@ def run_analysis():
             if not h_l or not a_l:
                 h_l, a_l = get_pro_lineup(game['home_id']), get_pro_lineup(game['away_id'])
 
-            log_entry = f"GAME: {game['away_name']} @ {game['home_name']} [{lineup_type}]\n"
-            log_entry += f"  - Away P: {a_p_name}\n    Lineup: {[get_name_only(bid) for bid in h_l]}\n"
-            log_entry += f"  - Home P: {h_p_name}\n    Lineup: {[get_name_only(bid) for bid in a_l]}\n"
-            eval_log_lines.append(log_entry)
+            eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} [{lineup_type}]\n  - Away P: {a_p_name}\n  - Home P: {h_p_name}\n")
 
             if not existing_row.empty:
                 game_info.update({'is_active': True, 'winner': existing_row['Predicted_Winner'], 'odds': format_odds(existing_row['Odds']), 'conf': existing_row['Confidence'], 'status': f'✅ PRED ({status})'})
@@ -279,8 +276,9 @@ def run_analysis():
                 winner = game['home_name'] if h_e > a_e else game['away_name']
                 conf = round(abs(h_e - a_e) * 100, 1)
                 
-                # Capture opening odds only when the prediction is first created
-                start_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
+                # Lock closing odds at the moment of prediction creation
+                winner_odds_raw = live_odds.get(f"{game['home_name']}_{winner}", -110)
+                start_odds = format_odds(winner_odds_raw)
                 
                 new_predictions.append({'Date': today_str, 'Matchup': matchup_display, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
                 game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf, 'status': f"{lineup_type} ({status})"})
@@ -300,10 +298,12 @@ def run_analysis():
     usage_msg = f"💳 *API USAGE*\n• Local Ticker: {local_calls}\n• API Reported: {api_used} Used | {api_remaining} Left"
     cache_msg = get_cache_stats()
     msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n{l_msg}\n\n{usage_msg}\n{cache_msg}\n\n"
+    
     active_preds = [g for g in display_list if g.get('is_active')]
     if active_preds:
         best = max(active_preds, key=lambda x: x['conf'])
         msg += f"🔥 *BEST BET:* {best['matchup']}\n👉 {best['winner']} ({best['odds']}) — {best['conf']}% Edge\n\n"
+    
     msg += "*DAILY SCHEDULE:*\n"
     display_list.sort(key=lambda x: x['raw_time'] if x['raw_time'] else datetime.max)
     for g in display_list:
@@ -311,6 +311,7 @@ def run_analysis():
             msg += f"• [{g['time']}] {g['matchup']}\n  _{g['pitchers']}_\n  👉 {g['winner']} ({g['odds']}) | {g['conf']}% | {g['status']}\n\n"
         else:
             msg += f"• [{g['time']}] {g['matchup']}\n  _{g['pitchers']}_\n  {g['status']}\n\n"
+    
     send_telegram(msg)
 
 if __name__ == "__main__": run_analysis()
