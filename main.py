@@ -16,9 +16,9 @@ ODDS_API_KEY = os.getenv('ODDS_API_KEY')
 CSV_FILE = 'prediction_history.csv'
 USAGE_FILE = 'api_usage.csv' 
 CACHE_DIR = 'pitcher_cache'
-GITHUB_CACHE_LIMIT_GB = 10.0  # GitHub Actions free tier limit
+EVAL_LOG = 'evaluation_log.txt'
+GITHUB_CACHE_LIMIT_GB = 10.0
 
-# Ensure cache directory exists
 if not os.path.exists(CACHE_DIR):
     os.makedirs(CACHE_DIR)
 
@@ -27,18 +27,15 @@ def get_mst_now():
     return datetime.now(tz)
 
 def get_cache_stats():
-    """Calculates size of the pitcher cache and remaining GitHub quota."""
     total_size_bytes = 0
     for dirpath, dirnames, filenames in os.walk(CACHE_DIR):
         for f in filenames:
             fp = os.path.join(dirpath, f)
             total_size_bytes += os.path.getsize(fp)
-    
     size_mb = total_size_bytes / (1024 * 1024)
     size_gb = size_mb / 1024
     remaining_gb = max(0, GITHUB_CACHE_LIMIT_GB - size_gb)
     percent_used = (size_gb / GITHUB_CACHE_LIMIT_GB) * 100
-    
     return f"📂 *CACHE STORAGE*\n• Used: {size_mb:.2f} MB ({percent_used:.2f}%)\n• Remaining: {remaining_gb:.2f} GB"
 
 def track_local_usage():
@@ -136,8 +133,8 @@ def audit_and_stats():
 def get_player_info(player_id):
     try:
         p = statsapi.get('person', {'personId': player_id})
-        return p['people'][0].get('pitchHand', {}).get('code', 'R')
-    except: return 'R'
+        return p['people'][0].get('pitchHand', {}).get('code', 'R'), p['people'][0].get('fullName', f"Unknown({player_id})")
+    except: return 'R', f"Unknown({player_id})"
 
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
     cache_path = os.path.join(CACHE_DIR, f"{pitcher_id}.csv")
@@ -211,6 +208,7 @@ def run_analysis():
     live_odds, api_used, api_remaining, _, local_calls = get_mlb_odds()
     new_predictions, display_list = [], []
     history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
+    eval_log_lines = [f"EVALUATION LOG - {today_str}\n" + "="*40 + "\n"]
 
     raw_schedule = statsapi.get('schedule', {'sportId': 1, 'date': today_str, 'hydrate': 'probablePitcher'})
     raw_games_map = {}
@@ -243,8 +241,17 @@ def run_analysis():
 
         try:
             box = statsapi.boxscore_data(game['game_id'])
+            
+            # Helper to map IDs to Names from the boxscore
+            def get_name(pid):
+                for team in ['home', 'away']:
+                    p_info = box.get(team, {}).get('players', {}).get(f"ID{pid}")
+                    if p_info: return p_info['person']['fullName']
+                return f"Unknown({pid})"
+
             if not h_p_id and box.get('home', {}).get('pitchers'): h_p_id = box['home']['pitchers'][0]
             if not a_p_id and box.get('away', {}).get('pitchers'): a_p_id = box['away']['pitchers'][0]
+            
             h_l, a_l = box.get('home', {}).get('battingOrder', []), box.get('away', {}).get('battingOrder', [])
             lineup_type = "✅ OFF"
             if not h_l or not a_l:
@@ -252,7 +259,17 @@ def run_analysis():
                 lineup_type = "📊 EST"
 
             if h_p_id and a_p_id and h_l and a_l:
-                h_p_hand, a_p_hand = get_player_info(h_p_id), get_player_info(a_p_id)
+                h_p_hand, h_p_real_name = get_player_info(h_p_id)
+                a_p_hand, a_p_real_name = get_player_info(a_p_id)
+                
+                # Evaluation Log Generation
+                log_entry = f"GAME: {game['away_name']} @ {game['home_name']} [{lineup_type}]\n"
+                log_entry += f"  - Away P: {a_p_real_name} ({a_p_id})\n"
+                log_entry += f"    vs Home Lineup: {[f'{get_name(bid)} ({bid})' for bid in h_l]}\n"
+                log_entry += f"  - Home P: {h_p_real_name} ({h_p_id})\n"
+                log_entry += f"    vs Away Lineup: {[f'{get_name(bid)} ({bid})' for bid in a_l]}\n"
+                eval_log_lines.append(log_entry)
+
                 h_e, a_e = get_smoothed_bvp(a_p_id, h_l, a_p_hand), get_smoothed_bvp(h_p_id, a_l, h_p_hand)
                 winner = game['home_name'] if h_e > a_e else game['away_name']
                 conf = round(abs(h_e - a_e) * 100, 1)
@@ -263,19 +280,20 @@ def run_analysis():
         except: continue
         display_list.append(game_info)
 
+    # Write Evaluation Log
+    with open(EVAL_LOG, 'w') as f:
+        f.write("\n".join(eval_log_lines))
+
     if new_predictions: pd.DataFrame(new_predictions).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE), quoting=csv.QUOTE_NONNUMERIC)
     
     t_msg, y_msg, l_msg = audit_and_stats()
     usage_msg = f"💳 *API USAGE*\n• Local Ticker: {local_calls}\n• API Reported: {api_used} Used | {api_remaining} Left"
     cache_msg = get_cache_stats()
-    
     msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n{l_msg}\n\n{usage_msg}\n{cache_msg}\n\n"
-    
     active_preds = [g for g in display_list if g.get('is_active')]
     if active_preds:
         best = max(active_preds, key=lambda x: x['conf'])
         msg += f"🔥 *BEST BET:* {best['matchup']}\n👉 {best['winner']} ({best['odds']}) — {best['conf']}% Edge\n\n"
-    
     msg += "*DAILY SCHEDULE:*\n"
     display_list.sort(key=lambda x: x['raw_time'] if x['raw_time'] else datetime.max)
     for g in display_list:
