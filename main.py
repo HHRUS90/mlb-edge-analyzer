@@ -28,15 +28,19 @@ def get_mst_now():
 
 def get_cache_stats():
     total_size_bytes = 0
+    file_count = 0
     for dirpath, dirnames, filenames in os.walk(CACHE_DIR):
         for f in filenames:
             fp = os.path.join(dirpath, f)
             total_size_bytes += os.path.getsize(fp)
+            file_count += 1
+    
     size_mb = total_size_bytes / (1024 * 1024)
-    size_gb = size_mb / 1024
-    remaining_gb = max(0, GITHUB_CACHE_LIMIT_GB - size_gb)
-    percent_used = (size_gb / GITHUB_CACHE_LIMIT_GB) * 100
-    return f"📂 *CACHE STORAGE*\n• Used: {size_mb:.2f} MB ({percent_used:.2f}%)\n• Remaining: {remaining_gb:.2f} GB"
+    # Note: This only tracks the CSVs, not the GitHub "Action Cache" overhead
+    return (f"📂 *DATA CACHE (Local)*\n"
+            f"• Files: {file_count}\n"
+            f"• Size: {size_mb:.2f} MB\n"
+            f"• GH Limit: 10 GB (Shared)")
 
 def track_local_usage():
     now_mst = get_mst_now()
