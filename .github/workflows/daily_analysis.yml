@@ -1,30 +1,28 @@
-name: MLB Quant Report
+name: MLB Daily Pro Analysis
 
 on:
   schedule:
-    # Runs at exactly 8:00 AM Mountain Time (MDT/MST) every day
-    - cron: '0 8 * * *'
-      timezone: "America/Denver"
-  workflow_dispatch: # Allows you to run it manually for testing
+    - cron: '0 14 * * *'  # 8:00 AM MST
+    - cron: '0 17 * * *'  # 11:00 AM MST
+    - cron: '0 21 * * *'  # 3:00 PM MST
+  workflow_dispatch:      # ALLOWS YOU TO CLICK "RUN WORKFLOW" MANUALLY
 
-permissions:
-  contents: write
-  
 jobs:
-  build:
+  analyze:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.9'
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
-          pip install mlb-statsapi pandas requests pybaseball pytz
+          python -m pip install --upgrade pip
+          pip install MLB-StatsAPI pandas requests pybaseball pytz
 
       - name: Run MLB Analysis
         env:
@@ -33,10 +31,10 @@ jobs:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python main.py
 
-      - name: Commit and Push changes
+      - name: Commit and Push Prediction History
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
           git add prediction_history.csv api_usage.csv
-          git commit -m "Update prediction history [skip ci]" || echo "No changes to commit"
+          git commit -m "Update MLB Predictions and Usage [skip ci]" || echo "No changes to commit"
           git push
