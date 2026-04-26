@@ -2,8 +2,9 @@ name: MLB Daily Analysis
 
 on:
   schedule:
+    # Runs at 10:30 AM UTC (6:30 AM ET)
     - cron: '30 10 * * *'
-  workflow_dispatch: 
+  workflow_dispatch: # Allows manual trigger
 
 permissions:
   contents: write 
@@ -36,6 +37,12 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "MLB-Quant-Bot"
-          git add prediction_history.csv api_usage.csv
+          
+          # This 'if' logic checks if the files exist before trying to add them
+          if [ -f prediction_history.csv ]; then git add prediction_history.csv; fi
+          if [ -f api_usage.csv ]; then git add api_usage.csv; fi
+          
+          # Only commit if there are actual changes staged
           git commit -m "Update MLB results, picks, and local API ticker [skip ci]" || echo "No changes to commit"
+          
           git push
