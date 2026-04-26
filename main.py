@@ -167,19 +167,11 @@ def get_pro_lineup(team_id):
     try:
         now_mst = get_mst_now()
         today_iso = now_mst.strftime("%Y-%m-%d")
-        trans = statsapi.get('transactions', {'teamId': team_id, 'startDate': today_iso})
-        new_arrival_ids = []
-        for t in trans:
-            if t.get('typeCode') in ['TR', 'RE', 'AC']:
-                pid = t.get('personId') or t.get('person', {}).get('id')
-                if pid: new_arrival_ids.append(pid)
         roster = statsapi.get('team_roster', {'teamId': team_id})['roster']
         healthy_ids = [p['person']['id'] for p in roster if p.get('status', {}).get('code') == 'A' and "Injured" not in p.get('status', {}).get('description', '')]
         leaders = statsapi.team_leader_data(team_id, 'gamesPlayed', limit=20)
         regular_ids = [leader[0] for leader in leaders]
         final_lineup = []
-        for p_id in new_arrival_ids:
-            if p_id in healthy_ids: final_lineup.append(p_id)
         for p_id in regular_ids:
             if p_id in healthy_ids and p_id not in final_lineup: final_lineup.append(p_id)
             if len(final_lineup) >= 9: break
@@ -208,18 +200,17 @@ def run_analysis():
     live_odds, api_used, api_remaining, _, local_calls = get_mlb_odds()
     new_predictions, display_list = [], []
     history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
+    
+    # Initialize Log (This will effectively overwrite daily)
     eval_log_lines = [f"EVALUATION LOG - {today_str}\n" + "="*40 + "\n"]
 
     raw_schedule = statsapi.get('schedule', {'sportId': 1, 'date': today_str, 'hydrate': 'probablePitcher'})
-    raw_games_map = {}
-    for date_obj in raw_schedule.get('dates', []):
-        for rg in date_obj.get('games', []): raw_games_map[rg['gamePk']] = rg
+    raw_games_map = {rg['gamePk']: rg for date_obj in raw_schedule.get('dates', []) for rg in date_obj.get('games', [])}
 
     for game in games:
         rg = raw_games_map.get(game['game_id'], {})
-        h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id')
-        a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id')
-        h_p_name, a_p_name = game.get('home_probable_pitcher', 'TBD'), game.get('away_probable_pitcher', 'TBD')
+        h_p_name = game.get('home_probable_pitcher') or "TBD"
+        a_p_name = game.get('away_probable_pitcher') or "TBD"
         status = game.get('status', 'Scheduled').upper()
         
         score_display = ""
@@ -248,37 +239,48 @@ def run_analysis():
                     if p_info: return p_info['person']['fullName']
                 return f"Player({pid})"
 
+            h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id')
             if not h_p_id and box.get('home', {}).get('pitchers'): h_p_id = box['home']['pitchers'][0]
-            if not a_p_id and box.get('away', {}).get('pitchers'): a_p_id = box['away']['pitchers'][0]
             
+            a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id')
+            if not a_p_id and box.get('away', {}).get('pitchers'): a_p_id = box['away']['pitchers'][0]
+
+            # SYNC NAMES (Fixes Blank Name issue)
+            if h_p_id: h_p_name = get_name_only(h_p_id)
+            if a_p_id: a_p_name = get_name_only(a_p_id)
+            game_info['pitchers'] = f"({a_p_name} vs {h_p_name})"
+
             h_l, a_l = box.get('home', {}).get('battingOrder', []), box.get('away', {}).get('battingOrder', [])
-            lineup_type = "✅ OFF"
+            lineup_type = "✅ OFF" if (h_l and a_l) else "📊 EST"
             if not h_l or not a_l:
                 h_l, a_l = get_pro_lineup(game['home_id']), get_pro_lineup(game['away_id'])
-                lineup_type = "📊 EST"
 
-            if h_p_id and a_p_id and h_l and a_l:
-                h_p_hand, h_p_real_name = get_player_info(h_p_id)
-                a_p_hand, a_p_real_name = get_player_info(a_p_id)
+            if h_p_id and a_p_id:
+                h_p_hand, _ = get_player_info(h_p_id)
+                a_p_hand, _ = get_player_info(a_p_id)
                 
-                # Evaluation Log - No IDs version
+                # Log writing
                 log_entry = f"GAME: {game['away_name']} @ {game['home_name']} [{lineup_type}]\n"
-                log_entry += f"  - Away P: {a_p_real_name}\n"
-                log_entry += f"    vs Home Lineup: {[get_name_only(bid) for bid in h_l]}\n"
-                log_entry += f"  - Home P: {h_p_real_name}\n"
-                log_entry += f"    vs Away Lineup: {[get_name_only(bid) for bid in a_l]}\n"
+                log_entry += f"  - Away P: {a_p_name}\n    Lineup: {[get_name_only(bid) for bid in h_l]}\n"
+                log_entry += f"  - Home P: {h_p_name}\n    Lineup: {[get_name_only(bid) for bid in a_l]}\n"
                 eval_log_lines.append(log_entry)
 
                 h_e, a_e = get_smoothed_bvp(a_p_id, h_l, a_p_hand), get_smoothed_bvp(h_p_id, a_l, h_p_hand)
                 winner = game['home_name'] if h_e > a_e else game['away_name']
                 conf = round(abs(h_e - a_e) * 100, 1)
                 start_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
+                
                 new_predictions.append({'Date': today_str, 'Matchup': matchup_display, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
                 game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf, 'status': f"{lineup_type} ({status})"})
-            else: game_info['status'] = f'⏳ DATA ({status})'
-        except: continue
+            else: 
+                game_info['status'] = f'⏳ DATA ({status})'
+                eval_log_lines.append(f"MISSING DATA: {game['home_name']} (P-IDs: {a_p_id} vs {h_p_id})")
+        except Exception as e:
+            eval_log_lines.append(f"ERROR: {game['home_name']} - {str(e)}")
+            continue
         display_list.append(game_info)
 
+    # FINAL LOG OVERWRITE
     with open(EVAL_LOG, 'w') as f:
         f.write("\n".join(eval_log_lines))
 
