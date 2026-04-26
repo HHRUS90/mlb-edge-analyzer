@@ -102,10 +102,7 @@ def audit_and_stats():
         total = len(target_df)
         acc = (wins / total) * 100 if total > 0 else 0
         profit = target_df['Profit'].sum()
-        
-        # New Formatting Logic
         profit_str = f"{'+$' if profit >= 0 else '-$'}{abs(profit):,.2f}"
-        
         return f"📊 *{label}:* {wins}/{total} ({acc:.1f}%) | {profit_str}"
 
     finalized = df[df['Result'].isin(['WIN', 'LOSS'])]
@@ -118,10 +115,14 @@ def audit_and_stats():
     if finalized.empty:
         l_msg = "📈 *LIFETIME:* N/A"
     else:
+        # Find the earliest date in the entire CSV history
+        df['Date_DT'] = pd.to_datetime(df['Date'], format='%m/%d/%Y')
+        start_date = df['Date_DT'].min().strftime("%m/%d/%Y")
+        
         l_acc = ((finalized['Result'] == 'WIN').sum() / len(finalized)) * 100
         l_total_profit = finalized['Profit'].sum()
         l_profit_str = f"{'+$' if l_total_profit >= 0 else '-$'}{abs(l_total_profit):,.2f}"
-        l_msg = f"📈 *LIFETIME:* {l_acc:.1f}% Accuracy | *{l_profit_str}*"
+        l_msg = f"📈 *LIFETIME (Since {start_date}):* {l_acc:.1f}% Accuracy | *{l_profit_str}*"
     
     return t_msg, y_msg, l_msg
 
