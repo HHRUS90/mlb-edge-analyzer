@@ -136,19 +136,20 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
         return 0.315
 
 def get_pro_lineup(team_id):
-    """
-    Handles trades, major call-ups, and injury status.
-    Prioritizes new arrivals (trades) and healthy regulars.
-    """
     try:
         now_mst = get_mst_now()
         today_iso = now_mst.strftime("%Y-%m-%d")
         
-        # 1. Check today's transactions for arrivals (Trades, Recalls, Activations)
+        # 1. Safely check today's transactions for arrivals
         trans = statsapi.get('transactions', {'teamId': team_id, 'startDate': today_iso})
-        new_arrival_ids = [t['personId'] for t in trans if t['typeCode'] in ['TR', 'RE', 'AC']]
+        new_arrival_ids = []
+        for t in trans:
+            if t.get('typeCode') in ['TR', 'RE', 'AC']:
+                # The ID can be nested differently depending on the transaction type
+                pid = t.get('personId') or t.get('person', {}).get('id')
+                if pid: new_arrival_ids.append(pid)
         
-        # 2. Get the healthy roster (Status code 'A' for Active)
+        # 2. Get the healthy roster
         roster = statsapi.get('team_roster', {'teamId': team_id})['roster']
         healthy_ids = [
             p['person']['id'] for p in roster 
@@ -162,17 +163,14 @@ def get_pro_lineup(team_id):
         
         # 4. Build the 9-man priority list
         final_lineup = []
-        # Priority 1: New arrivals that are on the healthy roster
         for p_id in new_arrival_ids:
             if p_id in healthy_ids: final_lineup.append(p_id)
         
-        # Priority 2: Healthy regulars
         for p_id in regular_ids:
             if p_id in healthy_ids and p_id not in final_lineup:
                 final_lineup.append(p_id)
             if len(final_lineup) >= 9: break
             
-        # Safety: Take first 9 healthy if still short
         if len(final_lineup) < 9:
             for p_id in healthy_ids:
                 if p_id not in final_lineup: final_lineup.append(p_id)
@@ -202,9 +200,23 @@ def run_analysis():
     new_predictions, display_list = [], []
     history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
 
+    # --- RAW SCHEDULE FETCH ---
+    # We do ONE raw call here to get the actual Pitcher IDs that the schedule() wrapper hides
+    raw_schedule = statsapi.get('schedule', {'sportId': 1, 'date': today_str, 'hydrate': 'probablePitcher'})
+    raw_games_map = {}
+    for date_obj in raw_schedule.get('dates', []):
+        for rg in date_obj.get('games', []):
+            raw_games_map[rg['gamePk']] = rg
+
     for game in games:
-        h_p_id, a_p_id = game.get('home_probable_pitcher_id'), game.get('away_probable_pitcher_id')
-        h_p_name, a_p_name = game.get('home_probable_pitcher', 'TBD'), game.get('away_probable_pitcher', 'TBD')
+        # 1. Grab Pitcher IDs from the raw map
+        rg = raw_games_map.get(game['game_id'], {})
+        h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id')
+        a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id')
+
+        h_p_name = game.get('home_probable_pitcher', 'TBD')
+        a_p_name = game.get('away_probable_pitcher', 'TBD')
+        
         status = game.get('status', 'Scheduled').upper()
         dh_label = f" (Game {game['game_num']})" if game.get('doubleheader') in ['Y', 'S'] else ""
         away_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['away_name']}", "N/A"))
@@ -225,6 +237,11 @@ def run_analysis():
 
         try:
             box = statsapi.boxscore_data(game['game_id'])
+            
+            # 2. Live Game Fallback: If game is in progress and probable pitcher is gone, check boxscore starters
+            if not h_p_id and box.get('home', {}).get('pitchers'): h_p_id = box['home']['pitchers'][0]
+            if not a_p_id and box.get('away', {}).get('pitchers'): a_p_id = box['away']['pitchers'][0]
+            
             h_l = box.get('home', {}).get('battingOrder', [])
             a_l = box.get('away', {}).get('battingOrder', [])
             lineup_type = "✅ OFFICIAL"
@@ -241,13 +258,17 @@ def run_analysis():
                 start_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
                 new_predictions.append({'Date': today_str, 'Matchup': matchup_display, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
                 game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf, 'status': lineup_type})
-            else: game_info['status'] = '⏳ DATA PENDING'
+            else: 
+                game_info['status'] = '⏳ DATA PENDING'
         except Exception as e: print(f"Error {game['game_id']}: {e}"); continue
         display_list.append(game_info)
 
     if new_predictions: pd.DataFrame(new_predictions).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE), quoting=csv.QUOTE_NONNUMERIC)
     t_msg, y_msg, l_msg = audit_and_stats()
-    usage_msg = f"💳 *API USAGE:* {local_calls} calls ({api_remaining} left)"
+    
+    # --- RESTORED API TRACKER FORMAT ---
+    usage_msg = f"💳 *API USAGE*\n• Local Ticker: {local_calls}\n• API Reported: {api_used} Used | {api_remaining} Left"
+    
     msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n{l_msg}\n\n{usage_msg}\n\n"
     active_preds = [g for g in display_list if g.get('is_active')]
     if active_preds:
