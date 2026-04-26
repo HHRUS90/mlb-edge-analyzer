@@ -2,9 +2,10 @@ name: MLB Daily Pro Analysis
 
 on:
   schedule:
-    - cron: '0 14 * * *'  # 8:00 AM MST
-    - cron: '0 17 * * *'  # 11:00 AM MST
-    - cron: '0 21 * * *'  # 3:00 PM MST
+    # 14 = 8:00 AM MDT
+    # 18 = 12:00 PM MDT
+    # 21 = 3:00 PM MDT
+    - cron: '0 14,18,21 * * *'
   workflow_dispatch:
 
 jobs:
