@@ -28,9 +28,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: pitcher_cache
-          # Run ID ensures we can save a new cache version even if key matches
           key: ${{ runner.os }}-pitchers-${{ github.run_id }}
-          # Restore keys allow us to grab the most recent cache available
           restore-keys: |
             ${{ runner.os }}-pitchers-
 
@@ -41,10 +39,10 @@ jobs:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python main.py
 
-      - name: Commit and Push Prediction History
+      - name: Commit and Push Data
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add prediction_history.csv api_usage.csv
-          git commit -m "Update MLB Predictions and Usage [skip ci]" || echo "No changes to commit"
+          git add prediction_history.csv api_usage.csv evaluation_log.txt
+          git commit -m "Update MLB Predictions and Verification Log [skip ci]" || echo "No changes to commit"
           git push
