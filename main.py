@@ -15,6 +15,11 @@ TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 ODDS_API_KEY = os.getenv('ODDS_API_KEY')
 CSV_FILE = 'prediction_history.csv'
 USAGE_FILE = 'api_usage.csv' 
+CACHE_DIR = 'pitcher_cache'
+
+# Ensure cache directory exists
+if not os.path.exists(CACHE_DIR):
+    os.makedirs(CACHE_DIR)
 
 def get_mst_now():
     tz = pytz.timezone('America/Denver')
@@ -57,19 +62,6 @@ def get_mlb_odds():
                     odds_dict[f"{home}_{outcome['name']}"] = outcome['price']
         return odds_dict, used, remaining, False, local_calls + 1
     except: return {}, "0", "0", False, local_calls
-
-def format_odds(odds_val):
-    try:
-        val = int(odds_val)
-        return f"+{val}" if val > 0 else str(val)
-    except: return str(odds_val)
-
-def calculate_payout(odds_str, stake):
-    try:
-        o = float(odds_str)
-        if o > 0: return stake * (o / 100)
-        return stake / (abs(o) / 100)
-    except: return 0.0
 
 def audit_and_stats():
     if not os.path.exists(CSV_FILE): return "📊 *TODAY:* N/A", "📊 *YESTERDAY:* N/A", "📈 *LIFETIME:* N/A"
@@ -119,12 +111,25 @@ def get_player_info(player_id):
     except: return 'R'
 
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
+    cache_path = os.path.join(CACHE_DIR, f"{pitcher_id}.csv")
+    now_mst = get_mst_now()
+    
+    use_cache = False
+    if os.path.exists(cache_path):
+        file_age = datetime.now() - datetime.fromtimestamp(os.path.getmtime(cache_path))
+        if file_age.days < 1: # Cache is fresh if less than 24h old
+            use_cache = True
+
     original_stdout = sys.stdout
     sys.stdout = open(os.devnull, 'w')
     try:
         from pybaseball import statcast_pitcher
-        now_mst = get_mst_now()
-        pitches = statcast_pitcher('2021-01-01', now_mst.strftime("%Y-%m-%d"), pitcher_id)
+        if use_cache:
+            pitches = pd.read_csv(cache_path)
+        else:
+            pitches = statcast_pitcher('2021-01-01', now_mst.strftime("%Y-%m-%d"), pitcher_id)
+            pitches.to_csv(cache_path, index=False)
+            
         sys.stdout = original_stdout
         matchups = pitches[pitches['batter'].isin(lineup_ids)].dropna(subset=['events'])
         default_obp = 0.310 if p_hand == 'L' else 0.320
@@ -185,40 +190,30 @@ def run_analysis():
     raw_schedule = statsapi.get('schedule', {'sportId': 1, 'date': today_str, 'hydrate': 'probablePitcher'})
     raw_games_map = {}
     for date_obj in raw_schedule.get('dates', []):
-        for rg in date_obj.get('games', []):
-            raw_games_map[rg['gamePk']] = rg
+        for rg in date_obj.get('games', []): raw_games_map[rg['gamePk']] = rg
 
     for game in games:
         rg = raw_games_map.get(game['game_id'], {})
         h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id')
         a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id')
         h_p_name, a_p_name = game.get('home_probable_pitcher', 'TBD'), game.get('away_probable_pitcher', 'TBD')
-        
         status = game.get('status', 'Scheduled').upper()
         
-        # --- LIVE SCORE LOGIC ---
         score_display = ""
         if any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL", "COMPLETED"]):
-            a_score = game.get('away_score', 0)
-            h_score = game.get('home_score', 0)
-            score_display = f" | 🏟 *SCORE: {a_score} - {h_score}*"
+            score_display = f" | 🏟 *SCORE: {game.get('away_score', 0)} - {game.get('home_score', 0)}*"
 
-        dh_label = f" (Game {game['game_num']})" if game.get('doubleheader') in ['Y', 'S'] else ""
         away_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['away_name']}", "N/A"))
         home_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['home_name']}", "N/A"))
-        
-        matchup_display = f"{game['away_name']} ({away_odds}) @ {game['home_name']} ({home_odds}){dh_label}{score_display}"
+        matchup_display = f"{game['away_name']} ({away_odds}) @ {game['home_name']} ({home_odds}){score_display}"
         mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
         game_info = {'matchup': matchup_display, 'pitchers': f"({a_p_name} vs {h_p_name})", 'time': mst_time_str, 'status': status, 'is_active': False, 'raw_time': mst_dt}
-
-        if any(x in status for x in ['POSTPONED', 'CANCELLED']):
-            display_list.append(game_info); continue
 
         if not history_df.empty:
             existing = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(game['home_name']))]
             if not existing.empty:
                 row = existing.iloc[0]
-                game_info.update({'is_active': True, 'winner': row['Predicted_Winner'], 'odds': row['Odds'], 'conf': row['Confidence'], 'status': f'✅ PREDICTED ({status})'})
+                game_info.update({'is_active': True, 'winner': row['Predicted_Winner'], 'odds': row['Odds'], 'conf': row['Confidence'], 'status': f'✅ PRED ({status})'})
                 display_list.append(game_info); continue
 
         try:
@@ -226,10 +221,10 @@ def run_analysis():
             if not h_p_id and box.get('home', {}).get('pitchers'): h_p_id = box['home']['pitchers'][0]
             if not a_p_id and box.get('away', {}).get('pitchers'): a_p_id = box['away']['pitchers'][0]
             h_l, a_l = box.get('home', {}).get('battingOrder', []), box.get('away', {}).get('battingOrder', [])
-            lineup_type = "✅ OFFICIAL"
+            lineup_type = "✅ OFF"
             if not h_l or not a_l:
                 h_l, a_l = get_pro_lineup(game['home_id']), get_pro_lineup(game['away_id'])
-                lineup_type = "📊 PRO-ESTIMATED"
+                lineup_type = "📊 EST"
 
             if h_p_id and a_p_id and h_l and a_l:
                 h_p_hand, a_p_hand = get_player_info(h_p_id), get_player_info(a_p_id)
@@ -239,7 +234,7 @@ def run_analysis():
                 start_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
                 new_predictions.append({'Date': today_str, 'Matchup': matchup_display, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
                 game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf, 'status': f"{lineup_type} ({status})"})
-            else: game_info['status'] = f'⏳ DATA PENDING ({status})'
+            else: game_info['status'] = f'⏳ DATA ({status})'
         except: continue
         display_list.append(game_info)
 
