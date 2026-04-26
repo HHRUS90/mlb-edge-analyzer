@@ -16,6 +16,7 @@ ODDS_API_KEY = os.getenv('ODDS_API_KEY')
 CSV_FILE = 'prediction_history.csv'
 USAGE_FILE = 'api_usage.csv' 
 CACHE_DIR = 'pitcher_cache'
+GITHUB_CACHE_LIMIT_GB = 10.0  # GitHub Actions free tier limit
 
 # Ensure cache directory exists
 if not os.path.exists(CACHE_DIR):
@@ -24,6 +25,21 @@ if not os.path.exists(CACHE_DIR):
 def get_mst_now():
     tz = pytz.timezone('America/Denver')
     return datetime.now(tz)
+
+def get_cache_stats():
+    """Calculates size of the pitcher cache and remaining GitHub quota."""
+    total_size_bytes = 0
+    for dirpath, dirnames, filenames in os.walk(CACHE_DIR):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            total_size_bytes += os.path.getsize(fp)
+    
+    size_mb = total_size_bytes / (1024 * 1024)
+    size_gb = size_mb / 1024
+    remaining_gb = max(0, GITHUB_CACHE_LIMIT_GB - size_gb)
+    percent_used = (size_gb / GITHUB_CACHE_LIMIT_GB) * 100
+    
+    return f"📂 *CACHE STORAGE*\n• Used: {size_mb:.2f} MB ({percent_used:.2f}%)\n• Remaining: {remaining_gb:.2f} GB"
 
 def track_local_usage():
     now_mst = get_mst_now()
@@ -62,6 +78,19 @@ def get_mlb_odds():
                     odds_dict[f"{home}_{outcome['name']}"] = outcome['price']
         return odds_dict, used, remaining, False, local_calls + 1
     except: return {}, "0", "0", False, local_calls
+
+def format_odds(odds_val):
+    try:
+        val = int(odds_val)
+        return f"+{val}" if val > 0 else str(val)
+    except: return str(odds_val)
+
+def calculate_payout(odds_str, stake):
+    try:
+        o = float(odds_str)
+        if o > 0: return stake * (o / 100)
+        return stake / (abs(o) / 100)
+    except: return 0.0
 
 def audit_and_stats():
     if not os.path.exists(CSV_FILE): return "📊 *TODAY:* N/A", "📊 *YESTERDAY:* N/A", "📈 *LIFETIME:* N/A"
@@ -113,12 +142,10 @@ def get_player_info(player_id):
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
     cache_path = os.path.join(CACHE_DIR, f"{pitcher_id}.csv")
     now_mst = get_mst_now()
-    
     use_cache = False
     if os.path.exists(cache_path):
         file_age = datetime.now() - datetime.fromtimestamp(os.path.getmtime(cache_path))
-        if file_age.days < 1: # Cache is fresh if less than 24h old
-            use_cache = True
+        if file_age.days < 1: use_cache = True
 
     original_stdout = sys.stdout
     sys.stdout = open(os.devnull, 'w')
@@ -129,7 +156,6 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
         else:
             pitches = statcast_pitcher('2021-01-01', now_mst.strftime("%Y-%m-%d"), pitcher_id)
             pitches.to_csv(cache_path, index=False)
-            
         sys.stdout = original_stdout
         matchups = pitches[pitches['batter'].isin(lineup_ids)].dropna(subset=['events'])
         default_obp = 0.310 if p_hand == 'L' else 0.320
@@ -158,8 +184,7 @@ def get_pro_lineup(team_id):
         for p_id in new_arrival_ids:
             if p_id in healthy_ids: final_lineup.append(p_id)
         for p_id in regular_ids:
-            if p_id in healthy_ids and p_id not in final_lineup:
-                final_lineup.append(p_id)
+            if p_id in healthy_ids and p_id not in final_lineup: final_lineup.append(p_id)
             if len(final_lineup) >= 9: break
         if len(final_lineup) < 9:
             for p_id in healthy_ids:
@@ -239,13 +264,18 @@ def run_analysis():
         display_list.append(game_info)
 
     if new_predictions: pd.DataFrame(new_predictions).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE), quoting=csv.QUOTE_NONNUMERIC)
+    
     t_msg, y_msg, l_msg = audit_and_stats()
     usage_msg = f"💳 *API USAGE*\n• Local Ticker: {local_calls}\n• API Reported: {api_used} Used | {api_remaining} Left"
-    msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n{l_msg}\n\n{usage_msg}\n\n"
+    cache_msg = get_cache_stats()
+    
+    msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n{l_msg}\n\n{usage_msg}\n{cache_msg}\n\n"
+    
     active_preds = [g for g in display_list if g.get('is_active')]
     if active_preds:
         best = max(active_preds, key=lambda x: x['conf'])
         msg += f"🔥 *BEST BET:* {best['matchup']}\n👉 {best['winner']} ({best['odds']}) — {best['conf']}% Edge\n\n"
+    
     msg += "*DAILY SCHEDULE:*\n"
     display_list.sort(key=lambda x: x['raw_time'] if x['raw_time'] else datetime.max)
     for g in display_list:
