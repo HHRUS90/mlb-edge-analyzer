@@ -115,10 +115,8 @@ def audit_and_stats():
     if finalized.empty:
         l_msg = "📈 *LIFETIME:* N/A"
     else:
-        # Find the earliest date in the entire CSV history
         df['Date_DT'] = pd.to_datetime(df['Date'], format='%m/%d/%Y')
         start_date = df['Date_DT'].min().strftime("%m/%d/%Y")
-        
         l_acc = ((finalized['Result'] == 'WIN').sum() / len(finalized)) * 100
         l_total_profit = finalized['Profit'].sum()
         l_profit_str = f"{'+$' if l_total_profit >= 0 else '-$'}{abs(l_total_profit):,.2f}"
@@ -138,7 +136,8 @@ def get_smoothed_bvp(pitcher_id, lineup_ids):
     try:
         from pybaseball import statcast_pitcher
         now_mst = get_mst_now()
-        pitches = statcast_pitcher('2023-01-01', now_mst.strftime("%Y-%m-%d"), pitcher_id)
+        # UPDATED: Pulling data since 2021 to increase matchup depth
+        pitches = statcast_pitcher('2021-01-01', now_mst.strftime("%Y-%m-%d"), pitcher_id)
         sys.stdout = original_stdout
         matchups = pitches[pitches['batter'].isin(lineup_ids)].dropna(subset=['events'])
         if matchups.empty: return 0.320
