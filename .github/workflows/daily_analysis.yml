@@ -28,9 +28,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: pitcher_cache
-          key: ${{ runner.os }}-pitcher-data-${{ github.run_id }}
+          # Run ID ensures we can save a new cache version even if key matches
+          key: ${{ runner.os }}-pitchers-${{ github.run_id }}
+          # Restore keys allow us to grab the most recent cache available
           restore-keys: |
-            ${{ runner.os }}-pitcher-data-
+            ${{ runner.os }}-pitchers-
 
       - name: Run MLB Analysis
         env:
