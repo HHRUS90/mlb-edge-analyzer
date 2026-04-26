@@ -133,8 +133,8 @@ def audit_and_stats():
 def get_player_info(player_id):
     try:
         p = statsapi.get('person', {'personId': player_id})
-        return p['people'][0].get('pitchHand', {}).get('code', 'R'), p['people'][0].get('fullName', f"Unknown({player_id})")
-    except: return 'R', f"Unknown({player_id})"
+        return p['people'][0].get('pitchHand', {}).get('code', 'R'), p['people'][0].get('fullName', f"Unknown")
+    except: return 'R', f"Unknown"
 
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
     cache_path = os.path.join(CACHE_DIR, f"{pitcher_id}.csv")
@@ -242,12 +242,11 @@ def run_analysis():
         try:
             box = statsapi.boxscore_data(game['game_id'])
             
-            # Helper to map IDs to Names from the boxscore
-            def get_name(pid):
+            def get_name_only(pid):
                 for team in ['home', 'away']:
                     p_info = box.get(team, {}).get('players', {}).get(f"ID{pid}")
                     if p_info: return p_info['person']['fullName']
-                return f"Unknown({pid})"
+                return f"Player({pid})"
 
             if not h_p_id and box.get('home', {}).get('pitchers'): h_p_id = box['home']['pitchers'][0]
             if not a_p_id and box.get('away', {}).get('pitchers'): a_p_id = box['away']['pitchers'][0]
@@ -262,12 +261,12 @@ def run_analysis():
                 h_p_hand, h_p_real_name = get_player_info(h_p_id)
                 a_p_hand, a_p_real_name = get_player_info(a_p_id)
                 
-                # Evaluation Log Generation
+                # Evaluation Log - No IDs version
                 log_entry = f"GAME: {game['away_name']} @ {game['home_name']} [{lineup_type}]\n"
-                log_entry += f"  - Away P: {a_p_real_name} ({a_p_id})\n"
-                log_entry += f"    vs Home Lineup: {[f'{get_name(bid)} ({bid})' for bid in h_l]}\n"
-                log_entry += f"  - Home P: {h_p_real_name} ({h_p_id})\n"
-                log_entry += f"    vs Away Lineup: {[f'{get_name(bid)} ({bid})' for bid in a_l]}\n"
+                log_entry += f"  - Away P: {a_p_real_name}\n"
+                log_entry += f"    vs Home Lineup: {[get_name_only(bid) for bid in h_l]}\n"
+                log_entry += f"  - Home P: {h_p_real_name}\n"
+                log_entry += f"    vs Away Lineup: {[get_name_only(bid) for bid in a_l]}\n"
                 eval_log_lines.append(log_entry)
 
                 h_e, a_e = get_smoothed_bvp(a_p_id, h_l, a_p_hand), get_smoothed_bvp(h_p_id, a_l, h_p_hand)
@@ -280,7 +279,6 @@ def run_analysis():
         except: continue
         display_list.append(game_info)
 
-    # Write Evaluation Log
     with open(EVAL_LOG, 'w') as f:
         f.write("\n".join(eval_log_lines))
 
