@@ -213,7 +213,6 @@ def run_analysis():
         is_live_or_final = any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL"])
         game_num = int(game.get('game_num', 1))
         
-        # --- LOOKUP LOGIC ---
         existing_idx = -1
         existing_row = pd.Series()
         if not history_df.empty:
@@ -244,18 +243,17 @@ def run_analysis():
                 h_e, h_samples = get_smoothed_bvp(a_p_id, h_l, a_p_hand)
                 a_e, a_samples = get_smoothed_bvp(h_p_id, a_l, h_p_hand)
                 winner = game['home_name'] if h_e > a_e else game['away_name']
-                conf = round(abs(h_e - a_e) * 1000, 1)
+                # BACK TO PERCENTAGE: round to 2 decimal places to catch small differences
+                conf = round(abs(h_e - a_e) * 100, 2)
 
                 eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} (G{game_num}) [{lineup_type}]\n")
                 eval_log_lines.append(f"  - {a_p_name} vs Lineup -> {h_e:.3f} ({h_samples} ABs)\n")
                 eval_log_lines.append(f"  - {h_p_name} vs Lineup -> {a_e:.3f} ({a_samples} ABs)\n")
-                eval_log_lines.append(f"  - RESULT: {winner} | {conf} pts\n" + "-"*40 + "\n")
+                eval_log_lines.append(f"  - RESULT: {winner} | {conf}%\n" + "-"*40 + "\n")
 
-                # --- UPGRADE LOGIC ---
-                # We update the CSV if: 1) No prediction exists OR 2) Existing is "EST" and we have "OFF"
-                should_update_csv = existing_idx == -1
+                should_update_csv = (existing_idx == -1)
                 if not existing_row.empty:
-                    # If existing confidence is very low (like the 0/1 you saw) and we have better data, overwrite
+                    # Update if the stored confidence is low (0.0 - 1.0) and we found a better matchup
                     if existing_row.get('Confidence', 0) <= 1.0 and conf > 1.0:
                         should_update_csv = True
 
@@ -276,23 +274,21 @@ def run_analysis():
         except Exception: continue
         display_list.append(game_info)
 
-    # Save Changes
     if new_predictions: pd.DataFrame(new_predictions).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE), quoting=csv.QUOTE_NONNUMERIC)
     if csv_updated: history_df.to_csv(CSV_FILE, index=False)
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
-    # Generate Message
     t_msg, y_msg, l_msg = audit_and_stats()
     msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n{l_msg}\n\n{get_cache_stats()}\n\n"
     active_preds = [g for g in display_list if g.get('is_active')]
     if active_preds:
         best = max(active_preds, key=lambda x: x['conf'])
-        msg += f"🔥 *BEST BET:* {best['matchup']}\n👉 {best['winner']} ({best['odds']}) — {best['conf']} pts Edge\n\n"
+        msg += f"🔥 *BEST BET:* {best['matchup']}\n👉 {best['winner']} ({best['odds']}) — {best['conf']}% Edge\n\n"
     
     display_list.sort(key=lambda x: x['raw_time'] if x['raw_time'] else datetime.max)
     for g in display_list:
         if g.get('is_active'):
-            msg += f"• [{g['time']}] {g['matchup']}\n  _{g['pitchers']}_\n  👉 {g['winner']} ({g['odds']}) | {g['conf']} pts | {g['status']}\n\n"
+            msg += f"• [{g['time']}] {g['matchup']}\n  _{g['pitchers']}_\n  👉 {g['winner']} ({g['odds']}) | {g['conf']}% | {g['status']}\n\n"
         else:
             msg += f"• [{g['time']}] {g['matchup']}\n  _{g['pitchers']}_\n  {g['status']}\n\n"
     send_telegram(msg)
