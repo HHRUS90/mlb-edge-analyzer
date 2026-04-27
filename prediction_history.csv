@@ -1,30 +1,30 @@
-Date,Matchup,Predicted_Winner,Odds,Confidence,Result,Profit
-04/25/2026,Boston Red Sox @ Baltimore Orioles,Baltimore Orioles,-146,1.1,LOSS,-100.0
-04/25/2026,Seattle Mariners @ St. Louis Cardinals,Seattle Mariners,-142,17.3,WIN,70.42253521126761
-04/25/2026,Cleveland Guardians @ Toronto Blue Jays,Toronto Blue Jays,-132,12.3,WIN,75.75757575757575
-04/25/2026,Miami Marlins @ San Francisco Giants,San Francisco Giants,-134,12.8,WIN,74.62686567164178
-04/25/2026,Minnesota Twins @ Tampa Bay Rays,Tampa Bay Rays,-132,0.2,WIN,75.75757575757575
-04/25/2026,Washington Nationals @ Chicago White Sox,Chicago White Sox,-130,7.0,LOSS,-100.0
-04/25/2026,San Diego Padres @ Arizona Diamondbacks,Arizona Diamondbacks,102,5.9,LOSS,-100.0
-04/25/2026,Athletics @ Texas Rangers,Athletics,108,21.2,LOSS,-100.0
-04/25/2026,Los Angeles Angels @ Kansas City Royals,Kansas City Royals,-120,8.4,WIN,83.33333333333334
-04/25/2026,New York Yankees @ Houston Astros,Houston Astros,116,2.7,LOSS,-100.0
-04/25/2026,Pittsburgh Pirates @ Milwaukee Brewers,Milwaukee Brewers,-124,14.7,LOSS,-100.0
-04/25/2026,Detroit Tigers @ Cincinnati Reds,Cincinnati Reds,-116,5.7,WIN,86.20689655172414
-04/25/2026,Chicago Cubs @ Los Angeles Dodgers,Chicago Cubs,112,11.0,LOSS,-100.0
-04/25/2026,Philadelphia Phillies @ Atlanta Braves,Philadelphia Phillies,140,11.8,WIN,140.0
-04/26/2026,Boston Red Sox (-115) @ Baltimore Orioles (-111) | 🏟 *SCORE: 0 - 0*,Boston Red Sox,-115,2.9,WIN,86.95652173913044
-04/26/2026,Philadelphia Phillies (+630) @ Atlanta Braves (-1200) | 🏟 *SCORE: 0 - 3*,Atlanta Braves,-1200,4.8,WIN,8.333333333333334
-04/26/2026,Cleveland Guardians (+280) @ Toronto Blue Jays (-134) | 🏟 *SCORE: 0 - 2*,Cleveland Guardians,280,2.7,LOSS,-100.0
-04/26/2026,Detroit Tigers (-245) @ Cincinnati Reds (+186) | 🏟 *SCORE: 2 - 0*,Cincinnati Reds,186,5.3,LOSS,-100.0
-04/26/2026,Colorado Rockies (+154) @ New York Mets (-184) (Game 1) | 🏟 *SCORE: 0 - 0*,Colorado Rockies,154,1.5,WIN,154.0
-04/26/2026,Minnesota Twins (+110) @ Tampa Bay Rays (-140) | 🏟 *SCORE: 0 - 0*,Minnesota Twins,110,3.6,LOSS,-100.0
-04/26/2026,Washington Nationals (+102) @ Chicago White Sox (-120),Washington Nationals,102,4.9,WIN,102.0
-04/26/2026,New York Yankees (-134) @ Houston Astros (+114),Houston Astros,114,0.5,WIN,114.0
-04/26/2026,Pittsburgh Pirates (+104) @ Milwaukee Brewers (-122),Milwaukee Brewers,-122,7.0,WIN,81.9672131147541
-04/26/2026,Seattle Mariners (-134) @ St. Louis Cardinals (+114),Seattle Mariners,-134,4.8,WIN,74.62686567164178
-04/26/2026,Athletics (-102) @ Texas Rangers (-116),Athletics,-102,10.8,WIN,98.0392156862745
-04/26/2026,San Diego Padres (-134) @ Arizona Diamondbacks (+114),San Diego Padres,-134,7.0,LOSS,-100.0
-04/26/2026,Miami Marlins (+110) @ San Francisco Giants (-130),San Francisco Giants,-130,15.9,WIN,76.92307692307692
-04/26/2026,Los Angeles Angels (+102) @ Kansas City Royals (-120),Kansas City Royals,-120,6.7,PENDING,0.0
-04/26/2026,Chicago Cubs (+108) @ Los Angeles Dodgers (-126),Chicago Cubs,108,1.2,LOSS,-100.0
+Date,Matchup,Predicted_Winner,Odds,Confidence,Result,Profit,Game_Num
+04/25/2026,Boston Red Sox @ Baltimore Orioles,Baltimore Orioles,-146,1.1,LOSS,-100.0,1
+04/25/2026,Seattle Mariners @ St. Louis Cardinals,Seattle Mariners,-142,17.3,WIN,70.42253521126761,1
+04/25/2026,Cleveland Guardians @ Toronto Blue Jays,Toronto Blue Jays,-132,12.3,WIN,75.75757575757575,1
+04/25/2026,Miami Marlins @ San Francisco Giants,San Francisco Giants,-134,12.8,WIN,74.62686567164178,1
+04/25/2026,Minnesota Twins @ Tampa Bay Rays,Tampa Bay Rays,-132,0.2,WIN,75.75757575757575,1
+04/25/2026,Washington Nationals @ Chicago White Sox,Chicago White Sox,-130,7.0,LOSS,-100.0,1
+04/25/2026,San Diego Padres @ Arizona Diamondbacks,Arizona Diamondbacks,102,5.9,LOSS,-100.0,1
+04/25/2026,Athletics @ Texas Rangers,Athletics,108,21.2,LOSS,-100.0,1
+04/25/2026,Los Angeles Angels @ Kansas City Royals,Kansas City Royals,-120,8.4,WIN,83.33333333333334,1
+04/25/2026,New York Yankees @ Houston Astros,Houston Astros,116,2.7,LOSS,-100.0,1
+04/25/2026,Pittsburgh Pirates @ Milwaukee Brewers,Milwaukee Brewers,-124,14.7,LOSS,-100.0,1
+04/25/2026,Detroit Tigers @ Cincinnati Reds,Cincinnati Reds,-116,5.7,WIN,86.20689655172414,1
+04/25/2026,Chicago Cubs @ Los Angeles Dodgers,Chicago Cubs,112,11.0,LOSS,-100.0,1
+04/25/2026,Philadelphia Phillies @ Atlanta Braves,Philadelphia Phillies,140,11.8,WIN,140.0,1
+04/26/2026,Boston Red Sox (-115) @ Baltimore Orioles (-111) | 🏟 *SCORE: 0 - 0*,Boston Red Sox,-115,2.9,WIN,86.95652173913044,1
+04/26/2026,Philadelphia Phillies (+630) @ Atlanta Braves (-1200) | 🏟 *SCORE: 0 - 3*,Atlanta Braves,-1200,4.8,WIN,8.333333333333334,1
+04/26/2026,Cleveland Guardians (+280) @ Toronto Blue Jays (-134) | 🏟 *SCORE: 0 - 2*,Cleveland Guardians,280,2.7,LOSS,-100.0,1
+04/26/2026,Detroit Tigers (-245) @ Cincinnati Reds (+186) | 🏟 *SCORE: 2 - 0*,Cincinnati Reds,186,5.3,LOSS,-100.0,1
+04/26/2026,Colorado Rockies (+154) @ New York Mets (-184) (Game 1) | 🏟 *SCORE: 0 - 0*,Colorado Rockies,154,1.5,WIN,154.0,1
+04/26/2026,Minnesota Twins (+110) @ Tampa Bay Rays (-140) | 🏟 *SCORE: 0 - 0*,Minnesota Twins,110,3.6,LOSS,-100.0,1
+04/26/2026,Washington Nationals (+102) @ Chicago White Sox (-120),Washington Nationals,102,4.9,WIN,102.0,1
+04/26/2026,New York Yankees (-134) @ Houston Astros (+114),Houston Astros,114,0.5,WIN,114.0,1
+04/26/2026,Pittsburgh Pirates (+104) @ Milwaukee Brewers (-122),Milwaukee Brewers,-122,7.0,WIN,81.9672131147541,1
+04/26/2026,Seattle Mariners (-134) @ St. Louis Cardinals (+114),Seattle Mariners,-134,4.8,WIN,74.62686567164178,1
+04/26/2026,Athletics (-102) @ Texas Rangers (-116),Athletics,-102,10.8,WIN,98.0392156862745,1
+04/26/2026,San Diego Padres (-134) @ Arizona Diamondbacks (+114),San Diego Padres,-134,7.0,LOSS,-100.0,1
+04/26/2026,Miami Marlins (+110) @ San Francisco Giants (-130),San Francisco Giants,-130,15.9,WIN,76.92307692307692,1
+04/26/2026,Los Angeles Angels (+102) @ Kansas City Royals (-120),Kansas City Royals,-120,6.7,WIN,83.33333333333334,1
+04/26/2026,Chicago Cubs (+108) @ Los Angeles Dodgers (-126),Chicago Cubs,108,1.2,LOSS,-100.0,1
