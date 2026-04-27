@@ -137,6 +137,7 @@ def audit_and_stats():
 
     t_msg = get_line_stats(df[df['Date'] == today_str], "TODAY")
     y_msg = get_line_stats(df[df['Date'] == yesterday_str], "YESTERDAY")
+    
     all_finalized = df[df['Result'].isin(['WIN', 'LOSS'])]
     if all_finalized.empty:
         l_msg = "📈 *LIFETIME:* N/A"
@@ -247,11 +248,13 @@ def run_analysis():
 
         try:
             box = statsapi.boxscore_data(game['game_id'])
+            
             def get_name_only(pid):
                 for team in ['home', 'away']:
                     p_info = box.get(team, {}).get('players', {}).get(f"ID{pid}")
                     if p_info: return p_info['person']['fullName']
-                return f"Player({pid})"
+                try: return statsapi.get('person', {'personId': pid})['people'][0]['fullName']
+                except: return f"Player({pid})"
 
             h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id') or (box['home']['pitchers'][0] if box.get('home', {}).get('pitchers') else None)
             a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id') or (box['away']['pitchers'][0] if box.get('away', {}).get('pitchers') else None)
@@ -264,7 +267,13 @@ def run_analysis():
             lineup_type = "✅ OFF" if (h_l and a_l) else "📊 EST"
             if not h_l or not a_l: h_l, a_l = get_pro_lineup(game['home_id']), get_pro_lineup(game['away_id'])
 
-            eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} [{lineup_type}]\n  - Away P: {a_p_name}\n  - Home P: {h_p_name}\n")
+            h_p_hand, _ = get_player_info(h_p_id) if h_p_id else ('R', 'TBD')
+            a_p_hand, _ = get_player_info(a_p_id) if a_p_id else ('R', 'TBD')
+            
+            log_entry = f"GAME: {game['away_name']} @ {game['home_name']} [{lineup_type}]\n"
+            log_entry += f"  - Away P: {a_p_name} ({a_p_hand})\n    Vs Home Lineup: {[get_name_only(bid) for bid in h_l]}\n"
+            log_entry += f"  - Home P: {h_p_name} ({h_p_hand})\n    Vs Away Lineup: {[get_name_only(bid) for bid in a_l]}\n"
+            eval_log_lines.append(log_entry)
 
             if not existing_row.empty:
                 game_info.update({'is_active': True, 'winner': existing_row['Predicted_Winner'], 'odds': format_odds(existing_row['Odds']), 'conf': existing_row['Confidence'], 'status': f'✅ PRED ({status})'})
@@ -272,8 +281,6 @@ def run_analysis():
                 continue
 
             if h_p_id and a_p_id:
-                h_p_hand, _ = get_player_info(h_p_id)
-                a_p_hand, _ = get_player_info(a_p_id)
                 h_e, a_e = get_smoothed_bvp(a_p_id, h_l, a_p_hand), get_smoothed_bvp(h_p_id, a_l, h_p_hand)
                 winner = game['home_name'] if h_e > a_e else game['away_name']
                 conf = round(abs(h_e - a_e) * 100, 1)
