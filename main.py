@@ -131,11 +131,12 @@ def audit_and_stats():
         acc = (wins / total) * 100
         profit = finalized['Profit'].sum()
         p_str = f"{'+$' if profit >= 0 else '-$'}{abs(profit):,.2f}"
+        # MATCH USER FORMAT: 10/100 (10.0%) | $555.54
         return f"📊 *{label}:* {wins}/{total} ({acc:.1f}%) | {p_str}"
 
     return get_line_stats(df[df['Date'] == today_str], "TODAY"), \
            get_line_stats(df[df['Date'] == yesterday_str], "YESTERDAY"), \
-           "📈 *LIFETIME:* " + (f"{((df[df['Result'].isin(['WIN','LOSS'])]['Result'] == 'WIN').sum() / len(df[df['Result'].isin(['WIN','LOSS'])])) * 100:.1f}% Acc" if not df[df['Result'].isin(['WIN','LOSS'])].empty else "N/A")
+           get_line_stats(df, "LIFETIME")
 
 def get_player_info(player_id):
     try:
@@ -143,12 +144,13 @@ def get_player_info(player_id):
         return p['people'][0].get('pitchHand', {}).get('code', 'R'), p['people'][0].get('fullName', f"Unknown")
     except: return 'R', f"Unknown"
 
-def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
+def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
     cache_path = os.path.join(CACHE_DIR, f"{pitcher_id}.csv")
     use_cache = False
     if os.path.exists(cache_path):
         if (datetime.now() - datetime.fromtimestamp(os.path.getmtime(cache_path))).days < 1: use_cache = True
     
+    details = []
     original_stdout = sys.stdout
     sys.stdout = open(os.devnull, 'w')
     try:
@@ -162,15 +164,26 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
             pitches.to_csv(cache_path, index=False)
         sys.stdout = original_stdout
         
-        matchups = pitches[pitches['batter'].isin(lineup_ids)].dropna(subset=['events'])
         default_obp = 0.310 if p_hand == 'L' else 0.320
-        if matchups.empty: return default_obp, 0
-        on_base = matchups['events'].isin(['single','double','triple','home_run','walk','hit_by_pitch']).sum()
-        smoothed = (on_base + (default_obp * 10)) / (len(matchups) + 10)
-        return smoothed, len(matchups)
+        total_hits = 0
+        total_at_bats = 0
+        
+        for b_id in lineup_ids:
+            matchups = pitches[pitches['batter'] == b_id].dropna(subset=['events'])
+            b_name = name_map.get(b_id, f"ID:{b_id}")
+            if matchups.empty:
+                details.append(f"    - {b_name}: NO HISTORY (Using default {default_obp})")
+            else:
+                on_base = matchups['events'].isin(['single','double','triple','home_run','walk','hit_by_pitch']).sum()
+                total_hits += on_base
+                total_at_bats += len(matchups)
+                details.append(f"    - {b_name}: {on_base}/{len(matchups)} ({(on_base/len(matchups)):.3f})")
+
+        smoothed = (total_hits + (default_obp * 10)) / (total_at_bats + 10)
+        return smoothed, total_at_bats, details
     except:
         sys.stdout = original_stdout
-        return 0.315, 0
+        return 0.315, 0, ["    - ERROR RETRIEVING DATA"]
 
 def get_pro_lineup(team_id):
     try:
@@ -198,7 +211,7 @@ def run_analysis():
     games = statsapi.schedule(date=today_str)
     live_odds, _, _, _, _ = get_mlb_odds()
     new_predictions, display_list = [], []
-    eval_log_lines = [f"EVALUATION LOG - {today_str}\n" + "="*40 + "\n"]
+    eval_log_lines = [f"DETAILED EVALUATION LOG - {today_str}\n" + "="*50 + "\n"]
     history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
     csv_updated = False
     
@@ -228,8 +241,12 @@ def run_analysis():
         mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
         game_info = {'matchup': matchup_display, 'pitchers': f"({a_p_name_api} vs {h_p_name_api})", 'time': mst_time_str, 'status': status, 'is_active': False, 'raw_time': mst_dt}
 
+        eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} (G{game_num}) [{status}]\n")
+
         try:
             box = statsapi.boxscore_data(game['game_id'])
+            name_map = {int(pid.replace('ID', '')): pdata['person']['fullName'] for team in ['home', 'away'] for pid, pdata in box[team]['players'].items()}
+            
             h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id') or (box['home']['pitchers'][0] if box.get('home', {}).get('pitchers') else None)
             a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id') or (box['away']['pitchers'][0] if box.get('away', {}).get('pitchers') else None)
 
@@ -237,41 +254,49 @@ def run_analysis():
                 h_p_hand, h_p_name = get_player_info(h_p_id)
                 a_p_hand, a_p_name = get_player_info(a_p_id)
                 h_l, a_l = box.get('home', {}).get('battingOrder', []), box.get('away', {}).get('battingOrder', [])
-                lineup_type = "✅ OFF" if (h_l and a_l) else "📊 EST"
+                lineup_source = "OFFICIAL BOXSCORE" if (h_l and a_l) else "ESTIMATED PRO LINEUP"
                 if not h_l or not a_l: h_l, a_l = get_pro_lineup(game['home_id']), get_pro_lineup(game['away_id'])
                 
-                h_e, h_samples = get_smoothed_bvp(a_p_id, h_l, a_p_hand)
-                a_e, a_samples = get_smoothed_bvp(h_p_id, a_l, h_p_hand)
+                h_e, h_samples, h_details = get_smoothed_bvp(a_p_id, h_l, a_p_hand, name_map)
+                a_e, a_samples, a_details = get_smoothed_bvp(h_p_id, a_l, h_p_hand, name_map)
                 winner = game['home_name'] if h_e > a_e else game['away_name']
-                # BACK TO PERCENTAGE: round to 2 decimal places to catch small differences
                 conf = round(abs(h_e - a_e) * 100, 2)
 
-                eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} (G{game_num}) [{lineup_type}]\n")
-                eval_log_lines.append(f"  - {a_p_name} vs Lineup -> {h_e:.3f} ({h_samples} ABs)\n")
-                eval_log_lines.append(f"  - {h_p_name} vs Lineup -> {a_e:.3f} ({a_samples} ABs)\n")
-                eval_log_lines.append(f"  - RESULT: {winner} | {conf}%\n" + "-"*40 + "\n")
+                eval_log_lines.append(f"  Source: {lineup_source}\n")
+                eval_log_lines.append(f"  [OFFENSE: {game['home_name']} vs {a_p_name}]\n")
+                eval_log_lines.extend([d + "\n" for d in h_details])
+                eval_log_lines.append(f"  >> Total Home Expected OBP: {h_e:.3f}\n\n")
 
+                eval_log_lines.append(f"  [OFFENSE: {game['away_name']} vs {h_p_name}]\n")
+                eval_log_lines.extend([d + "\n" for d in a_details])
+                eval_log_lines.append(f"  >> Total Away Expected OBP: {a_e:.3f}\n\n")
+
+                eval_log_lines.append(f"  MATH: abs({h_e:.3f} - {a_e:.3f}) * 100 = {conf}%\n")
+                eval_log_lines.append(f"  PREDICTION: {winner}\n" + "-"*50 + "\n")
+
+                # Upgrade/Save logic
                 should_update_csv = (existing_idx == -1)
-                if not existing_row.empty:
-                    # Update if the stored confidence is low (0.0 - 1.0) and we found a better matchup
-                    if existing_row.get('Confidence', 0) <= 1.0 and conf > 1.0:
-                        should_update_csv = True
+                if not existing_row.empty and existing_row.get('Confidence', 0) <= 1.0 and conf > 1.0:
+                    should_update_csv = True
 
                 if should_update_csv:
                     start_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
                     pred_data = {'Date': today_str, 'Matchup': matchup_display, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num}
-                    
                     if existing_idx != -1:
                         history_df.iloc[existing_idx] = pd.Series(pred_data)
                         csv_updated = True
                     else:
                         new_predictions.append(pred_data)
-                    
-                    game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf, 'status': f"{lineup_type} ({status})"})
+                    game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf, 'status': f"{'✅ OFF' if (lineup_source == 'OFFICIAL BOXSCORE') else '📊 EST'} ({status})"})
                 else:
                     game_info.update({'is_active': True, 'winner': existing_row['Predicted_Winner'], 'odds': format_odds(existing_row['Odds']), 'conf': existing_row['Confidence'], 'status': f'✅ PRED ({status})'})
-            else: game_info['status'] = f'⏳ DATA ({status})'
-        except Exception: continue
+            else:
+                reason = "Probable pitchers not announced yet" if not (h_p_id or a_p_id) else "Incomplete player data"
+                eval_log_lines.append(f"  SKIPPED: {reason}\n" + "-"*50 + "\n")
+                game_info['status'] = f'⏳ DATA ({status})'
+        except Exception as e:
+            eval_log_lines.append(f"  ERROR: {str(e)}\n" + "-"*50 + "\n")
+            continue
         display_list.append(game_info)
 
     if new_predictions: pd.DataFrame(new_predictions).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE), quoting=csv.QUOTE_NONNUMERIC)
@@ -279,7 +304,7 @@ def run_analysis():
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
     t_msg, y_msg, l_msg = audit_and_stats()
-    msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n{l_msg}\n\n{get_cache_stats()}\n\n"
+    msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {l_msg.split(': ')[1]}\n\n{get_cache_stats()}\n\n"
     active_preds = [g for g in display_list if g.get('is_active')]
     if active_preds:
         best = max(active_preds, key=lambda x: x['conf'])
