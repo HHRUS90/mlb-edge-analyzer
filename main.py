@@ -112,6 +112,7 @@ def audit_and_stats():
         if str(row.get('Result')).strip().upper() == 'PENDING':
             actual_games = statsapi.schedule(date=row['Date'])
             for g in actual_games:
+                # Doubleheader Logic: Must match Home Team AND Game Number
                 if g['home_name'] in row['Matchup'] and int(g.get('game_num', 1)) == int(row['Game_Num']):
                     if g['status'] == 'Final':
                         winner = g['winning_team']
@@ -156,9 +157,8 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
         if use_cache: 
             pitches = pd.read_csv(cache_path)
         else:
-            # Back to 2021 as requested
             pitches = statcast_pitcher('2021-01-01', datetime.now().strftime("%Y-%m-%d"), pitcher_id)
-            # PRUNING: Only keep essential columns to save 95% of disk space
+            # PRUNING: Keeps 2021 history but deletes the 90% of columns we don't use for BvP
             essential_cols = ['batter', 'events', 'description', 'game_date']
             pitches = pitches[pitches.columns.intersection(essential_cols)]
             pitches.to_csv(cache_path, index=False)
@@ -179,8 +179,7 @@ def get_pro_lineup(team_id):
         healthy_ids = [p['person']['id'] for p in roster if p.get('status', {}).get('code') == 'A']
         leaders = statsapi.team_leader_data(team_id, 'gamesPlayed', limit=20)
         regular_ids = [leader[0] for leader in leaders]
-        final_lineup = [p_id for p_id in regular_ids if p_id in healthy_ids][:9]
-        return final_lineup
+        return [p_id for p_id in regular_ids if p_id in healthy_ids][:9]
     except: return []
 
 def format_mst_time(utc_string):
@@ -213,6 +212,7 @@ def run_analysis():
         is_live_or_final = any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL"])
         game_num = int(game.get('game_num', 1))
         
+        # --- IMPROVED DOUBLEHEADER CHECK ---
         existing_row = pd.Series()
         if not history_df.empty:
             matches = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(game['home_name']))]
@@ -220,10 +220,12 @@ def run_analysis():
                 matches = matches[matches['Game_Num'].astype(int) == game_num]
             if not matches.empty: existing_row = matches.iloc[0]
 
+        # --- ODDS HANDLING ---
         away_o_h = format_odds(live_odds.get(f"{game['home_name']}_{game['away_name']}", "N/A"))
         home_o_h = format_odds(live_odds.get(f"{game['home_name']}_{game['home_name']}", "N/A"))
         score = f" | 🏟 *SCORE: {game.get('away_score', 0)} - {game.get('home_score', 0)}*" if is_live_or_final else ""
         matchup_display = f"{game['away_name']} ({away_o_h}) @ {game['home_name']} ({home_o_h}){score}"
+        
         mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
         game_info = {'matchup': matchup_display, 'pitchers': f"({a_p_name} vs {h_p_name})", 'time': mst_time_str, 'status': status, 'is_active': False, 'raw_time': mst_dt}
 
