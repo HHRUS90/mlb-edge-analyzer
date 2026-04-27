@@ -164,12 +164,13 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
         
         matchups = pitches[pitches['batter'].isin(lineup_ids)].dropna(subset=['events'])
         default_obp = 0.310 if p_hand == 'L' else 0.320
-        if matchups.empty: return default_obp
+        if matchups.empty: return default_obp, 0
         on_base = matchups['events'].isin(['single','double','triple','home_run','walk','hit_by_pitch']).sum()
-        return (on_base + (default_obp * 10)) / (len(matchups) + 10)
+        smoothed = (on_base + (default_obp * 10)) / (len(matchups) + 10)
+        return smoothed, len(matchups)
     except:
         sys.stdout = original_stdout
-        return 0.315
+        return 0.315, 0
 
 def get_pro_lineup(team_id):
     try:
@@ -205,8 +206,8 @@ def run_analysis():
 
     for game in games:
         rg = raw_games_map.get(game['game_id'], {})
-        h_p_name = game.get('home_probable_pitcher') or "TBD"
-        a_p_name = game.get('away_probable_pitcher') or "TBD"
+        h_p_name_api = game.get('home_probable_pitcher') or "TBD"
+        a_p_name_api = game.get('away_probable_pitcher') or "TBD"
         status = game.get('status', 'Scheduled').upper()
         is_live_or_final = any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL"])
         game_num = int(game.get('game_num', 1))
@@ -223,10 +224,16 @@ def run_analysis():
         score = f" | 🏟 *SCORE: {game.get('away_score', 0)} - {game.get('home_score', 0)}*" if is_live_or_final else ""
         matchup_display = f"{game['away_name']} ({away_o_h}) @ {game['home_name']} ({home_o_h}){score}"
         mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
-        game_info = {'matchup': matchup_display, 'pitchers': f"({a_p_name} vs {h_p_name})", 'time': mst_time_str, 'status': status, 'is_active': False, 'raw_time': mst_dt}
+        game_info = {'matchup': matchup_display, 'pitchers': f"({a_p_name_api} vs {h_p_name_api})", 'time': mst_time_str, 'status': status, 'is_active': False, 'raw_time': mst_dt}
 
         try:
             box = statsapi.boxscore_data(game['game_id'])
+            # Create a name map for the log
+            name_map = {}
+            for team in ['home', 'away']:
+                for pid, pdata in box[team]['players'].items():
+                    name_map[int(pid.replace('ID', ''))] = pdata['person']['fullName']
+
             h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id') or (box['home']['pitchers'][0] if box.get('home', {}).get('pitchers') else None)
             a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id') or (box['away']['pitchers'][0] if box.get('away', {}).get('pitchers') else None)
 
@@ -237,15 +244,27 @@ def run_analysis():
                 lineup_type = "✅ OFF" if (h_l and a_l) else "📊 EST"
                 if not h_l or not a_l: h_l, a_l = get_pro_lineup(game['home_id']), get_pro_lineup(game['away_id'])
                 
-                h_e, a_e = get_smoothed_bvp(a_p_id, h_l, a_p_hand), get_smoothed_bvp(h_p_id, a_l, h_p_hand)
+                h_e, h_samples = get_smoothed_bvp(a_p_id, h_l, a_p_hand)
+                a_e, a_samples = get_smoothed_bvp(h_p_id, a_l, h_p_hand)
                 winner = game['home_name'] if h_e > a_e else game['away_name']
                 conf = round(abs(h_e - a_e) * 100, 1)
 
-                # --- ADD TO EVAL LOG ---
-                eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} [{lineup_type}]\n")
-                eval_log_lines.append(f"  - Away P: {a_p_name} | Target OBP: {a_e:.3f}\n")
-                eval_log_lines.append(f"  - Home P: {h_p_name} | Target OBP: {h_e:.3f}\n")
-                eval_log_lines.append(f"  - Logic: {'HOME' if h_e > a_e else 'AWAY'} has better expected OBP edge.\n\n")
+                # --- DETAILED EVAL LOG ---
+                eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} (Game {game_num}) [{lineup_type}]\n")
+                
+                # Away Pitcher vs Home Lineup
+                h_lineup_names = [name_map.get(pid, f"Unknown({pid})") for pid in h_l]
+                eval_log_lines.append(f"  - Pitcher: {a_p_name} (Away)\n")
+                eval_log_lines.append(f"  - Target Lineup: {', '.join(h_lineup_names)}\n")
+                eval_log_lines.append(f"  - Result: {h_e:.3f} OBP over {h_samples} historical ABs\n\n")
+
+                # Home Pitcher vs Away Lineup
+                a_lineup_names = [name_map.get(pid, f"Unknown({pid})") for pid in a_l]
+                eval_log_lines.append(f"  - Pitcher: {h_p_name} (Home)\n")
+                eval_log_lines.append(f"  - Target Lineup: {', '.join(a_lineup_names)}\n")
+                eval_log_lines.append(f"  - Result: {a_e:.3f} OBP over {a_samples} historical ABs\n")
+                eval_log_lines.append(f"  - PICK: {winner} | Edge: {conf}%\n")
+                eval_log_lines.append("-" * 40 + "\n")
 
                 if not existing_row.empty:
                     game_info.update({'is_active': True, 'winner': existing_row['Predicted_Winner'], 'odds': format_odds(existing_row['Odds']), 'conf': existing_row['Confidence'], 'status': f'✅ PRED ({status})'})
@@ -259,7 +278,6 @@ def run_analysis():
 
     if new_predictions: pd.DataFrame(new_predictions).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE), quoting=csv.QUOTE_NONNUMERIC)
     
-    # Save the evaluation log
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
     t_msg, y_msg, l_msg = audit_and_stats()
