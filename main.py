@@ -95,7 +95,7 @@ def calculate_payout(odds_str, stake):
 
 def audit_and_stats():
     if not os.path.exists(CSV_FILE): 
-        return "📊 *TODAY:* N/A", "📊 *YESTERDAY:* N/A", "📈 *LIFETIME:* N/A"
+        return "📊 *TODAY:* N/A", "📊 *YESTERDAY:* N/A", "0/0 (0.0%) | $0.00"
     try:
         df = pd.read_csv(CSV_FILE)
         if 'Game_Num' not in df.columns: df['Game_Num'] = 1
@@ -131,12 +131,22 @@ def audit_and_stats():
         acc = (wins / total) * 100
         profit = finalized['Profit'].sum()
         p_str = f"{'+$' if profit >= 0 else '-$'}{abs(profit):,.2f}"
-        # MATCH USER FORMAT: 10/100 (10.0%) | $555.54
         return f"📊 *{label}:* {wins}/{total} ({acc:.1f}%) | {p_str}"
+
+    finalized_all = df[df['Result'].isin(['WIN', 'LOSS'])]
+    if finalized_all.empty:
+        lifetime_str = "0/0 (0.0%) | $0.00"
+    else:
+        l_wins = (finalized_all['Result'] == 'WIN').sum()
+        l_total = len(finalized_all)
+        l_acc = (l_wins / l_total) * 100
+        l_profit = finalized_all['Profit'].sum()
+        l_p_str = f"{'+$' if l_profit >= 0 else '-$'}{abs(l_profit):,.2f}"
+        lifetime_str = f"{l_wins}/{l_total} ({l_acc:.1f}%) | {l_p_str}"
 
     return get_line_stats(df[df['Date'] == today_str], "TODAY"), \
            get_line_stats(df[df['Date'] == yesterday_str], "YESTERDAY"), \
-           get_line_stats(df, "LIFETIME")
+           lifetime_str
 
 def get_player_info(player_id):
     try:
@@ -170,9 +180,13 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
         
         for b_id in lineup_ids:
             matchups = pitches[pitches['batter'] == b_id].dropna(subset=['events'])
-            b_name = name_map.get(b_id, f"ID:{b_id}")
+            # Attempt to get name from boxscore map, otherwise API call
+            b_name = name_map.get(b_id)
+            if not b_name:
+                _, b_name = get_player_info(b_id)
+            
             if matchups.empty:
-                details.append(f"    - {b_name}: NO HISTORY (Using default {default_obp})")
+                details.append(f"    - {b_name}: NO HISTORY (Defaulting {default_obp})")
             else:
                 on_base = matchups['events'].isin(['single','double','triple','home_run','walk','hit_by_pitch']).sum()
                 total_hits += on_base
@@ -226,6 +240,7 @@ def run_analysis():
         is_live_or_final = any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL"])
         game_num = int(game.get('game_num', 1))
         
+        # --- LOOKUP ---
         existing_idx = -1
         existing_row = pd.Series()
         if not history_df.empty:
@@ -241,12 +256,19 @@ def run_analysis():
         mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
         game_info = {'matchup': matchup_display, 'pitchers': f"({a_p_name_api} vs {h_p_name_api})", 'time': mst_time_str, 'status': status, 'is_active': False, 'raw_time': mst_dt}
 
-        eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} (G{game_num}) [{status}]\n")
+        eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} (G{game_num})\n")
 
         try:
             box = statsapi.boxscore_data(game['game_id'])
-            name_map = {int(pid.replace('ID', '')): pdata['person']['fullName'] for team in ['home', 'away'] for pid, pdata in box[team]['players'].items()}
-            
+            # Safe name mapping
+            name_map = {}
+            for team in ['home', 'away']:
+                for pid, pdata in box.get(team, {}).get('players', {}).items():
+                    try:
+                        clean_id = int(pid.replace('ID', ''))
+                        name_map[clean_id] = pdata['person']['fullName']
+                    except: continue
+
             h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id') or (box['home']['pitchers'][0] if box.get('home', {}).get('pitchers') else None)
             a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id') or (box['away']['pitchers'][0] if box.get('away', {}).get('pitchers') else None)
 
@@ -262,19 +284,19 @@ def run_analysis():
                 winner = game['home_name'] if h_e > a_e else game['away_name']
                 conf = round(abs(h_e - a_e) * 100, 2)
 
+                # EVAL LOG DETAILED OUTPUT
                 eval_log_lines.append(f"  Source: {lineup_source}\n")
                 eval_log_lines.append(f"  [OFFENSE: {game['home_name']} vs {a_p_name}]\n")
                 eval_log_lines.extend([d + "\n" for d in h_details])
-                eval_log_lines.append(f"  >> Total Home Expected OBP: {h_e:.3f}\n\n")
+                eval_log_lines.append(f"  >> Aggregated Home OBP: {h_e:.3f}\n\n")
 
                 eval_log_lines.append(f"  [OFFENSE: {game['away_name']} vs {h_p_name}]\n")
                 eval_log_lines.extend([d + "\n" for d in a_details])
-                eval_log_lines.append(f"  >> Total Away Expected OBP: {a_e:.3f}\n\n")
+                eval_log_lines.append(f"  >> Aggregated Away OBP: {a_e:.3f}\n\n")
 
-                eval_log_lines.append(f"  MATH: abs({h_e:.3f} - {a_e:.3f}) * 100 = {conf}%\n")
-                eval_log_lines.append(f"  PREDICTION: {winner}\n" + "-"*50 + "\n")
+                eval_log_lines.append(f"  CALC: abs({h_e:.3f} - {a_e:.3f}) * 100 = {conf}%\n")
+                eval_log_lines.append(f"  RESULT: {winner}\n" + "-"*50 + "\n")
 
-                # Upgrade/Save logic
                 should_update_csv = (existing_idx == -1)
                 if not existing_row.empty and existing_row.get('Confidence', 0) <= 1.0 and conf > 1.0:
                     should_update_csv = True
@@ -282,29 +304,36 @@ def run_analysis():
                 if should_update_csv:
                     start_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
                     pred_data = {'Date': today_str, 'Matchup': matchup_display, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num}
+                    
                     if existing_idx != -1:
+                        # Fix pandas dtype warning by casting to object first
+                        history_df = history_df.astype(object)
                         history_df.iloc[existing_idx] = pd.Series(pred_data)
                         csv_updated = True
                     else:
                         new_predictions.append(pred_data)
+                    
                     game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf, 'status': f"{'✅ OFF' if (lineup_source == 'OFFICIAL BOXSCORE') else '📊 EST'} ({status})"})
                 else:
                     game_info.update({'is_active': True, 'winner': existing_row['Predicted_Winner'], 'odds': format_odds(existing_row['Odds']), 'conf': existing_row['Confidence'], 'status': f'✅ PRED ({status})'})
             else:
-                reason = "Probable pitchers not announced yet" if not (h_p_id or a_p_id) else "Incomplete player data"
+                reason = "Pitchers TBD" if not (h_p_id or a_p_id) else "Data Retrieval Error"
                 eval_log_lines.append(f"  SKIPPED: {reason}\n" + "-"*50 + "\n")
                 game_info['status'] = f'⏳ DATA ({status})'
         except Exception as e:
-            eval_log_lines.append(f"  ERROR: {str(e)}\n" + "-"*50 + "\n")
+            eval_log_lines.append(f"  ERROR IN G{game_num}: {str(e)}\n" + "-"*50 + "\n")
             continue
         display_list.append(game_info)
 
+    # Save
     if new_predictions: pd.DataFrame(new_predictions).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE), quoting=csv.QUOTE_NONNUMERIC)
     if csv_updated: history_df.to_csv(CSV_FILE, index=False)
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
-    t_msg, y_msg, l_msg = audit_and_stats()
-    msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {l_msg.split(': ')[1]}\n\n{get_cache_stats()}\n\n"
+    # Message Construction
+    t_msg, y_msg, lifetime_val = audit_and_stats()
+    msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {lifetime_val}\n\n{get_cache_stats()}\n\n"
+    
     active_preds = [g for g in display_list if g.get('is_active')]
     if active_preds:
         best = max(active_preds, key=lambda x: x['conf'])
