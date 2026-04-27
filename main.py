@@ -112,7 +112,6 @@ def audit_and_stats():
         if str(row.get('Result')).strip().upper() == 'PENDING':
             actual_games = statsapi.schedule(date=row['Date'])
             for g in actual_games:
-                # Doubleheader Logic: Must match Home Team AND Game Number
                 if g['home_name'] in row['Matchup'] and int(g.get('game_num', 1)) == int(row['Game_Num']):
                     if g['status'] == 'Final':
                         winner = g['winning_team']
@@ -158,7 +157,6 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
             pitches = pd.read_csv(cache_path)
         else:
             pitches = statcast_pitcher('2021-01-01', datetime.now().strftime("%Y-%m-%d"), pitcher_id)
-            # PRUNING: Keeps 2021 history but deletes the 90% of columns we don't use for BvP
             essential_cols = ['batter', 'events', 'description', 'game_date']
             pitches = pitches[pitches.columns.intersection(essential_cols)]
             pitches.to_csv(cache_path, index=False)
@@ -199,6 +197,7 @@ def run_analysis():
     games = statsapi.schedule(date=today_str)
     live_odds, _, _, _, _ = get_mlb_odds()
     new_predictions, display_list = [], []
+    eval_log_lines = [f"EVALUATION LOG - {today_str}\n" + "="*40 + "\n"]
     history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
     
     raw_schedule = statsapi.get('schedule', {'sportId': 1, 'date': today_str, 'hydrate': 'probablePitcher'})
@@ -212,7 +211,6 @@ def run_analysis():
         is_live_or_final = any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL"])
         game_num = int(game.get('game_num', 1))
         
-        # --- IMPROVED DOUBLEHEADER CHECK ---
         existing_row = pd.Series()
         if not history_df.empty:
             matches = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(game['home_name']))]
@@ -220,12 +218,10 @@ def run_analysis():
                 matches = matches[matches['Game_Num'].astype(int) == game_num]
             if not matches.empty: existing_row = matches.iloc[0]
 
-        # --- ODDS HANDLING ---
         away_o_h = format_odds(live_odds.get(f"{game['home_name']}_{game['away_name']}", "N/A"))
         home_o_h = format_odds(live_odds.get(f"{game['home_name']}_{game['home_name']}", "N/A"))
         score = f" | 🏟 *SCORE: {game.get('away_score', 0)} - {game.get('home_score', 0)}*" if is_live_or_final else ""
         matchup_display = f"{game['away_name']} ({away_o_h}) @ {game['home_name']} ({home_o_h}){score}"
-        
         mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
         game_info = {'matchup': matchup_display, 'pitchers': f"({a_p_name} vs {h_p_name})", 'time': mst_time_str, 'status': status, 'is_active': False, 'raw_time': mst_dt}
 
@@ -235,26 +231,36 @@ def run_analysis():
             a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id') or (box['away']['pitchers'][0] if box.get('away', {}).get('pitchers') else None)
 
             if h_p_id and a_p_id:
-                h_p_hand, _ = get_player_info(h_p_id)
-                a_p_hand, _ = get_player_info(a_p_id)
+                h_p_hand, h_p_name = get_player_info(h_p_id)
+                a_p_hand, a_p_name = get_player_info(a_p_id)
                 h_l, a_l = box.get('home', {}).get('battingOrder', []), box.get('away', {}).get('battingOrder', [])
+                lineup_type = "✅ OFF" if (h_l and a_l) else "📊 EST"
                 if not h_l or not a_l: h_l, a_l = get_pro_lineup(game['home_id']), get_pro_lineup(game['away_id'])
                 
                 h_e, a_e = get_smoothed_bvp(a_p_id, h_l, a_p_hand), get_smoothed_bvp(h_p_id, a_l, h_p_hand)
                 winner = game['home_name'] if h_e > a_e else game['away_name']
                 conf = round(abs(h_e - a_e) * 100, 1)
 
+                # --- ADD TO EVAL LOG ---
+                eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} [{lineup_type}]\n")
+                eval_log_lines.append(f"  - Away P: {a_p_name} | Target OBP: {a_e:.3f}\n")
+                eval_log_lines.append(f"  - Home P: {h_p_name} | Target OBP: {h_e:.3f}\n")
+                eval_log_lines.append(f"  - Logic: {'HOME' if h_e > a_e else 'AWAY'} has better expected OBP edge.\n\n")
+
                 if not existing_row.empty:
                     game_info.update({'is_active': True, 'winner': existing_row['Predicted_Winner'], 'odds': format_odds(existing_row['Odds']), 'conf': existing_row['Confidence'], 'status': f'✅ PRED ({status})'})
                 else:
                     start_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
                     new_predictions.append({'Date': today_str, 'Matchup': matchup_display, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
-                    game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf, 'status': f"📊 ({status})"})
+                    game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf, 'status': f"{lineup_type} ({status})"})
             else: game_info['status'] = f'⏳ DATA ({status})'
         except Exception: continue
         display_list.append(game_info)
 
     if new_predictions: pd.DataFrame(new_predictions).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE), quoting=csv.QUOTE_NONNUMERIC)
+    
+    # Save the evaluation log
+    with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
     t_msg, y_msg, l_msg = audit_and_stats()
     msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n{l_msg}\n\n{get_cache_stats()}\n\n"
