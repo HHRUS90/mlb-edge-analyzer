@@ -31,15 +31,11 @@ def get_cache_stats():
         for f in filenames:
             fp = os.path.join(dirpath, f)
             local_size_bytes += os.path.getsize(fp)
-    
     local_mb = local_size_bytes / (1024 * 1024)
-    # Estimated GitHub overhead (2x Setup-Python + compressed archives)
     gh_overhead_mb = 325.0 
-    
     total_estimated_mb = local_mb + gh_overhead_mb
     gh_limit_mb = 10 * 1024 
     percent_used = (total_estimated_mb / gh_limit_mb) * 100
-    
     return (f"📂 *TOTAL STORAGE USAGE*\n"
             f"• Live Data: {local_mb:.2f} MB\n"
             f"• Env & Archives: {gh_overhead_mb:.2f} MB\n"
@@ -50,8 +46,7 @@ def track_local_usage():
     current_month = now_mst.strftime("%Y-%m")
     if not os.path.exists(USAGE_FILE):
         with open(USAGE_FILE, 'w') as f:
-            f.write("Month,Calls\n")
-            f.write(f"{current_month},0\n")
+            f.write("Month,Calls,Game_ID\n")
     df = pd.read_csv(USAGE_FILE)
     if current_month not in df['Month'].values:
         new_row = pd.DataFrame([{'Month': current_month, 'Calls': 0}])
@@ -103,25 +98,23 @@ def audit_and_stats():
     try:
         df = pd.read_csv(CSV_FILE)
         df['Date'] = df['Date'].astype(str)
+        if 'Game_Num' not in df.columns: df['Game_Num'] = 1
     except: return "Error", "Error", "Error"
 
-    now_mst = get_mst_now()
-    today_str = now_mst.strftime("%m/%d/%Y")
-    yesterday_str = (now_mst - timedelta(days=1)).strftime("%m/%d/%Y")
     updates_made = False
-
     for idx, row in df.iterrows():
         if str(row.get('Result')).strip().upper() == 'PENDING':
             actual_games = statsapi.schedule(date=row['Date'])
             for g in actual_games:
-                matchup_key = f"{g['home_name']}"
-                if matchup_key in row['Matchup'] and g['status'] == 'Final':
-                    winner = g['winning_team']
-                    result = 'WIN' if row['Predicted_Winner'] == winner else 'LOSS'
-                    profit = calculate_payout(row['Odds'], UNIT_SIZE) if result == 'WIN' else -UNIT_SIZE
-                    df.at[idx, 'Result'] = result
-                    df.at[idx, 'Profit'] = profit
-                    updates_made = True
+                # Match by Home Team AND Game Number to solve Doubleheader bug
+                if g['home_name'] in row['Matchup'] and g.get('game_num', 1) == row.get('Game_Num', 1):
+                    if g['status'] == 'Final':
+                        winner = g['winning_team']
+                        result = 'WIN' if row['Predicted_Winner'] == winner else 'LOSS'
+                        profit = calculate_payout(row['Odds'], UNIT_SIZE) if result == 'WIN' else -UNIT_SIZE
+                        df.at[idx, 'Result'] = result
+                        df.at[idx, 'Profit'] = profit
+                        updates_made = True
 
     if updates_made: df.to_csv(CSV_FILE, index=False)
 
@@ -135,12 +128,12 @@ def audit_and_stats():
         p_str = f"{'+$' if profit >= 0 else '-$'}{abs(profit):,.2f}"
         return f"📊 *{label}:* {wins}/{total} ({acc:.1f}%) | {p_str}"
 
-    t_msg = get_line_stats(df[df['Date'] == today_str], "TODAY")
-    y_msg = get_line_stats(df[df['Date'] == yesterday_str], "YESTERDAY")
+    now_mst = get_mst_now()
+    t_msg = get_line_stats(df[df['Date'] == now_mst.strftime("%m/%d/%Y")], "TODAY")
+    y_msg = get_line_stats(df[df['Date'] == (now_mst - timedelta(days=1)).strftime("%m/%d/%Y")], "YESTERDAY")
     
     all_finalized = df[df['Result'].isin(['WIN', 'LOSS'])]
-    if all_finalized.empty:
-        l_msg = "📈 *LIFETIME:* N/A"
+    if all_finalized.empty: l_msg = "📈 *LIFETIME:* N/A"
     else:
         l_acc = ((all_finalized['Result'] == 'WIN').sum() / len(all_finalized)) * 100
         l_profit = all_finalized['Profit'].sum()
@@ -157,18 +150,16 @@ def get_player_info(player_id):
 
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand):
     cache_path = os.path.join(CACHE_DIR, f"{pitcher_id}.csv")
-    now_mst = get_mst_now()
     use_cache = False
     if os.path.exists(cache_path):
-        file_age = datetime.now() - datetime.fromtimestamp(os.path.getmtime(cache_path))
-        if file_age.days < 1: use_cache = True
+        if (datetime.now() - datetime.fromtimestamp(os.path.getmtime(cache_path))).days < 1: use_cache = True
     original_stdout = sys.stdout
     sys.stdout = open(os.devnull, 'w')
     try:
         from pybaseball import statcast_pitcher
         if use_cache: pitches = pd.read_csv(cache_path)
         else:
-            pitches = statcast_pitcher('2021-01-01', now_mst.strftime("%Y-%m-%d"), pitcher_id)
+            pitches = statcast_pitcher('2021-01-01', datetime.now().strftime("%Y-%m-%d"), pitcher_id)
             pitches.to_csv(cache_path, index=False)
         sys.stdout = original_stdout
         matchups = pitches[pitches['batter'].isin(lineup_ids)].dropna(subset=['events'])
@@ -226,29 +217,29 @@ def run_analysis():
         a_p_name = game.get('away_probable_pitcher') or "TBD"
         status = game.get('status', 'Scheduled').upper()
         is_live_or_final = any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL"])
+        game_num = game.get('game_num', 1)
         
+        # 1. Match game in history
         existing_row = pd.Series()
         if not history_df.empty:
             matches = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(game['home_name']))]
+            if len(matches) > 1: # Handle Doubleheader
+                matches = matches[matches['Game_Num'] == game_num]
             if not matches.empty: existing_row = matches.iloc[0]
 
-        if is_live_or_final and not existing_row.empty:
-             pred_winner = existing_row['Predicted_Winner']
-             fixed_odds = format_odds(existing_row['Odds'])
-             away_odds = fixed_odds if pred_winner == game['away_name'] else "N/A"
-             home_odds = fixed_odds if pred_winner == game['home_name'] else "N/A"
-        else:
-             away_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['away_name']}", "N/A"))
-             home_odds = format_odds(live_odds.get(f"{game['home_name']}_{game['home_name']}", "N/A"))
+        # 2. Get Odds Logic
+        # Header ALWAYS shows current closing odds from API
+        away_odds_header = format_odds(live_odds.get(f"{game['home_name']}_{game['away_name']}", "N/A"))
+        home_odds_header = format_odds(live_odds.get(f"{game['home_name']}_{game['home_name']}", "N/A"))
 
         score_display = f" | 🏟 *SCORE: {game.get('away_score', 0)} - {game.get('home_score', 0)}*" if is_live_or_final else ""
-        matchup_display = f"{game['away_name']} ({away_odds}) @ {game['home_name']} ({home_odds}){score_display}"
+        matchup_display = f"{game['away_name']} ({away_odds_header}) @ {game['home_name']} ({home_odds_header}){score_display}"
+        
         mst_dt, mst_time_str = format_mst_time(game.get('game_datetime'))
         game_info = {'matchup': matchup_display, 'pitchers': f"({a_p_name} vs {h_p_name})", 'time': mst_time_str, 'status': status, 'is_active': False, 'raw_time': mst_dt}
 
         try:
             box = statsapi.boxscore_data(game['game_id'])
-            
             def get_name_only(pid):
                 for team in ['home', 'away']:
                     p_info = box.get(team, {}).get('players', {}).get(f"ID{pid}")
@@ -267,46 +258,35 @@ def run_analysis():
             lineup_type = "✅ OFF" if (h_l and a_l) else "📊 EST"
             if not h_l or not a_l: h_l, a_l = get_pro_lineup(game['home_id']), get_pro_lineup(game['away_id'])
 
-            h_p_hand, _ = get_player_info(h_p_id) if h_p_id else ('R', 'TBD')
-            a_p_hand, _ = get_player_info(a_p_id) if a_p_id else ('R', 'TBD')
-            
-            log_entry = f"GAME: {game['away_name']} @ {game['home_name']} [{lineup_type}]\n"
-            log_entry += f"  - Away P: {a_p_name} ({a_p_hand})\n    Vs Home Lineup: {[get_name_only(bid) for bid in h_l]}\n"
-            log_entry += f"  - Home P: {h_p_name} ({h_p_hand})\n    Vs Away Lineup: {[get_name_only(bid) for bid in a_l]}\n"
-            eval_log_lines.append(log_entry)
-
-            if not existing_row.empty:
-                game_info.update({'is_active': True, 'winner': existing_row['Predicted_Winner'], 'odds': format_odds(existing_row['Odds']), 'conf': existing_row['Confidence'], 'status': f'✅ PRED ({status})'})
-                display_list.append(game_info)
-                continue
-
             if h_p_id and a_p_id:
+                h_p_hand, _ = get_player_info(h_p_id)
+                a_p_hand, _ = get_player_info(a_p_id)
                 h_e, a_e = get_smoothed_bvp(a_p_id, h_l, a_p_hand), get_smoothed_bvp(h_p_id, a_l, h_p_hand)
                 winner = game['home_name'] if h_e > a_e else game['away_name']
                 conf = round(abs(h_e - a_e) * 100, 1)
-                start_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
-                new_predictions.append({'Date': today_str, 'Matchup': matchup_display, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0})
-                game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf, 'status': f"{lineup_type} ({status})"})
+
+                if not existing_row.empty:
+                    # Use OLD odds from CSV for prediction line
+                    game_info.update({'is_active': True, 'winner': existing_row['Predicted_Winner'], 'odds': format_odds(existing_row['Odds']), 'conf': existing_row['Confidence'], 'status': f'✅ PRED ({status})'})
+                else:
+                    # Save NEW prediction with current odds
+                    start_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
+                    new_predictions.append({'Date': today_str, 'Matchup': matchup_display, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
+                    game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf, 'status': f"{lineup_type} ({status})"})
             else: game_info['status'] = f'⏳ DATA ({status})'
-        except Exception as e:
-            eval_log_lines.append(f"ERROR: {game['home_name']} - {str(e)}")
-            continue
+        except Exception: continue
         display_list.append(game_info)
 
-    with open(EVAL_LOG, 'w') as f: f.write("\n".join(eval_log_lines))
     if new_predictions: pd.DataFrame(new_predictions).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE), quoting=csv.QUOTE_NONNUMERIC)
     
     t_msg, y_msg, l_msg = audit_and_stats()
-    usage_msg = f"💳 *API USAGE*\n• Local Ticker: {local_calls}\n• API Reported: {api_used} Used | {api_remaining} Left"
-    cache_msg = get_cache_stats()
-    msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n{l_msg}\n\n{usage_msg}\n{cache_msg}\n\n"
+    msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n{l_msg}\n\n{get_cache_stats()}\n\n"
     
     active_preds = [g for g in display_list if g.get('is_active')]
     if active_preds:
         best = max(active_preds, key=lambda x: x['conf'])
         msg += f"🔥 *BEST BET:* {best['matchup']}\n👉 {best['winner']} ({best['odds']}) — {best['conf']}% Edge\n\n"
     
-    msg += "*DAILY SCHEDULE:*\n"
     display_list.sort(key=lambda x: x['raw_time'] if x['raw_time'] else datetime.max)
     for g in display_list:
         if g.get('is_active'):
