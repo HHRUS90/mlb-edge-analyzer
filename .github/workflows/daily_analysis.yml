@@ -1,12 +1,12 @@
-name: MLB Daily Pro Analysis
+name: MLB Pro Analyzer
 
 on:
   schedule:
-    # 14 = 8:00 AM MDT
-    # 18 = 12:00 PM MDT
-    # 21 = 3:00 PM MDT
+    # 14 UTC = 8:00 AM MDT
+    # 18 UTC = 12:00 PM MDT
+    # 21 UTC = 3:00 PM MDT
     - cron: '0 14,18,21 * * *'
-  workflow_dispatch:
+  workflow_dispatch:      # Allows you to run it manually from the "Actions" tab whenever you want
 
 jobs:
   analyze:
@@ -28,14 +28,13 @@ jobs:
             bvp_cache.json
             prediction_history.csv
             api_usage.csv
-          # The key ensures the cache is unique to the day but restored across hours
           key: mlb-data-cache-${{ runner.os }}-${{ github.run_id }}
           restore-keys: |
             mlb-data-cache-${{ runner.os }}-
 
       - name: Install Dependencies
         run: |
-          pip install pandas requests pytz MLB-StatsAPI
+          pip install pandas requests miracle-statsapi pytz
 
       - name: Run MLB Analysis
         env:
@@ -45,10 +44,16 @@ jobs:
         run: python main.py
 
       - name: Commit and Push Updated Data
-        # This step ensures the CSVs and JSON are saved back to your repo
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add prediction_history.csv api_usage.csv bvp_cache.json evaluation_log.txt
-          git commit -m "Automated Data Update [$(date)]" || exit 0
+          
+          # Only add files if they exist to prevent "pathspec" errors on first run
+          [ -f prediction_history.csv ] && git add prediction_history.csv
+          [ -f api_usage.csv ] && git add api_usage.csv
+          [ -f bvp_cache.json ] && git add bvp_cache.json
+          [ -f evaluation_log.txt ] && git add evaluation_log.txt
+          
+          # Only commit if there are actually changes to record
+          git diff-index --quiet HEAD || git commit -m "Automated Data Update [$(date)]"
           git push
