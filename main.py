@@ -5,6 +5,7 @@ import os
 import csv
 import sys
 import pytz
+import traceback
 from datetime import datetime, timedelta
 
 # --- CONFIGURATION ---
@@ -180,10 +181,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
         
         for b_id in lineup_ids:
             matchups = pitches[pitches['batter'] == b_id].dropna(subset=['events'])
-            # Attempt to get name from boxscore map, otherwise API call
-            b_name = name_map.get(b_id)
-            if not b_name:
-                _, b_name = get_player_info(b_id)
+            b_name = name_map.get(b_id) or get_player_info(b_id)[1]
             
             if matchups.empty:
                 details.append(f"    - {b_name}: NO HISTORY (Defaulting {default_obp})")
@@ -197,7 +195,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
         return smoothed, total_at_bats, details
     except:
         sys.stdout = original_stdout
-        return 0.315, 0, ["    - ERROR RETRIEVING DATA"]
+        return 0.315, 0, [f"    - DATA RETRIEVAL ERROR FOR PITCHER {pitcher_id}"]
 
 def get_pro_lineup(team_id):
     try:
@@ -233,6 +231,7 @@ def run_analysis():
     raw_games_map = {rg['gamePk']: rg for d in raw_schedule.get('dates', []) for rg in d.get('games', [])}
 
     for game in games:
+        name_map = {} # Reset per game
         rg = raw_games_map.get(game['game_id'], {})
         h_p_name_api = game.get('home_probable_pitcher') or "TBD"
         a_p_name_api = game.get('away_probable_pitcher') or "TBD"
@@ -240,7 +239,7 @@ def run_analysis():
         is_live_or_final = any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL"])
         game_num = int(game.get('game_num', 1))
         
-        # --- LOOKUP ---
+        # Check existing
         existing_idx = -1
         existing_row = pd.Series()
         if not history_df.empty:
@@ -259,23 +258,24 @@ def run_analysis():
         eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} (G{game_num})\n")
 
         try:
-            box = statsapi.boxscore_data(game['game_id'])
-            # Safe name mapping
-            name_map = {}
-            for team in ['home', 'away']:
-                for pid, pdata in box.get(team, {}).get('players', {}).items():
-                    try:
-                        clean_id = int(pid.replace('ID', ''))
-                        name_map[clean_id] = pdata['person']['fullName']
-                    except: continue
+            # Map names safely
+            try:
+                box = statsapi.boxscore_data(game['game_id'])
+                for team in ['home', 'away']:
+                    for pid, pdata in box.get(team, {}).get('players', {}).items():
+                        try:
+                            name_map[int(pid.replace('ID', ''))] = pdata['person']['fullName']
+                        except: continue
+            except: box = {}
 
-            h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id') or (box['home']['pitchers'][0] if box.get('home', {}).get('pitchers') else None)
-            a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id') or (box['away']['pitchers'][0] if box.get('away', {}).get('pitchers') else None)
+            h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id') or (box.get('home', {}).get('pitchers', [None])[0] if box else None)
+            a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id') or (box.get('away', {}).get('pitchers', [None])[0] if box else None)
 
             if h_p_id and a_p_id:
                 h_p_hand, h_p_name = get_player_info(h_p_id)
                 a_p_hand, a_p_name = get_player_info(a_p_id)
-                h_l, a_l = box.get('home', {}).get('battingOrder', []), box.get('away', {}).get('battingOrder', [])
+                h_l, a_l = box.get('home', {}).get('battingOrder', []) if box else [], box.get('away', {}).get('battingOrder', []) if box else []
+                
                 lineup_source = "OFFICIAL BOXSCORE" if (h_l and a_l) else "ESTIMATED PRO LINEUP"
                 if not h_l or not a_l: h_l, a_l = get_pro_lineup(game['home_id']), get_pro_lineup(game['away_id'])
                 
@@ -284,7 +284,6 @@ def run_analysis():
                 winner = game['home_name'] if h_e > a_e else game['away_name']
                 conf = round(abs(h_e - a_e) * 100, 2)
 
-                # EVAL LOG DETAILED OUTPUT
                 eval_log_lines.append(f"  Source: {lineup_source}\n")
                 eval_log_lines.append(f"  [OFFENSE: {game['home_name']} vs {a_p_name}]\n")
                 eval_log_lines.extend([d + "\n" for d in h_details])
@@ -304,36 +303,29 @@ def run_analysis():
                 if should_update_csv:
                     start_odds = format_odds(live_odds.get(f"{game['home_name']}_{winner}", -110))
                     pred_data = {'Date': today_str, 'Matchup': matchup_display, 'Predicted_Winner': winner, 'Odds': start_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num}
-                    
                     if existing_idx != -1:
-                        # Fix pandas dtype warning by casting to object first
                         history_df = history_df.astype(object)
                         history_df.iloc[existing_idx] = pd.Series(pred_data)
                         csv_updated = True
                     else:
                         new_predictions.append(pred_data)
-                    
                     game_info.update({'is_active': True, 'winner': winner, 'odds': start_odds, 'conf': conf, 'status': f"{'✅ OFF' if (lineup_source == 'OFFICIAL BOXSCORE') else '📊 EST'} ({status})"})
                 else:
                     game_info.update({'is_active': True, 'winner': existing_row['Predicted_Winner'], 'odds': format_odds(existing_row['Odds']), 'conf': existing_row['Confidence'], 'status': f'✅ PRED ({status})'})
             else:
-                reason = "Pitchers TBD" if not (h_p_id or a_p_id) else "Data Retrieval Error"
-                eval_log_lines.append(f"  SKIPPED: {reason}\n" + "-"*50 + "\n")
+                eval_log_lines.append(f"  SKIPPED: Missing Pitcher IDs (H:{h_p_id} A:{a_p_id})\n" + "-"*50 + "\n")
                 game_info['status'] = f'⏳ DATA ({status})'
-        except Exception as e:
-            eval_log_lines.append(f"  ERROR IN G{game_num}: {str(e)}\n" + "-"*50 + "\n")
+        except Exception:
+            eval_log_lines.append(f"  CRITICAL ERROR IN G{game_num}:\n{traceback.format_exc()}\n" + "-"*50 + "\n")
             continue
         display_list.append(game_info)
 
-    # Save
     if new_predictions: pd.DataFrame(new_predictions).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE), quoting=csv.QUOTE_NONNUMERIC)
     if csv_updated: history_df.to_csv(CSV_FILE, index=False)
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
-    # Message Construction
     t_msg, y_msg, lifetime_val = audit_and_stats()
     msg = f"⚾ *MLB PRO REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {lifetime_val}\n\n{get_cache_stats()}\n\n"
-    
     active_preds = [g for g in display_list if g.get('is_active')]
     if active_preds:
         best = max(active_preds, key=lambda x: x['conf'])
