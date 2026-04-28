@@ -39,10 +39,6 @@ def save_bvp_cache(cache_data):
         json.dump(cache_data, f, indent=4)
 
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
-    """
-    Calculates OBP using official MLB BvP data.
-    Returns the exact format required for the evaluation log.
-    """
     cache = load_bvp_cache()
     details = []
     total_ob_events = 0
@@ -51,40 +47,61 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
     default_obp = 0.310 if p_hand == 'L' else 0.320
 
     for b_id in lineup_ids:
-        b_name = name_map.get(b_id) or get_player_info(b_id)[1]
+        b_name = name_map.get(b_id) or f"ID:{b_id}"
         cache_key = f"{pitcher_id}_{b_id}"
         
         if cache_key in cache:
-            stats = cache[cache_key]
-            hits, walks, hbp, pa = stats['h'], stats['bb'], stats['hbp'], stats['pa']
+            s = cache[cache_key]
+            h, bb, hbp, pa = s['h'], s['bb'], s['hbp'], s['pa']
         else:
-            time.sleep(0.1) 
+            time.sleep(0.15) # Increased delay to be safe
             try:
-                data = statsapi.get('pitcher_vs_batter', {'pitcherId': pitcher_id, 'batterId': b_id})
-                s = data.get('stat', {})
-                if s:
-                    hits, walks, hbp, pa = int(s.get('hits', 0)), int(s.get('baseOnBalls', 0)), int(s.get('hitByPitch', 0)), int(s.get('plateAppearances', 0))
-                    cache[cache_key] = {'h': hits, 'bb': walks, 'hbp': hbp, 'pa': pa}
+                # FIX: Using explicit lowercase keys and forcing Regular Season lookup
+                params = {
+                    'pitcherId': int(pitcher_id), 
+                    'batterId': int(b_id), 
+                    'gameType': 'R'
+                }
+                data = statsapi.get('pitcher_vs_batter', params)
+                
+                # The API returns a list of 'people' or a 'stat' object depending on the version
+                # We need to check both to be safe
+                stat = data.get('stat', {})
+                if not stat and 'people' in data:
+                    # Some versions of the API nest this inside the player object
+                    stat = data['people'][0].get('stats', [{}])[0].get('stat', {})
+
+                if stat:
+                    h = int(stat.get('hits', 0))
+                    bb = int(stat.get('baseOnBalls', 0))
+                    hbp = int(stat.get('hitByPitch', 0))
+                    pa = int(stat.get('plateAppearances', 0))
+                    
+                    cache[cache_key] = {'h': h, 'bb': bb, 'hbp': hbp, 'pa': pa}
                     cache_updated = True
                 else:
-                    hits, walks, hbp, pa = 0, 0, 0, 0
-            except:
-                hits, walks, hbp, pa = 0, 0, 0, 0
+                    # If still nothing, it's truly a first-time matchup
+                    h, bb, hbp, pa = 0, 0, 0, 0
+            except Exception as e:
+                print(f"API Error for {b_name}: {e}")
+                h, bb, hbp, pa = 0, 0, 0, 0
 
-        ob_events = hits + walks + hbp
+        ob_events = h + bb + hbp
         if pa > 0:
             total_ob_events += ob_events
             total_pas += pa
             details.append(f"    - {b_name}: {ob_events}/{pa} ({(ob_events/pa):.3f})")
         else:
+            # If no history, we smooth them using the league average (31%/32%) 
+            # so they don't break the team total.
             details.append(f"    - {b_name}: NO HISTORY (Defaulting {default_obp})")
 
     if cache_updated:
         save_bvp_cache(cache)
 
+    # Bayesian Smoothing: (Total OB + (Avg * 10)) / (Total PA + 10)
     smoothed = (total_ob_events + (default_obp * 10)) / (total_pas + 10)
     return smoothed, total_pas, details
-
 # --- ODDS & STATS HELPERS ---
 def get_mlb_odds():
     now_mst = get_mst_now()
