@@ -34,7 +34,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install pandas requests miracle-statsapi pytz
+          pip install pandas requests MLB-StatsAPI pytz
 
       - name: Run MLB Analysis
         env:
