@@ -16,7 +16,7 @@ GAME: Tampa Bay Rays @ Cleveland Guardians (G1)
 
   [OFFENSE: Tampa Bay Rays vs Tanner Bibee]
     - Chandler Simpson: 0/7 (0.000)
-    - Junior Caminero: 3/9 (0.333)
+    - Ben Williamson: 0/2 (0.000)
     - Jonathan Aranda: 1/3 (0.333)
     - Yandy Díaz: 3/10 (0.300)
     - Jake Fraley: 1/5 (0.200)
@@ -24,9 +24,9 @@ GAME: Tampa Bay Rays @ Cleveland Guardians (G1)
     - Nick Fortes: NO HISTORY (Defaulting 0.32)
     - Richie Palacios: 0/2 (0.000)
     - Taylor Walls: 1/2 (0.500)
-  >> Aggregated Away OBP: 0.232
+  >> Aggregated Away OBP: 0.204
 
-  CALC: abs(0.388 - 0.232) * 100 = 15.59%
+  CALC: abs(0.388 - 0.204) * 100 = 18.35%
   RESULT: Cleveland Guardians
 --------------------------------------------------
 GAME: Houston Astros @ Baltimore Orioles (G1)
@@ -349,36 +349,89 @@ GAME: New York Yankees @ Texas Rangers (G1)
   RESULT: Texas Rangers
 --------------------------------------------------
 GAME: Kansas City Royals @ Athletics (G1)
-  Source: ESTIMATED PRO LINEUP
+  Source: OFFICIAL BOXSCORE
   [OFFENSE: Athletics vs Kris Bubic]
-  >> Aggregated Home OBP: 0.310
+    - Jacob Wilson: NO HISTORY (Defaulting 0.31)
+    - Shea Langeliers: NO HISTORY (Defaulting 0.31)
+    - Nick Kurtz: NO HISTORY (Defaulting 0.31)
+    - Brent Rooker: 1/6 (0.167)
+    - Colby Thomas: NO HISTORY (Defaulting 0.31)
+    - Tyler Soderstrom: NO HISTORY (Defaulting 0.31)
+    - Zack Gelof: NO HISTORY (Defaulting 0.31)
+    - Darell Hernaiz: NO HISTORY (Defaulting 0.31)
+    - Jeff McNeil: NO HISTORY (Defaulting 0.31)
+  >> Aggregated Home OBP: 0.256
 
   [OFFENSE: Kansas City Royals vs Aaron Civale]
-    - DATA RETRIEVAL ERROR FOR PITCHER 650644
-  >> Aggregated Away OBP: 0.315
+    - Maikel Garcia: 2/17 (0.118)
+    - Bobby Witt Jr.: 9/28 (0.321)
+    - Vinnie Pasquantino: 4/16 (0.250)
+    - Salvador Perez: 10/24 (0.417)
+    - Jac Caglianone: 1/1 (1.000)
+    - Lane Thomas: 2/3 (0.667)
+    - Isaac Collins: 0/1 (0.000)
+    - Nick Loftin: 0/2 (0.000)
+    - Kyle Isbel: 4/20 (0.200)
+  >> Aggregated Away OBP: 0.289
 
-  CALC: abs(0.310 - 0.315) * 100 = 0.5%
+  CALC: abs(0.256 - 0.289) * 100 = 3.23%
   RESULT: Kansas City Royals
 --------------------------------------------------
 GAME: Chicago Cubs @ San Diego Padres (G1)
-  Source: ESTIMATED PRO LINEUP
+  Source: ESTIMATED LAST GAME
   [OFFENSE: San Diego Padres vs Edward Cabrera]
-  >> Aggregated Home OBP: 0.320
+    - Ramón Laureano: 1/2 (0.500)
+    - Fernando Tatis Jr.: 0/3 (0.000)
+    - Jackson Merrill: 2/5 (0.400)
+    - Xander Bogaerts: 1/6 (0.167)
+    - Ty France: 0/4 (0.000)
+    - Gavin Sheets: 2/5 (0.400)
+    - Luis Campusano: 0/3 (0.000)
+    - Bryce Johnson: NO HISTORY (Defaulting 0.32)
+    - Jake Cronenworth: 3/7 (0.429)
+  >> Aggregated Home OBP: 0.271
 
   [OFFENSE: Chicago Cubs vs Walker Buehler]
-  >> Aggregated Away OBP: 0.320
+    - Nico Hoerner: 2/5 (0.400)
+    - Michael Busch: 2/2 (1.000)
+    - Alex Bregman: NO HISTORY (Defaulting 0.32)
+    - Ian Happ: 1/6 (0.167)
+    - Seiya Suzuki: 2/6 (0.333)
+    - Moisés Ballesteros: NO HISTORY (Defaulting 0.32)
+    - Matt Shaw: NO HISTORY (Defaulting 0.32)
+    - Dansby Swanson: 2/12 (0.167)
+    - Pete Crow-Armstrong: 1/2 (0.500)
+  >> Aggregated Away OBP: 0.307
 
-  CALC: abs(0.320 - 0.320) * 100 = 0.0%
+  CALC: abs(0.271 - 0.307) * 100 = 3.59%
   RESULT: Chicago Cubs
 --------------------------------------------------
 GAME: Miami Marlins @ Los Angeles Dodgers (G1)
-  Source: ESTIMATED PRO LINEUP
+  Source: ESTIMATED LAST GAME
   [OFFENSE: Los Angeles Dodgers vs Janson Junk]
-  >> Aggregated Home OBP: 0.320
+    - Dalton Rushing: NO HISTORY (Defaulting 0.32)
+    - Freddie Freeman: NO HISTORY (Defaulting 0.32)
+    - Will Smith: NO HISTORY (Defaulting 0.32)
+    - Kyle Tucker: 1/2 (0.500)
+    - Max Muncy: NO HISTORY (Defaulting 0.32)
+    - Teoscar Hernández: 0/1 (0.000)
+    - Andy Pages: NO HISTORY (Defaulting 0.32)
+    - Hyeseong Kim: NO HISTORY (Defaulting 0.32)
+    - Alex Freeland: NO HISTORY (Defaulting 0.32)
+  >> Aggregated Home OBP: 0.323
 
   [OFFENSE: Miami Marlins vs Shohei Ohtani]
-  >> Aggregated Away OBP: 0.320
+    - Jakob Marsee: NO HISTORY (Defaulting 0.32)
+    - Kyle Stowers: NO HISTORY (Defaulting 0.32)
+    - Otto Lopez: NO HISTORY (Defaulting 0.32)
+    - Xavier Edwards: 1/2 (0.500)
+    - Liam Hicks: NO HISTORY (Defaulting 0.32)
+    - Agustín Ramírez: NO HISTORY (Defaulting 0.32)
+    - Esteury Ruiz: 1/5 (0.200)
+    - Javier Sanoja: NO HISTORY (Defaulting 0.32)
+    - Connor Norby: NO HISTORY (Defaulting 0.32)
+  >> Aggregated Away OBP: 0.306
 
-  CALC: abs(0.320 - 0.320) * 100 = 0.0%
-  RESULT: Miami Marlins
+  CALC: abs(0.323 - 0.306) * 100 = 1.72%
+  RESULT: Los Angeles Dodgers
 --------------------------------------------------
