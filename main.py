@@ -6,6 +6,7 @@ import csv
 import sys
 import pytz
 import traceback
+import time # Added for sleep during retries
 from datetime import datetime, timedelta
 
 # --- CONFIGURATION ---
@@ -23,10 +24,12 @@ if not os.path.exists(CACHE_DIR):
     os.makedirs(CACHE_DIR)
 
 def get_mst_now():
+    """Returns the current time in Mountain Standard Time."""
     tz = pytz.timezone('America/Denver')
     return datetime.now(tz)
 
 def get_cache_stats():
+    """Calculates storage usage to prevent hitting GitHub Actions limits."""
     local_size_bytes = 0
     for dirpath, dirnames, filenames in os.walk(CACHE_DIR):
         for f in filenames:
@@ -43,6 +46,7 @@ def get_cache_stats():
             f"• GH Limit: 10 GB ({percent_used:.2f}%)")
 
 def track_local_usage():
+    """Tracks monthly API call count for the Odds API."""
     now_mst = get_mst_now()
     current_month = now_mst.strftime("%Y-%m")
     if not os.path.exists(USAGE_FILE):
@@ -56,6 +60,7 @@ def track_local_usage():
     return df, current_month
 
 def get_mlb_odds():
+    """Fetches real-time odds from FanDuel."""
     usage_df, current_month = track_local_usage()
     local_calls = int(usage_df.loc[usage_df['Month'] == current_month, 'Calls'].values[0])
     if not ODDS_API_KEY or local_calls >= ODDS_CALL_LIMIT:
@@ -81,6 +86,7 @@ def get_mlb_odds():
     except: return {}, "0", "0", False, local_calls
 
 def format_odds(odds_val):
+    """Converts floats to American odds strings."""
     try:
         if odds_val == "N/A" or odds_val is None: return "N/A"
         val = int(float(odds_val))
@@ -88,6 +94,7 @@ def format_odds(odds_val):
     except: return str(odds_val)
 
 def calculate_payout(odds_str, stake):
+    """Calculates ROI for finalized games."""
     try:
         o = float(odds_str)
         if o > 0: return stake * (o / 100)
@@ -95,6 +102,7 @@ def calculate_payout(odds_str, stake):
     except: return 0.0
 
 def audit_and_stats():
+    """Closes out pending bets and returns summary stats."""
     if not os.path.exists(CSV_FILE): 
         return "📊 *TODAY:* N/A", "📊 *YESTERDAY:* N/A", "0/0 (0.0%) | $0.00"
     try:
@@ -150,32 +158,54 @@ def audit_and_stats():
            lifetime_str
 
 def get_player_info(player_id):
+    """Gets pitcher handedness and name from MLB API."""
     try:
         p = statsapi.get('person', {'personId': player_id})
         return p['people'][0].get('pitchHand', {}).get('code', 'R'), p['people'][0].get('fullName', f"Unknown")
     except: return 'R', f"Unknown"
 
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
+    """
+    Fetches pitcher data with a retry mechanism and smoothing.
+    Added a try/except block inside the fetch loop to handle Aaron Civale-style timeouts.
+    """
     cache_path = os.path.join(CACHE_DIR, f"{pitcher_id}.csv")
     use_cache = False
     if os.path.exists(cache_path):
-        if (datetime.now() - datetime.fromtimestamp(os.path.getmtime(cache_path))).days < 1: use_cache = True
+        if (datetime.now() - datetime.fromtimestamp(os.path.getmtime(cache_path))).days < 1: 
+            use_cache = True
     
     details = []
     original_stdout = sys.stdout
     sys.stdout = open(os.devnull, 'w')
+    
     try:
         from pybaseball import statcast_pitcher
+        pitches = None
+        
         if use_cache: 
             pitches = pd.read_csv(cache_path)
         else:
-            pitches = statcast_pitcher('2021-01-01', datetime.now().strftime("%Y-%m-%d"), pitcher_id)
-            essential_cols = ['batter', 'events', 'description', 'game_date']
-            pitches = pitches[pitches.columns.intersection(essential_cols)]
-            pitches.to_csv(cache_path, index=False)
-        sys.stdout = original_stdout
+            # RETRY LOOP: Attempts up to 3 times to get data from MLB servers
+            for attempt in range(3):
+                try:
+                    pitches = statcast_pitcher('2021-01-01', datetime.now().strftime("%Y-%m-%d"), pitcher_id)
+                    if not pitches.empty:
+                        essential_cols = ['batter', 'events', 'description', 'game_date']
+                        pitches = pitches[pitches.columns.intersection(essential_cols)]
+                        pitches.to_csv(cache_path, index=False)
+                        break # Success! Exit the retry loop
+                except:
+                    time.sleep(2) # Wait 2 seconds before retrying
+                    continue
         
+        sys.stdout = original_stdout # Restore console output
+        
+        # If no data found after retries, use the baseline OBP
         default_obp = 0.310 if p_hand == 'L' else 0.320
+        if pitches is None or pitches.empty:
+            return default_obp, 0, [f"    - NO RECENT HISTORY FOUND FOR PITCHER {pitcher_id}"]
+            
         total_hits = 0
         total_at_bats = 0
         
@@ -191,6 +221,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
                 total_at_bats += len(matchups)
                 details.append(f"    - {b_name}: {on_base}/{len(matchups)} ({(on_base/len(matchups)):.3f})")
 
+        # Calculation: (Total Career Hits + baseline) / (Total Career ABs + baseline)
         smoothed = (total_hits + (default_obp * 10)) / (total_at_bats + 10)
         return smoothed, total_at_bats, details
     except:
@@ -198,6 +229,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
         return 0.315, 0, [f"    - DATA RETRIEVAL ERROR FOR PITCHER {pitcher_id}"]
 
 def get_pro_lineup(team_id):
+    """Falls back to active regulars if the boxscore lineup isn't out."""
     try:
         roster = statsapi.get('team_roster', {'teamId': team_id})['roster']
         healthy_ids = [p['person']['id'] for p in roster if p.get('status', {}).get('code') == 'A']
@@ -207,6 +239,7 @@ def get_pro_lineup(team_id):
     except: return []
 
 def format_mst_time(utc_string):
+    """Converts game times to Colorado MST."""
     try:
         utc_dt = datetime.strptime(utc_string, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=pytz.UTC)
         denver_dt = utc_dt.astimezone(pytz.timezone('America/Denver'))
@@ -214,10 +247,12 @@ def format_mst_time(utc_string):
     except: return None, "TBD"
 
 def send_telegram(message):
+    """Pushes the final report to Telegram."""
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     requests.post(url, data={'chat_id': TELEGRAM_CHAT_ID, 'text': message, 'parse_mode': 'Markdown'})
 
 def run_analysis():
+    """Processes daily games and evaluates batting edges."""
     now_mst = get_mst_now()
     today_str = now_mst.strftime("%m/%d/%Y")
     games = statsapi.schedule(date=today_str)
@@ -268,7 +303,6 @@ def run_analysis():
                         except: continue
             except: pass
 
-            # Safe ID grabbing with list content checks
             h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id')
             if not h_p_id:
                 h_pitchers = box.get('home', {}).get('pitchers', [])
