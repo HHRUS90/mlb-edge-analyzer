@@ -30,15 +30,33 @@ GAME: Tampa Bay Rays @ Cleveland Guardians (G1)
   RESULT: Cleveland Guardians
 --------------------------------------------------
 GAME: Houston Astros @ Baltimore Orioles (G1)
-  Source: ESTIMATED PRO LINEUP
+  Source: OFFICIAL BOXSCORE
   [OFFENSE: Baltimore Orioles vs Kai-Wei Teng]
-  >> Aggregated Home OBP: 0.320
+    - Gunnar Henderson: NO HISTORY (Defaulting 0.32)
+    - Taylor Ward: NO HISTORY (Defaulting 0.32)
+    - Adley Rutschman: NO HISTORY (Defaulting 0.32)
+    - Pete Alonso: 2/2 (1.000)
+    - Samuel Basallo: NO HISTORY (Defaulting 0.32)
+    - Leody Taveras: NO HISTORY (Defaulting 0.32)
+    - Dylan Beavers: NO HISTORY (Defaulting 0.32)
+    - Coby Mayo: NO HISTORY (Defaulting 0.32)
+    - Jeremiah Jackson: NO HISTORY (Defaulting 0.32)
+  >> Aggregated Home OBP: 0.433
 
   [OFFENSE: Houston Astros vs Shane Baz]
-  >> Aggregated Away OBP: 0.320
+    - Carlos Correa: 1/4 (0.250)
+    - Yordan Alvarez: 1/6 (0.167)
+    - Isaac Paredes: 0/3 (0.000)
+    - Jose Altuve: 1/10 (0.100)
+    - Christian Walker: NO HISTORY (Defaulting 0.32)
+    - Yainer Diaz: 5/9 (0.556)
+    - Dustin Harris: NO HISTORY (Defaulting 0.32)
+    - Cam Smith: 1/2 (0.500)
+    - Brice Matthews: 1/2 (0.500)
+  >> Aggregated Away OBP: 0.287
 
-  CALC: abs(0.320 - 0.320) * 100 = 0.0%
-  RESULT: Houston Astros
+  CALC: abs(0.433 - 0.287) * 100 = 14.64%
+  RESULT: Baltimore Orioles
 --------------------------------------------------
 GAME: Colorado Rockies @ Cincinnati Reds (G1)
   Source: OFFICIAL BOXSCORE
@@ -70,98 +88,273 @@ GAME: Colorado Rockies @ Cincinnati Reds (G1)
   RESULT: Cincinnati Reds
 --------------------------------------------------
 GAME: St. Louis Cardinals @ Pittsburgh Pirates (G1)
-  SKIPPED: Data Retrieval Error
+  Source: OFFICIAL BOXSCORE
+  [OFFENSE: Pittsburgh Pirates vs Kyle Leahy]
+    - Oneil Cruz: 2/4 (0.500)
+    - Brandon Lowe: NO HISTORY (Defaulting 0.32)
+    - Bryan Reynolds: 0/4 (0.000)
+    - Ryan O'Hearn: 2/2 (1.000)
+    - Nick Gonzales: 1/3 (0.333)
+    - Spencer Horwitz: 1/1 (1.000)
+    - Konnor Griffin: 1/2 (0.500)
+    - Jake Mangum: 1/2 (0.500)
+    - Henry Davis: NO HISTORY (Defaulting 0.32)
+  >> Aggregated Home OBP: 0.400
+
+  [OFFENSE: St. Louis Cardinals vs Braxton Ashcraft]
+    - JJ Wetherholt: NO HISTORY (Defaulting 0.32)
+    - Iván Herrera: 1/3 (0.333)
+    - Alec Burleson: 1/3 (0.333)
+    - Jordan Walker: 0/2 (0.000)
+    - Nolan Gorman: 0/2 (0.000)
+    - Masyn Winn: 0/2 (0.000)
+    - Nathan Church: NO HISTORY (Defaulting 0.32)
+    - Pedro Pagés: NO HISTORY (Defaulting 0.32)
+    - Victor Scott II: NO HISTORY (Defaulting 0.32)
+  >> Aggregated Away OBP: 0.236
+
+  CALC: abs(0.400 - 0.236) * 100 = 16.36%
+  RESULT: Pittsburgh Pirates
 --------------------------------------------------
 GAME: San Francisco Giants @ Philadelphia Phillies (G1)
-  Source: ESTIMATED PRO LINEUP
+  Source: OFFICIAL BOXSCORE
   [OFFENSE: Philadelphia Phillies vs Tyler Mahle]
-  >> Aggregated Home OBP: 0.320
+    - Trea Turner: 4/12 (0.333)
+    - Kyle Schwarber: 3/5 (0.600)
+    - Bryce Harper: 3/6 (0.500)
+    - Adolis García: 2/3 (0.667)
+    - Brandon Marsh: 0/2 (0.000)
+    - Bryson Stott: 0/3 (0.000)
+    - Alec Bohm: 0/3 (0.000)
+    - Justin Crawford: 0/2 (0.000)
+    - Rafael Marchán: 0/2 (0.000)
+  >> Aggregated Home OBP: 0.317
 
   [OFFENSE: San Francisco Giants vs Jesús Luzardo]
-  >> Aggregated Away OBP: 0.310
+    - Jung Hoo Lee: 1/5 (0.200)
+    - Matt Chapman: 3/6 (0.500)
+    - Luis Arraez: 2/5 (0.400)
+    - Casey Schmitt: 2/7 (0.286)
+    - Rafael Devers: 2/6 (0.333)
+    - Willy Adames: 3/14 (0.214)
+    - Heliot Ramos: 2/8 (0.250)
+    - Drew Gilbert: NO HISTORY (Defaulting 0.31)
+    - Patrick Bailey: 1/4 (0.250)
+  >> Aggregated Away OBP: 0.294
 
-  CALC: abs(0.320 - 0.310) * 100 = 1.0%
+  CALC: abs(0.317 - 0.294) * 100 = 2.28%
   RESULT: Philadelphia Phillies
 --------------------------------------------------
 GAME: Boston Red Sox @ Toronto Blue Jays (G1)
-  Source: ESTIMATED PRO LINEUP
+  Source: OFFICIAL BOXSCORE
   [OFFENSE: Toronto Blue Jays vs Payton Tolle]
-  >> Aggregated Home OBP: 0.310
+    - Myles Straw: NO HISTORY (Defaulting 0.31)
+    - Ernie Clement: 0/1 (0.000)
+    - Vladimir Guerrero Jr.: NO HISTORY (Defaulting 0.31)
+    - Kazuma Okamoto: NO HISTORY (Defaulting 0.31)
+    - Daulton Varsho: NO HISTORY (Defaulting 0.31)
+    - Eloy Jiménez: NO HISTORY (Defaulting 0.31)
+    - Davis Schneider: NO HISTORY (Defaulting 0.31)
+    - Tyler Heineman: NO HISTORY (Defaulting 0.31)
+    - Andrés Giménez: NO HISTORY (Defaulting 0.31)
+  >> Aggregated Home OBP: 0.282
 
   [OFFENSE: Boston Red Sox vs Trey Yesavage]
+    - Jarren Duran: NO HISTORY (Defaulting 0.32)
+    - Willson Contreras: NO HISTORY (Defaulting 0.32)
+    - Roman Anthony: NO HISTORY (Defaulting 0.32)
+    - Wilyer Abreu: NO HISTORY (Defaulting 0.32)
+    - Trevor Story: NO HISTORY (Defaulting 0.32)
+    - Masataka Yoshida: NO HISTORY (Defaulting 0.32)
+    - Carlos Narváez: NO HISTORY (Defaulting 0.32)
+    - Marcelo Mayer: NO HISTORY (Defaulting 0.32)
+    - Caleb Durbin: NO HISTORY (Defaulting 0.32)
   >> Aggregated Away OBP: 0.320
 
-  CALC: abs(0.310 - 0.320) * 100 = 1.0%
+  CALC: abs(0.282 - 0.320) * 100 = 3.82%
   RESULT: Boston Red Sox
 --------------------------------------------------
 GAME: Washington Nationals @ New York Mets (G1)
-  Source: ESTIMATED PRO LINEUP
+  Source: OFFICIAL BOXSCORE
   [OFFENSE: New York Mets vs Zack Littell]
-  >> Aggregated Home OBP: 0.320
+    - Bo Bichette: 5/13 (0.385)
+    - Juan Soto: 3/8 (0.375)
+    - Francisco Alvarez: 0/1 (0.000)
+    - MJ Melendez: 2/3 (0.667)
+    - Mark Vientos: 0/2 (0.000)
+    - Brett Baty: 3/5 (0.600)
+    - Marcus Semien: 2/9 (0.222)
+    - Carson Benge: 0/2 (0.000)
+    - Ronny Mauricio: 1/1 (1.000)
+  >> Aggregated Home OBP: 0.356
 
   [OFFENSE: Washington Nationals vs Clay Holmes]
-  >> Aggregated Away OBP: 0.320
+    - James Wood: 2/5 (0.400)
+    - Luis García Jr.: 2/5 (0.400)
+    - Brady House: 0/2 (0.000)
+    - CJ Abrams: 2/5 (0.400)
+    - Daylen Lile: 0/2 (0.000)
+    - Jacob Young: 1/4 (0.250)
+    - Jorbit Vivas: NO HISTORY (Defaulting 0.32)
+    - Drew Millas: NO HISTORY (Defaulting 0.32)
+    - Nasim Nuñez: 1/3 (0.333)
+  >> Aggregated Away OBP: 0.311
 
-  CALC: abs(0.320 - 0.320) * 100 = 0.0%
-  RESULT: Washington Nationals
+  CALC: abs(0.356 - 0.311) * 100 = 4.44%
+  RESULT: New York Mets
 --------------------------------------------------
 GAME: Detroit Tigers @ Atlanta Braves (G1)
-  Source: ESTIMATED PRO LINEUP
+  Source: OFFICIAL BOXSCORE
   [OFFENSE: Atlanta Braves vs Casey Mize]
-  >> Aggregated Home OBP: 0.320
+    - Ronald Acuña Jr.: 1/3 (0.333)
+    - Drake Baldwin: 1/3 (0.333)
+    - Matt Olson: 5/8 (0.625)
+    - Ozzie Albies: 1/5 (0.200)
+    - Michael Harris II: 0/2 (0.000)
+    - Austin Riley: 0/2 (0.000)
+    - Dominic Smith: 1/2 (0.500)
+    - Mauricio Dubón: NO HISTORY (Defaulting 0.32)
+    - Mike Yastrzemski: 2/3 (0.667)
+  >> Aggregated Home OBP: 0.374
 
   [OFFENSE: Detroit Tigers vs Martín Pérez]
-  >> Aggregated Away OBP: 0.310
+    - Jahmai Jones: 3/5 (0.600)
+    - Gleyber Torres: 7/16 (0.438)
+    - Kevin McGonigle: NO HISTORY (Defaulting 0.31)
+    - Matt Vierling: 3/15 (0.200)
+    - Dillon Dingler: 0/5 (0.000)
+    - Riley Greene: 4/11 (0.364)
+    - Spencer Torkelson: 6/22 (0.273)
+    - Hao-Yu  Lee: NO HISTORY (Defaulting 0.31)
+    - Javier Báez: 4/18 (0.222)
+  >> Aggregated Away OBP: 0.295
 
-  CALC: abs(0.320 - 0.310) * 100 = 1.0%
+  CALC: abs(0.374 - 0.295) * 100 = 7.86%
   RESULT: Atlanta Braves
 --------------------------------------------------
 GAME: Seattle Mariners @ Minnesota Twins (G1)
-  Source: ESTIMATED PRO LINEUP
+  Source: OFFICIAL BOXSCORE
   [OFFENSE: Minnesota Twins vs Logan Gilbert]
-  >> Aggregated Home OBP: 0.320
+    - Byron Buxton: 2/9 (0.222)
+    - Trevor Larnach: 1/8 (0.125)
+    - Austin Martin: 1/2 (0.500)
+    - Josh Bell: 2/11 (0.182)
+    - Kody Clemens: NO HISTORY (Defaulting 0.32)
+    - Victor Caratini: 2/14 (0.143)
+    - Luke Keaschall: NO HISTORY (Defaulting 0.32)
+    - Tristan Gray: 0/2 (0.000)
+    - Royce Lewis: 0/3 (0.000)
+  >> Aggregated Home OBP: 0.190
 
   [OFFENSE: Seattle Mariners vs Joe Ryan]
-  >> Aggregated Away OBP: 0.320
+    - J.P. Crawford: 3/8 (0.375)
+    - Cal Raleigh: 3/10 (0.300)
+    - Julio Rodríguez: 7/13 (0.538)
+    - Josh Naylor: 4/15 (0.267)
+    - Randy Arozarena: 4/8 (0.500)
+    - Luke Raley: 2/7 (0.286)
+    - Dominic Canzone: NO HISTORY (Defaulting 0.32)
+    - Cole Young: 1/2 (0.500)
+    - Leo Rivas: NO HISTORY (Defaulting 0.32)
+  >> Aggregated Away OBP: 0.373
 
-  CALC: abs(0.320 - 0.320) * 100 = 0.0%
+  CALC: abs(0.190 - 0.373) * 100 = 18.28%
   RESULT: Seattle Mariners
 --------------------------------------------------
 GAME: Los Angeles Angels @ Chicago White Sox (G1)
-  Source: ESTIMATED PRO LINEUP
+  Source: OFFICIAL BOXSCORE
   [OFFENSE: Chicago White Sox vs José Soriano]
-  >> Aggregated Home OBP: 0.320
+    - Andrew Benintendi: 2/3 (0.667)
+    - Munetaka Murakami: NO HISTORY (Defaulting 0.32)
+    - Miguel Vargas: 3/6 (0.500)
+    - Colson Montgomery: NO HISTORY (Defaulting 0.32)
+    - Everson Pereira: NO HISTORY (Defaulting 0.32)
+    - Sam Antonacci: 2/2 (1.000)
+    - Tristan Peters: 0/1 (0.000)
+    - Drew Romo: 0/1 (0.000)
+    - Luisangel Acuña: NO HISTORY (Defaulting 0.32)
+  >> Aggregated Home OBP: 0.443
 
   [OFFENSE: Los Angeles Angels vs Davis Martin]
-  >> Aggregated Away OBP: 0.320
+    - Zach Neto: 2/5 (0.400)
+    - Mike Trout: 1/3 (0.333)
+    - Yoán Moncada: 1/3 (0.333)
+    - Jorge Soler: 1/3 (0.333)
+    - Nolan Schanuel: 3/7 (0.429)
+    - Jo Adell: NO HISTORY (Defaulting 0.32)
+    - Josh Lowe: 1/2 (0.500)
+    - Sebastián Rivero: NO HISTORY (Defaulting 0.32)
+    - Adam Frazier: 0/2 (0.000)
+  >> Aggregated Away OBP: 0.349
 
-  CALC: abs(0.320 - 0.320) * 100 = 0.0%
-  RESULT: Los Angeles Angels
+  CALC: abs(0.443 - 0.349) * 100 = 9.49%
+  RESULT: Chicago White Sox
 --------------------------------------------------
 GAME: Arizona Diamondbacks @ Milwaukee Brewers (G1)
-  Source: ESTIMATED PRO LINEUP
+  Source: OFFICIAL BOXSCORE
   [OFFENSE: Milwaukee Brewers vs Merrill Kelly]
-  >> Aggregated Home OBP: 0.320
+    - Garrett Mitchell: 1/10 (0.100)
+    - William Contreras: 3/7 (0.429)
+    - Brice Turang: 3/9 (0.333)
+    - Tyler Black: NO HISTORY (Defaulting 0.32)
+    - Jake Bauers: 0/5 (0.000)
+    - Brandon Lockridge: 1/2 (0.500)
+    - Sal Frelick: 4/9 (0.444)
+    - David Hamilton: 1/2 (0.500)
+    - Joey Ortiz: 2/4 (0.500)
+  >> Aggregated Home OBP: 0.314
 
   [OFFENSE: Arizona Diamondbacks vs Chad Patrick]
-  >> Aggregated Away OBP: 0.320
+    - Ildemaro Vargas: NO HISTORY (Defaulting 0.32)
+    - Ketel Marte: NO HISTORY (Defaulting 0.32)
+    - Corbin Carroll: 1/2 (0.500)
+    - Lourdes Gurriel Jr.: 0/2 (0.000)
+    - Adrian Del Castillo: NO HISTORY (Defaulting 0.32)
+    - Jose Fernandez: NO HISTORY (Defaulting 0.32)
+    - Nolan Arenado: 2/4 (0.500)
+    - Alek Thomas: 0/2 (0.000)
+    - James McCann: NO HISTORY (Defaulting 0.32)
+  >> Aggregated Away OBP: 0.310
 
-  CALC: abs(0.320 - 0.320) * 100 = 0.0%
-  RESULT: Arizona Diamondbacks
+  CALC: abs(0.314 - 0.310) * 100 = 0.38%
+  RESULT: Milwaukee Brewers
 --------------------------------------------------
 GAME: New York Yankees @ Texas Rangers (G1)
-  Source: ESTIMATED PRO LINEUP
+  Source: OFFICIAL BOXSCORE
   [OFFENSE: Texas Rangers vs Cam Schlittler]
+    - Brandon Nimmo: NO HISTORY (Defaulting 0.32)
+    - Josh Jung: NO HISTORY (Defaulting 0.32)
+    - Corey Seager: NO HISTORY (Defaulting 0.32)
+    - Joc Pederson: NO HISTORY (Defaulting 0.32)
+    - Jake Burger: NO HISTORY (Defaulting 0.32)
+    - Evan Carter: NO HISTORY (Defaulting 0.32)
+    - Josh Smith: NO HISTORY (Defaulting 0.32)
+    - Alejandro Osuna: NO HISTORY (Defaulting 0.32)
+    - Danny Jansen: NO HISTORY (Defaulting 0.32)
   >> Aggregated Home OBP: 0.320
 
   [OFFENSE: New York Yankees vs Jacob deGrom]
-  >> Aggregated Away OBP: 0.320
+    - Trent Grisham: 2/7 (0.286)
+    - Ben Rice: 0/3 (0.000)
+    - Aaron Judge: 1/3 (0.333)
+    - Cody Bellinger: 2/5 (0.400)
+    - Jazz Chisholm Jr.: 1/3 (0.333)
+    - Jasson Domínguez: 0/3 (0.000)
+    - Austin Wells: 0/3 (0.000)
+    - Ryan McMahon: 2/8 (0.250)
+    - José Caballero: 0/2 (0.000)
+  >> Aggregated Away OBP: 0.238
 
-  CALC: abs(0.320 - 0.320) * 100 = 0.0%
-  RESULT: New York Yankees
+  CALC: abs(0.320 - 0.238) * 100 = 8.17%
+  RESULT: Texas Rangers
 --------------------------------------------------
 GAME: Kansas City Royals @ Athletics (G1)
-  SKIPPED: Data Retrieval Error
+  CRITICAL ERROR IN G1:
+Traceback (most recent call last):
+  File "/home/runner/work/mlb-edge-analyzer/mlb-edge-analyzer/main.py", line 271, in run_analysis
+    h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id') or (box.get('home', {}).get('pitchers', [None])[0] if box else None)
+IndexError: list index out of range
+
 --------------------------------------------------
 GAME: Chicago Cubs @ San Diego Padres (G1)
   Source: ESTIMATED PRO LINEUP
