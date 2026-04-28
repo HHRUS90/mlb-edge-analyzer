@@ -6,7 +6,7 @@ import csv
 import sys
 import pytz
 import traceback
-import time # Added for sleep during retries
+import time
 from datetime import datetime, timedelta
 
 # --- CONFIGURATION ---
@@ -24,12 +24,12 @@ if not os.path.exists(CACHE_DIR):
     os.makedirs(CACHE_DIR)
 
 def get_mst_now():
-    """Returns the current time in Mountain Standard Time."""
+    """Returns current Denver time."""
     tz = pytz.timezone('America/Denver')
     return datetime.now(tz)
 
 def get_cache_stats():
-    """Calculates storage usage to prevent hitting GitHub Actions limits."""
+    """Calculates storage usage for GitHub Actions safety."""
     local_size_bytes = 0
     for dirpath, dirnames, filenames in os.walk(CACHE_DIR):
         for f in filenames:
@@ -46,7 +46,7 @@ def get_cache_stats():
             f"• GH Limit: 10 GB ({percent_used:.2f}%)")
 
 def track_local_usage():
-    """Tracks monthly API call count for the Odds API."""
+    """Monitors monthly API usage to stay under free-tier caps."""
     now_mst = get_mst_now()
     current_month = now_mst.strftime("%Y-%m")
     if not os.path.exists(USAGE_FILE):
@@ -60,7 +60,7 @@ def track_local_usage():
     return df, current_month
 
 def get_mlb_odds():
-    """Fetches real-time odds from FanDuel."""
+    """Retrieves odds from FanDuel via The-Odds-API."""
     usage_df, current_month = track_local_usage()
     local_calls = int(usage_df.loc[usage_df['Month'] == current_month, 'Calls'].values[0])
     if not ODDS_API_KEY or local_calls >= ODDS_CALL_LIMIT:
@@ -86,7 +86,7 @@ def get_mlb_odds():
     except: return {}, "0", "0", False, local_calls
 
 def format_odds(odds_val):
-    """Converts floats to American odds strings."""
+    """Formats float odds into American ML strings."""
     try:
         if odds_val == "N/A" or odds_val is None: return "N/A"
         val = int(float(odds_val))
@@ -94,7 +94,7 @@ def format_odds(odds_val):
     except: return str(odds_val)
 
 def calculate_payout(odds_str, stake):
-    """Calculates ROI for finalized games."""
+    """Determines profit for ROI tracking."""
     try:
         o = float(odds_str)
         if o > 0: return stake * (o / 100)
@@ -102,7 +102,7 @@ def calculate_payout(odds_str, stake):
     except: return 0.0
 
 def audit_and_stats():
-    """Closes out pending bets and returns summary stats."""
+    """Updates PENDING games and calculates performance metrics."""
     if not os.path.exists(CSV_FILE): 
         return "📊 *TODAY:* N/A", "📊 *YESTERDAY:* N/A", "0/0 (0.0%) | $0.00"
     try:
@@ -158,17 +158,31 @@ def audit_and_stats():
            lifetime_str
 
 def get_player_info(player_id):
-    """Gets pitcher handedness and name from MLB API."""
+    """Retrieves biographical data from MLB API."""
     try:
         p = statsapi.get('person', {'personId': player_id})
-        return p['people'][0].get('pitchHand', {}).get('code', 'R'), p['people'][0].get('fullName', f"Unknown")
-    except: return 'R', f"Unknown"
+        return p['people'][0].get('pitchHand', {}).get('code', 'R'), p['people'][0].get('fullName', f"ID:{player_id}")
+    except: return 'R', f"ID:{player_id}"
+
+def get_pro_lineup(team_id):
+    """
+    SMART FALLBACK: If today's lineup isn't out, fetch the lineup from the last game played.
+    This provides a much more accurate prediction than just grabbing the top 9 roster players.
+    """
+    try:
+        # Get the team's most recently completed game ID
+        last_game_id = statsapi.last_game(team_id)
+        if last_game_id:
+            box = statsapi.boxscore_data(last_game_id)
+            # Find whether the team was 'home' or 'away' in that last game
+            team_key = 'home' if box['home']['team']['id'] == team_id else 'away'
+            # Return the batting order from that game
+            return box[team_key].get('battingOrder', [])
+    except: pass
+    return []
 
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
-    """
-    Fetches pitcher data with a retry mechanism and smoothing.
-    Added a try/except block inside the fetch loop to handle Aaron Civale-style timeouts.
-    """
+    """Calculates OBP using career Statcast data and Bayesian smoothing."""
     cache_path = os.path.join(CACHE_DIR, f"{pitcher_id}.csv")
     use_cache = False
     if os.path.exists(cache_path):
@@ -186,7 +200,6 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
         if use_cache: 
             pitches = pd.read_csv(cache_path)
         else:
-            # RETRY LOOP: Attempts up to 3 times to get data from MLB servers
             for attempt in range(3):
                 try:
                     pitches = statcast_pitcher('2021-01-01', datetime.now().strftime("%Y-%m-%d"), pitcher_id)
@@ -194,23 +207,25 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
                         essential_cols = ['batter', 'events', 'description', 'game_date']
                         pitches = pitches[pitches.columns.intersection(essential_cols)]
                         pitches.to_csv(cache_path, index=False)
-                        break # Success! Exit the retry loop
+                        break
                 except:
-                    time.sleep(2) # Wait 2 seconds before retrying
+                    time.sleep(2)
                     continue
         
-        sys.stdout = original_stdout # Restore console output
+        sys.stdout = original_stdout
         
-        # If no data found after retries, use the baseline OBP
         default_obp = 0.310 if p_hand == 'L' else 0.320
+        # If still no data after retries, return the default baseline
         if pitches is None or pitches.empty:
             return default_obp, 0, [f"    - NO RECENT HISTORY FOUND FOR PITCHER {pitcher_id}"]
             
         total_hits = 0
         total_at_bats = 0
         
+        # Calculate BvP for every player in the provided lineup
         for b_id in lineup_ids:
             matchups = pitches[pitches['batter'] == b_id].dropna(subset=['events'])
+            # Attempt to resolve name from local map or API
             b_name = name_map.get(b_id) or get_player_info(b_id)[1]
             
             if matchups.empty:
@@ -221,25 +236,15 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
                 total_at_bats += len(matchups)
                 details.append(f"    - {b_name}: {on_base}/{len(matchups)} ({(on_base/len(matchups)):.3f})")
 
-        # Calculation: (Total Career Hits + baseline) / (Total Career ABs + baseline)
+        # Smoothing formula to stabilize small samples
         smoothed = (total_hits + (default_obp * 10)) / (total_at_bats + 10)
         return smoothed, total_at_bats, details
     except:
         sys.stdout = original_stdout
         return 0.315, 0, [f"    - DATA RETRIEVAL ERROR FOR PITCHER {pitcher_id}"]
 
-def get_pro_lineup(team_id):
-    """Falls back to active regulars if the boxscore lineup isn't out."""
-    try:
-        roster = statsapi.get('team_roster', {'teamId': team_id})['roster']
-        healthy_ids = [p['person']['id'] for p in roster if p.get('status', {}).get('code') == 'A']
-        leaders = statsapi.team_leader_data(team_id, 'gamesPlayed', limit=20)
-        regular_ids = [leader[0] for leader in leaders]
-        return [p_id for p_id in regular_ids if p_id in healthy_ids][:9]
-    except: return []
-
 def format_mst_time(utc_string):
-    """Converts game times to Colorado MST."""
+    """Converts game start time to MST."""
     try:
         utc_dt = datetime.strptime(utc_string, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=pytz.UTC)
         denver_dt = utc_dt.astimezone(pytz.timezone('America/Denver'))
@@ -247,12 +252,12 @@ def format_mst_time(utc_string):
     except: return None, "TBD"
 
 def send_telegram(message):
-    """Pushes the final report to Telegram."""
+    """Sends the summary report to Telegram."""
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     requests.post(url, data={'chat_id': TELEGRAM_CHAT_ID, 'text': message, 'parse_mode': 'Markdown'})
 
 def run_analysis():
-    """Processes daily games and evaluates batting edges."""
+    """Main loop: Identifies matchups, calculates edges, and logs details."""
     now_mst = get_mst_now()
     today_str = now_mst.strftime("%m/%d/%Y")
     games = statsapi.schedule(date=today_str)
@@ -274,6 +279,7 @@ def run_analysis():
         is_live_or_final = any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL"])
         game_num = int(game.get('game_num', 1))
         
+        # ID existing predictions to avoid duplicates
         existing_idx = -1
         existing_row = pd.Series()
         if not history_df.empty:
@@ -316,11 +322,23 @@ def run_analysis():
             if h_p_id and a_p_id:
                 h_p_hand, h_p_name = get_player_info(h_p_id)
                 a_p_hand, a_p_name = get_player_info(a_p_id)
+                
+                # Check for official lineup first
                 h_l, a_l = box.get('home', {}).get('battingOrder', []) if box else [], box.get('away', {}).get('battingOrder', []) if box else []
                 
-                lineup_source = "OFFICIAL BOXSCORE" if (h_l and a_l) else "ESTIMATED PRO LINEUP"
-                if not h_l or not a_l: h_l, a_l = get_pro_lineup(game['home_id']), get_pro_lineup(game['away_id'])
+                lineup_source = "OFFICIAL BOXSCORE" if (h_l and a_l) else "ESTIMATED LAST GAME"
+                # If official is missing, trigger the Smart Fallback (Last Game)
+                if not h_l or not a_l: 
+                    h_l = h_l if h_l else get_pro_lineup(game['home_id'])
+                    a_l = a_l if a_l else get_pro_lineup(game['away_id'])
                 
+                # If still empty (e.g. season opener), log the skip
+                if not h_l or not a_l:
+                    eval_log_lines.append(f"  SKIPPED: No Lineup Data (H:{len(h_l)} A:{len(a_l)})\n" + "-"*50 + "\n")
+                    game_info['status'] = f'⏳ LINEUP ({status})'
+                    display_list.append(game_info)
+                    continue
+
                 h_e, h_samples, h_details = get_smoothed_bvp(a_p_id, h_l, a_p_hand, name_map)
                 a_e, a_samples, a_details = get_smoothed_bvp(h_p_id, a_l, h_p_hand, name_map)
                 winner = game['home_name'] if h_e > a_e else game['away_name']
@@ -338,6 +356,7 @@ def run_analysis():
                 eval_log_lines.append(f"  CALC: abs({h_e:.3f} - {a_e:.3f}) * 100 = {conf}%\n")
                 eval_log_lines.append(f"  RESULT: {winner}\n" + "-"*50 + "\n")
 
+                # Update logic to overwrite "Estimated" predictions with "Official" ones if confidence changes
                 should_update_csv = (existing_idx == -1)
                 if not existing_row.empty and existing_row.get('Confidence', 0) <= 1.0 and conf > 1.0:
                     should_update_csv = True
@@ -356,7 +375,7 @@ def run_analysis():
                     game_info.update({'is_active': True, 'winner': existing_row['Predicted_Winner'], 'odds': format_odds(existing_row['Odds']), 'conf': existing_row['Confidence'], 'status': f'✅ PRED ({status})'})
             else:
                 eval_log_lines.append(f"  SKIPPED: Missing Pitcher IDs (H:{h_p_id} A:{a_p_id})\n" + "-"*50 + "\n")
-                game_info['status'] = f'⏳ DATA ({status})'
+                game_info['status'] = f'⏳ PITCHER ({status})'
         except Exception:
             eval_log_lines.append(f"  CRITICAL ERROR IN G{game_num}:\n{traceback.format_exc()}\n" + "-"*50 + "\n")
             continue
