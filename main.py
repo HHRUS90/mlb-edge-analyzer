@@ -231,7 +231,7 @@ def run_analysis():
     raw_games_map = {rg['gamePk']: rg for d in raw_schedule.get('dates', []) for rg in d.get('games', [])}
 
     for game in games:
-        name_map = {} # Reset per game
+        name_map = {} 
         rg = raw_games_map.get(game['game_id'], {})
         h_p_name_api = game.get('home_probable_pitcher') or "TBD"
         a_p_name_api = game.get('away_probable_pitcher') or "TBD"
@@ -239,7 +239,6 @@ def run_analysis():
         is_live_or_final = any(x in status for x in ["IN PROGRESS", "LIVE", "FINAL"])
         game_num = int(game.get('game_num', 1))
         
-        # Check existing
         existing_idx = -1
         existing_row = pd.Series()
         if not history_df.empty:
@@ -258,18 +257,27 @@ def run_analysis():
         eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} (G{game_num})\n")
 
         try:
-            # Map names safely
+            box = {}
             try:
                 box = statsapi.boxscore_data(game['game_id'])
                 for team in ['home', 'away']:
-                    for pid, pdata in box.get(team, {}).get('players', {}).items():
+                    players = box.get(team, {}).get('players', {})
+                    for pid, pdata in players.items():
                         try:
                             name_map[int(pid.replace('ID', ''))] = pdata['person']['fullName']
                         except: continue
-            except: box = {}
+            except: pass
 
-            h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id') or (box.get('home', {}).get('pitchers', [None])[0] if box else None)
-            a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id') or (box.get('away', {}).get('pitchers', [None])[0] if box else None)
+            # Safe ID grabbing with list content checks
+            h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id')
+            if not h_p_id:
+                h_pitchers = box.get('home', {}).get('pitchers', [])
+                if h_pitchers: h_p_id = h_pitchers[0]
+
+            a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id')
+            if not a_p_id:
+                a_pitchers = box.get('away', {}).get('pitchers', [])
+                if a_pitchers: a_p_id = a_pitchers[0]
 
             if h_p_id and a_p_id:
                 h_p_hand, h_p_name = get_player_info(h_p_id)
