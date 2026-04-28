@@ -349,12 +349,16 @@ GAME: New York Yankees @ Texas Rangers (G1)
   RESULT: Texas Rangers
 --------------------------------------------------
 GAME: Kansas City Royals @ Athletics (G1)
-  CRITICAL ERROR IN G1:
-Traceback (most recent call last):
-  File "/home/runner/work/mlb-edge-analyzer/mlb-edge-analyzer/main.py", line 271, in run_analysis
-    h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id') or (box.get('home', {}).get('pitchers', [None])[0] if box else None)
-IndexError: list index out of range
+  Source: ESTIMATED PRO LINEUP
+  [OFFENSE: Athletics vs Kris Bubic]
+  >> Aggregated Home OBP: 0.310
 
+  [OFFENSE: Kansas City Royals vs Aaron Civale]
+    - DATA RETRIEVAL ERROR FOR PITCHER 650644
+  >> Aggregated Away OBP: 0.315
+
+  CALC: abs(0.310 - 0.315) * 100 = 0.5%
+  RESULT: Kansas City Royals
 --------------------------------------------------
 GAME: Chicago Cubs @ San Diego Padres (G1)
   Source: ESTIMATED PRO LINEUP
