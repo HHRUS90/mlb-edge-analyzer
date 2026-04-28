@@ -6,7 +6,7 @@ on:
     # 18 UTC = 12:00 PM MDT
     # 21 UTC = 3:00 PM MDT
     - cron: '0 14,18,21 * * *'
-  workflow_dispatch:      # Allows you to run it manually from the "Actions" tab whenever you want
+  workflow_dispatch:
 
 jobs:
   analyze:
@@ -47,13 +47,9 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          
-          # Only add files if they exist to prevent "pathspec" errors on first run
           [ -f prediction_history.csv ] && git add prediction_history.csv
           [ -f api_usage.csv ] && git add api_usage.csv
           [ -f bvp_cache.json ] && git add bvp_cache.json
           [ -f evaluation_log.txt ] && git add evaluation_log.txt
-          
-          # Only commit if there are actually changes to record
           git diff-index --quiet HEAD || git commit -m "Automated Data Update [$(date)]"
           git push
