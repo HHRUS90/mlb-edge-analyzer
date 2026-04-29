@@ -42,14 +42,12 @@ def save_bvp_cache(cache_data):
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
     cache = load_bvp_cache()
     details = []
-    total_ob_events = 0
-    total_pas = 0
+    total_ob_events, total_pas = 0, 0
     cache_updated = False
     default_obp = 0.310 if p_hand == 'L' else 0.320
 
     for b_id in lineup_ids:
         b_name = name_map.get(b_id) or f"ID:{b_id}"
-        # Using v3 cache key to ensure we pull fresh data including Postseason/World Series
         cache_key = f"{pitcher_id}_{b_id}_v3"
         
         if cache_key in cache:
@@ -58,15 +56,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
         else:
             time.sleep(0.15) 
             try:
-                # gameType=[R,P,W] ensures Regular, Postseason, and World Series are included
-                params = {
-                    'personIds': int(b_id),
-                    'stats': 'vsPlayer',
-                    'opposingPlayerId': pitcher_id,
-                    'gameType': 'R,P,W'
-                }
                 data = statsapi.get('people', {'personIds': b_id, 'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id},gameType=[R,P,W])'})
-                
                 h, bb, hbp, pa = 0, 0, 0, 0
                 if 'people' in data and data['people']:
                     player_stats = data['people'][0].get('stats', [])
@@ -76,11 +66,9 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
                                 st = split.get('stat', {})
                                 h, bb, hbp, pa = int(st.get('hits', 0)), int(st.get('baseOnBalls', 0)), int(st.get('hitByPitch', 0)), int(st.get('plateAppearances', 0))
                                 break
-
                 cache[cache_key] = {'h': h, 'bb': bb, 'hbp': hbp, 'pa': pa}
                 cache_updated = True
-            except:
-                h, bb, hbp, pa = 0, 0, 0, 0
+            except: h, bb, hbp, pa = 0, 0, 0, 0
 
         ob_events = h + bb + hbp
         if pa > 0:
@@ -90,9 +78,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
         else:
             details.append(f"    - {b_name}: NO HISTORY (Defaulting {default_obp})")
 
-    if cache_updated:
-        save_bvp_cache(cache)
-
+    if cache_updated: save_bvp_cache(cache)
     smoothed = (total_ob_events + (default_obp * 10)) / (total_pas + 10)
     return smoothed, total_pas, details
 
@@ -106,7 +92,8 @@ def get_mlb_odds():
         usage_df = pd.concat([usage_df, pd.DataFrame([{'Month': current_month, 'Calls': 0}])], ignore_index=True)
     
     local_calls = int(usage_df.loc[usage_df['Month'] == current_month, 'Calls'].values[0])
-    if not ODDS_API_KEY or local_calls >= ODDS_CALL_LIMIT: return {}, "N/A", "N/A", True, local_calls
+    if not ODDS_API_KEY or local_calls >= ODDS_CALL_LIMIT: 
+        return {}, "N/A", "N/A", True, local_calls
     
     try:
         url = "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/"
@@ -116,8 +103,11 @@ def get_mlb_odds():
             usage_df.loc[usage_df['Month'] == current_month, 'Calls'] += 1
             usage_df.to_csv(USAGE_FILE, index=False)
             data = resp.json()
+            # Tracker for Odds-API headers
+            used = resp.headers.get('x-requests-used', '0')
+            rem = resp.headers.get('x-requests-remaining', '0')
             odds_dict = {f"{g['home_team']}_{o['name']}": o['price'] for g in data if g.get('bookmakers') for o in g['bookmakers'][0]['markets'][0]['outcomes']}
-            return odds_dict, resp.headers.get('x-requests-used', '0'), resp.headers.get('x-requests-remaining', '0'), False, local_calls + 1
+            return odds_dict, used, rem, False, local_calls + 1
     except: pass
     return {}, "0", "0", False, local_calls
 
@@ -139,7 +129,6 @@ def audit_and_stats():
         if str(row.get('Result')).upper() == 'PENDING':
             games = statsapi.schedule(date=row['Date'])
             for g in games:
-                # Match based on matchup and game number to support doubleheaders
                 if g['home_name'] in row['Matchup'] and g['status'] == 'Final' and int(g.get('game_num', 1)) == int(row.get('Game_Num', 1)):
                     win = 'WIN' if row['Predicted_Winner'] == g['winning_team'] else 'LOSS'
                     try:
@@ -176,9 +165,9 @@ def get_pro_lineup(tid):
         if lg:
             box = statsapi.boxscore_data(lg)
             key = 'home' if box['home']['team']['id'] == tid else 'away'
-            return box[key].get('battingOrder', [])
+            return box[key].get('battingOrder', []), "ESTIMATED"
     except: pass
-    return []
+    return [], "NONE"
 
 def format_mst_time(utc):
     try:
@@ -193,7 +182,7 @@ def run_analysis():
     now_mst = get_mst_now()
     today_str = now_mst.strftime("%m/%d/%Y")
     games = statsapi.schedule(date=today_str)
-    live_odds, _, _, _, _ = get_mlb_odds()
+    live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
     new_preds, display_list = [], []
     eval_log_lines = [f"DETAILED EVALUATION LOG - {today_str}\n" + "="*50 + "\n"]
     history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
@@ -207,12 +196,13 @@ def run_analysis():
         h_p_id = rg.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id')
         a_p_id = rg.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id')
         game_num = int(game.get('game_num', 1))
-        
         mst_dt, mst_time = format_mst_time(game.get('game_datetime'))
+        
         away_o = format_odds(live_odds.get(f"{game['home_name']}_{game['away_name']}", "N/A"))
         home_o = format_odds(live_odds.get(f"{game['home_name']}_{game['home_name']}", "N/A"))
         matchup_txt = f"{game['away_name']} ({away_o}) @ {game['home_name']} ({home_o})"
-        game_info = {'matchup': matchup_txt, 'pitchers': f"({game.get('away_probable_pitcher','TBD')} vs {game.get('home_probable_pitcher','TBD')})", 'time': mst_time, 'raw_time': mst_dt, 'is_active': False, 'status': game['status']}
+        
+        game_info = {'matchup': matchup_txt, 'time': mst_time, 'raw_time': mst_dt, 'is_active': False, 'status': game['status'], 'game_num': game_num}
 
         if h_p_id and a_p_id:
             try:
@@ -222,55 +212,58 @@ def run_analysis():
                         name_map[int(pid.replace('ID',''))] = p['person']['fullName']
                 
                 h_l, a_l = box.get('home',{}).get('battingOrder',[]), box.get('away',{}).get('battingOrder',[])
-                src = "OFFICIAL BOXSCORE" if (h_l and a_l) else "ESTIMATED LAST GAME"
-                if not h_l: h_l = get_pro_lineup(game['home_id'])
-                if not a_l: a_l = get_pro_lineup(game['away_id'])
+                lineup_src = "OFFICIAL" if (h_l and a_l) else "ESTIMATED"
+                
+                if not h_l: h_l, _ = get_pro_lineup(game['home_id'])
+                if not a_l: a_l, _ = get_pro_lineup(game['away_id'])
 
                 if h_l and a_l:
                     h_h, h_n = get_player_info(h_p_id)
                     a_h, a_n = get_player_info(a_p_id)
-                    
                     h_e, _, h_det = get_smoothed_bvp(a_p_id, h_l, a_h, name_map)
                     a_e, _, a_det = get_smoothed_bvp(h_p_id, a_l, h_h, name_map)
                     
                     winner = game['home_name'] if h_e > a_e else game['away_name']
                     conf = round(abs(h_e - a_e) * 100, 2)
-                    
-                    # LOGGING UPDATE
-                    eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} (G{game_num})\n")
-                    eval_log_lines.append(f"  Source: {src}\n")
+                    w_odds = live_odds.get(f"{game['home_name']}_{winner}", -110)
+
+                    # Detailed Log
+                    eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} (G{game_num})\n  Source: {lineup_src}\n")
                     eval_log_lines.append(f"  [OFFENSE: {game['home_name']} vs {a_n}]\n")
                     eval_log_lines.extend([d + "\n" for d in h_det])
-                    eval_log_lines.append(f"  >> Aggregated Home OBP: {h_e:.3f}\n\n")
-
                     eval_log_lines.append(f"  [OFFENSE: {game['away_name']} vs {h_n}]\n")
                     eval_log_lines.extend([d + "\n" for d in a_det])
-                    eval_log_lines.append(f"  >> Aggregated Away OBP: {a_e:.3f}\n")
-                    
-                    # NEW CALCULATION LINE
-                    eval_log_lines.append(f"  CALCULATION: |{h_e:.3f} - {a_e:.3f}| = {abs(h_e - a_e):.3f} spread -> {conf}% Edge for {winner}\n")
+                    eval_log_lines.append(f"  CALCULATION: |{h_e:.3f} - {a_e:.3f}| = {abs(h_e-a_e):.3f} -> {conf}% Edge\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
                     exists = not history_df.empty and not history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(game['home_name'])) & (history_df['Game_Num'].astype(int) == game_num)].empty
                     if not exists:
-                        w_odds = live_odds.get(f"{game['home_name']}_{winner}", -110)
                         new_preds.append({'Date': today_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
                     
-                    game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(live_odds.get(f"{game['home_name']}_{winner}", "N/A"))})
+                    game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': lineup_src})
             except: pass
         display_list.append(game_info)
 
     if new_preds: pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
+    # Telegram Report Construction
     t_msg, y_msg, life = audit_and_stats()
-    report = f"⚾ *MLB REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n\n"
-    # Sort display list to group doubleheaders correctly
+    report = f"⚾ *MLB REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n"
+    report += f"🔑 *ODDS-API:* {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n\n"
+    
+    # Best Pick Logic
+    active_games = [g for g in display_list if g.get('is_active')]
+    if active_games:
+        best = max(active_games, key=lambda x: x['conf'])
+        report += f"⭐ *BEST PICK:* {best['winner']} ({best['odds']}) | {best['conf']}% Edge\n\n"
+
     for g in sorted(display_list, key=lambda x: (x['raw_time'] or datetime.max)):
-        if g['is_active']:
-            report += f"• [{g['time']}] {g['matchup']}\n  👉 {g['winner']} | {g['conf']}% Edge\n\n"
+        if g.get('is_active'):
+            report += f"• [{g['time']}] {g['matchup']}\n  👉 *{g['winner']}* ({g['odds']}) | {g['conf']}% Edge ({g['src']})\n\n"
         else:
             report += f"• [{g['time']}] {g['matchup']}\n  ⏳ {g['status']}\n\n"
+    
     send_telegram(report)
 
 if __name__ == "__main__": run_analysis()
