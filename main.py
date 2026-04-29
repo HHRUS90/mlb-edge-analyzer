@@ -49,19 +49,18 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
 
     for b_id in lineup_ids:
         b_name = name_map.get(b_id) or f"ID:{b_id}"
-        cache_key = f"{pitcher_id}_{b_id}"
+        cache_key = f"{pitcher_id}_{b_id}_v3" # Added v3 to force a fresh fetch for postseason data
         
-        # Only use cache if it has actual data (greater than 0 PAs)
-        # This prevents the "All Zeros" bug from earlier today from sticking around
-        if cache_key in cache and cache[cache_key].get('pa', 0) > 0:
+        if cache_key in cache:
             s = cache[cache_key]
             h, bb, hbp, pa = s['h'], s['bb'], s['hbp'], s['pa']
         else:
             time.sleep(0.15) 
             try:
+                # Updated Hydration: Added gameType=[R,P,W] for Regular, Playoffs, and World Series
                 params = {
                     'personIds': int(b_id),
-                    'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id})'
+                    'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id},gameType=[R,P,W])'
                 }
                 data = statsapi.get('people', params)
                 
@@ -69,7 +68,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
                 if 'people' in data and data['people']:
                     player_stats = data['people'][0].get('stats', [])
                     for stat_group in player_stats:
-                        # Target the Career Total block we identified in the debug log
+                        # We still want the Total Career block, which now includes the extra game types
                         if stat_group.get('type', {}).get('displayName') == 'vsPlayerTotal':
                             for split in stat_group.get('splits', []):
                                 st = split.get('stat', {})
