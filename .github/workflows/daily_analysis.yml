@@ -28,9 +28,9 @@ jobs:
             bvp_cache.json
             prediction_history.csv
             api_usage.csv
-          key: mlb-data-cache-${{ runner.os }}-${{ github.run_id }}
+          key: mlb-data-cache-v2-${{ runner.os }}-${{ github.run_id }}
           restore-keys: |
-            mlb-data-cache-${{ runner.os }}-
+            mlb-data-cache-v2-${{ runner.os }}-
 
       - name: Install Dependencies
         run: |
@@ -38,7 +38,7 @@ jobs:
 
       - name: Run MLB Analysis
         env:
-          PYTHONUNBUFFERED: "1"  # This forces Python to send logs to GitHub instantly
+          PYTHONUNBUFFERED: "1"
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
