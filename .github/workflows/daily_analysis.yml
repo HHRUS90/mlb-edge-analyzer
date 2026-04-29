@@ -38,6 +38,7 @@ jobs:
 
       - name: Run MLB Analysis
         env:
+          PYTHONUNBUFFERED: "1"  # This forces Python to send logs to GitHub instantly
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
