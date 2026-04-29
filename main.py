@@ -54,40 +54,36 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
             s = cache[cache_key]
             h, bb, hbp, pa = s['h'], s['bb'], s['hbp'], s['pa']
         else:
-            time.sleep(0.2) 
+            time.sleep(0.2)
             try:
-                # Updated Hydration: Using the 'vsPlayer' type which is often more stable
+                # Updated Hydration: Specifically requesting 'statSplits' for 'career' vs this pitcher
                 params = {
                     'personIds': int(b_id),
-                    'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id})'
+                    'hydrate': f'stats(group=[hitting],type=[statSplits],opposingPlayerId={pitcher_id},season=career)'
                 }
                 data = statsapi.get('people', params)
                 
-                # --- DEBUG PRINT: ONLY RUNS FOR THE FIRST BATTER TO AVOID FLOODING LOGS ---
+                # --- FORCED DEBUG PRINT ---
                 if total_pas == 0:
-                    print(f"DEBUG: Data structure for {b_name} vs {pitcher_id}:")
+                    print(f"\n--- DEBUG DATA FOR {b_name} vs {pitcher_id} ---")
                     print(json.dumps(data, indent=2))
+                    sys.stdout.flush() # This forces GitHub to show the text IMMEDIATELY
                 
                 h, bb, hbp, pa = 0, 0, 0, 0
-                
                 if 'people' in data and data['people']:
-                    player_stats = data['people'][0].get('stats', [])
-                    for stat_entry in player_stats:
-                        # Scan all splits for the matching pitcher ID
-                        for split in stat_entry.get('splits', []):
-                            opp_id = split.get('opponent', {}).get('id')
-                            if opp_id == int(pitcher_id):
-                                st = split.get('stat', {})
-                                h = int(st.get('hits', 0))
-                                bb = int(st.get('baseOnBalls', 0))
-                                hbp = int(st.get('hitByPitch', 0))
-                                pa = int(st.get('plateAppearances', 0))
-                                break
-
+                    for person in data['people']:
+                        for stat_entry in person.get('stats', []):
+                            for split in stat_entry.get('splits', []):
+                                # Check if this split actually belongs to our target pitcher
+                                if str(split.get('opponent', {}).get('id')) == str(pitcher_id):
+                                    st = split.get('stat', {})
+                                    h, bb, hbp, pa = int(st.get('hits', 0)), int(st.get('baseOnBalls', 0)), int(st.get('hitByPitch', 0)), int(st.get('plateAppearances', 0))
+                
                 cache[cache_key] = {'h': h, 'bb': bb, 'hbp': hbp, 'pa': pa}
                 cache_updated = True
             except Exception as e:
                 print(f"CRITICAL ERROR for {b_name}: {e}")
+                sys.stdout.flush()
                 h, bb, hbp, pa = 0, 0, 0, 0
 
         ob_events = h + bb + hbp
