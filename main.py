@@ -10,6 +10,9 @@ import time
 import json
 from datetime import datetime, timedelta
 
+# Force unbuffered output so logs show up instantly in GitHub Actions
+sys.stdout.reconfigure(line_buffering=True)
+
 # --- CONFIGURATION ---
 ODDS_CALL_LIMIT = 450         
 UNIT_SIZE = 100               
@@ -54,36 +57,41 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
             s = cache[cache_key]
             h, bb, hbp, pa = s['h'], s['bb'], s['hbp'], s['pa']
         else:
-            time.sleep(0.2)
+            time.sleep(0.2) 
             try:
-                # Updated Hydration: Specifically requesting 'statSplits' for 'career' vs this pitcher
+                # The "vsPlayer" type is the standard for individual matchups
                 params = {
                     'personIds': int(b_id),
-                    'hydrate': f'stats(group=[hitting],type=[statSplits],opposingPlayerId={pitcher_id},season=career)'
+                    'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id})'
                 }
                 data = statsapi.get('people', params)
                 
-                # --- FORCED DEBUG PRINT ---
+                # DEBUG: This MUST show up in logs if the script reaches here
                 if total_pas == 0:
                     print(f"\n--- DEBUG DATA FOR {b_name} vs {pitcher_id} ---")
                     print(json.dumps(data, indent=2))
-                    sys.stdout.flush() # This forces GitHub to show the text IMMEDIATELY
+                    print("-" * 40)
                 
                 h, bb, hbp, pa = 0, 0, 0, 0
-                if 'people' in data and data['people']:
-                    for person in data['people']:
-                        for stat_entry in person.get('stats', []):
-                            for split in stat_entry.get('splits', []):
-                                # Check if this split actually belongs to our target pitcher
-                                if str(split.get('opponent', {}).get('id')) == str(pitcher_id):
-                                    st = split.get('stat', {})
-                                    h, bb, hbp, pa = int(st.get('hits', 0)), int(st.get('baseOnBalls', 0)), int(st.get('hitByPitch', 0)), int(st.get('plateAppearances', 0))
                 
+                if 'people' in data and data['people']:
+                    player_stats = data['people'][0].get('stats', [])
+                    for stat_entry in player_stats:
+                        for split in stat_entry.get('splits', []):
+                            # Verify if the opponent ID matches our pitcher
+                            opp = split.get('opponent', {})
+                            if str(opp.get('id')) == str(pitcher_id):
+                                st = split.get('stat', {})
+                                h = int(st.get('hits', 0))
+                                bb = int(st.get('baseOnBalls', 0))
+                                hbp = int(st.get('hitByPitch', 0))
+                                pa = int(st.get('plateAppearances', 0))
+                                break
+
                 cache[cache_key] = {'h': h, 'bb': bb, 'hbp': hbp, 'pa': pa}
                 cache_updated = True
             except Exception as e:
-                print(f"CRITICAL ERROR for {b_name}: {e}")
-                sys.stdout.flush()
+                print(f"ERROR fetching {b_name}: {e}")
                 h, bb, hbp, pa = 0, 0, 0, 0
 
         ob_events = h + bb + hbp
@@ -99,7 +107,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
 
     smoothed = (total_ob_events + (default_obp * 10)) / (total_pas + 10)
     return smoothed, total_pas, details
-    
+
 # --- ODDS & STATS HELPERS ---
 def get_mlb_odds():
     now_mst = get_mst_now()
@@ -197,6 +205,8 @@ def send_telegram(msg):
 def run_analysis():
     now_mst = get_mst_now()
     today_str = now_mst.strftime("%m/%d/%Y")
+    print(f"--- STARTING MLB ANALYSIS FOR {today_str} ---")
+    
     games = statsapi.schedule(date=today_str)
     live_odds, _, _, _, _ = get_mlb_odds()
     new_preds, display_list = [], []
@@ -241,7 +251,6 @@ def run_analysis():
                     winner = game['home_name'] if h_e > a_e else game['away_name']
                     conf = round(abs(h_e - a_e) * 100, 2)
                     
-                    # LOGGING STRUCTURE (RESTORED TO USER PREFERENCE)
                     eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} (G{game_num})\n")
                     eval_log_lines.append(f"  Source: {src}\n")
                     eval_log_lines.append(f"  [OFFENSE: {game['home_name']} vs {a_n}]\n")
@@ -253,14 +262,14 @@ def run_analysis():
                     eval_log_lines.append(f"  >> Aggregated Away OBP: {a_e:.3f}\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
-                    # Prediction Storage
                     exists = not history_df.empty and not history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(game['home_name'])) & (history_df['Game_Num'].astype(int) == game_num)].empty
                     if not exists:
                         w_odds = live_odds.get(f"{game['home_name']}_{winner}", -110)
                         new_preds.append({'Date': today_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
                     
                     game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(live_odds.get(f"{game['home_name']}_{winner}", "N/A"))})
-            except: pass
+            except Exception as e:
+                print(f"Error analyzing game {game['game_id']}: {e}")
         display_list.append(game_info)
 
     if new_preds: pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
@@ -274,5 +283,6 @@ def run_analysis():
         else:
             report += f"• [{g['time']}] {g['matchup']}\n  ⏳ {g['status']}\n\n"
     send_telegram(report)
+    print("--- ANALYSIS COMPLETE, TELEGRAM SENT ---")
 
 if __name__ == "__main__": run_analysis()
