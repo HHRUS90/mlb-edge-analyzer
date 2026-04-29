@@ -5,10 +5,12 @@ import os
 import csv
 import sys
 import pytz
-import traceback
 import time
 import json
 from datetime import datetime, timedelta
+
+# Force unbuffered output for GitHub logs
+sys.stdout.reconfigure(line_buffering=True)
 
 # --- CONFIGURATION ---
 ODDS_CALL_LIMIT = 450         
@@ -25,7 +27,6 @@ def get_mst_now():
     tz = pytz.timezone('America/Denver')
     return datetime.now(tz)
 
-# --- CACHING LOGIC ---
 def load_bvp_cache():
     if os.path.exists(BVP_CACHE_FILE):
         try:
@@ -50,13 +51,14 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
         b_name = name_map.get(b_id) or f"ID:{b_id}"
         cache_key = f"{pitcher_id}_{b_id}"
         
-        if cache_key in cache:
+        # Only use cache if it has actual data (greater than 0 PAs)
+        # This prevents the "All Zeros" bug from earlier today from sticking around
+        if cache_key in cache and cache[cache_key].get('pa', 0) > 0:
             s = cache[cache_key]
             h, bb, hbp, pa = s['h'], s['bb'], s['hbp'], s['pa']
         else:
             time.sleep(0.15) 
             try:
-                # We use the 'vsPlayer' type which provides both seasonal and career totals
                 params = {
                     'personIds': int(b_id),
                     'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id})'
@@ -64,11 +66,10 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
                 data = statsapi.get('people', params)
                 
                 h, bb, hbp, pa = 0, 0, 0, 0
-                
                 if 'people' in data and data['people']:
                     player_stats = data['people'][0].get('stats', [])
                     for stat_group in player_stats:
-                        # CRITICAL: We want the 'vsPlayerTotal' display name for the full career summary
+                        # Target the Career Total block we identified in the debug log
                         if stat_group.get('type', {}).get('displayName') == 'vsPlayerTotal':
                             for split in stat_group.get('splits', []):
                                 st = split.get('stat', {})
@@ -76,12 +77,11 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
                                 bb = int(st.get('baseOnBalls', 0))
                                 hbp = int(st.get('hitByPitch', 0))
                                 pa = int(st.get('plateAppearances', 0))
-                                break # Found the career total
+                                break
 
                 cache[cache_key] = {'h': h, 'bb': bb, 'hbp': hbp, 'pa': pa}
                 cache_updated = True
-            except Exception as e:
-                print(f"Error fetching {b_name}: {e}")
+            except:
                 h, bb, hbp, pa = 0, 0, 0, 0
 
         ob_events = h + bb + hbp
@@ -95,11 +95,9 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
     if cache_updated:
         save_bvp_cache(cache)
 
-    # Bayesian Smoothing: (Total OB + (LeagueAvg * 10)) / (Total PA + 10)
     smoothed = (total_ob_events + (default_obp * 10)) / (total_pas + 10)
     return smoothed, total_pas, details
 
-# --- ODDS & STATS HELPERS ---
 def get_mlb_odds():
     now_mst = get_mst_now()
     current_month = now_mst.strftime("%Y-%m")
@@ -192,12 +190,9 @@ def format_mst_time(utc):
 def send_telegram(msg):
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", data={'chat_id': TELEGRAM_CHAT_ID, 'text': msg, 'parse_mode': 'Markdown'})
 
-# --- MAIN RUN ---
 def run_analysis():
     now_mst = get_mst_now()
     today_str = now_mst.strftime("%m/%d/%Y")
-    print(f"--- STARTING MLB ANALYSIS FOR {today_str} ---")
-    
     games = statsapi.schedule(date=today_str)
     live_odds, _, _, _, _ = get_mlb_odds()
     new_preds, display_list = [], []
@@ -259,8 +254,7 @@ def run_analysis():
                         new_preds.append({'Date': today_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
                     
                     game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(live_odds.get(f"{game['home_name']}_{winner}", "N/A"))})
-            except Exception as e:
-                print(f"Error analyzing game {game['game_id']}: {e}")
+            except: pass
         display_list.append(game_info)
 
     if new_preds: pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
@@ -274,6 +268,5 @@ def run_analysis():
         else:
             report += f"• [{g['time']}] {g['matchup']}\n  ⏳ {g['status']}\n\n"
     send_telegram(report)
-    print("--- ANALYSIS COMPLETE, TELEGRAM SENT ---")
 
 if __name__ == "__main__": run_analysis()
