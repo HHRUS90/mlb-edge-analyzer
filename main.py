@@ -49,7 +49,8 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
 
     for b_id in lineup_ids:
         b_name = name_map.get(b_id) or f"ID:{b_id}"
-        cache_key = f"{pitcher_id}_{b_id}_v3" # Added v3 to force a fresh fetch for postseason data
+        # Using v3 cache key to ensure we pull fresh data including Postseason/World Series
+        cache_key = f"{pitcher_id}_{b_id}_v3"
         
         if cache_key in cache:
             s = cache[cache_key]
@@ -57,25 +58,23 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
         else:
             time.sleep(0.15) 
             try:
-                # Updated Hydration: Added gameType=[R,P,W] for Regular, Playoffs, and World Series
+                # gameType=[R,P,W] ensures Regular, Postseason, and World Series are included
                 params = {
                     'personIds': int(b_id),
-                    'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id},gameType=[R,P,W])'
+                    'stats': 'vsPlayer',
+                    'opposingPlayerId': pitcher_id,
+                    'gameType': 'R,P,W'
                 }
-                data = statsapi.get('people', params)
+                data = statsapi.get('people', {'personIds': b_id, 'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id},gameType=[R,P,W])'})
                 
                 h, bb, hbp, pa = 0, 0, 0, 0
                 if 'people' in data and data['people']:
                     player_stats = data['people'][0].get('stats', [])
                     for stat_group in player_stats:
-                        # We still want the Total Career block, which now includes the extra game types
                         if stat_group.get('type', {}).get('displayName') == 'vsPlayerTotal':
                             for split in stat_group.get('splits', []):
                                 st = split.get('stat', {})
-                                h = int(st.get('hits', 0))
-                                bb = int(st.get('baseOnBalls', 0))
-                                hbp = int(st.get('hitByPitch', 0))
-                                pa = int(st.get('plateAppearances', 0))
+                                h, bb, hbp, pa = int(st.get('hits', 0)), int(st.get('baseOnBalls', 0)), int(st.get('hitByPitch', 0)), int(st.get('plateAppearances', 0))
                                 break
 
                 cache[cache_key] = {'h': h, 'bb': bb, 'hbp': hbp, 'pa': pa}
@@ -140,7 +139,8 @@ def audit_and_stats():
         if str(row.get('Result')).upper() == 'PENDING':
             games = statsapi.schedule(date=row['Date'])
             for g in games:
-                if g['home_name'] in row['Matchup'] and g['status'] == 'Final':
+                # Match based on matchup and game number to support doubleheaders
+                if g['home_name'] in row['Matchup'] and g['status'] == 'Final' and int(g.get('game_num', 1)) == int(row.get('Game_Num', 1)):
                     win = 'WIN' if row['Predicted_Winner'] == g['winning_team'] else 'LOSS'
                     try:
                         o = float(row['Odds'])
@@ -236,6 +236,7 @@ def run_analysis():
                     winner = game['home_name'] if h_e > a_e else game['away_name']
                     conf = round(abs(h_e - a_e) * 100, 2)
                     
+                    # LOGGING UPDATE
                     eval_log_lines.append(f"GAME: {game['away_name']} @ {game['home_name']} (G{game_num})\n")
                     eval_log_lines.append(f"  Source: {src}\n")
                     eval_log_lines.append(f"  [OFFENSE: {game['home_name']} vs {a_n}]\n")
@@ -245,6 +246,9 @@ def run_analysis():
                     eval_log_lines.append(f"  [OFFENSE: {game['away_name']} vs {h_n}]\n")
                     eval_log_lines.extend([d + "\n" for d in a_det])
                     eval_log_lines.append(f"  >> Aggregated Away OBP: {a_e:.3f}\n")
+                    
+                    # NEW CALCULATION LINE
+                    eval_log_lines.append(f"  CALCULATION: |{h_e:.3f} - {a_e:.3f}| = {abs(h_e - a_e):.3f} spread -> {conf}% Edge for {winner}\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
                     exists = not history_df.empty and not history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(game['home_name'])) & (history_df['Game_Num'].astype(int) == game_num)].empty
@@ -261,7 +265,8 @@ def run_analysis():
     
     t_msg, y_msg, life = audit_and_stats()
     report = f"⚾ *MLB REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n\n"
-    for g in sorted(display_list, key=lambda x: x['raw_time'] or datetime.max):
+    # Sort display list to group doubleheaders correctly
+    for g in sorted(display_list, key=lambda x: (x['raw_time'] or datetime.max)):
         if g['is_active']:
             report += f"• [{g['time']}] {g['matchup']}\n  👉 {g['winner']} | {g['conf']}% Edge\n\n"
         else:
