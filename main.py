@@ -54,38 +54,40 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
             s = cache[cache_key]
             h, bb, hbp, pa = s['h'], s['bb'], s['hbp'], s['pa']
         else:
-            time.sleep(0.12) # Slight delay to keep the API happy
+            time.sleep(0.2) 
             try:
-                # We use the 'people' endpoint with career vs-pitcher hydration
+                # Updated Hydration: Using the 'vsPlayer' type which is often more stable
                 params = {
                     'personIds': int(b_id),
-                    'hydrate': f'stats(group=[hitting],type=[statSplits],opposingPlayerId={pitcher_id},season=career)'
+                    'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id})'
                 }
                 data = statsapi.get('people', params)
                 
+                # --- DEBUG PRINT: ONLY RUNS FOR THE FIRST BATTER TO AVOID FLOODING LOGS ---
+                if total_pas == 0:
+                    print(f"DEBUG: Data structure for {b_name} vs {pitcher_id}:")
+                    print(json.dumps(data, indent=2))
+                
                 h, bb, hbp, pa = 0, 0, 0, 0
-                print(json.dumps(data, indent=2))
-                # MLB API responses are deeply nested: people -> stats -> splits -> stat
+                
                 if 'people' in data and data['people']:
-                    for person in data['people']:
-                        for stat_entry in person.get('stats', []):
-                            # Only look at the 'statSplits' entries we requested
-                            if stat_entry.get('type', {}).get('displayName') == 'statSplits':
-                                for split in stat_entry.get('splits', []):
-                                    # Double check that this split is indeed for the correct pitcher
-                                    opp_id = split.get('opponent', {}).get('id')
-                                    if opp_id == int(pitcher_id):
-                                        st = split.get('stat', {})
-                                        h = int(st.get('hits', 0))
-                                        bb = int(st.get('baseOnBalls', 0))
-                                        hbp = int(st.get('hitByPitch', 0))
-                                        pa = int(st.get('plateAppearances', 0))
-                                        break # Found our match
+                    player_stats = data['people'][0].get('stats', [])
+                    for stat_entry in player_stats:
+                        # Scan all splits for the matching pitcher ID
+                        for split in stat_entry.get('splits', []):
+                            opp_id = split.get('opponent', {}).get('id')
+                            if opp_id == int(pitcher_id):
+                                st = split.get('stat', {})
+                                h = int(st.get('hits', 0))
+                                bb = int(st.get('baseOnBalls', 0))
+                                hbp = int(st.get('hitByPitch', 0))
+                                pa = int(st.get('plateAppearances', 0))
+                                break
 
                 cache[cache_key] = {'h': h, 'bb': bb, 'hbp': hbp, 'pa': pa}
                 cache_updated = True
             except Exception as e:
-                print(f"Error fetching {b_name} vs {pitcher_id}: {e}")
+                print(f"CRITICAL ERROR for {b_name}: {e}")
                 h, bb, hbp, pa = 0, 0, 0, 0
 
         ob_events = h + bb + hbp
@@ -99,7 +101,6 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
     if cache_updated:
         save_bvp_cache(cache)
 
-    # Bayesian Smoothing: Adds 10 PAs of league-average baseline
     smoothed = (total_ob_events + (default_obp * 10)) / (total_pas + 10)
     return smoothed, total_pas, details
     
