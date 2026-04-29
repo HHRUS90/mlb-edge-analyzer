@@ -10,9 +10,6 @@ import time
 import json
 from datetime import datetime, timedelta
 
-# Force unbuffered output so logs show up instantly in GitHub Actions
-sys.stdout.reconfigure(line_buffering=True)
-
 # --- CONFIGURATION ---
 ODDS_CALL_LIMIT = 450         
 UNIT_SIZE = 100               
@@ -57,41 +54,34 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
             s = cache[cache_key]
             h, bb, hbp, pa = s['h'], s['bb'], s['hbp'], s['pa']
         else:
-            time.sleep(0.2) 
+            time.sleep(0.15) 
             try:
-                # The "vsPlayer" type is the standard for individual matchups
+                # We use the 'vsPlayer' type which provides both seasonal and career totals
                 params = {
                     'personIds': int(b_id),
                     'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id})'
                 }
                 data = statsapi.get('people', params)
                 
-                # DEBUG: This MUST show up in logs if the script reaches here
-                if total_pas == 0:
-                    print(f"\n--- DEBUG DATA FOR {b_name} vs {pitcher_id} ---")
-                    print(json.dumps(data, indent=2))
-                    print("-" * 40)
-                
                 h, bb, hbp, pa = 0, 0, 0, 0
                 
                 if 'people' in data and data['people']:
                     player_stats = data['people'][0].get('stats', [])
-                    for stat_entry in player_stats:
-                        for split in stat_entry.get('splits', []):
-                            # Verify if the opponent ID matches our pitcher
-                            opp = split.get('opponent', {})
-                            if str(opp.get('id')) == str(pitcher_id):
+                    for stat_group in player_stats:
+                        # CRITICAL: We want the 'vsPlayerTotal' display name for the full career summary
+                        if stat_group.get('type', {}).get('displayName') == 'vsPlayerTotal':
+                            for split in stat_group.get('splits', []):
                                 st = split.get('stat', {})
                                 h = int(st.get('hits', 0))
                                 bb = int(st.get('baseOnBalls', 0))
                                 hbp = int(st.get('hitByPitch', 0))
                                 pa = int(st.get('plateAppearances', 0))
-                                break
+                                break # Found the career total
 
                 cache[cache_key] = {'h': h, 'bb': bb, 'hbp': hbp, 'pa': pa}
                 cache_updated = True
             except Exception as e:
-                print(f"ERROR fetching {b_name}: {e}")
+                print(f"Error fetching {b_name}: {e}")
                 h, bb, hbp, pa = 0, 0, 0, 0
 
         ob_events = h + bb + hbp
@@ -105,6 +95,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
     if cache_updated:
         save_bvp_cache(cache)
 
+    # Bayesian Smoothing: (Total OB + (LeagueAvg * 10)) / (Total PA + 10)
     smoothed = (total_ob_events + (default_obp * 10)) / (total_pas + 10)
     return smoothed, total_pas, details
 
