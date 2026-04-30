@@ -65,7 +65,6 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
         else:
             time.sleep(0.1) 
             try:
-                # Use wrapper for API tracking
                 data = call_stats_api('people', {'personIds': b_id, 'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id},gameType=[R,P,W])'})
                 h, bb, hbp, pa = 0, 0, 0, 0
                 if 'people' in data and data['people']:
@@ -136,20 +135,24 @@ def audit_and_stats():
     updated = False
     for idx, row in df.iterrows():
         if str(row.get('Result')).upper() == 'PENDING':
-            # FIX: Added sportId=1 to satisfy API requirements
             sched_data = call_stats_api('schedule', {'date': row['Date'], 'sportId': 1})
             games = sched_data.get('dates', [{}])[0].get('games', [])
             for g in games:
                 h_name = g.get('teams', {}).get('home', {}).get('team', {}).get('name', '')
-                if h_name in row['Matchup'] and g['status']['abstractGameState'] == 'Final' and int(g.get('gameNumber', 1)) == int(row.get('Game_Num', 1)):
-                    winning_team = g['teams']['home']['team']['name'] if g['teams']['home'].get('isWinner') else g['teams']['away']['team']['name']
-                    win = 'WIN' if row['Predicted_Winner'] == winning_team else 'LOSS'
-                    try:
-                        o = float(row['Odds'])
-                        prof = (UNIT_SIZE * (o/100) if o > 0 else UNIT_SIZE/(abs(o)/100)) if win == 'WIN' else -UNIT_SIZE
-                        df.at[idx, 'Result'], df.at[idx, 'Profit'] = win, prof
+                if h_name in row['Matchup'] and int(g.get('gameNumber', 1)) == int(row.get('Game_Num', 1)):
+                    # Check for Postponed status
+                    if g['status']['abstractGameState'] == 'Final' and g['status']['detailedState'] != 'Postponed':
+                        winning_team = g['teams']['home']['team']['name'] if g['teams']['home'].get('isWinner') else g['teams']['away']['team']['name']
+                        win = 'WIN' if row['Predicted_Winner'] == winning_team else 'LOSS'
+                        try:
+                            o = float(row['Odds'])
+                            prof = (UNIT_SIZE * (o/100) if o > 0 else UNIT_SIZE/(abs(o)/100)) if win == 'WIN' else -UNIT_SIZE
+                            df.at[idx, 'Result'], df.at[idx, 'Profit'] = win, prof
+                            updated = True
+                        except: pass
+                    elif g['status']['detailedState'] == 'Postponed':
+                        df.at[idx, 'Result'], df.at[idx, 'Profit'] = 'PPD', 0.0
                         updated = True
-                    except: pass
     if updated: df.to_csv(CSV_FILE, index=False)
     
     def line(d, label):
@@ -194,7 +197,6 @@ def send_telegram(msg):
 def run_analysis():
     now_mst = get_mst_now()
     today_str = now_mst.strftime("%m/%d/%Y")
-    # FIX: Added sportId=1
     games_raw = call_stats_api('schedule', {'sportId': 1, 'date': today_str, 'hydrate': 'probablePitcher,lineups'})
     games = [g for d in games_raw.get('dates', []) for g in d.get('games', [])]
     
@@ -228,19 +230,22 @@ def run_analysis():
         home_o_str = format_odds(current_home_o or "N/A")
         matchup_txt = f"{away_name} ({away_o_str}) @ {home_name} ({home_o_str})"
         
+        # BOLD Scores and Status logic
         score_str = ""
-        if status in ['Live', 'In Progress'] or detailed_status == 'In Progress':
-            score_str = f" 🔥 LIVE: {away_name} {game['teams']['away'].get('score', 0)}, {home_name} {game['teams']['home'].get('score', 0)}"
+        if detailed_status == 'Postponed':
+            score_str = f" ❌ **POSTPONED**"
+        elif status in ['Live', 'In Progress'] or detailed_status == 'In Progress':
+            score_str = f" 🔥 **LIVE: {away_name} {game['teams']['away'].get('score', 0)}, {home_name} {game['teams']['home'].get('score', 0)}**"
         elif status == 'Final':
-            score_str = f" ✅ FINAL: {away_name} {game['teams']['away'].get('score', 0)}, {home_name} {game['teams']['home'].get('score', 0)}"
+            score_str = f" ✅ **FINAL: {away_name} {game['teams']['away'].get('score', 0)}, {home_name} {game['teams']['home'].get('score', 0)}**"
 
         game_info = {
             'matchup': matchup_txt, 'time': mst_time, 'raw_time': mst_dt, 
-            'is_active': False, 'status': status, 'score': score_str,
-            'away_team': away_name, 'home_team': home_name, 'game_num': game_num
+            'is_active': False, 'status': detailed_status if detailed_status == 'Postponed' else status, 
+            'score': score_str, 'away_team': away_name, 'home_team': home_name, 'game_num': game_num
         }
 
-        if h_p_id and a_p_id:
+        if h_p_id and a_p_id and detailed_status != 'Postponed':
             try:
                 box = statsapi.boxscore_data(game_id)
                 global stats_api_calls
