@@ -140,7 +140,6 @@ def audit_and_stats():
             for g in games:
                 h_name = g.get('teams', {}).get('home', {}).get('team', {}).get('name', '')
                 if h_name in row['Matchup'] and int(g.get('gameNumber', 1)) == int(row.get('Game_Num', 1)):
-                    # Check for Postponed status
                     if g['status']['abstractGameState'] == 'Final' and g['status']['detailedState'] != 'Postponed':
                         winning_team = g['teams']['home']['team']['name'] if g['teams']['home'].get('isWinner') else g['teams']['away']['team']['name']
                         win = 'WIN' if row['Predicted_Winner'] == winning_team else 'LOSS'
@@ -230,14 +229,13 @@ def run_analysis():
         home_o_str = format_odds(current_home_o or "N/A")
         matchup_txt = f"{away_name} ({away_o_str}) @ {home_name} ({home_o_str})"
         
-        # BOLD Scores and Status logic
         score_str = ""
         if detailed_status == 'Postponed':
-            score_str = f" ❌ **POSTPONED**"
+            score_str = f"❌ **POSTPONED**"
         elif status in ['Live', 'In Progress'] or detailed_status == 'In Progress':
-            score_str = f" 🔥 **LIVE: {away_name} {game['teams']['away'].get('score', 0)}, {home_name} {game['teams']['home'].get('score', 0)}**"
+            score_str = f"🔥 **LIVE: {game['teams']['away'].get('score', 0)} - {game['teams']['home'].get('score', 0)}**"
         elif status == 'Final':
-            score_str = f" ✅ **FINAL: {away_name} {game['teams']['away'].get('score', 0)}, {home_name} {game['teams']['home'].get('score', 0)}**"
+            score_str = f"✅ **FINAL: {game['teams']['away'].get('score', 0)} - {game['teams']['home'].get('score', 0)}**"
 
         game_info = {
             'matchup': matchup_txt, 'time': mst_time, 'raw_time': mst_dt, 
@@ -288,7 +286,8 @@ def run_analysis():
     
     t_msg, y_msg, life = audit_and_stats()
     report = f"⚾ *MLB REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n"
-    report += f"🔑 *ODDS-API:* {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n\n"
+    report += f"🔑 *ODDS-API:* {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
+    report += f"📊 *MLB-STATS-API:* {stats_api_calls} Calls this run\n\n"
     
     active_games = [g for g in display_list if g.get('is_active')]
     if active_games:
@@ -297,13 +296,15 @@ def run_analysis():
         report += f"👉 PROJECTION: {best['winner']} ({best['odds']}) | {best['conf']}% Edge\n\n"
 
     for g in sorted(display_list, key=lambda x: (x['raw_time'] or datetime.max)):
-        time_status = f"[{g['time']}]" if g['score'] == "" else g['score']
+        report += f"• [{g['time']}] {g['matchup']}\n"
+        if g['score']:
+            report += f"  {g['score']}\n"
+        
         if g.get('is_active'):
-            report += f"• {time_status} {g['matchup']}\n  👉 *{g['winner']}* ({g['odds']}) | {g['conf']}% Edge ({g['src']})\n\n"
+            report += f"  👉 *{g['winner']}* ({g['odds']}) | {g['conf']}% Edge ({g['src']})\n\n"
         else:
-            report += f"• {time_status} {g['matchup']}\n  ⏳ {g['status']}\n\n"
+            report += f"  ⏳ {g['status']}\n\n"
     
-    report += f"📊 *MLB-Stats-API Accesses:* {stats_api_calls} calls this run"
     send_telegram(report)
 
 if __name__ == "__main__": run_analysis()
