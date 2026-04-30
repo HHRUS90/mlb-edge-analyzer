@@ -65,6 +65,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
         else:
             time.sleep(0.1) 
             try:
+                # Includes Regular, Postseason, and World Series per instructions
                 data = call_stats_api('people', {'personIds': b_id, 'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id},gameType=[R,P,W])'})
                 h, bb, hbp, pa = 0, 0, 0, 0
                 if 'people' in data and data['people']:
@@ -88,6 +89,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
             details.append(f"    - {b_name}: NO HISTORY (Defaulting {default_obp})")
 
     if cache_updated: save_bvp_cache(cache)
+    # Smoothed OBP calculation
     smoothed = (total_ob_events + (default_obp * 10)) / (total_pas + 10)
     return smoothed, total_pas, details
 
@@ -106,6 +108,7 @@ def get_mlb_odds():
     
     try:
         url = "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds/"
+        # Strictly FanDuel
         params = {'apiKey': ODDS_API_KEY, 'bookmakers': 'fanduel', 'markets': 'h2h', 'oddsFormat': 'american'}
         resp = requests.get(url, params=params)
         if resp.status_code == 200:
@@ -140,6 +143,7 @@ def audit_and_stats():
             for g in games:
                 h_name = g.get('teams', {}).get('home', {}).get('team', {}).get('name', '')
                 if h_name in row['Matchup'] and int(g.get('gameNumber', 1)) == int(row.get('Game_Num', 1)):
+                    # Postponed logic per instructions
                     if g['status']['abstractGameState'] == 'Final' and g['status']['detailedState'] != 'Postponed':
                         winning_team = g['teams']['home']['team']['name'] if g['teams']['home'].get('isWinner') else g['teams']['away']['team']['name']
                         win = 'WIN' if row['Predicted_Winner'] == winning_team else 'LOSS'
@@ -262,15 +266,26 @@ def run_analysis():
                 if h_l and a_l:
                     h_h, h_n = get_player_info(h_p_id)
                     a_h, a_n = get_player_info(a_p_id)
-                    h_e, _, h_det = get_smoothed_bvp(a_p_id, h_l, a_h, name_map)
-                    a_e, _, a_det = get_smoothed_bvp(h_p_id, a_l, h_h, name_map)
+                    
+                    # RESTORED FULL LOGGING
+                    h_e, h_pa, h_det = get_smoothed_bvp(a_p_id, h_l, a_h, name_map)
+                    a_e, a_pa, a_det = get_smoothed_bvp(h_p_id, a_l, h_h, name_map)
                     
                     winner = home_name if h_e > a_e else away_name
                     conf = round(abs(h_e - a_e) * 100, 2)
                     w_odds = live_odds.get(f"{home_name}_{winner}", -110)
 
+                    # Detailed Log Reconstruction
                     eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n  Source: {lineup_src}\n")
-                    eval_log_lines.append(f"  CALCULATION: |{h_e:.3f} - {a_e:.3f}| = {abs(h_e-a_e):.3f} -> {conf}% Edge\n")
+                    eval_log_lines.append(f"  {home_name} Hitting (vs {a_n}):\n")
+                    eval_log_lines.extend([line + "\n" for line in h_det])
+                    eval_log_lines.append(f"  Aggregated Home OBP: {h_e:.3f}\n\n")
+                    
+                    eval_log_lines.append(f"  {away_name} Hitting (vs {h_n}):\n")
+                    eval_log_lines.extend([line + "\n" for line in a_det])
+                    eval_log_lines.append(f"  Aggregated Away OBP: {a_e:.3f}\n")
+                    
+                    eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
                     exists = not history_df.empty and not history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(home_name)) & (history_df['Game_Num'].astype(int) == game_num)].empty
@@ -284,6 +299,7 @@ def run_analysis():
     if new_preds: pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
+    # Telegram Hierarchy restored
     t_msg, y_msg, life = audit_and_stats()
     report = f"⚾ *MLB REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n"
     report += f"🔑 *ODDS-API:* {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
