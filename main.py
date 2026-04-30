@@ -136,8 +136,9 @@ def audit_and_stats():
     updated = False
     for idx, row in df.iterrows():
         if str(row.get('Result')).upper() == 'PENDING':
-            # Use wrapper for audit check
-            games = call_stats_api('schedule', {'date': row['Date']}).get('dates', [{}])[0].get('games', [])
+            # FIX: Added sportId=1 to satisfy API requirements
+            sched_data = call_stats_api('schedule', {'date': row['Date'], 'sportId': 1})
+            games = sched_data.get('dates', [{}])[0].get('games', [])
             for g in games:
                 h_name = g.get('teams', {}).get('home', {}).get('team', {}).get('name', '')
                 if h_name in row['Matchup'] and g['status']['abstractGameState'] == 'Final' and int(g.get('gameNumber', 1)) == int(row.get('Game_Num', 1)):
@@ -193,7 +194,7 @@ def send_telegram(msg):
 def run_analysis():
     now_mst = get_mst_now()
     today_str = now_mst.strftime("%m/%d/%Y")
-    # Use wrapper
+    # FIX: Added sportId=1
     games_raw = call_stats_api('schedule', {'sportId': 1, 'date': today_str, 'hydrate': 'probablePitcher,lineups'})
     games = [g for d in games_raw.get('dates', []) for g in d.get('games', [])]
     
@@ -215,21 +216,18 @@ def run_analysis():
         away_name = game['teams']['away']['team']['name']
         home_name = game['teams']['home']['team']['name']
         
-        # Odds logic: use current or fallback to history if game already started
         current_away_o = live_odds.get(f"{home_name}_{away_name}")
         current_home_o = live_odds.get(f"{home_name}_{home_name}")
         
         if current_away_o is None and not history_df.empty:
             match_rows = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(home_name)) & (history_df['Game_Num'] == game_num)]
             if not match_rows.empty:
-                # We extract what we had previously if API returns nothing (game started)
-                current_away_o = "Closed" # Placeholder logic
+                current_away_o = match_rows.iloc[0]['Odds']
         
         away_o_str = format_odds(current_away_o or "N/A")
         home_o_str = format_odds(current_home_o or "N/A")
         matchup_txt = f"{away_name} ({away_o_str}) @ {home_name} ({home_o_str})"
         
-        # Score Tracking
         score_str = ""
         if status in ['Live', 'In Progress'] or detailed_status == 'In Progress':
             score_str = f" 🔥 LIVE: {away_name} {game['teams']['away'].get('score', 0)}, {home_name} {game['teams']['home'].get('score', 0)}"
@@ -244,7 +242,6 @@ def run_analysis():
 
         if h_p_id and a_p_id:
             try:
-                # Use call wrapper indirectly via boxscore (counts as 1)
                 box = statsapi.boxscore_data(game_id)
                 global stats_api_calls
                 stats_api_calls += 1 
