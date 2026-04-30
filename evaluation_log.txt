@@ -2,53 +2,352 @@ DETAILED EVALUATION LOG - 04/29/2026
 ==================================================
 GAME: Tampa Bay Rays @ Cleveland Guardians (G1)
   Source: OFFICIAL
-  CALCULATION: |0.287 - 0.482| = 0.194 -> 19.43% Edge
+  Cleveland Guardians Hitting (vs Drew Rasmussen):
+    - Steven Kwan: 3/6 (0.500)
+    - Chase DeLauter: NO HISTORY (Defaulting 0.32)
+    - José Ramírez: 0/1 (0.000)
+    - Kyle Manzardo: 2/5 (0.400)
+    - Daniel Schneemann: 0/2 (0.000)
+    - Angel Martínez: 0/3 (0.000)
+    - Travis Bazzana: NO HISTORY (Defaulting 0.32)
+    - Bo Naylor: NO HISTORY (Defaulting 0.32)
+    - Brayan Rocchio: 1/5 (0.200)
+  Aggregated Home OBP: 0.287
+
+  Tampa Bay Rays Hitting (vs Gavin Williams):
+    - Chandler Simpson: NO HISTORY (Defaulting 0.32)
+    - Ben Williamson: 2/2 (1.000)
+    - Jonathan Aranda: 1/2 (0.500)
+    - Yandy Díaz: 7/13 (0.538)
+    - Jake Fraley: NO HISTORY (Defaulting 0.32)
+    - Cedric Mullins: 3/8 (0.375)
+    - Richie Palacios: 3/6 (0.500)
+    - Hunter Feduccia: 2/3 (0.667)
+    - Taylor Walls: NO HISTORY (Defaulting 0.32)
+  Aggregated Away OBP: 0.482
+  PROJECTION: Tampa Bay Rays | 19.43% Edge
 --------------------------------------------------
 GAME: Los Angeles Angels @ Chicago White Sox (G1)
   Source: OFFICIAL
-  CALCULATION: |0.253 - 0.273| = 0.021 -> 2.08% Edge
+  Chicago White Sox Hitting (vs Yusei Kikuchi):
+    - Chase Meidroth: NO HISTORY (Defaulting 0.31)
+    - Miguel Vargas: 1/3 (0.333)
+    - Munetaka Murakami: NO HISTORY (Defaulting 0.31)
+    - Austin Hays: 6/27 (0.222)
+    - Colson Montgomery: NO HISTORY (Defaulting 0.31)
+    - Edgar Quero: NO HISTORY (Defaulting 0.31)
+    - Tristan Peters: NO HISTORY (Defaulting 0.31)
+    - Jarred Kelenic: NO HISTORY (Defaulting 0.31)
+    - Sam Antonacci: NO HISTORY (Defaulting 0.31)
+  Aggregated Home OBP: 0.253
+
+  Los Angeles Angels Hitting (vs Erick Fedde):
+    - Zach Neto: NO HISTORY (Defaulting 0.32)
+    - Mike Trout: 1/3 (0.333)
+    - Oswald Peraza: 0/1 (0.000)
+    - Bryce Teodosio: 0/1 (0.000)
+    - Jo Adell: NO HISTORY (Defaulting 0.32)
+    - Josh Lowe: 1/2 (0.500)
+    - Vaughn Grissom: NO HISTORY (Defaulting 0.32)
+    - Sebastián Rivero: 0/1 (0.000)
+    - Adam Frazier: 3/12 (0.250)
+  Aggregated Away OBP: 0.273
+  PROJECTION: Los Angeles Angels | 2.08% Edge
 --------------------------------------------------
 GAME: Seattle Mariners @ Minnesota Twins (G1)
   Source: OFFICIAL
-  CALCULATION: |0.287 - 0.345| = 0.058 -> 5.75% Edge
+  Minnesota Twins Hitting (vs George Kirby):
+    - Byron Buxton: 1/6 (0.167)
+    - Austin Martin: NO HISTORY (Defaulting 0.32)
+    - Josh Bell: 4/7 (0.571)
+    - James Outman: 0/2 (0.000)
+    - Kody Clemens: 1/7 (0.143)
+    - Luke Keaschall: NO HISTORY (Defaulting 0.32)
+    - Victor Caratini: 2/7 (0.286)
+    - Brooks Lee: NO HISTORY (Defaulting 0.32)
+    - Royce Lewis: NO HISTORY (Defaulting 0.32)
+  Aggregated Home OBP: 0.287
+
+  Seattle Mariners Hitting (vs Taj Bradley):
+    - J.P. Crawford: 3/9 (0.333)
+    - Cal Raleigh: 4/6 (0.667)
+    - Julio Rodríguez: 3/9 (0.333)
+    - Josh Naylor: 3/11 (0.273)
+    - Randy Arozarena: NO HISTORY (Defaulting 0.32)
+    - Luke Raley: 0/2 (0.000)
+    - Leo Rivas: NO HISTORY (Defaulting 0.32)
+    - Cole Young: NO HISTORY (Defaulting 0.32)
+    - Will Wilson: NO HISTORY (Defaulting 0.32)
+  Aggregated Away OBP: 0.345
+  PROJECTION: Seattle Mariners | 5.75% Edge
 --------------------------------------------------
 GAME: New York Yankees @ Texas Rangers (G1)
   Source: OFFICIAL
-  CALCULATION: |0.320 - 0.214| = 0.106 -> 10.6% Edge
+  Texas Rangers Hitting (vs Elmer Rodríguez):
+    - Sam Haggerty: NO HISTORY (Defaulting 0.32)
+    - Josh Jung: NO HISTORY (Defaulting 0.32)
+    - Corey Seager: NO HISTORY (Defaulting 0.32)
+    - Joc Pederson: NO HISTORY (Defaulting 0.32)
+    - Jake Burger: NO HISTORY (Defaulting 0.32)
+    - Evan Carter: NO HISTORY (Defaulting 0.32)
+    - Kyle Higashioka: NO HISTORY (Defaulting 0.32)
+    - Alejandro Osuna: NO HISTORY (Defaulting 0.32)
+    - Ezequiel Duran: NO HISTORY (Defaulting 0.32)
+  Aggregated Home OBP: 0.320
+
+  New York Yankees Hitting (vs Nathan Eovaldi):
+    - Trent Grisham: 2/7 (0.286)
+    - Ben Rice: 0/5 (0.000)
+    - Aaron Judge: 1/3 (0.333)
+    - Cody Bellinger: 2/11 (0.182)
+    - Jazz Chisholm Jr.: 1/10 (0.100)
+    - Max Schuemann: NO HISTORY (Defaulting 0.32)
+    - J.C. Escarra: 0/3 (0.000)
+    - Ryan McMahon: 0/2 (0.000)
+    - José Caballero: 3/6 (0.500)
+  Aggregated Away OBP: 0.214
+  PROJECTION: Texas Rangers | 10.6% Edge
 --------------------------------------------------
 GAME: Boston Red Sox @ Toronto Blue Jays (G1)
   Source: OFFICIAL
-  CALCULATION: |0.360 - 0.410| = 0.050 -> 5.02% Edge
+  Toronto Blue Jays Hitting (vs Brayan Bello):
+    - Ernie Clement: 3/10 (0.300)
+    - Jesús Sánchez: 3/5 (0.600)
+    - Vladimir Guerrero Jr.: 13/31 (0.419)
+    - Kazuma Okamoto: NO HISTORY (Defaulting 0.32)
+    - Daulton Varsho: 3/13 (0.231)
+    - George Springer: 11/31 (0.355)
+    - Myles Straw: 1/2 (0.500)
+    - Andrés Giménez: 2/7 (0.286)
+    - Brandon Valenzuela: NO HISTORY (Defaulting 0.32)
+  Aggregated Home OBP: 0.360
+
+  Boston Red Sox Hitting (vs Eric Lauer):
+    - Roman Anthony: 2/3 (0.667)
+    - Willson Contreras: 7/15 (0.467)
+    - Wilyer Abreu: 1/2 (0.500)
+    - Ceddanne Rafaela: 2/5 (0.400)
+    - Trevor Story: 11/27 (0.407)
+    - Jarren Duran: 3/8 (0.375)
+    - Connor Wong: 0/1 (0.000)
+    - Marcelo Mayer: NO HISTORY (Defaulting 0.31)
+    - Caleb Durbin: NO HISTORY (Defaulting 0.31)
+  Aggregated Away OBP: 0.410
+  PROJECTION: Boston Red Sox | 5.02% Edge
 --------------------------------------------------
 GAME: Miami Marlins @ Los Angeles Dodgers (G1)
   Source: OFFICIAL
-  CALCULATION: |0.432 - 0.323| = 0.109 -> 10.91% Edge
+  Los Angeles Dodgers Hitting (vs Sandy Alcantara):
+    - Shohei Ohtani: 4/9 (0.444)
+    - Freddie Freeman: 0/3 (0.000)
+    - Andy Pages: 1/4 (0.250)
+    - Kyle Tucker: NO HISTORY (Defaulting 0.32)
+    - Will Smith: 6/16 (0.375)
+    - Miguel Rojas: 1/2 (0.500)
+    - Hyeseong Kim: 1/2 (0.500)
+    - Alex Call: 8/10 (0.800)
+    - Alex Freeland: NO HISTORY (Defaulting 0.32)
+  Aggregated Home OBP: 0.432
+
+  Miami Marlins Hitting (vs Tyler Glasnow):
+    - Jakob Marsee: NO HISTORY (Defaulting 0.32)
+    - Kyle Stowers: NO HISTORY (Defaulting 0.32)
+    - Otto Lopez: NO HISTORY (Defaulting 0.32)
+    - Xavier Edwards: NO HISTORY (Defaulting 0.32)
+    - Liam Hicks: NO HISTORY (Defaulting 0.32)
+    - Connor Norby: NO HISTORY (Defaulting 0.32)
+    - Javier Sanoja: NO HISTORY (Defaulting 0.32)
+    - Graham Pauley: NO HISTORY (Defaulting 0.32)
+    - Esteury Ruiz: 1/3 (0.333)
+  Aggregated Away OBP: 0.323
+  PROJECTION: Los Angeles Dodgers | 10.91% Edge
 --------------------------------------------------
 GAME: Chicago Cubs @ San Diego Padres (G1)
   Source: OFFICIAL
-  CALCULATION: |0.245 - 0.247| = 0.002 -> 0.16% Edge
+  San Diego Padres Hitting (vs Jameson Taillon):
+    - Jackson Merrill: 1/2 (0.500)
+    - Fernando Tatis Jr.: 2/6 (0.333)
+    - Manny Machado: 0/2 (0.000)
+    - Xander Bogaerts: 6/28 (0.214)
+    - Ty France: 2/9 (0.222)
+    - Ramón Laureano: 2/6 (0.333)
+    - Jake Cronenworth: 0/2 (0.000)
+    - Freddy Fermin: 0/1 (0.000)
+    - Bryce Johnson: NO HISTORY (Defaulting 0.32)
+  Aggregated Home OBP: 0.245
+
+  Chicago Cubs Hitting (vs Matt Waldron):
+    - Nico Hoerner: NO HISTORY (Defaulting 0.32)
+    - Moisés Ballesteros: NO HISTORY (Defaulting 0.32)
+    - Alex Bregman: 0/2 (0.000)
+    - Ian Happ: NO HISTORY (Defaulting 0.32)
+    - Michael Busch: NO HISTORY (Defaulting 0.32)
+    - Michael Conforto: 1/5 (0.200)
+    - Matt Shaw: NO HISTORY (Defaulting 0.32)
+    - Pete Crow-Armstrong: NO HISTORY (Defaulting 0.32)
+    - Miguel Amaya: NO HISTORY (Defaulting 0.32)
+  Aggregated Away OBP: 0.247
+  PROJECTION: Chicago Cubs | 0.16% Edge
 --------------------------------------------------
 GAME: Colorado Rockies @ Cincinnati Reds (G1)
   Source: OFFICIAL
-  CALCULATION: |0.320 - 0.319| = 0.001 -> 0.13% Edge
+  Cincinnati Reds Hitting (vs Tomoyuki Sugano):
+    - TJ Friedl: NO HISTORY (Defaulting 0.32)
+    - Matt McLain: NO HISTORY (Defaulting 0.32)
+    - Elly De La Cruz: NO HISTORY (Defaulting 0.32)
+    - Sal Stewart: NO HISTORY (Defaulting 0.32)
+    - Tyler Stephenson: NO HISTORY (Defaulting 0.32)
+    - Will Benson: NO HISTORY (Defaulting 0.32)
+    - JJ Bleday: NO HISTORY (Defaulting 0.32)
+    - Rece Hinds: NO HISTORY (Defaulting 0.32)
+    - Ke'Bryan Hayes: NO HISTORY (Defaulting 0.32)
+  Aggregated Home OBP: 0.320
+
+  Colorado Rockies Hitting (vs Brandon Williamson):
+    - Jordan Beck: NO HISTORY (Defaulting 0.31)
+    - Brenton Doyle: 1/4 (0.250)
+    - TJ Rumfield: NO HISTORY (Defaulting 0.31)
+    - Hunter Goodman: NO HISTORY (Defaulting 0.31)
+    - Willi Castro: NO HISTORY (Defaulting 0.31)
+    - Brett Sullivan: NO HISTORY (Defaulting 0.31)
+    - Kyle Karros: NO HISTORY (Defaulting 0.31)
+    - Ezequiel Tovar: 1/2 (0.500)
+    - Mickey Moniak: NO HISTORY (Defaulting 0.31)
+  Aggregated Away OBP: 0.319
+  PROJECTION: Cincinnati Reds | 0.13% Edge
 --------------------------------------------------
 GAME: St. Louis Cardinals @ Pittsburgh Pirates (G1)
   Source: OFFICIAL
-  CALCULATION: |0.243 - 0.233| = 0.009 -> 0.93% Edge
+  Pittsburgh Pirates Hitting (vs Andre Pallante):
+    - Oneil Cruz: 5/13 (0.385)
+    - Nick Yorke: 0/3 (0.000)
+    - Bryan Reynolds: 4/23 (0.174)
+    - Ryan O'Hearn: 2/6 (0.333)
+    - Marcell Ozuna: 3/5 (0.600)
+    - Nick Gonzales: 0/9 (0.000)
+    - Billy Cook: 0/2 (0.000)
+    - Konnor Griffin: NO HISTORY (Defaulting 0.32)
+    - Henry Davis: 1/4 (0.250)
+  Aggregated Home OBP: 0.243
+
+  St. Louis Cardinals Hitting (vs Bubba Chandler):
+    - JJ Wetherholt: NO HISTORY (Defaulting 0.32)
+    - Iván Herrera: 0/1 (0.000)
+    - Alec Burleson: 0/1 (0.000)
+    - Jordan Walker: NO HISTORY (Defaulting 0.32)
+    - Nolan Gorman: 0/2 (0.000)
+    - Masyn Winn: 1/2 (0.500)
+    - Nathan Church: 0/2 (0.000)
+    - Ramón Urías: NO HISTORY (Defaulting 0.32)
+    - Victor Scott II: NO HISTORY (Defaulting 0.32)
+  Aggregated Away OBP: 0.233
+  PROJECTION: Pittsburgh Pirates | 0.93% Edge
 --------------------------------------------------
 GAME: Washington Nationals @ New York Mets (G1)
   Source: OFFICIAL
-  CALCULATION: |0.365 - 0.346| = 0.019 -> 1.88% Edge
+  New York Mets Hitting (vs Cade Cavalli):
+    - Bo Bichette: NO HISTORY (Defaulting 0.32)
+    - Juan Soto: 1/3 (0.333)
+    - Austin Slater: NO HISTORY (Defaulting 0.32)
+    - Francisco Alvarez: 1/2 (0.500)
+    - Brett Baty: 1/2 (0.500)
+    - Tyrone Taylor: NO HISTORY (Defaulting 0.32)
+    - Carson Benge: NO HISTORY (Defaulting 0.32)
+    - Luis Torrens: NO HISTORY (Defaulting 0.32)
+    - Ronny Mauricio: NO HISTORY (Defaulting 0.32)
+  Aggregated Home OBP: 0.365
+
+  Washington Nationals Hitting (vs David Peterson):
+    - James Wood: 3/13 (0.231)
+    - Curtis Mead: NO HISTORY (Defaulting 0.31)
+    - Brady House: 0/3 (0.000)
+    - José Tena: NO HISTORY (Defaulting 0.31)
+    - Jacob Young: 5/13 (0.385)
+    - Daylen Lile: NO HISTORY (Defaulting 0.31)
+    - Joey Wiemer: 4/6 (0.667)
+    - Nasim Nuñez: NO HISTORY (Defaulting 0.31)
+    - Keibert Ruiz: 6/16 (0.375)
+  Aggregated Away OBP: 0.346
+  PROJECTION: New York Mets | 1.88% Edge
 --------------------------------------------------
 GAME: Detroit Tigers @ Atlanta Braves (G1)
   Source: OFFICIAL
-  CALCULATION: |0.385 - 0.320| = 0.065 -> 6.53% Edge
+  Atlanta Braves Hitting (vs Tarik Skubal):
+    - Ronald Acuña Jr.: NO HISTORY (Defaulting 0.31)
+    - Drake Baldwin: NO HISTORY (Defaulting 0.31)
+    - Ozzie Albies: 3/3 (1.000)
+    - Matt Olson: 3/8 (0.375)
+    - Austin Riley: 2/3 (0.667)
+    - Mauricio Dubón: 2/8 (0.250)
+    - Michael Harris II: NO HISTORY (Defaulting 0.31)
+    - Mike Yastrzemski: 0/2 (0.000)
+    - Reynaldo López: NO HISTORY (Defaulting 0.31)
+  Aggregated Home OBP: 0.385
+
+  Detroit Tigers Hitting (vs JR Ritchie):
+    - Kevin McGonigle: NO HISTORY (Defaulting 0.32)
+    - Gleyber Torres: NO HISTORY (Defaulting 0.32)
+    - Colt Keith: NO HISTORY (Defaulting 0.32)
+    - Riley Greene: NO HISTORY (Defaulting 0.32)
+    - Dillon Dingler: NO HISTORY (Defaulting 0.32)
+    - Matt Vierling: NO HISTORY (Defaulting 0.32)
+    - Spencer Torkelson: NO HISTORY (Defaulting 0.32)
+    - Wenceel Pérez: NO HISTORY (Defaulting 0.32)
+    - Jahmai Jones: NO HISTORY (Defaulting 0.32)
+  Aggregated Away OBP: 0.320
+  PROJECTION: Atlanta Braves | 6.53% Edge
 --------------------------------------------------
 GAME: Arizona Diamondbacks @ Milwaukee Brewers (G1)
   Source: OFFICIAL
-  CALCULATION: |0.321 - 0.320| = 0.001 -> 0.13% Edge
+  Milwaukee Brewers Hitting (vs Eduardo Rodriguez):
+    - Brandon Lockridge: 0/2 (0.000)
+    - Brice Turang: 4/7 (0.571)
+    - William Contreras: 3/10 (0.300)
+    - Jake Bauers: NO HISTORY (Defaulting 0.31)
+    - Gary Sánchez: 11/27 (0.407)
+    - Luis Rengifo: 2/11 (0.182)
+    - Garrett Mitchell: 0/3 (0.000)
+    - Sal Frelick: 1/5 (0.200)
+    - David Hamilton: NO HISTORY (Defaulting 0.31)
+  Aggregated Home OBP: 0.321
+
+  Arizona Diamondbacks Hitting (vs Brandon Sproat):
+    - Geraldo Perdomo: NO HISTORY (Defaulting 0.32)
+    - Ketel Marte: NO HISTORY (Defaulting 0.32)
+    - Corbin Carroll: NO HISTORY (Defaulting 0.32)
+    - Adrian Del Castillo: NO HISTORY (Defaulting 0.32)
+    - Ildemaro Vargas: NO HISTORY (Defaulting 0.32)
+    - Lourdes Gurriel Jr.: NO HISTORY (Defaulting 0.32)
+    - Nolan Arenado: NO HISTORY (Defaulting 0.32)
+    - Jose Fernandez: NO HISTORY (Defaulting 0.32)
+    - Alek Thomas: NO HISTORY (Defaulting 0.32)
+  Aggregated Away OBP: 0.320
+  PROJECTION: Milwaukee Brewers | 0.13% Edge
 --------------------------------------------------
 GAME: Kansas City Royals @ Athletics (G1)
   Source: OFFICIAL
-  CALCULATION: |0.376 - 0.336| = 0.040 -> 4.04% Edge
+  Athletics Hitting (vs Michael Wacha):
+    - Nick Kurtz: 2/6 (0.333)
+    - Shea Langeliers: 2/3 (0.667)
+    - Carlos Cortes: 0/2 (0.000)
+    - Brent Rooker: 5/9 (0.556)
+    - Jacob Wilson: 1/5 (0.200)
+    - Jeff McNeil: 3/8 (0.375)
+    - Zack Gelof: NO HISTORY (Defaulting 0.32)
+    - Lawrence Butler: 3/6 (0.500)
+    - Darell Hernaiz: 0/2 (0.000)
+  Aggregated Home OBP: 0.376
+
+  Kansas City Royals Hitting (vs Luis Severino):
+    - Maikel Garcia: 5/10 (0.500)
+    - Bobby Witt Jr.: 2/10 (0.200)
+    - Carter Jensen: NO HISTORY (Defaulting 0.32)
+    - Salvador Perez: 7/20 (0.350)
+    - Michael Massey: 2/3 (0.667)
+    - Isaac Collins: NO HISTORY (Defaulting 0.32)
+    - Jac Caglianone: 1/3 (0.333)
+    - Lane Thomas: 2/9 (0.222)
+    - Kyle Isbel: 2/7 (0.286)
+  Aggregated Away OBP: 0.336
+  PROJECTION: Athletics | 4.04% Edge
 --------------------------------------------------
