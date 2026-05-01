@@ -42,10 +42,8 @@ def get_key_relievers(team_id):
     """Identifies Closers and Setup men from live depth charts."""
     key_ids = {}
     try:
-        # Fetch depth chart to find CL and SU roles
         depth = call_stats_api('teams', {'teamId': team_id, 'hydrate': 'depthChart'})
         depth_data = depth.get('teams', [{}])[0].get('depthChart', [])
-        
         for entry in depth_data:
             pos = entry.get('position', {}).get('abbreviation')
             if pos in ['CL', 'SU']:
@@ -62,39 +60,35 @@ def check_bullpen_fatigue(team_id, team_name):
     
     now = get_mst_now()
     fatigued_names = []
-    
-    # Check usage over the last 3 days
+    # Check yesterday, 2 days ago, and 3 days ago
     lookback_days = [(now - timedelta(days=i)).strftime("%m/%d/%Y") for i in range(1, 4)]
     
-    usage_data = {pid: {'pitches': 0, 'days': 0} for pid in key_arms}
+    usage_data = {pid: {'pitches': 0, 'appearances': 0} for pid in key_arms}
     
     for date_str in lookback_days:
         try:
             games = call_stats_api('schedule', {'sportId': 1, 'date': date_str, 'teamId': team_id})
             for g in games.get('dates', [{}])[0].get('games', []):
                 box = statsapi.boxscore_data(g['gamePk'])
-                # Check both home and away pitchers in the boxscore
                 for side in ['home', 'away']:
                     for p_id_str in box[side]['pitchers']:
                         p_id = int(p_id_str.replace('ID',''))
                         if p_id in usage_data:
                             p_stats = box[side]['players'][p_id_str]['stats']['pitching']
                             usage_data[p_id]['pitches'] += p_stats.get('pitchesThrown', 0)
-                            usage_data[p_id]['days'] += 1
+                            usage_data[p_id]['appearances'] += 1
         except: continue
 
     for pid, data in usage_data.items():
-        # Fatigue Thresholds: 3 consecutive days OR 50+ pitches in 48/72h
-        if data['days'] >= 2 and data['pitches'] >= 45:
-            fatigued_names.append(key_arms[pid].split(' (')[0])
-        elif data['days'] >= 3:
+        # Trigger on 3 appearances in 3 days OR 50+ cumulative pitches
+        if data['appearances'] >= 3 or data['pitches'] >= 50:
             fatigued_names.append(key_arms[pid].split(' (')[0])
 
     if fatigued_names:
         return f"⚠️ {team_name} Bullpen Fatigue: ({', '.join(fatigued_names)})"
     return ""
 
-# --- CORE BVP & ODDS LOGIC ---
+# --- CACHE & BVP LOGIC ---
 
 def load_bvp_cache():
     if os.path.exists(BVP_CACHE_FILE):
@@ -111,46 +105,48 @@ def save_bvp_cache(cache_data):
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
     cache = load_bvp_cache()
     details = []
-    total_ob_events, total_pas = 0, 0
+    total_ob_events, total_pas, total_abs = 0, 0, 0
     cache_updated = False
     default_obp = 0.310 if p_hand == 'L' else 0.320
 
     for b_id in lineup_ids:
         b_name = name_map.get(b_id) or f"ID:{b_id}"
-        cache_key = f"{pitcher_id}_{b_id}_v4" # Updated version key
+        cache_key = f"{pitcher_id}_{b_id}_v5" # Version 5 for AB tracking
         
         if cache_key in cache:
             s = cache[cache_key]
-            h, bb, hbp, pa = s['h'], s['bb'], s['hbp'], s['pa']
+            h, bb, hbp, pa, ab = s['h'], s['bb'], s['hbp'], s['pa'], s.get('ab', 0)
         else:
             time.sleep(0.1) 
             try:
-                # Includes Regular (R), Postseason (P), World Series (W)
                 data = call_stats_api('people', {'personIds': b_id, 'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id},gameType=[R,P,W])'})
-                h, bb, hbp, pa = 0, 0, 0, 0
+                h, bb, hbp, pa, ab = 0, 0, 0, 0, 0
                 if 'people' in data and data['people']:
                     player_stats = data['people'][0].get('stats', [])
                     for stat_group in player_stats:
                         if stat_group.get('type', {}).get('displayName') == 'vsPlayerTotal':
                             for split in stat_group.get('splits', []):
                                 st = split.get('stat', {})
-                                h, bb, hbp, pa = int(st.get('hits', 0)), int(st.get('baseOnBalls', 0)), int(st.get('hitByPitch', 0)), int(st.get('plateAppearances', 0))
+                                h, bb, hbp, pa, ab = int(st.get('hits', 0)), int(st.get('baseOnBalls', 0)), int(st.get('hitByPitch', 0)), int(st.get('plateAppearances', 0)), int(st.get('atBats', 0))
                                 break
-                cache[cache_key] = {'h': h, 'bb': bb, 'hbp': hbp, 'pa': pa}
+                cache[cache_key] = {'h': h, 'bb': bb, 'hbp': hbp, 'pa': pa, 'ab': ab}
                 cache_updated = True
-            except: h, bb, hbp, pa = 0, 0, 0, 0
+            except: h, bb, hbp, pa, ab = 0, 0, 0, 0, 0
 
         ob_events = h + bb + hbp
         if pa > 0:
             total_ob_events += ob_events
             total_pas += pa
-            details.append(f"    - {b_name}: {ob_events}/{pa} ({(ob_events/pa):.3f})")
+            total_abs += ab
+            details.append(f"    - {b_name}: {ob_events}/{pa} OBP (AB: {ab})")
         else:
             details.append(f"    - {b_name}: NO HISTORY (Defaulting {default_obp})")
 
     if cache_updated: save_bvp_cache(cache)
     smoothed = (total_ob_events + (default_obp * 10)) / (total_pas + 10)
-    return smoothed, total_pas, details
+    return smoothed, total_pas, details, total_abs
+
+# --- ODDS & AUDIT LOGIC ---
 
 def get_mlb_odds():
     now_mst = get_mst_now()
@@ -229,6 +225,8 @@ def audit_and_stats():
     lifetime = f"{l_w}/{len(total_fin)} ({l_w/len(total_fin)*100 if len(total_fin)>0 else 0:.1f}%) | {'+$' if l_p>=0 else '-$'}{abs(l_p):,.2f}"
     return line(today_str, "TODAY"), line(yesterday_str, "YESTERDAY"), lifetime
 
+# --- UTILS ---
+
 def get_player_info(pid):
     try:
         p = call_stats_api('person', {'personId': pid})
@@ -241,9 +239,9 @@ def get_pro_lineup(tid):
         if lg:
             box = statsapi.boxscore_data(lg)
             key = 'home' if box['home']['team']['id'] == tid else 'away'
-            return box[key].get('battingOrder', []), "ESTIMATED"
+            return box[key].get('battingOrder', []), "Starters of Last Game"
     except: pass
-    return [], "NONE"
+    return [], "None Found"
 
 def format_mst_time(utc):
     try:
@@ -253,6 +251,8 @@ def format_mst_time(utc):
 
 def send_telegram(msg):
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", data={'chat_id': TELEGRAM_CHAT_ID, 'text': msg, 'parse_mode': 'Markdown'})
+
+# --- MAIN RUN ---
 
 def run_analysis():
     now_mst = get_mst_now()
@@ -298,7 +298,7 @@ def run_analysis():
         elif status == 'Final':
             score_str = f"✅ **FINAL: {game['teams']['away'].get('score', 0)} - {game['teams']['home'].get('score', 0)}**"
 
-        # Check Fatigue for both teams
+        # Bullpen Fatigue Check
         away_fatigue = check_bullpen_fatigue(game['teams']['away']['team']['id'], away_name)
         home_fatigue = check_bullpen_fatigue(game['teams']['home']['team']['id'], home_name)
         fatigue_txt = "\n  ".join(filter(None, [away_fatigue, home_fatigue]))
@@ -316,12 +316,12 @@ def run_analysis():
                 global stats_api_calls
                 stats_api_calls += 1 
 
-                for t in ['home', 'away']:
-                    for pid, p in box.get(t, {}).get('players', {}).items():
+                for side in ['home', 'away']:
+                    for pid, p in box.get(side, {}).get('players', {}).items():
                         name_map[int(pid.replace('ID',''))] = p['person']['fullName']
                 
                 h_l, a_l = box.get('home',{}).get('battingOrder',[]), box.get('away',{}).get('battingOrder',[])
-                lineup_src = "OFFICIAL" if (h_l and a_l) else "ESTIMATED"
+                lineup_src = "Official Boxscore" if (h_l and a_l) else "Starters of Last Game"
                 
                 if not h_l: h_l, _ = get_pro_lineup(game['teams']['home']['team']['id'])
                 if not a_l: a_l, _ = get_pro_lineup(game['teams']['away']['team']['id'])
@@ -329,21 +329,20 @@ def run_analysis():
                 if h_l and a_l:
                     h_h, h_n = get_player_info(h_p_id)
                     a_h, a_n = get_player_info(a_p_id)
-                    h_e, h_pa, h_det = get_smoothed_bvp(a_p_id, h_l, a_h, name_map)
-                    a_e, a_pa, a_det = get_smoothed_bvp(h_p_id, a_l, h_h, name_map)
+                    h_e, h_pa, h_det, h_ab = get_smoothed_bvp(a_p_id, h_l, a_h, name_map)
+                    a_e, a_pa, a_det, a_ab = get_smoothed_bvp(h_p_id, a_l, h_h, name_map)
                     
                     winner = home_name if h_e > a_e else away_name
                     conf = round(abs(h_e - a_e) * 100, 2)
                     w_odds = live_odds.get(f"{home_name}_{winner}", -110)
 
-                    # Update Evaluation Log
-                    eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n  Source: {lineup_src}\n")
+                    eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n  Lineup Source: {lineup_src}\n")
                     eval_log_lines.append(f"  {home_name} Hitting (vs {a_n}):\n")
                     eval_log_lines.extend([line + "\n" for line in h_det])
-                    eval_log_lines.append(f"  Aggregated Home OBP: {h_e:.3f}\n\n")
+                    eval_log_lines.append(f"  Aggregated Home OBP: {h_e:.3f} (Total AB: {h_ab})\n\n")
                     eval_log_lines.append(f"  {away_name} Hitting (vs {h_n}):\n")
                     eval_log_lines.extend([line + "\n" for line in a_det])
-                    eval_log_lines.append(f"  Aggregated Away OBP: {a_e:.3f}\n")
+                    eval_log_lines.append(f"  Aggregated Away OBP: {a_e:.3f} (Total AB: {a_ab})\n")
                     eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
@@ -373,10 +372,8 @@ def run_analysis():
         report += f"• [{g['time']}] {g['matchup']}\n"
         if g['score']:
             report += f"  {g['score']}\n"
-        
         if g['fatigue']:
             report += f"  {g['fatigue']}\n"
-        
         if g.get('is_active'):
             report += f"  👉 *{g['winner']}* ({g['odds']}) | {g['conf']}% Edge ({g['src']})\n\n"
         else:
