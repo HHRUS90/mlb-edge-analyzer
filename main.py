@@ -60,7 +60,6 @@ def check_bullpen_fatigue(team_id, team_name):
     
     now = get_mst_now()
     fatigued_names = []
-    # Check yesterday, 2 days ago, and 3 days ago
     lookback_days = [(now - timedelta(days=i)).strftime("%m/%d/%Y") for i in range(1, 4)]
     
     usage_data = {pid: {'pitches': 0, 'appearances': 0} for pid in key_arms}
@@ -80,7 +79,6 @@ def check_bullpen_fatigue(team_id, team_name):
         except: continue
 
     for pid, data in usage_data.items():
-        # Trigger on 3 appearances in 3 days OR 50+ cumulative pitches
         if data['appearances'] >= 3 or data['pitches'] >= 50:
             fatigued_names.append(key_arms[pid].split(' (')[0])
 
@@ -111,7 +109,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
 
     for b_id in lineup_ids:
         b_name = name_map.get(b_id) or f"ID:{b_id}"
-        cache_key = f"{pitcher_id}_{b_id}_v5" # Version 5 for AB tracking
+        cache_key = f"{pitcher_id}_{b_id}_v5"
         
         if cache_key in cache:
             s = cache[cache_key]
@@ -184,10 +182,11 @@ def format_odds(odds_val):
     except: return str(odds_val)
 
 def audit_and_stats():
-    if not os.path.exists(CSV_FILE): return "N/A", "N/A", "0/0 | $0.00"
+    if not os.path.exists(CSV_FILE): return "📊 *TODAY:* N/A", "📊 *YESTERDAY:* N/A", "0/0 (0.0%) | $0.00"
     df = pd.read_csv(CSV_FILE)
     now_mst = get_mst_now()
-    today_str, yesterday_str = now_mst.strftime("%m/%d/%Y"), (now_mst - timedelta(days=1)).strftime("%m/%d/%Y")
+    today_str = now_mst.strftime("%m/%d/%Y")
+    yesterday_str = (now_mst - timedelta(days=1)).strftime("%m/%d/%Y")
     
     updated = False
     for idx, row in df.iterrows():
@@ -211,10 +210,10 @@ def audit_and_stats():
                         updated = True
     if updated: df.to_csv(CSV_FILE, index=False)
     
-    def line(d, label):
-        sub = df[df['Date'] == d]
+    def get_stat_line(date_str, label):
+        sub = df[df['Date'] == date_str]
         fin = sub[sub['Result'].isin(['WIN', 'LOSS'])]
-        if fin.empty: return f"📊 *{label}:* N/A"
+        if fin.empty: return f"📊 *{label}:* 0/0 (0.0%) | $0.00"
         w = (fin['Result'] == 'WIN').sum()
         p = fin['Profit'].sum()
         return f"📊 *{label}:* {w}/{len(fin)} ({w/len(fin)*100:.1f}%) | {'+$' if p>=0 else '-$'}{abs(p):,.2f}"
@@ -223,7 +222,8 @@ def audit_and_stats():
     l_w = (total_fin['Result'] == 'WIN').sum()
     l_p = total_fin['Profit'].sum()
     lifetime = f"{l_w}/{len(total_fin)} ({l_w/len(total_fin)*100 if len(total_fin)>0 else 0:.1f}%) | {'+$' if l_p>=0 else '-$'}{abs(l_p):,.2f}"
-    return line(today_str, "TODAY"), line(yesterday_str, "YESTERDAY"), lifetime
+    
+    return get_stat_line(today_str, "TODAY"), get_stat_line(yesterday_str, "YESTERDAY"), lifetime
 
 # --- UTILS ---
 
@@ -298,7 +298,6 @@ def run_analysis():
         elif status == 'Final':
             score_str = f"✅ **FINAL: {game['teams']['away'].get('score', 0)} - {game['teams']['home'].get('score', 0)}**"
 
-        # Bullpen Fatigue Check
         away_fatigue = check_bullpen_fatigue(game['teams']['away']['team']['id'], away_name)
         home_fatigue = check_bullpen_fatigue(game['teams']['home']['team']['id'], home_name)
         fatigue_txt = "\n  ".join(filter(None, [away_fatigue, home_fatigue]))
