@@ -182,7 +182,9 @@ def format_odds(odds_val):
     except: return str(odds_val)
 
 def audit_and_stats():
-    if not os.path.exists(CSV_FILE): return "📊 *TODAY:* N/A", "📊 *YESTERDAY:* N/A", "0/0 (0.0%) | $0.00"
+    if not os.path.exists(CSV_FILE): 
+        return "📊 TODAY: 0/0 (0.0%) | $0.00", "📊 YESTERDAY: 0/0 (0.0%) | $0.00", "0/0 (0.0%) | $0.00"
+    
     df = pd.read_csv(CSV_FILE)
     now_mst = get_mst_now()
     today_str = now_mst.strftime("%m/%d/%Y")
@@ -213,15 +215,18 @@ def audit_and_stats():
     def get_stat_line(date_str, label):
         sub = df[df['Date'] == date_str]
         fin = sub[sub['Result'].isin(['WIN', 'LOSS'])]
-        if fin.empty: return f"📊 *{label}:* 0/0 (0.0%) | $0.00"
+        if fin.empty: return f"📊 {label}: 0/0 (0.0%) | $0.00"
         w = (fin['Result'] == 'WIN').sum()
         p = fin['Profit'].sum()
-        return f"📊 *{label}:* {w}/{len(fin)} ({w/len(fin)*100:.1f}%) | {'+$' if p>=0 else '-$'}{abs(p):,.2f}"
+        win_pct = (w / len(fin)) * 100
+        return f"📊 {label}: {w}/{len(fin)} ({win_pct:.1f}%) | {'+$' if p>=0 else '-$'}{abs(p):,.2f}"
 
     total_fin = df[df['Result'].isin(['WIN', 'LOSS'])]
     l_w = (total_fin['Result'] == 'WIN').sum()
     l_p = total_fin['Profit'].sum()
-    lifetime = f"{l_w}/{len(total_fin)} ({l_w/len(total_fin)*100 if len(total_fin)>0 else 0:.1f}%) | {'+$' if l_p>=0 else '-$'}{abs(l_p):,.2f}"
+    l_count = len(total_fin)
+    l_pct = (l_w / l_count * 100) if l_count > 0 else 0.0
+    lifetime = f"{l_w}/{l_count} ({l_pct:.1f}%) | {'+$' if l_p>=0 else '-$'}{abs(l_p):,.2f}"
     
     return get_stat_line(today_str, "TODAY"), get_stat_line(yesterday_str, "YESTERDAY"), lifetime
 
