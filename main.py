@@ -137,9 +137,10 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
             total_ob_events += ob_events
             total_pas += pa
             total_abs += ab
-            details.append(f"    - {b_name}: {ob_events}/{pa} OBP (AB: {ab})")
+            player_obp = ob_events / pa
+            details.append(f"    - {b_name}: {ob_events}/{pa} OBP: {player_obp:.3f} (AB: {ab})")
         else:
-            details.append(f"    - {b_name}: NO HISTORY (Defaulting {default_obp})")
+            details.append(f"    - {b_name}: NO HISTORY (Defaulting {default_obp:.3f})")
 
     if cache_updated: save_bvp_cache(cache)
     smoothed = (total_ob_events + (default_obp * 10)) / (total_pas + 10)
