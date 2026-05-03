@@ -303,17 +303,35 @@ def run_analysis():
         a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
         pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
 
-        current_away_o = live_odds.get(f"{home_name}_{away_name}")
-        current_home_o = live_odds.get(f"{home_name}_{home_name}")
+        # --- UPDATED ODDS PERSISTENCE LOGIC ---
+        saved_game = pd.DataFrame()
+        if not history_df.empty:
+            saved_game = history_df[(history_df['Date'] == today_date_str) & 
+                                    (history_df['Matchup'].str.contains(home_name)) & 
+                                    (history_df['Game_Num'].astype(int) == game_num)]
+
+        # Determine if we should use LIVE or SAVED odds
+        # Rule: Use live odds if the game hasn't started. Lock odds if game is Live or Final.
+        is_live_or_final = status in ['Live', 'In Progress', 'Final'] or detailed_status == 'In Progress'
         
-        if current_away_o is None and not history_df.empty:
-            match_rows = history_df[(history_df['Date'] == today_date_str) & (history_df['Matchup'].str.contains(home_name)) & (history_df['Game_Num'] == game_num)]
-            if not match_rows.empty:
-                current_away_o = match_rows.iloc[0]['Odds']
-        
-        away_o_str = format_odds(current_away_o or "N/A")
-        home_o_str = format_odds(current_home_o or "N/A")
-        matchup_txt = f"{away_name} ({away_o_str}) @ {home_name} ({home_o_str})"
+        if is_live_or_final and not saved_game.empty:
+            # LOCK: Use saved odds once the game is underway
+            matchup_txt = saved_game.iloc[0]['Matchup']
+            winner_saved = saved_game.iloc[0]['Predicted_Winner']
+            w_odds = saved_game.iloc[0]['Odds']
+        else:
+            # UPDATE: Continue showing live odds up until first pitch
+            current_away_o = live_odds.get(f"{home_name}_{away_name}")
+            current_home_o = live_odds.get(f"{home_name}_{home_name}")
+            away_o_str = format_odds(current_away_o or "N/A")
+            home_o_str = format_odds(current_home_o or "N/A")
+            matchup_txt = f"{away_name} ({away_o_str}) @ {home_name} ({home_o_str})"
+            w_odds = None # Will be determined after winner projection
+
+            # If the game is Pre-Game but already in CSV, we need to update the CSV line later
+            if not saved_game.empty:
+                # Flag to update this row in the logic below
+                pass
         
         score_str = ""
         if detailed_status == 'Postponed':
@@ -337,9 +355,6 @@ def run_analysis():
         if h_p_id and a_p_id and detailed_status != 'Postponed':
             try:
                 box = statsapi.boxscore_data(game_id)
-                global stats_api_calls
-                stats_api_calls += 1 
-
                 for side in ['home', 'away']:
                     for pid, p in box.get(side, {}).get('players', {}).items():
                         name_map[int(pid.replace('ID',''))] = p['person']['fullName']
@@ -356,7 +371,9 @@ def run_analysis():
                     
                     winner = home_name if h_e > a_e else away_name
                     conf = round(abs(h_e - a_e) * 100, 2)
-                    w_odds = live_odds.get(f"{home_name}_{winner}", -110)
+                    
+                    if w_odds is None:
+                        w_odds = live_odds.get(f"{home_name}_{winner}", -110)
 
                     eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n  Lineup Source: {lineup_src}\n")
                     eval_log_lines.append(f"  {home_name} Hitting (vs {a_name}):\n")
@@ -368,14 +385,21 @@ def run_analysis():
                     eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
-                    exists = not history_df.empty and not history_df[(history_df['Date'] == today_date_str) & (history_df['Matchup'].str.contains(home_name)) & (history_df['Game_Num'].astype(int) == game_num)].empty
-                    if not exists and status == 'Pre-Game':
-                        new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
+                    # Logic to Add or Update CSV
+                    if status == 'Pre-Game':
+                        if saved_game.empty:
+                            new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
+                        else:
+                            # Update existing row with new live odds/matchup string
+                            history_df.loc[saved_game.index, 'Matchup'] = matchup_txt
+                            history_df.loc[saved_game.index, 'Odds'] = w_odds
                     
                     game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': lineup_src})
             except: pass
         display_list.append(game_info)
 
+    # Save updates back to CSV
+    if not history_df.empty: history_df.to_csv(CSV_FILE, index=False)
     if new_preds: 
         pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
     
