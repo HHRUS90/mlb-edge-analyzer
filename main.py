@@ -233,10 +233,19 @@ def audit_and_stats():
 # --- UTILS ---
 
 def get_player_info(pid):
+    """Retrieves pitch hand, full name, and season ERA for a pitcher."""
     try:
-        p = call_stats_api('person', {'personId': pid})
-        return p['people'][0].get('pitchHand', {}).get('code', 'R'), p['people'][0].get('fullName', f"ID:{pid}")
-    except: return 'R', f"ID:{pid}"
+        p = call_stats_api('person', {'personId': pid, 'hydrate': 'stats(group=[pitching],type=[season])'})
+        hand = p['people'][0].get('pitchHand', {}).get('code', 'R')
+        name = p['people'][0].get('fullName', f"ID:{pid}")
+        era = "0.00"
+        stats = p['people'][0].get('stats', [])
+        for s in stats:
+            if s.get('type', {}).get('displayName') == 'season':
+                era = s.get('splits', [{}])[0].get('stat', {}).get('era', '0.00')
+                break
+        return hand, name, era
+    except: return 'R', f"ID:{pid}", "0.00"
 
 def get_pro_lineup(tid):
     try:
@@ -283,6 +292,11 @@ def run_analysis():
         away_name = game['teams']['away']['team']['name']
         home_name = game['teams']['home']['team']['name']
         
+        # Probable Pitcher display info
+        h_hand, h_name, h_era = get_player_info(h_p_id) if h_p_id else ('R', 'TBD', '0.00')
+        a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
+        pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
+
         current_away_o = live_odds.get(f"{home_name}_{away_name}")
         current_home_o = live_odds.get(f"{home_name}_{home_name}")
         
@@ -311,7 +325,7 @@ def run_analysis():
             'matchup': matchup_txt, 'time': mst_time, 'raw_time': mst_dt, 
             'is_active': False, 'status': detailed_status if detailed_status == 'Postponed' else status, 
             'score': score_str, 'away_team': away_name, 'home_team': home_name, 'game_num': game_num,
-            'fatigue': fatigue_txt
+            'fatigue': fatigue_txt, 'pitchers': pitcher_header
         }
 
         if h_p_id and a_p_id and detailed_status != 'Postponed':
@@ -331,20 +345,18 @@ def run_analysis():
                 if not a_l: a_l, _ = get_pro_lineup(game['teams']['away']['team']['id'])
 
                 if h_l and a_l:
-                    h_h, h_n = get_player_info(h_p_id)
-                    a_h, a_n = get_player_info(a_p_id)
-                    h_e, h_pa, h_det, h_ab = get_smoothed_bvp(a_p_id, h_l, a_h, name_map)
-                    a_e, a_pa, a_det, a_ab = get_smoothed_bvp(h_p_id, a_l, h_h, name_map)
+                    h_e, h_pa, h_det, h_ab = get_smoothed_bvp(a_p_id, h_l, a_hand, name_map)
+                    a_e, a_pa, a_det, a_ab = get_smoothed_bvp(h_p_id, a_l, h_hand, name_map)
                     
                     winner = home_name if h_e > a_e else away_name
                     conf = round(abs(h_e - a_e) * 100, 2)
                     w_odds = live_odds.get(f"{home_name}_{winner}", -110)
 
                     eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n  Lineup Source: {lineup_src}\n")
-                    eval_log_lines.append(f"  {home_name} Hitting (vs {a_n}):\n")
+                    eval_log_lines.append(f"  {home_name} Hitting (vs {a_name}):\n")
                     eval_log_lines.extend([line + "\n" for line in h_det])
                     eval_log_lines.append(f"  Aggregated Home OBP: {h_e:.3f} (Total AB: {h_ab})\n\n")
-                    eval_log_lines.append(f"  {away_name} Hitting (vs {h_n}):\n")
+                    eval_log_lines.append(f"  {away_name} Hitting (vs {h_name}):\n")
                     eval_log_lines.extend([line + "\n" for line in a_det])
                     eval_log_lines.append(f"  Aggregated Away OBP: {a_e:.3f} (Total AB: {a_ab})\n")
                     eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
@@ -374,6 +386,7 @@ def run_analysis():
 
     for g in sorted(display_list, key=lambda x: (x['raw_time'] or datetime.max)):
         report += f"• [{g['time']}] {g['matchup']}\n"
+        report += f"  {g['pitchers']}\n"
         if g['score']:
             report += f"  {g['score']}\n"
         if g['fatigue']:
