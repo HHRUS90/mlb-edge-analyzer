@@ -33,6 +33,7 @@ def call_stats_api(endpoint, params=None):
     return statsapi.get(endpoint, params or {})
 
 def get_mst_now():
+    """Returns current time in America/Denver."""
     tz = pytz.timezone('America/Denver')
     return datetime.now(tz)
 
@@ -182,7 +183,6 @@ def format_odds(odds_val):
     except: return str(odds_val)
 
 def audit_and_stats():
-    """Updates game results in CSV and calculates statistics for reporting."""
     if not os.path.exists(CSV_FILE): 
         return "📊 TODAY: 0/0 (0.0%) | $0.00", "📊 YESTERDAY: 0/0 (0.0%) | $0.00", "0/0 (0.0%) | $0.00"
     
@@ -194,7 +194,6 @@ def audit_and_stats():
     updated = False
     for idx, row in df.iterrows():
         if str(row.get('Result')).upper() == 'PENDING':
-            # Check results based on date stored in CSV
             sched_data = call_stats_api('schedule', {'date': row['Date'], 'sportId': 1})
             dates = sched_data.get('dates', [])
             if not dates: continue
@@ -202,7 +201,6 @@ def audit_and_stats():
             games = dates[0].get('games', [])
             for g in games:
                 h_name = g.get('teams', {}).get('home', {}).get('team', {}).get('name', '')
-                # Ensure matchup and game number alignment
                 if h_name in row['Matchup'] and int(g.get('gameNumber', 1)) == int(row.get('Game_Num', 1)):
                     if g['status']['abstractGameState'] == 'Final' and g['status']['detailedState'] != 'Postponed':
                         winning_team = g['teams']['home']['team']['name'] if g['teams']['home'].get('isWinner') else g['teams']['away']['team']['name']
@@ -216,9 +214,7 @@ def audit_and_stats():
                     elif g['status']['detailedState'] == 'Postponed':
                         df.at[idx, 'Result'], df.at[idx, 'Profit'] = 'PPD', 0.0
                         updated = True
-    
-    if updated: 
-        df.to_csv(CSV_FILE, index=False)
+    if updated: df.to_csv(CSV_FILE, index=False)
     
     def get_stat_line(date_str, label):
         sub = df[df['Date'] == date_str]
@@ -278,15 +274,15 @@ def send_telegram(msg):
 
 def run_analysis():
     now_mst = get_mst_now()
-    today_str = now_mst.strftime("%m/%d/%Y")
-    games_raw = call_stats_api('schedule', {'sportId': 1, 'date': today_str, 'hydrate': 'probablePitcher,lineups'})
+    today_date_str = now_mst.strftime("%m/%d/%Y")
+    full_timestamp_str = now_mst.strftime("%m/%d/%Y (%I:%M %p)")
+    
+    games_raw = call_stats_api('schedule', {'sportId': 1, 'date': today_date_str, 'hydrate': 'probablePitcher,lineups'})
     games = [g for d in games_raw.get('dates', []) for g in d.get('games', [])]
     
     live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
     new_preds, display_list = [], []
-    eval_log_lines = [f"DETAILED EVALUATION LOG - {today_str}\n" + "="*50 + "\n"]
-    
-    # Load existing history to check for duplicates
+    eval_log_lines = [f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n"]
     history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
 
     for game in games:
@@ -302,7 +298,6 @@ def run_analysis():
         away_name = game['teams']['away']['team']['name']
         home_name = game['teams']['home']['team']['name']
         
-        # Probable Pitcher display info
         h_hand, h_name, h_era = get_player_info(h_p_id) if h_p_id else ('R', 'TBD', '0.00')
         a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
         pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
@@ -310,9 +305,8 @@ def run_analysis():
         current_away_o = live_odds.get(f"{home_name}_{away_name}")
         current_home_o = live_odds.get(f"{home_name}_{home_name}")
         
-        # Fallback to existing CSV odds if already tracked
         if current_away_o is None and not history_df.empty:
-            match_rows = history_df[(history_df['Date'] == today_str) & (history_df['Matchup'].str.contains(home_name)) & (history_df['Game_Num'] == game_num)]
+            match_rows = history_df[(history_df['Date'] == today_date_str) & (history_df['Matchup'].str.contains(home_name)) & (history_df['Game_Num'] == game_num)]
             if not match_rows.empty:
                 current_away_o = match_rows.iloc[0]['Odds']
         
@@ -373,39 +367,21 @@ def run_analysis():
                     eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
-                    # Check if this specific game already exists in history
-                    exists = False
-                    if not history_df.empty:
-                        exists = not history_df[(history_df['Date'] == today_str) & 
-                                              (history_df['Matchup'].str.contains(home_name)) & 
-                                              (history_df['Game_Num'].astype(int) == game_num)].empty
-                    
-                    if not exists:
-                        new_preds.append({
-                            'Date': today_str, 
-                            'Matchup': matchup_txt, 
-                            'Predicted_Winner': winner, 
-                            'Odds': w_odds, 
-                            'Confidence': conf, 
-                            'Result': 'PENDING', 
-                            'Profit': 0.0, 
-                            'Game_Num': game_num
-                        })
+                    exists = not history_df.empty and not history_df[(history_df['Date'] == today_date_str) & (history_df['Matchup'].str.contains(home_name)) & (history_df['Game_Num'].astype(int) == game_num)].empty
+                    if not exists and status == 'Pre-Game':
+                        new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
                     
                     game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': lineup_src})
             except: pass
         display_list.append(game_info)
 
-    # WRITE NEW PREDICTIONS TO CSV IMMEDIATELY
     if new_preds: 
-        new_df = pd.DataFrame(new_preds)
-        new_df.to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
-        
+        pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
+    
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
-    # Audit existing games and get stats for header
     t_msg, y_msg, life = audit_and_stats()
-    report = f"⚾ *MLB REPORT: {today_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n"
+    report = f"⚾ *MLB REPORT: {full_timestamp_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n"
     report += f"🔑 *ODDS-API:* {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
     report += f"📊 *MLB-STATS-API:* {stats_api_calls} Calls this run\n\n"
     
