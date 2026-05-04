@@ -9,38 +9,58 @@ import time
 import json
 from datetime import datetime, timedelta
 
-# Force unbuffered output for GitHub logs
+# Force unbuffered output for real-time logging
 sys.stdout.reconfigure(line_buffering=True)
 
 # --- CONFIGURATION ---
-ODDS_CALL_LIMIT = 450         
-UNIT_SIZE = 100               
+ODDS_API_KEY = os.getenv('ODDS_API_KEY')
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
-ODDS_API_KEY = os.getenv('ODDS_API_KEY')
+UNIT_SIZE = 100               
+ODDS_CALL_LIMIT = 450         
 CSV_FILE = 'prediction_history.csv'
 USAGE_FILE = 'api_usage.csv' 
 EVAL_LOG = 'evaluation_log.txt'
 BVP_CACHE_FILE = 'bvp_cache.json'
+SEASON_STATS_CACHE = {} # In-memory cache to prevent redundant API calls in a single run
 
 # --- GLOBAL COUNTER ---
 stats_api_calls = 0
 
 def call_stats_api(endpoint, params=None):
-    """Wrapper to track every single access to MLB-Stats-API."""
     global stats_api_calls
     stats_api_calls += 1
     return statsapi.get(endpoint, params or {})
 
 def get_mst_now():
-    """Returns current time in America/Denver."""
     tz = pytz.timezone('America/Denver')
     return datetime.now(tz)
 
-# --- BULLPEN FATIGUE LOGIC ---
+# --- SEASON OBP LOOKUP (NEW LOGIC) ---
+def get_season_obp(player_id, p_hand):
+    """Fetches 2026 season OBP for a player to use as a personalized fallback."""
+    if player_id in SEASON_STATS_CACHE:
+        return SEASON_STATS_CACHE[player_id]
+    
+    # Base fallback if the player has no 2026 stats (e.g., a rookie)
+    default_val = 0.310 if p_hand == 'L' else 0.320
+    try:
+        data = call_stats_api('person', {'personId': player_id, 'hydrate': 'stats(group=[hitting],type=[season],season=2026)'})
+        stats = data.get('people', [{}])[0].get('stats', [])
+        for s in stats:
+            if s.get('type', {}).get('displayName') == 'season':
+                obp = s.get('splits', [{}])[0].get('stat', {}).get('obp')
+                if obp and obp != '.---':
+                    val = float(obp)
+                    SEASON_STATS_CACHE[player_id] = val
+                    return val
+    except: pass
+    
+    SEASON_STATS_CACHE[player_id] = default_val
+    return default_val
 
+# --- BULLPEN FATIGUE LOGIC ---
 def get_key_relievers(team_id):
-    """Identifies Closers and Setup men from live depth charts."""
     key_ids = {}
     try:
         depth = call_stats_api('teams', {'teamId': team_id, 'hydrate': 'depthChart'})
@@ -55,14 +75,11 @@ def get_key_relievers(team_id):
     return key_ids
 
 def check_bullpen_fatigue(team_id, team_name):
-    """Analyzes last 3 days of pitch counts for key relievers."""
     key_arms = get_key_relievers(team_id)
     if not key_arms: return ""
-    
     now = get_mst_now()
     fatigued_names = []
     lookback_days = [(now - timedelta(days=i)).strftime("%m/%d/%Y") for i in range(1, 4)]
-    
     usage_data = {pid: {'pitches': 0, 'appearances': 0} for pid in key_arms}
     
     for date_str in lookback_days:
@@ -78,35 +95,27 @@ def check_bullpen_fatigue(team_id, team_name):
                             usage_data[p_id]['pitches'] += p_stats.get('pitchesThrown', 0)
                             usage_data[p_id]['appearances'] += 1
         except: continue
-
     for pid, data in usage_data.items():
         if data['appearances'] >= 3 or data['pitches'] >= 50:
             fatigued_names.append(key_arms[pid].split(' (')[0])
+    return f"⚠️ {team_name} Bullpen Fatigue: ({', '.join(fatigued_names)})" if fatigued_names else ""
 
-    if fatigued_names:
-        return f"⚠️ {team_name} Bullpen Fatigue: ({', '.join(fatigued_names)})"
-    return ""
-
-# --- CACHE & BVP LOGIC ---
-
+# --- BVP LOGIC WITH SEASON OBP FALLBACK ---
 def load_bvp_cache():
     if os.path.exists(BVP_CACHE_FILE):
         try:
-            with open(BVP_CACHE_FILE, 'r') as f:
-                return json.load(f)
+            with open(BVP_CACHE_FILE, 'r') as f: return json.load(f)
         except: return {}
     return {}
 
 def save_bvp_cache(cache_data):
-    with open(BVP_CACHE_FILE, 'w') as f:
-        json.dump(cache_data, f, indent=4)
+    with open(BVP_CACHE_FILE, 'w') as f: json.dump(cache_data, f, indent=4)
 
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
     cache = load_bvp_cache()
     details = []
     total_ob_events, total_pas, total_abs = 0, 0, 0
     cache_updated = False
-    default_obp = 0.310 if p_hand == 'L' else 0.320
 
     for b_id in lineup_ids:
         b_name = name_map.get(b_id) or f"ID:{b_id}"
@@ -116,7 +125,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
             s = cache[cache_key]
             h, bb, hbp, pa, ab = s['h'], s['bb'], s['hbp'], s['pa'], s.get('ab', 0)
         else:
-            time.sleep(0.1) 
+            time.sleep(0.05) # Rate limit protection
             try:
                 data = call_stats_api('people', {'personIds': b_id, 'hydrate': f'stats(group=[hitting],type=[vsPlayer],opposingPlayerId={pitcher_id},gameType=[R,P,W])'})
                 h, bb, hbp, pa, ab = 0, 0, 0, 0, 0
@@ -132,22 +141,25 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
                 cache_updated = True
             except: h, bb, hbp, pa, ab = 0, 0, 0, 0, 0
 
-        ob_events = h + bb + hbp
         if pa > 0:
-            total_ob_events += ob_events
+            total_ob_events += (h + bb + hbp)
             total_pas += pa
             total_abs += ab
-            player_obp = ob_events / pa
-            details.append(f"    - {b_name}: {ob_events}/{pa} OBP: {player_obp:.3f} (AB: {ab})")
+            player_obp = (h + bb + hbp) / pa
+            details.append(f"    - {b_name}: {h+bb+hbp}/{pa} OBP: {player_obp:.3f} (AB: {ab})")
         else:
-            details.append(f"    - {b_name}: NO HISTORY (Defaulting {default_obp:.3f})")
+            # NO HISTORY FALLBACK
+            fallback_obp = get_season_obp(b_id, p_hand)
+            # Use 10 theoretical PAs for smoothing weight
+            total_ob_events += (fallback_obp * 10)
+            total_pas += 10
+            details.append(f"    - {b_name}: NO BvP HISTORY (Defaulting to 2026 Season OBP: {fallback_obp:.3f})")
 
     if cache_updated: save_bvp_cache(cache)
-    smoothed = (total_ob_events + (default_obp * 10)) / (total_pas + 10)
+    smoothed = total_ob_events / total_pas if total_pas > 0 else 0.315
     return smoothed, total_pas, details, total_abs
 
-# --- ODDS & AUDIT LOGIC ---
-
+# --- ODDS TRACKING ---
 def get_mlb_odds():
     now_mst = get_mst_now()
     current_month = now_mst.strftime("%Y-%m")
@@ -186,24 +198,20 @@ def format_odds(odds_val):
 def audit_and_stats():
     if not os.path.exists(CSV_FILE): 
         return "📊 TODAY: 0/0 (0.0%) | $0.00", "📊 YESTERDAY: 0/0 (0.0%) | $0.00", "0/0 (0.0%) | $0.00"
-    
     df = pd.read_csv(CSV_FILE)
     now_mst = get_mst_now()
     today_str = now_mst.strftime("%m/%d/%Y")
     yesterday_str = (now_mst - timedelta(days=1)).strftime("%m/%d/%Y")
-    
     updated = False
     for idx, row in df.iterrows():
         if str(row.get('Result')).upper() == 'PENDING':
             sched_data = call_stats_api('schedule', {'date': row['Date'], 'sportId': 1})
             dates = sched_data.get('dates', [])
             if not dates: continue
-            
-            games = dates[0].get('games', [])
-            for g in games:
+            for g in dates[0].get('games', []):
                 h_name = g.get('teams', {}).get('home', {}).get('team', {}).get('name', '')
                 if h_name in row['Matchup'] and int(g.get('gameNumber', 1)) == int(row.get('Game_Num', 1)):
-                    if g['status']['abstractGameState'] == 'Final' and g['status']['detailedState'] != 'Postponed':
+                    if g['status']['abstractGameState'] == 'Final':
                         winning_team = g['teams']['home']['team']['name'] if g['teams']['home'].get('isWinner') else g['teams']['away']['team']['name']
                         win = 'WIN' if row['Predicted_Winner'] == winning_team else 'LOSS'
                         try:
@@ -212,222 +220,84 @@ def audit_and_stats():
                             df.at[idx, 'Result'], df.at[idx, 'Profit'] = win, prof
                             updated = True
                         except: pass
-                    elif g['status']['detailedState'] == 'Postponed':
-                        df.at[idx, 'Result'], df.at[idx, 'Profit'] = 'PPD', 0.0
-                        updated = True
     if updated: df.to_csv(CSV_FILE, index=False)
-    
     def get_stat_line(date_str, label):
         sub = df[df['Date'] == date_str]
         fin = sub[sub['Result'].isin(['WIN', 'LOSS'])]
         if fin.empty: return f"📊 {label}: 0/0 (0.0%) | $0.00"
-        w = (fin['Result'] == 'WIN').sum()
-        p = fin['Profit'].sum()
-        win_pct = (w / len(fin)) * 100
-        return f"📊 {label}: {w}/{len(fin)} ({win_pct:.1f}%) | {'+$' if p>=0 else '-$'}{abs(p):,.2f}"
-
+        w, p = (fin['Result'] == 'WIN').sum(), fin['Profit'].sum()
+        return f"📊 {label}: {w}/{len(fin)} ({w/len(fin)*100:.1f}%) | {'+$' if p>=0 else '-$'}{abs(p):,.2f}"
     total_fin = df[df['Result'].isin(['WIN', 'LOSS'])]
-    l_w = (total_fin['Result'] == 'WIN').sum()
-    l_p = total_fin['Profit'].sum()
-    l_count = len(total_fin)
-    l_pct = (l_w / l_count * 100) if l_count > 0 else 0.0
-    lifetime = f"{l_w}/{l_count} ({l_pct:.1f}%) | {'+$' if l_p>=0 else '-$'}{abs(l_p):,.2f}"
-    
-    return get_stat_line(today_str, "TODAY"), get_stat_line(yesterday_str, "YESTERDAY"), lifetime
+    l_w, l_p, l_count = (total_fin['Result'] == 'WIN').sum(), total_fin['Profit'].sum(), len(total_fin)
+    return get_stat_line(today_str, "TODAY"), get_stat_line(yesterday_str, "YESTERDAY"), f"{l_w}/{l_count} ({l_w/l_count*100 if l_count>0 else 0:.1f}%) | {'+$' if l_p>=0 else '-$'}{abs(l_p):,.2f}"
 
-# --- UTILS ---
-
-def get_player_info(pid):
-    """Retrieves pitch hand, full name, and season ERA for a pitcher."""
-    try:
-        p = call_stats_api('person', {'personId': pid, 'hydrate': 'stats(group=[pitching],type=[season])'})
-        hand = p['people'][0].get('pitchHand', {}).get('code', 'R')
-        name = p['people'][0].get('fullName', f"ID:{pid}")
-        era = "0.00"
-        stats = p['people'][0].get('stats', [])
-        for s in stats:
-            if s.get('type', {}).get('displayName') == 'season':
-                era = s.get('splits', [{}])[0].get('stat', {}).get('era', '0.00')
-                break
-        return hand, name, era
-    except: return 'R', f"ID:{pid}", "0.00"
-
-def get_pro_lineup(tid):
-    try:
-        lg = statsapi.last_game(tid)
-        if lg:
-            box = statsapi.boxscore_data(lg)
-            key = 'home' if box['home']['team']['id'] == tid else 'away'
-            return box[key].get('battingOrder', []), "Starters of Last Game"
-    except: pass
-    return [], "None Found"
-
-def format_mst_time(utc):
-    try:
-        dt = datetime.strptime(utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=pytz.UTC).astimezone(pytz.timezone('America/Denver'))
-        return dt, dt.strftime("%I:%M %p")
-    except: return None, "TBD"
-
-def send_telegram(msg):
-    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", data={'chat_id': TELEGRAM_CHAT_ID, 'text': msg, 'parse_mode': 'Markdown'})
-
-# --- MAIN RUN ---
-
+# --- RUN ANALYSIS ---
 def run_analysis():
     now_mst = get_mst_now()
     today_date_str = now_mst.strftime("%m/%d/%Y")
-    full_timestamp_str = now_mst.strftime("%m/%d/%Y (%I:%M %p)")
-    
     games_raw = call_stats_api('schedule', {'sportId': 1, 'date': today_date_str, 'hydrate': 'probablePitcher,lineups'})
     games = [g for d in games_raw.get('dates', []) for g in d.get('games', [])]
-    
     live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
-    new_preds, display_list = [], []
-    eval_log_lines = [f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n"]
+    new_preds, display_list, eval_log_lines = [], [], [f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n"]
     history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
 
     for game in games:
-        name_map = {}
         game_id = game['gamePk']
-        h_p_id = game.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id')
-        a_p_id = game.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id')
         game_num = int(game.get('gameNumber', 1))
-        mst_dt, mst_time = format_mst_time(game.get('gameDate'))
+        # DOUBLEHEADER LABELING
+        dh_label = f" (Game {game_num})" if game_num > 1 or game.get('doubleHeader') == 'Y' else ""
         
-        status = game.get('status', {}).get('abstractGameState', 'Pre-Game')
-        detailed_status = game.get('status', {}).get('detailedState', '')
-        away_name = game['teams']['away']['team']['name']
-        home_name = game['teams']['home']['team']['name']
+        h_p_id = game.get('teams',{}).get('home',{}).get('probablePitcher',{}).get('id')
+        a_p_id = game.get('teams',{}).get('away',{}).get('probablePitcher',{}).get('id')
         
-        h_hand, h_name, h_era = get_player_info(h_p_id) if h_p_id else ('R', 'TBD', '0.00')
-        a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
-        pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
-
-        # --- UPDATED ODDS PERSISTENCE LOGIC ---
-        saved_game = pd.DataFrame()
-        if not history_df.empty:
-            saved_game = history_df[(history_df['Date'] == today_date_str) & 
-                                    (history_df['Matchup'].str.contains(home_name)) & 
-                                    (history_df['Game_Num'].astype(int) == game_num)]
-
-        # Determine if we should use LIVE or SAVED odds
-        # Rule: Use live odds if the game hasn't started. Lock odds if game is Live or Final.
-        is_live_or_final = status in ['Live', 'In Progress', 'Final'] or detailed_status == 'In Progress'
+        mst_dt = datetime.strptime(game.get('gameDate'), "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=pytz.UTC).astimezone(pytz.timezone('America/Denver'))
+        mst_time = mst_dt.strftime("%I:%M %p")
         
-        if is_live_or_final and not saved_game.empty:
-            # LOCK: Use saved odds once the game is underway
-            matchup_txt = saved_game.iloc[0]['Matchup']
-            winner_saved = saved_game.iloc[0]['Predicted_Winner']
-            w_odds = saved_game.iloc[0]['Odds']
+        status, detailed_status = game.get('status',{}).get('abstractGameState','Pre-Game'), game.get('status',{}).get('detailedState','')
+        away_name, home_name = game['teams']['away']['team']['name'], game['teams']['home']['team']['name']
+        
+        saved_game = history_df[(history_df['Date'] == today_date_str) & (history_df['Matchup'].str.contains(home_name)) & (history_df['Game_Num'].astype(int) == game_num)] if not history_df.empty else pd.DataFrame()
+        is_started = status in ['Live', 'In Progress', 'Final']
+        
+        if is_started and not saved_game.empty:
+            matchup_txt, w_odds = saved_game.iloc[0]['Matchup'], saved_game.iloc[0]['Odds']
         else:
-            # UPDATE: Continue showing live odds up until first pitch
-            current_away_o = live_odds.get(f"{home_name}_{away_name}")
-            current_home_o = live_odds.get(f"{home_name}_{home_name}")
-            away_o_str = format_odds(current_away_o or "N/A")
-            home_o_str = format_odds(current_home_o or "N/A")
-            matchup_txt = f"{away_name} ({away_o_str}) @ {home_name} ({home_o_str})"
-            w_odds = None # Will be determined after winner projection
+            ao, ho = format_odds(live_odds.get(f"{home_name}_{away_name}", "N/A")), format_odds(live_odds.get(f"{home_name}_{home_name}", "N/A"))
+            matchup_txt = f"{away_name} ({ao}) @ {home_name} ({ho}){dh_label}"
+            w_odds = None
+            if not saved_game.empty: history_df.loc[saved_game.index, 'Matchup'] = matchup_txt
 
-            # If the game is Pre-Game but already in CSV, we need to update the CSV line later
-            if not saved_game.empty:
-                # Flag to update this row in the logic below
-                pass
+        game_info = {'matchup': matchup_txt, 'time': mst_time, 'raw_time': mst_dt, 'is_active': False, 'status': detailed_status, 'score': f"🔥 LIVE: {game['teams']['away'].get('score',0)} - {game['teams']['home'].get('score',0)}" if is_started else "", 'away_team': away_name, 'home_team': home_name, 'game_num': game_num}
         
-        score_str = ""
-        if detailed_status == 'Postponed':
-            score_str = f"❌ **POSTPONED**"
-        elif status in ['Live', 'In Progress'] or detailed_status == 'In Progress':
-            score_str = f"🔥 **LIVE: {game['teams']['away'].get('score', 0)} - {game['teams']['home'].get('score', 0)}**"
-        elif status == 'Final':
-            score_str = f"✅ **FINAL: {game['teams']['away'].get('score', 0)} - {game['teams']['home'].get('score', 0)}**"
-
-        away_fatigue = check_bullpen_fatigue(game['teams']['away']['team']['id'], away_name)
-        home_fatigue = check_bullpen_fatigue(game['teams']['home']['team']['id'], home_name)
-        fatigue_txt = "\n  ".join(filter(None, [away_fatigue, home_fatigue]))
-
-        game_info = {
-            'matchup': matchup_txt, 'time': mst_time, 'raw_time': mst_dt, 
-            'is_active': False, 'status': detailed_status if detailed_status == 'Postponed' else status, 
-            'score': score_str, 'away_team': away_name, 'home_team': home_name, 'game_num': game_num,
-            'fatigue': fatigue_txt, 'pitchers': pitcher_header
-        }
-
         if h_p_id and a_p_id and detailed_status != 'Postponed':
             try:
                 box = statsapi.boxscore_data(game_id)
-                for side in ['home', 'away']:
-                    for pid, p in box.get(side, {}).get('players', {}).items():
-                        name_map[int(pid.replace('ID',''))] = p['person']['fullName']
-                
+                name_map = {int(pid.replace('ID','')): p['person']['fullName'] for side in ['home','away'] for pid, p in box.get(side,{}).get('players',{}).items()}
                 h_l, a_l = box.get('home',{}).get('battingOrder',[]), box.get('away',{}).get('battingOrder',[])
-                lineup_src = "Official Boxscore" if (h_l and a_l) else "Starters of Last Game"
-                
-                if not h_l: h_l, _ = get_pro_lineup(game['teams']['home']['team']['id'])
-                if not a_l: a_l, _ = get_pro_lineup(game['teams']['away']['team']['id'])
+                src = "Official Boxscore" if h_l and a_l else "Starters of Last Game"
+                if not h_l: h_l = statsapi.boxscore_data(statsapi.last_game(game['teams']['home']['team']['id'])).get('home' if statsapi.boxscore_data(statsapi.last_game(game['teams']['home']['team']['id']))['home']['team']['id'] == game['teams']['home']['team']['id'] else 'away',{}).get('battingOrder',[])
+                if not a_l: a_l = statsapi.boxscore_data(statsapi.last_game(game['teams']['away']['team']['id'])).get('home' if statsapi.boxscore_data(statsapi.last_game(game['teams']['away']['team']['id']))['home']['team']['id'] == game['teams']['away']['team']['id'] else 'away',{}).get('battingOrder',[])
 
                 if h_l and a_l:
-                    h_e, h_pa, h_det, h_ab = get_smoothed_bvp(a_p_id, h_l, a_hand, name_map)
-                    a_e, a_pa, a_det, a_ab = get_smoothed_bvp(h_p_id, a_l, h_hand, name_map)
+                    h_e, _, h_det, h_ab = get_smoothed_bvp(a_p_id, h_l, 'R', name_map)
+                    a_e, _, a_det, a_ab = get_smoothed_bvp(h_p_id, a_l, 'R', name_map)
+                    winner, conf = (home_name, round(abs(h_e-a_e)*100, 2)) if h_e > a_e else (away_name, round(abs(h_e-a_e)*100, 2))
+                    w_odds = w_odds if w_odds else live_odds.get(f"{home_name}_{winner}", -110)
                     
-                    winner = home_name if h_e > a_e else away_name
-                    conf = round(abs(h_e - a_e) * 100, 2)
-                    
-                    if w_odds is None:
-                        w_odds = live_odds.get(f"{home_name}_{winner}", -110)
-
-                    eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n  Lineup Source: {lineup_src}\n")
-                    eval_log_lines.append(f"  {home_name} Hitting (vs {a_name}):\n")
-                    eval_log_lines.extend([line + "\n" for line in h_det])
-                    eval_log_lines.append(f"  Aggregated Home OBP: {h_e:.3f} (Total AB: {h_ab})\n\n")
-                    eval_log_lines.append(f"  {away_name} Hitting (vs {h_name}):\n")
-                    eval_log_lines.extend([line + "\n" for line in a_det])
-                    eval_log_lines.append(f"  Aggregated Away OBP: {a_e:.3f} (Total AB: {a_ab})\n")
-                    eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
-                    eval_log_lines.append("-" * 50 + "\n")
-
-                    # Logic to Add or Update CSV
-                    if status == 'Pre-Game':
-                        if saved_game.empty:
-                            new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
-                        else:
-                            # Update existing row with new live odds/matchup string
-                            history_df.loc[saved_game.index, 'Matchup'] = matchup_txt
-                            history_df.loc[saved_game.index, 'Odds'] = w_odds
-                    
-                    game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': lineup_src})
+                    eval_log_lines.append(f"GAME: {away_name} @ {home_name}{dh_label}\n  Lineup Source: {src}\n  Home OBP: {h_e:.3f} (AB: {h_ab})\n  Away OBP: {a_e:.3f} (AB: {a_ab})\n  PROJECTION: {winner}\n" + "".join(h_det) + "".join(a_det) + "\n" + "-"*30 + "\n")
+                    if status == 'Pre-Game' and saved_game.empty: new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
+                    game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': src})
             except: pass
         display_list.append(game_info)
 
-    # Save updates back to CSV
     if not history_df.empty: history_df.to_csv(CSV_FILE, index=False)
-    if new_preds: 
-        pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
-    
+    if new_preds: pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
-    
-    t_msg, y_msg, life = audit_and_stats()
-    report = f"⚾ *MLB REPORT: {full_timestamp_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n"
-    report += f"🔑 *ODDS-API:* {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
-    report += f"📊 *MLB-STATS-API:* {stats_api_calls} Calls this run\n\n"
-    
-    active_games = [g for g in display_list if g.get('is_active')]
-    if active_games:
-        best = max(active_games, key=lambda x: x['conf'])
-        report += f"⭐ *BEST PICK:* {best['away_team']} @ {best['home_team']}\n"
-        report += f"👉 PROJECTION: {best['winner']} ({best['odds']}) | {best['conf']}% Edge\n\n"
-
+    t, y, l = audit_and_stats()
+    report = f"⚾ *MLB REPORT: {today_date_str}*\n\n{t}\n{y}\n📈 *LIFETIME:* {l}\n\n"
     for g in sorted(display_list, key=lambda x: (x['raw_time'] or datetime.max)):
         report += f"• [{g['time']}] {g['matchup']}\n"
-        report += f"  {g['pitchers']}\n"
-        if g['score']:
-            report += f"  {g['score']}\n"
-        if g['fatigue']:
-            report += f"  {g['fatigue']}\n"
-        if g.get('is_active'):
-            report += f"  👉 *{g['winner']}* ({g['odds']}) | {g['conf']}% Edge ({g['src']})\n\n"
-        else:
-            report += f"  ⏳ {g['status']}\n\n"
-    
-    send_telegram(report)
+        if g.get('is_active'): report += f"  👉 *{g['winner']}* ({g['odds']}) | {g['conf']}% Edge ({g['src']})\n\n"
+    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", data={'chat_id': TELEGRAM_CHAT_ID, 'text': report, 'parse_mode': 'Markdown'})
 
 if __name__ == "__main__": run_analysis()
