@@ -106,7 +106,8 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
     details = []
     total_ob_events, total_pas, total_abs = 0, 0, 0
     cache_updated = False
-    default_obp = 0.310 if p_hand == 'L' else 0.320
+    # Standard league baseline fallback
+    league_default = 0.310 if p_hand == 'L' else 0.320
 
     for b_id in lineup_ids:
         b_name = name_map.get(b_id) or f"ID:{b_id}"
@@ -132,18 +133,34 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
                 cache_updated = True
             except: h, bb, hbp, pa, ab = 0, 0, 0, 0, 0
 
-        ob_events = h + bb + hbp
         if pa > 0:
+            ob_events = h + bb + hbp
             total_ob_events += ob_events
             total_pas += pa
             total_abs += ab
             player_obp = ob_events / pa
             details.append(f"    - {b_name}: {ob_events}/{pa} OBP: {player_obp:.3f} (AB: {ab})")
         else:
-            details.append(f"    - {b_name}: NO HISTORY (Defaulting {default_obp:.3f})")
+            # NO HISTORY FALLBACK LOGIC
+            try:
+                # Attempt to pull 2026 Season Stats
+                s_data = call_stats_api('person', {'personId': b_id, 'hydrate': 'stats(group=[hitting],type=[season],season=2026)'})
+                season_obp = float(s_data['people'][0]['stats'][0]['splits'][0]['stat']['obp'])
+                label = "2026 Season OBP"
+            except (KeyError, IndexError, ValueError, TypeError):
+                # If no season data, label as Rookie and use league default
+                season_obp = league_default
+                label = "Rookie (League Default)"
+            
+            # Incorporate into aggregate (Weighted as 10 PAs to avoid skewing)
+            total_ob_events += (season_obp * 10)
+            total_pas += 10
+            details.append(f"    - {b_name}: NO HISTORY ({label}: {season_obp:.3f})")
 
     if cache_updated: save_bvp_cache(cache)
-    smoothed = (total_ob_events + (default_obp * 10)) / (total_pas + 10)
+    
+    # Calculate aggregate smoothed OBP
+    smoothed = total_ob_events / total_pas if total_pas > 0 else league_default
     return smoothed, total_pas, details, total_abs
 
 # --- ODDS & AUDIT LOGIC ---
