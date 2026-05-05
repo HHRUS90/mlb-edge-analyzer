@@ -141,25 +141,20 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
             player_obp = ob_events / pa
             details.append(f"    - {b_name}: {ob_events}/{pa} OBP: {player_obp:.3f} (AB: {ab})")
         else:
-            # NO HISTORY FALLBACK LOGIC
             try:
-                # Attempt to pull 2026 Season Stats
                 s_data = call_stats_api('person', {'personId': b_id, 'hydrate': 'stats(group=[hitting],type=[season],season=2026)'})
                 season_obp = float(s_data['people'][0]['stats'][0]['splits'][0]['stat']['obp'])
                 label = "2026 Season OBP"
             except (KeyError, IndexError, ValueError, TypeError):
-                # If no season data, label as Rookie and use league default
                 season_obp = league_default
                 label = "Rookie (League Default)"
             
-            # Incorporate into aggregate (Weighted as 10 PAs to avoid skewing)
             total_ob_events += (season_obp * 10)
             total_pas += 10
             details.append(f"    - {b_name}: NO HISTORY ({label}: {season_obp:.3f})")
 
     if cache_updated: save_bvp_cache(cache)
     
-    # Calculate aggregate smoothed OBP
     smoothed = total_ob_events / total_pas if total_pas > 0 else league_default
     return smoothed, total_pas, details, total_abs
 
@@ -299,9 +294,12 @@ def run_analysis():
     games = [g for d in games_raw.get('dates', []) for g in d.get('games', [])]
     
     live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
-    new_preds, display_list = [], []
+    display_list = []
     eval_log_lines = [f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n"]
-    history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
+    
+    # Initialize CSV if it doesn't exist
+    if not os.path.exists(CSV_FILE):
+        pd.DataFrame(columns=['Date', 'Matchup', 'Predicted_Winner', 'Odds', 'Confidence', 'Result', 'Profit', 'Game_Num']).to_csv(CSV_FILE, index=False)
 
     for game in games:
         name_map = {}
@@ -320,14 +318,12 @@ def run_analysis():
         a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
         pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
 
-        # --- UPDATED ODDS PERSISTENCE LOGIC ---
-        saved_game = pd.DataFrame()
-        if not history_df.empty:
-            saved_game = history_df[(history_df['Date'] == today_date_str) & 
-                                    (history_df['Matchup'].str.contains(home_name)) & 
-                                    (history_df['Game_Num'].astype(int) == game_num)]
+        # --- CSV CHECK INSIDE LOOP ---
+        history_df = pd.read_csv(CSV_FILE)
+        saved_game = history_df[(history_df['Date'] == today_date_str) & 
+                                (history_df['Matchup'].str.contains(home_name)) & 
+                                (history_df['Game_Num'].astype(int) == game_num)]
 
-        # Determine if we should use LIVE or SAVED odds
         is_live_or_final = status in ['Live', 'In Progress', 'Final'] or detailed_status == 'In Progress'
         
         if is_live_or_final and not saved_game.empty:
@@ -393,22 +389,20 @@ def run_analysis():
                     eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
-                    # UPDATED CSV PERSISTENCE GATE
+                    # IMMEDIATE CSV PERSISTENCE GATE
                     if status in ['Pre-Game', 'Live', 'In Progress']:
                         if saved_game.empty:
-                            new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
+                            new_row = pd.DataFrame([{'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num}])
+                            new_row.to_csv(CSV_FILE, mode='a', index=False, header=False)
                         else:
                             history_df.loc[saved_game.index, 'Matchup'] = matchup_txt
                             history_df.loc[saved_game.index, 'Odds'] = w_odds
+                            history_df.to_csv(CSV_FILE, index=False)
                     
                     game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': lineup_src})
             except: pass
         display_list.append(game_info)
 
-    if not history_df.empty: history_df.to_csv(CSV_FILE, index=False)
-    if new_preds: 
-        pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
-    
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
     t_msg, y_msg, life = audit_and_stats()
