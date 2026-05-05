@@ -9,10 +9,10 @@ import time
 import json
 from datetime import datetime, timedelta
 
-# Force unbuffered output for GitHub logs to ensure real-time tracking
+# Force unbuffered output for GitHub logs
 sys.stdout.reconfigure(line_buffering=True)
 
-# --- CONFIGURATION & CONSTANTS ---
+# --- CONFIGURATION ---
 ODDS_CALL_LIMIT = 450         
 UNIT_SIZE = 100               
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
@@ -23,24 +23,24 @@ USAGE_FILE = 'api_usage.csv'
 EVAL_LOG = 'evaluation_log.txt'
 BVP_CACHE_FILE = 'bvp_cache.json'
 
-# --- GLOBAL TRACKERS ---
+# --- GLOBAL COUNTER ---
 stats_api_calls = 0
 
 def call_stats_api(endpoint, params=None):
-    """Wrapper to track every single access to MLB-Stats-API for audit purposes."""
+    """Wrapper to track every single access to MLB-Stats-API."""
     global stats_api_calls
     stats_api_calls += 1
     return statsapi.get(endpoint, params or {})
 
 def get_mst_now():
-    """Returns current time in America/Denver as the project's source of truth."""
+    """Returns current time in America/Denver."""
     tz = pytz.timezone('America/Denver')
     return datetime.now(tz)
 
 # --- BULLPEN FATIGUE LOGIC ---
 
 def get_key_relievers(team_id):
-    """Identifies Closers and Setup men from live depth charts to monitor fatigue."""
+    """Identifies Closers and Setup men from live depth charts."""
     key_ids = {}
     try:
         depth = call_stats_api('teams', {'teamId': team_id, 'hydrate': 'depthChart'})
@@ -51,12 +51,11 @@ def get_key_relievers(team_id):
                 p_id = entry.get('player', {}).get('id')
                 p_name = entry.get('player', {}).get('fullName')
                 if p_id: key_ids[p_id] = f"{p_name} ({pos})"
-    except Exception:
-        pass
+    except: pass
     return key_ids
 
 def check_bullpen_fatigue(team_id, team_name):
-    """Analyzes last 3 days of pitch counts for key relievers to flag usage warnings."""
+    """Analyzes last 3 days of pitch counts for key relievers."""
     key_arms = get_key_relievers(team_id)
     if not key_arms: return ""
     
@@ -78,8 +77,7 @@ def check_bullpen_fatigue(team_id, team_name):
                             p_stats = box[side]['players'][p_id_str]['stats']['pitching']
                             usage_data[p_id]['pitches'] += p_stats.get('pitchesThrown', 0)
                             usage_data[p_id]['appearances'] += 1
-        except Exception:
-            continue
+        except: continue
 
     for pid, data in usage_data.items():
         if data['appearances'] >= 3 or data['pitches'] >= 50:
@@ -92,26 +90,23 @@ def check_bullpen_fatigue(team_id, team_name):
 # --- CACHE & BVP LOGIC ---
 
 def load_bvp_cache():
-    """Retrieves stored Batter vs Pitcher data to minimize API overhead."""
     if os.path.exists(BVP_CACHE_FILE):
         try:
             with open(BVP_CACHE_FILE, 'r') as f:
                 return json.load(f)
-        except Exception:
-            return {}
+        except: return {}
     return {}
 
 def save_bvp_cache(cache_data):
-    """Saves updated BvP data to local JSON."""
     with open(BVP_CACHE_FILE, 'w') as f:
         json.dump(cache_data, f, indent=4)
 
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
-    """Calculates OBP for a lineup against a specific pitcher with league-average smoothing."""
     cache = load_bvp_cache()
     details = []
     total_ob_events, total_pas, total_abs = 0, 0, 0
     cache_updated = False
+    # Standard league baseline fallback
     league_default = 0.310 if p_hand == 'L' else 0.320
 
     for b_id in lineup_ids:
@@ -136,8 +131,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
                                 break
                 cache[cache_key] = {'h': h, 'bb': bb, 'hbp': hbp, 'pa': pa, 'ab': ab}
                 cache_updated = True
-            except Exception:
-                h, bb, hbp, pa, ab = 0, 0, 0, 0, 0
+            except: h, bb, hbp, pa, ab = 0, 0, 0, 0, 0
 
         if pa > 0:
             ob_events = h + bb + hbp
@@ -147,27 +141,31 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
             player_obp = ob_events / pa
             details.append(f"    - {b_name}: {ob_events}/{pa} OBP: {player_obp:.3f} (AB: {ab})")
         else:
+            # NO HISTORY FALLBACK LOGIC
             try:
+                # Attempt to pull 2026 Season Stats
                 s_data = call_stats_api('person', {'personId': b_id, 'hydrate': 'stats(group=[hitting],type=[season],season=2026)'})
                 season_obp = float(s_data['people'][0]['stats'][0]['splits'][0]['stat']['obp'])
                 label = "2026 Season OBP"
             except (KeyError, IndexError, ValueError, TypeError):
+                # If no season data, label as Rookie and use league default
                 season_obp = league_default
                 label = "Rookie (League Default)"
             
+            # Incorporate into aggregate (Weighted as 10 PAs to avoid skewing)
             total_ob_events += (season_obp * 10)
             total_pas += 10
             details.append(f"    - {b_name}: NO HISTORY ({label}: {season_obp:.3f})")
 
     if cache_updated: save_bvp_cache(cache)
     
+    # Calculate aggregate smoothed OBP
     smoothed = total_ob_events / total_pas if total_pas > 0 else league_default
     return smoothed, total_pas, details, total_abs
 
 # --- ODDS & AUDIT LOGIC ---
 
 def get_mlb_odds():
-    """Fetches moneyline odds from The-Odds-API and tracks monthly usage limits."""
     now_mst = get_mst_now()
     current_month = now_mst.strftime("%Y-%m")
     if not os.path.exists(USAGE_FILE):
@@ -192,23 +190,19 @@ def get_mlb_odds():
             rem = resp.headers.get('x-requests-remaining', '0')
             odds_dict = {f"{g['home_team']}_{o['name']}": o['price'] for g in data if g.get('bookmakers') for o in g['bookmakers'][0]['markets'][0]['outcomes']}
             return odds_dict, used, rem, False, local_calls + 1
-    except Exception:
-        pass
+    except: pass
     return {}, "0", "0", False, local_calls
 
 def format_odds(odds_val):
-    """Properly formats American odds with +/- prefixes."""
     try:
         if odds_val == "N/A" or odds_val is None: return "N/A"
         val = int(float(odds_val))
         return f"+{val}" if val > 0 else str(val)
-    except Exception:
-        return str(odds_val)
+    except: return str(odds_val)
 
 def audit_and_stats():
-    """Processes 'PENDING' games and calculates the precise stat block for reporting."""
     if not os.path.exists(CSV_FILE): 
-        return "📊 TODAY: 0/0 (0.0%) | $0.00", "📊 YESTERDAY: 0/0 (0.0%) | $0.00", "📊 LIFETIME: 0/0 (0.0%) | $0.00"
+        return "📊 TODAY: 0/0 (0.0%) | $0.00", "📊 YESTERDAY: 0/0 (0.0%) | $0.00", "0/0 (0.0%) | $0.00"
     
     df = pd.read_csv(CSV_FILE)
     now_mst = get_mst_now()
@@ -234,8 +228,7 @@ def audit_and_stats():
                             prof = (UNIT_SIZE * (o/100) if o > 0 else UNIT_SIZE/(abs(o)/100)) if win == 'WIN' else -UNIT_SIZE
                             df.at[idx, 'Result'], df.at[idx, 'Profit'] = win, prof
                             updated = True
-                        except Exception:
-                            pass
+                        except: pass
                     elif g['status']['detailedState'] == 'Postponed':
                         df.at[idx, 'Result'], df.at[idx, 'Profit'] = 'PPD', 0.0
                         updated = True
@@ -247,7 +240,7 @@ def audit_and_stats():
         if fin.empty: return f"📊 {label}: 0/0 (0.0%) | $0.00"
         w = (fin['Result'] == 'WIN').sum()
         p = fin['Profit'].sum()
-        win_pct = (w / len(fin)) * 100 if len(fin) > 0 else 0.0
+        win_pct = (w / len(fin)) * 100
         return f"📊 {label}: {w}/{len(fin)} ({win_pct:.1f}%) | {'+$' if p>=0 else '-$'}{abs(p):,.2f}"
 
     total_fin = df[df['Result'].isin(['WIN', 'LOSS'])]
@@ -255,14 +248,14 @@ def audit_and_stats():
     l_p = total_fin['Profit'].sum()
     l_count = len(total_fin)
     l_pct = (l_w / l_count * 100) if l_count > 0 else 0.0
-    lifetime = f"📊 LIFETIME: {l_w}/{l_count} ({l_pct:.1f}%) | {'+$' if l_p>=0 else '-$'}{abs(l_p):,.2f}"
+    lifetime = f"{l_w}/{l_count} ({l_pct:.1f}%) | {'+$' if l_p>=0 else '-$'}{abs(l_p):,.2f}"
     
     return get_stat_line(today_str, "TODAY"), get_stat_line(yesterday_str, "YESTERDAY"), lifetime
 
-# --- CORE UTILITIES ---
+# --- UTILS ---
 
 def get_player_info(pid):
-    """Retrieves player handedness, name, and seasonal ERA."""
+    """Retrieves pitch hand, full name, and season ERA for a pitcher."""
     try:
         p = call_stats_api('person', {'personId': pid, 'hydrate': 'stats(group=[pitching],type=[season])'})
         hand = p['people'][0].get('pitchHand', {}).get('code', 'R')
@@ -274,37 +267,30 @@ def get_player_info(pid):
                 era = s.get('splits', [{}])[0].get('stat', {}).get('era', '0.00')
                 break
         return hand, name, era
-    except Exception:
-        return 'R', f"ID:{pid}", "0.00"
+    except: return 'R', f"ID:{pid}", "0.00"
 
 def get_pro_lineup(tid):
-    """Predicts a lineup based on the team's most recent completed game."""
     try:
         lg = statsapi.last_game(tid)
         if lg:
             box = statsapi.boxscore_data(lg)
             key = 'home' if box['home']['team']['id'] == tid else 'away'
             return box[key].get('battingOrder', []), "Starters of Last Game"
-    except Exception:
-        pass
+    except: pass
     return [], "None Found"
 
 def format_mst_time(utc):
-    """Converts UTC game times to America/Denver for project-wide consistency."""
     try:
         dt = datetime.strptime(utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=pytz.UTC).astimezone(pytz.timezone('America/Denver'))
         return dt, dt.strftime("%I:%M %p")
-    except Exception:
-        return None, "TBD"
+    except: return None, "TBD"
 
 def send_telegram(msg):
-    """Dispatches the final report to the designated Telegram chat."""
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", data={'chat_id': TELEGRAM_CHAT_ID, 'text': msg, 'parse_mode': 'Markdown'})
 
-# --- PRIMARY EXECUTION LOOP ---
+# --- MAIN RUN ---
 
 def run_analysis():
-    """Main execution orchestrating data retrieval, modeling, and reporting."""
     now_mst = get_mst_now()
     today_date_str = now_mst.strftime("%m/%d/%Y")
     full_timestamp_str = now_mst.strftime("%m/%d/%Y (%I:%M %p)")
@@ -315,7 +301,6 @@ def run_analysis():
     live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
     new_preds, display_list = [], []
     eval_log_lines = [f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n"]
-    
     history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
 
     for game in games:
@@ -335,13 +320,14 @@ def run_analysis():
         a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
         pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
 
-        # --- ODDS PERSISTENCE & LOCKING LOGIC ---
+        # --- UPDATED ODDS PERSISTENCE LOGIC ---
         saved_game = pd.DataFrame()
         if not history_df.empty:
             saved_game = history_df[(history_df['Date'] == today_date_str) & 
                                     (history_df['Matchup'].str.contains(home_name)) & 
                                     (history_df['Game_Num'].astype(int) == game_num)]
 
+        # Determine if we should use LIVE or SAVED odds
         is_live_or_final = status in ['Live', 'In Progress', 'Final'] or detailed_status == 'In Progress'
         
         if is_live_or_final and not saved_game.empty:
@@ -354,7 +340,7 @@ def run_analysis():
             home_o_str = format_odds(current_home_o or "N/A")
             matchup_txt = f"{away_name} ({away_o_str}) @ {home_name} ({home_o_str})"
             w_odds = None 
-        
+
         score_str = ""
         if detailed_status == 'Postponed':
             score_str = f"❌ **POSTPONED**"
@@ -407,7 +393,8 @@ def run_analysis():
                     eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
-                    if status == 'Pre-Game':
+                    # UPDATED CSV PERSISTENCE GATE
+                    if status in ['Pre-Game', 'Live', 'In Progress']:
                         if saved_game.empty:
                             new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
                         else:
@@ -415,8 +402,7 @@ def run_analysis():
                             history_df.loc[saved_game.index, 'Odds'] = w_odds
                     
                     game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': lineup_src})
-            except Exception:
-                pass
+            except: pass
         display_list.append(game_info)
 
     if not history_df.empty: history_df.to_csv(CSV_FILE, index=False)
@@ -426,7 +412,7 @@ def run_analysis():
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
     t_msg, y_msg, life = audit_and_stats()
-    report = f"⚾ *MLB REPORT: {full_timestamp_str}*\n\n{t_msg}\n{y_msg}\n{life}\n"
+    report = f"⚾ *MLB REPORT: {full_timestamp_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n"
     report += f"🔑 *ODDS-API:* {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
     report += f"📊 *MLB-STATS-API:* {stats_api_calls} Calls this run\n\n"
     
@@ -450,5 +436,4 @@ def run_analysis():
     
     send_telegram(report)
 
-if __name__ == "__main__": 
-    run_analysis()
+if __name__ == "__main__": run_analysis()
