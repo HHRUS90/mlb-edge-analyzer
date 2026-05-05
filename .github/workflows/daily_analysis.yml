@@ -2,18 +2,19 @@ name: MLB Pro Analyzer
 
 on:
   schedule:
-    # 14 UTC = 8:00 AM MDT
-    # 18 UTC = 12:00 PM MDT
-    # 21 UTC = 3:00 PM MDT
     - cron: '0 14,18,21 * * *'
   workflow_dispatch:
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Explicitly grant write access
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Get full history for cleaner pushes
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -28,14 +29,13 @@ jobs:
             bvp_cache.json
             prediction_history.csv
             api_usage.csv
-          # Use a stable key without run_id to ensure data persists between different workflow runs
-          key: mlb-data-cache-v3-${{ runner.os }}
+          # Stable key to prevent run_id mismatch
+          key: mlb-data-cache-v4-${{ runner.os }}
           restore-keys: |
-            mlb-data-cache-v3-${{ runner.os }}-
+            mlb-data-cache-v4-${{ runner.os }}-
 
       - name: Install Dependencies
-        run: |
-          pip install pandas requests MLB-StatsAPI pytz
+        run: pip install pandas requests MLB-StatsAPI pytz
 
       - name: Run MLB Analysis
         env:
@@ -49,11 +49,7 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          # Ensure files exist before adding to prevent errors
-          [ -f prediction_history.csv ] && git add prediction_history.csv
-          [ -f api_usage.csv ] && git add api_usage.csv
-          [ -f bvp_cache.json ] && git add bvp_cache.json
-          [ -f evaluation_log.txt ] && git add evaluation_log.txt
-          # Only commit if there are actual changes to the files
+          git pull origin main # Ensure local is sync'd before pushing
+          git add prediction_history.csv api_usage.csv bvp_cache.json evaluation_log.txt
           git diff-index --quiet HEAD || git commit -m "Automated Data Update [$(date)]"
-          git push
+          git push origin main
