@@ -28,9 +28,10 @@ jobs:
             bvp_cache.json
             prediction_history.csv
             api_usage.csv
-          key: mlb-data-cache-v2-${{ runner.os }}-${{ github.run_id }}
+          # Use a stable key without run_id to ensure data persists between different workflow runs
+          key: mlb-data-cache-v3-${{ runner.os }}
           restore-keys: |
-            mlb-data-cache-v2-${{ runner.os }}-
+            mlb-data-cache-v3-${{ runner.os }}-
 
       - name: Install Dependencies
         run: |
@@ -48,9 +49,11 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
+          # Ensure files exist before adding to prevent errors
           [ -f prediction_history.csv ] && git add prediction_history.csv
           [ -f api_usage.csv ] && git add api_usage.csv
           [ -f bvp_cache.json ] && git add bvp_cache.json
           [ -f evaluation_log.txt ] && git add evaluation_log.txt
+          # Only commit if there are actual changes to the files
           git diff-index --quiet HEAD || git commit -m "Automated Data Update [$(date)]"
           git push
