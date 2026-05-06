@@ -106,7 +106,6 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
     details = []
     total_ob_events, total_pas, total_abs = 0, 0, 0
     cache_updated = False
-    # Standard league baseline fallback
     league_default = 0.310 if p_hand == 'L' else 0.320
 
     for b_id in lineup_ids:
@@ -297,7 +296,6 @@ def run_analysis():
     display_list = []
     eval_log_lines = [f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n"]
     
-    # Initialize CSV if it doesn't exist
     if not os.path.exists(CSV_FILE):
         pd.DataFrame(columns=['Date', 'Matchup', 'Predicted_Winner', 'Odds', 'Confidence', 'Result', 'Profit', 'Game_Num']).to_csv(CSV_FILE, index=False)
 
@@ -318,7 +316,6 @@ def run_analysis():
         a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
         pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
 
-        # --- CSV CHECK INSIDE LOOP ---
         history_df = pd.read_csv(CSV_FILE)
         saved_game = history_df[(history_df['Date'] == today_date_str) & 
                                 (history_df['Matchup'].str.contains(home_name)) & 
@@ -389,7 +386,6 @@ def run_analysis():
                     eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
-                    # IMMEDIATE CSV PERSISTENCE GATE
                     if status in ['Pre-Game', 'Live', 'In Progress']:
                         if saved_game.empty:
                             new_row = pd.DataFrame([{'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num}])
