@@ -27,20 +27,20 @@ BVP_CACHE_FILE = 'bvp_cache.json'
 stats_api_calls = 0
 
 def call_stats_api(endpoint, params=None):
-    """Wrapper to track every single access to MLB-Stats-API."""
+    """Wrapper to track every single access to MLB-Stats-API[cite: 2]."""
     global stats_api_calls
     stats_api_calls += 1
     return statsapi.get(endpoint, params or {})
 
 def get_mst_now():
-    """Returns current time in America/Denver."""
+    """Returns current time in America/Denver[cite: 2]."""
     tz = pytz.timezone('America/Denver')
     return datetime.now(tz)
 
 # --- BULLPEN FATIGUE LOGIC ---
 
 def get_key_relievers(team_id):
-    """Identifies Closers and Setup men from live depth charts."""
+    """Identifies Closers and Setup men from live depth charts[cite: 2]."""
     key_ids = {}
     try:
         depth = call_stats_api('teams', {'teamId': team_id, 'hydrate': 'depthChart'})
@@ -55,7 +55,7 @@ def get_key_relievers(team_id):
     return key_ids
 
 def check_bullpen_fatigue(team_id, team_name):
-    """Analyzes last 3 days of pitch counts for key relievers."""
+    """Analyzes last 3 days of pitch counts for key relievers[cite: 2]."""
     key_arms = get_key_relievers(team_id)
     if not key_arms: return ""
     
@@ -102,6 +102,7 @@ def save_bvp_cache(cache_data):
         json.dump(cache_data, f, indent=4)
 
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
+    """Calculates OBP and tracks specific At Bats (AB) for the log[cite: 2]."""
     cache = load_bvp_cache()
     details = []
     total_ob_events, total_pas, total_abs = 0, 0, 0
@@ -144,7 +145,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
                 s_data = call_stats_api('person', {'personId': b_id, 'hydrate': 'stats(group=[hitting],type=[season],season=2026)'})
                 season_obp = float(s_data['people'][0]['stats'][0]['splits'][0]['stat']['obp'])
                 label = "2026 Season OBP"
-            except (KeyError, IndexError, ValueError, TypeError):
+            except:
                 season_obp = league_default
                 label = "Rookie (League Default)"
             
@@ -194,6 +195,7 @@ def format_odds(odds_val):
     except: return str(odds_val)
 
 def audit_and_stats():
+    """Maintains the requested stat line formatting for TODAY, YESTERDAY, and LIFETIME[cite: 2]."""
     if not os.path.exists(CSV_FILE): 
         return "📊 TODAY: 0/0 (0.0%) | $0.00", "📊 YESTERDAY: 0/0 (0.0%) | $0.00", "0/0 (0.0%) | $0.00"
     
@@ -248,7 +250,6 @@ def audit_and_stats():
 # --- UTILS ---
 
 def get_player_info(pid):
-    """Retrieves pitch hand, full name, and season ERA for a pitcher."""
     try:
         p = call_stats_api('person', {'personId': pid, 'hydrate': 'stats(group=[pitching],type=[season])'})
         hand = p['people'][0].get('pitchHand', {}).get('code', 'R')
@@ -294,7 +295,12 @@ def run_analysis():
     live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
     new_preds, display_list = [], []
     eval_log_lines = [f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n"]
-    history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
+    
+    # Initialize history_df properly to avoid trigger failure[cite: 2]
+    if os.path.exists(CSV_FILE):
+        history_df = pd.read_csv(CSV_FILE)
+    else:
+        history_df = pd.DataFrame(columns=['Date', 'Matchup', 'Predicted_Winner', 'Odds', 'Confidence', 'Result', 'Profit', 'Game_Num'])
 
     for game in games:
         name_map = {}
@@ -313,29 +319,23 @@ def run_analysis():
         a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
         pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
 
-        saved_game = pd.DataFrame()
-        if not history_df.empty:
-            saved_game = history_df[(history_df['Date'] == today_date_str) & 
-                                    (history_df['Matchup'].str.contains(home_name)) & 
-                                    (history_df['Game_Num'].astype(int) == game_num)]
+        # Persistence Gate[cite: 2]
+        is_already_saved = not history_df[
+            (history_df['Date'] == today_date_str) & 
+            (history_df['Matchup'].str.contains(home_name)) & 
+            (history_df['Game_Num'].astype(int) == game_num)
+        ].empty
 
-        is_live_or_final = status in ['Live', 'In Progress', 'Final'] or detailed_status == 'In Progress'
-        
-        if is_live_or_final and not saved_game.empty:
-            matchup_txt = saved_game.iloc[0]['Matchup']
-            w_odds = saved_game.iloc[0]['Odds']
-        else:
-            current_away_o = live_odds.get(f"{home_name}_{away_name}")
-            current_home_o = live_odds.get(f"{home_name}_{home_name}")
-            away_o_str = format_odds(current_away_o or "N/A")
-            home_o_str = format_odds(current_home_o or "N/A")
-            matchup_txt = f"{away_name} ({away_o_str}) @ {home_name} ({home_o_str})"
-            w_odds = None 
+        current_away_o = live_odds.get(f"{home_name}_{away_name}")
+        current_home_o = live_odds.get(f"{home_name}_{home_name}")
+        away_o_str = format_odds(current_away_o or "N/A")
+        home_o_str = format_odds(current_home_o or "N/A")
+        matchup_txt = f"{away_name} ({away_o_str}) @ {home_name} ({home_o_str})"
         
         score_str = ""
         if detailed_status == 'Postponed':
             score_str = f"❌ **POSTPONED**"
-        elif status in ['Live', 'In Progress'] or detailed_status == 'In Progress':
+        elif status in ['Live', 'In Progress']:
             score_str = f"🔥 **LIVE: {game['teams']['away'].get('score', 0)} - {game['teams']['home'].get('score', 0)}**"
         elif status == 'Final':
             score_str = f"✅ **FINAL: {game['teams']['away'].get('score', 0)} - {game['teams']['home'].get('score', 0)}**"
@@ -344,12 +344,11 @@ def run_analysis():
         home_fatigue = check_bullpen_fatigue(game['teams']['home']['team']['id'], home_name)
         fatigue_txt = "\n  ".join(filter(None, [away_fatigue, home_fatigue]))
 
-        # INITIALIZE game_info with 'src' key to avoid KeyError later[cite: 2]
         game_info = {
             'matchup': matchup_txt, 'time': mst_time, 'raw_time': mst_dt, 
             'is_active': False, 'status': detailed_status if detailed_status == 'Postponed' else status, 
             'score': score_str, 'away_team': away_name, 'home_team': home_name, 'game_num': game_num,
-            'fatigue': fatigue_txt, 'pitchers': pitcher_header, 'src': 'None'
+            'fatigue': fatigue_txt, 'pitchers': pitcher_header
         }
 
         if h_p_id and a_p_id and detailed_status != 'Postponed':
@@ -361,7 +360,6 @@ def run_analysis():
                 
                 h_l, a_l = box.get('home',{}).get('battingOrder',[]), box.get('away',{}).get('battingOrder',[])
                 lineup_src = "Official Boxscore" if (h_l and a_l) else "Starters of Last Game"
-                
                 if not h_l: h_l, _ = get_pro_lineup(game['teams']['home']['team']['id'])
                 if not a_l: a_l, _ = get_pro_lineup(game['teams']['away']['team']['id'])
 
@@ -371,10 +369,9 @@ def run_analysis():
                     
                     winner = home_name if h_e > a_e else away_name
                     conf = round(abs(h_e - a_e) * 100, 2)
-                    
-                    if w_odds is None:
-                        w_odds = live_odds.get(f"{home_name}_{winner}", -110)
+                    w_odds = live_odds.get(f"{home_name}_{winner}", -110)
 
+                    # Evaluation Log formatting with ABs[cite: 2]
                     eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n  Lineup Source: {lineup_src}\n")
                     eval_log_lines.append(f"  {home_name} Hitting (vs {a_name}):\n")
                     eval_log_lines.extend([line + "\n" for line in h_det])
@@ -385,23 +382,29 @@ def run_analysis():
                     eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
-                    if status == 'Pre-Game':
-                        if saved_game.empty:
-                            new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
-                        else:
-                            history_df.loc[saved_game.index, 'Matchup'] = matchup_txt
-                            history_df.loc[saved_game.index, 'Odds'] = w_odds
+                    # Prediction Storage[cite: 2]
+                    if not is_already_saved and status == 'Pre-Game':
+                        new_preds.append({
+                            'Date': today_date_str, 'Matchup': matchup_txt, 
+                            'Predicted_Winner': winner, 'Odds': w_odds, 
+                            'Confidence': conf, 'Result': 'PENDING', 
+                            'Profit': 0.0, 'Game_Num': game_num
+                        })
                     
                     game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': lineup_src})
-            except: pass
+            except Exception as e:
+                print(f"Error in logic: {e}")
+
         display_list.append(game_info)
 
-    if not history_df.empty: history_df.to_csv(CSV_FILE, index=False)
-    if new_preds: 
+    # Save logic[cite: 2]
+    if new_preds:
         pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
     
-    with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
+    with open(EVAL_LOG, 'w') as f:
+        f.writelines(eval_log_lines)
     
+    # TELEGRAM REPORT[cite: 2]
     t_msg, y_msg, life = audit_and_stats()
     report = f"⚾ *MLB REPORT: {full_timestamp_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n"
     report += f"🔑 *ODDS-API:* {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
@@ -420,14 +423,12 @@ def run_analysis():
             report += f"  {g['score']}\n"
         if g['fatigue']:
             report += f"  {g['fatigue']}\n"
-        
-        # Added safety check for 'src' key during report generation[cite: 2]
         if g.get('is_active'):
-            src_label = g.get('src', 'Unknown Source')
-            report += f"  👉 *{g['winner']}* ({g['odds']}) | {g['conf']}% Edge ({src_label})\n\n"
+            report += f"  👉 *{g['winner']}* ({g['odds']}) | {g['conf']}% Edge ({g['src']})\n\n"
         else:
             report += f"  ⏳ {g['status']}\n\n"
     
     send_telegram(report)
 
-if __name__ == "__main__": run_analysis()
+if __name__ == "__main__":
+    run_analysis()
