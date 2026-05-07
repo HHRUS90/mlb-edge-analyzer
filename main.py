@@ -350,7 +350,7 @@ def run_analysis():
             'score': score_str, 'away_team': away_name, 'home_team': home_name, 'game_num': game_num,
             'fatigue': fatigue_txt, 'pitchers': pitcher_header
         }
-
+        print(f"DEBUG: Checking {home_name} - Status: {status}, Saved: {is_already_saved}, Lineup: {lineup_src}")
         if h_p_id and a_p_id and detailed_status != 'Postponed':
             try:
                 box = statsapi.boxscore_data(game_id)
