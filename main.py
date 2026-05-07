@@ -102,7 +102,6 @@ def save_bvp_cache(cache_data):
         json.dump(cache_data, f, indent=4)
 
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
-    """Calculates OBP and tracks specific ABs for granular reporting[cite: 2]."""
     cache = load_bvp_cache()
     details = []
     total_ob_events, total_pas, total_abs = 0, 0, 0
@@ -195,7 +194,6 @@ def format_odds(odds_val):
     except: return str(odds_val)
 
 def audit_and_stats():
-    """Maintains specific stat reporting format for Telegram[cite: 2]."""
     if not os.path.exists(CSV_FILE): 
         return "📊 TODAY: 0/0 (0.0%) | $0.00", "📊 YESTERDAY: 0/0 (0.0%) | $0.00", "0/0 (0.0%) | $0.00"
     
@@ -314,7 +312,6 @@ def run_analysis():
         a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
         pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
 
-        # Persistence Check[cite: 2]
         is_already_saved = False
         if not history_df.empty:
             is_already_saved = not history_df[
@@ -360,7 +357,6 @@ def run_analysis():
                 if not h_l: h_l, _ = get_pro_lineup(game['teams']['home']['team']['id'])
                 if not a_l: a_l, _ = get_pro_lineup(game['teams']['away']['team']['id'])
 
-                # ACTIONABLE DEBUG STEP[cite: 2]
                 print(f"DEBUG: Checking {home_name} - Status: {status}, Saved: {is_already_saved}, Lineup: {lineup_src}")
 
                 if h_l and a_l:
@@ -381,7 +377,8 @@ def run_analysis():
                     eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
-                    if not is_already_saved and status == 'Pre-Game':
+                    # UPDATED LOGIC: Include 'Preview' status to ensure pre-game games are saved[cite: 2]
+                    if not is_already_saved and status in ['Pre-Game', 'Preview']:
                         new_preds.append({
                             'Date': today_date_str, 'Matchup': matchup_txt, 
                             'Predicted_Winner': winner, 'Odds': w_odds, 
