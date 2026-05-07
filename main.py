@@ -102,7 +102,7 @@ def save_bvp_cache(cache_data):
         json.dump(cache_data, f, indent=4)
 
 def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
-    """Calculates OBP and tracks specific At Bats (AB) for the log[cite: 2]."""
+    """Calculates OBP and tracks specific ABs for granular reporting[cite: 2]."""
     cache = load_bvp_cache()
     details = []
     total_ob_events, total_pas, total_abs = 0, 0, 0
@@ -195,7 +195,7 @@ def format_odds(odds_val):
     except: return str(odds_val)
 
 def audit_and_stats():
-    """Maintains the requested stat line formatting for TODAY, YESTERDAY, and LIFETIME[cite: 2]."""
+    """Maintains specific stat reporting format for Telegram[cite: 2]."""
     if not os.path.exists(CSV_FILE): 
         return "📊 TODAY: 0/0 (0.0%) | $0.00", "📊 YESTERDAY: 0/0 (0.0%) | $0.00", "0/0 (0.0%) | $0.00"
     
@@ -295,12 +295,7 @@ def run_analysis():
     live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
     new_preds, display_list = [], []
     eval_log_lines = [f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n"]
-    
-    # Initialize history_df properly to avoid trigger failure[cite: 2]
-    if os.path.exists(CSV_FILE):
-        history_df = pd.read_csv(CSV_FILE)
-    else:
-        history_df = pd.DataFrame(columns=['Date', 'Matchup', 'Predicted_Winner', 'Odds', 'Confidence', 'Result', 'Profit', 'Game_Num'])
+    history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
 
     for game in games:
         name_map = {}
@@ -319,12 +314,14 @@ def run_analysis():
         a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
         pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
 
-        # Persistence Gate[cite: 2]
-        is_already_saved = not history_df[
-            (history_df['Date'] == today_date_str) & 
-            (history_df['Matchup'].str.contains(home_name)) & 
-            (history_df['Game_Num'].astype(int) == game_num)
-        ].empty
+        # Persistence Check[cite: 2]
+        is_already_saved = False
+        if not history_df.empty:
+            is_already_saved = not history_df[
+                (history_df['Date'] == today_date_str) & 
+                (history_df['Matchup'].str.contains(home_name)) & 
+                (history_df['Game_Num'].astype(int) == game_num)
+            ].empty
 
         current_away_o = live_odds.get(f"{home_name}_{away_name}")
         current_home_o = live_odds.get(f"{home_name}_{home_name}")
@@ -335,7 +332,7 @@ def run_analysis():
         score_str = ""
         if detailed_status == 'Postponed':
             score_str = f"❌ **POSTPONED**"
-        elif status in ['Live', 'In Progress']:
+        elif status in ['Live', 'In Progress'] or detailed_status == 'In Progress':
             score_str = f"🔥 **LIVE: {game['teams']['away'].get('score', 0)} - {game['teams']['home'].get('score', 0)}**"
         elif status == 'Final':
             score_str = f"✅ **FINAL: {game['teams']['away'].get('score', 0)} - {game['teams']['home'].get('score', 0)}**"
@@ -350,7 +347,7 @@ def run_analysis():
             'score': score_str, 'away_team': away_name, 'home_team': home_name, 'game_num': game_num,
             'fatigue': fatigue_txt, 'pitchers': pitcher_header
         }
-        print(f"DEBUG: Checking {home_name} - Status: {status}, Saved: {is_already_saved}, Lineup: {lineup_src}")
+
         if h_p_id and a_p_id and detailed_status != 'Postponed':
             try:
                 box = statsapi.boxscore_data(game_id)
@@ -363,6 +360,9 @@ def run_analysis():
                 if not h_l: h_l, _ = get_pro_lineup(game['teams']['home']['team']['id'])
                 if not a_l: a_l, _ = get_pro_lineup(game['teams']['away']['team']['id'])
 
+                # ACTIONABLE DEBUG STEP[cite: 2]
+                print(f"DEBUG: Checking {home_name} - Status: {status}, Saved: {is_already_saved}, Lineup: {lineup_src}")
+
                 if h_l and a_l:
                     h_e, h_pa, h_det, h_ab = get_smoothed_bvp(a_p_id, h_l, a_hand, name_map)
                     a_e, a_pa, a_det, a_ab = get_smoothed_bvp(h_p_id, a_l, h_hand, name_map)
@@ -371,7 +371,6 @@ def run_analysis():
                     conf = round(abs(h_e - a_e) * 100, 2)
                     w_odds = live_odds.get(f"{home_name}_{winner}", -110)
 
-                    # Evaluation Log formatting with ABs[cite: 2]
                     eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n  Lineup Source: {lineup_src}\n")
                     eval_log_lines.append(f"  {home_name} Hitting (vs {a_name}):\n")
                     eval_log_lines.extend([line + "\n" for line in h_det])
@@ -382,7 +381,6 @@ def run_analysis():
                     eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
-                    # Prediction Storage[cite: 2]
                     if not is_already_saved and status == 'Pre-Game':
                         new_preds.append({
                             'Date': today_date_str, 'Matchup': matchup_txt, 
@@ -393,18 +391,15 @@ def run_analysis():
                     
                     game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': lineup_src})
             except Exception as e:
-                print(f"Error in logic: {e}")
+                print(f"Error in logic for {home_name}: {e}")
 
         display_list.append(game_info)
 
-    # Save logic[cite: 2]
     if new_preds:
         pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
     
-    with open(EVAL_LOG, 'w') as f:
-        f.writelines(eval_log_lines)
+    with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
-    # TELEGRAM REPORT[cite: 2]
     t_msg, y_msg, life = audit_and_stats()
     report = f"⚾ *MLB REPORT: {full_timestamp_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n"
     report += f"🔑 *ODDS-API:* {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
@@ -430,5 +425,4 @@ def run_analysis():
     
     send_telegram(report)
 
-if __name__ == "__main__":
-    run_analysis()
+if __name__ == "__main__": run_analysis()
