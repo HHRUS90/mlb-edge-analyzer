@@ -27,20 +27,20 @@ BVP_CACHE_FILE = 'bvp_cache.json'
 stats_api_calls = 0
 
 def call_stats_api(endpoint, params=None):
-    """Wrapper to track every single access to MLB-Stats-API[cite: 2]."""
+    """Wrapper to track every single access to MLB-Stats-API."""
     global stats_api_calls
     stats_api_calls += 1
     return statsapi.get(endpoint, params or {})
 
 def get_mst_now():
-    """Returns current time in America/Denver[cite: 2]."""
+    """Returns current time in America/Denver."""
     tz = pytz.timezone('America/Denver')
     return datetime.now(tz)
 
 # --- BULLPEN FATIGUE LOGIC ---
 
 def get_key_relievers(team_id):
-    """Identifies Closers and Setup men from live depth charts[cite: 2]."""
+    """Identifies Closers and Setup men from live depth charts."""
     key_ids = {}
     try:
         depth = call_stats_api('teams', {'teamId': team_id, 'hydrate': 'depthChart'})
@@ -55,7 +55,7 @@ def get_key_relievers(team_id):
     return key_ids
 
 def check_bullpen_fatigue(team_id, team_name):
-    """Analyzes last 3 days of pitch counts for key relievers[cite: 2]."""
+    """Analyzes last 3 days of pitch counts for key relievers."""
     key_arms = get_key_relievers(team_id)
     if not key_arms: return ""
     
@@ -144,7 +144,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
                 s_data = call_stats_api('person', {'personId': b_id, 'hydrate': 'stats(group=[hitting],type=[season],season=2026)'})
                 season_obp = float(s_data['people'][0]['stats'][0]['splits'][0]['stat']['obp'])
                 label = "2026 Season OBP"
-            except:
+            except (KeyError, IndexError, ValueError, TypeError):
                 season_obp = league_default
                 label = "Rookie (League Default)"
             
@@ -153,6 +153,7 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
             details.append(f"    - {b_name}: NO HISTORY ({label}: {season_obp:.3f})")
 
     if cache_updated: save_bvp_cache(cache)
+    
     smoothed = total_ob_events / total_pas if total_pas > 0 else league_default
     return smoothed, total_pas, details, total_abs
 
@@ -312,19 +313,26 @@ def run_analysis():
         a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
         pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
 
-        is_already_saved = False
+        # --- UPDATED ODDS PERSISTENCE & LOCKING LOGIC ---
+        PRE_GAME_STATUSES = ['Scheduled', 'Pre-Game', 'Warmup']
+        saved_game = pd.DataFrame()
         if not history_df.empty:
-            is_already_saved = not history_df[
-                (history_df['Date'] == today_date_str) & 
-                (history_df['Matchup'].str.contains(home_name)) & 
-                (history_df['Game_Num'].astype(int) == game_num)
-            ].empty
+            saved_game = history_df[(history_df['Date'] == today_date_str) & 
+                                    (history_df['Matchup'].str.contains(home_name)) & 
+                                    (history_df['Game_Num'].astype(int) == game_num)]
 
-        current_away_o = live_odds.get(f"{home_name}_{away_name}")
-        current_home_o = live_odds.get(f"{home_name}_{home_name}")
-        away_o_str = format_odds(current_away_o or "N/A")
-        home_o_str = format_odds(current_home_o or "N/A")
-        matchup_txt = f"{away_name} ({away_o_str}) @ {home_name} ({home_o_str})"
+        is_locked = status in ['Live', 'In Progress', 'Final'] or detailed_status in ['In Progress', 'Final']
+        
+        if is_locked and not saved_game.empty:
+            matchup_txt = saved_game.iloc[0]['Matchup']
+            w_odds = saved_game.iloc[0]['Odds']
+        else:
+            current_away_o = live_odds.get(f"{home_name}_{away_name}")
+            current_home_o = live_odds.get(f"{home_name}_{home_name}")
+            away_o_str = format_odds(current_away_o or "N/A")
+            home_o_str = format_odds(current_home_o or "N/A")
+            matchup_txt = f"{away_name} ({away_o_str}) @ {home_name} ({home_o_str})"
+            w_odds = None 
         
         score_str = ""
         if detailed_status == 'Postponed':
@@ -354,10 +362,9 @@ def run_analysis():
                 
                 h_l, a_l = box.get('home',{}).get('battingOrder',[]), box.get('away',{}).get('battingOrder',[])
                 lineup_src = "Official Boxscore" if (h_l and a_l) else "Starters of Last Game"
+                
                 if not h_l: h_l, _ = get_pro_lineup(game['teams']['home']['team']['id'])
                 if not a_l: a_l, _ = get_pro_lineup(game['teams']['away']['team']['id'])
-
-                print(f"DEBUG: Checking {home_name} - Status: {status}, Saved: {is_already_saved}, Lineup: {lineup_src}")
 
                 if h_l and a_l:
                     h_e, h_pa, h_det, h_ab = get_smoothed_bvp(a_p_id, h_l, a_hand, name_map)
@@ -365,7 +372,9 @@ def run_analysis():
                     
                     winner = home_name if h_e > a_e else away_name
                     conf = round(abs(h_e - a_e) * 100, 2)
-                    w_odds = live_odds.get(f"{home_name}_{winner}", -110)
+                    
+                    if w_odds is None:
+                        w_odds = live_odds.get(f"{home_name}_{winner}", -110)
 
                     eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n  Lineup Source: {lineup_src}\n")
                     eval_log_lines.append(f"  {home_name} Hitting (vs {a_name}):\n")
@@ -377,22 +386,21 @@ def run_analysis():
                     eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
-                    # UPDATED LOGIC: Include 'Preview' status to ensure pre-game games are saved[cite: 2]
-                    if not is_already_saved and status in ['Pre-Game', 'Preview']:
-                        new_preds.append({
-                            'Date': today_date_str, 'Matchup': matchup_txt, 
-                            'Predicted_Winner': winner, 'Odds': w_odds, 
-                            'Confidence': conf, 'Result': 'PENDING', 
-                            'Profit': 0.0, 'Game_Num': game_num
-                        })
+                    if detailed_status in PRE_GAME_STATUSES:
+                        if saved_game.empty:
+                            new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
+                        else:
+                            history_df.loc[saved_game.index, 'Matchup'] = matchup_txt
+                            history_df.loc[saved_game.index, 'Odds'] = w_odds
+                            history_df.loc[saved_game.index, 'Predicted_Winner'] = winner
+                            history_df.loc[saved_game.index, 'Confidence'] = conf
                     
                     game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': lineup_src})
-            except Exception as e:
-                print(f"Error in logic for {home_name}: {e}")
-
+            except: pass
         display_list.append(game_info)
 
-    if new_preds:
+    if not history_df.empty: history_df.to_csv(CSV_FILE, index=False)
+    if new_preds: 
         pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
     
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
