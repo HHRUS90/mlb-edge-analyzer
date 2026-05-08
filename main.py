@@ -292,9 +292,14 @@ def run_analysis():
     games = [g for d in games_raw.get('dates', []) for g in d.get('games', [])]
     
     live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
-    new_preds, display_list = [], []
+    display_list = []
     eval_log_lines = [f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n"]
-    history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
+    
+    # 1. Load existing history or create new DataFrame if file is deleted
+    if os.path.exists(CSV_FILE):
+        history_df = pd.read_csv(CSV_FILE)
+    else:
+        history_df = pd.DataFrame(columns=['Date', 'Matchup', 'Predicted_Winner', 'Odds', 'Confidence', 'Result', 'Profit', 'Game_Num'])
 
     for game in games:
         name_map = {}
@@ -309,31 +314,30 @@ def run_analysis():
         away_name = game['teams']['away']['team']['name']
         home_name = game['teams']['home']['team']['name']
         
-        h_hand, h_name, h_era = get_player_info(h_p_id) if h_p_id else ('R', 'TBD', '0.00')
-        a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
-        pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
+        # 2. Check if this specific game already exists in our ledger
+        existing_idx = history_df[
+            (history_df['Date'] == today_date_str) & 
+            (history_df['Matchup'].str.contains(home_name)) & 
+            (history_df['Game_Num'].astype(int) == game_num)
+        ].index
 
-        # --- UPDATED ODDS PERSISTENCE & LOCKING LOGIC ---
-        PRE_GAME_STATUSES = ['Scheduled', 'Pre-Game', 'Warmup']
-        saved_game = pd.DataFrame()
-        if not history_df.empty:
-            saved_game = history_df[(history_df['Date'] == today_date_str) & 
-                                    (history_df['Matchup'].str.contains(home_name)) & 
-                                    (history_df['Game_Num'].astype(int) == game_num)]
-
-        is_locked = status in ['Live', 'In Progress', 'Final'] or detailed_status in ['In Progress', 'Final']
+        # 3. Determine Odds & Matchup String Logic
+        is_live_or_final = status in ['Live', 'In Progress', 'Final'] or detailed_status == 'In Progress'
         
-        if is_locked and not saved_game.empty:
-            matchup_txt = saved_game.iloc[0]['Matchup']
-            w_odds = saved_game.iloc[0]['Odds']
+        if is_live_or_final and not existing_idx.empty:
+            # LOCK: Game started, use what was already recorded
+            matchup_txt = history_df.loc[existing_idx[0], 'Matchup']
+            w_odds = history_df.loc[existing_idx[0], 'Odds']
         else:
+            # UPDATE: Game hasn't started, refresh with latest live odds
             current_away_o = live_odds.get(f"{home_name}_{away_name}")
             current_home_o = live_odds.get(f"{home_name}_{home_name}")
             away_o_str = format_odds(current_away_o or "N/A")
             home_o_str = format_odds(current_home_o or "N/A")
             matchup_txt = f"{away_name} ({away_o_str}) @ {home_name} ({home_o_str})"
-            w_odds = None 
-        
+            w_odds = None # Will be calculated by prediction logic below
+
+        # Status and Score Strings for Telegram
         score_str = ""
         if detailed_status == 'Postponed':
             score_str = f"❌ **POSTPONED**"
@@ -341,6 +345,10 @@ def run_analysis():
             score_str = f"🔥 **LIVE: {game['teams']['away'].get('score', 0)} - {game['teams']['home'].get('score', 0)}**"
         elif status == 'Final':
             score_str = f"✅ **FINAL: {game['teams']['away'].get('score', 0)} - {game['teams']['home'].get('score', 0)}**"
+
+        h_hand, h_name, h_era = get_player_info(h_p_id) if h_p_id else ('R', 'TBD', '0.00')
+        a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
+        pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
 
         away_fatigue = check_bullpen_fatigue(game['teams']['away']['team']['id'], away_name)
         home_fatigue = check_bullpen_fatigue(game['teams']['home']['team']['id'], home_name)
@@ -353,6 +361,7 @@ def run_analysis():
             'fatigue': fatigue_txt, 'pitchers': pitcher_header
         }
 
+        # 4. Prediction Logic (Only update if not Live/Final)
         if h_p_id and a_p_id and detailed_status != 'Postponed':
             try:
                 box = statsapi.boxscore_data(game_id)
@@ -373,9 +382,27 @@ def run_analysis():
                     winner = home_name if h_e > a_e else away_name
                     conf = round(abs(h_e - a_e) * 100, 2)
                     
+                    # If game is Pre-Game, we use live odds for the winner
                     if w_odds is None:
                         w_odds = live_odds.get(f"{home_name}_{winner}", -110)
 
+                    # Update the dataframe
+                    new_row = {
+                        'Date': today_date_str, 'Matchup': matchup_txt, 
+                        'Predicted_Winner': winner, 'Odds': w_odds, 
+                        'Confidence': conf, 'Result': 'PENDING', 
+                        'Profit': 0.0, 'Game_Num': game_num
+                    }
+
+                    if not is_live_or_final:
+                        if existing_idx.empty:
+                            history_df = pd.concat([history_df, pd.DataFrame([new_row])], ignore_index=True)
+                        else:
+                            # Update existing Pending game with fresh lineups/odds
+                            for col, val in new_row.items():
+                                history_df.at[existing_idx[0], col] = val
+                    
+                    # (Standard Log generation remains same)
                     eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n  Lineup Source: {lineup_src}\n")
                     eval_log_lines.append(f"  {home_name} Hitting (vs {a_name}):\n")
                     eval_log_lines.extend([line + "\n" for line in h_det])
@@ -386,25 +413,16 @@ def run_analysis():
                     eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
                     eval_log_lines.append("-" * 50 + "\n")
 
-                    if detailed_status in PRE_GAME_STATUSES:
-                        if saved_game.empty:
-                            new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
-                        else:
-                            history_df.loc[saved_game.index, 'Matchup'] = matchup_txt
-                            history_df.loc[saved_game.index, 'Odds'] = w_odds
-                            history_df.loc[saved_game.index, 'Predicted_Winner'] = winner
-                            history_df.loc[saved_game.index, 'Confidence'] = conf
-                    
                     game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': lineup_src})
             except: pass
         display_list.append(game_info)
 
-    if not history_df.empty: history_df.to_csv(CSV_FILE, index=False)
-    if new_preds: 
-        pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
+    # 5. Save the stateful DataFrame back to CSV
+    history_df.to_csv(CSV_FILE, index=False)
     
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
+    # Audit finished games and generate the Telegram Report
     t_msg, y_msg, life = audit_and_stats()
     report = f"⚾ *MLB REPORT: {full_timestamp_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n"
     report += f"🔑 *ODDS-API:* {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
