@@ -166,9 +166,9 @@ def get_mlb_odds():
     usage_df = pd.read_csv(USAGE_FILE)
     
     if current_month not in usage_df['Month'].values:
-        new_row = pd.DataFrame([{'Month': current_month, 'Calls': 0}])
-        usage_df = pd.concat([usage_df, new_row], ignore_index=True)
+        usage_df = pd.concat([usage_df, pd.DataFrame([{'Month': current_month, 'Calls': 0}])], ignore_index=True)
     
+    # Use the value DIRECTLY from the freshly read file
     local_calls = int(usage_df.loc[usage_df['Month'] == current_month, 'Calls'].values[0])
     if not ODDS_API_KEY or local_calls >= ODDS_CALL_LIMIT: 
         return {}, "N/A", "N/A", True, local_calls
@@ -178,14 +178,15 @@ def get_mlb_odds():
         params = {'apiKey': ODDS_API_KEY, 'bookmakers': 'fanduel', 'markets': 'h2h', 'oddsFormat': 'american'}
         resp = requests.get(url, params=params)
         if resp.status_code == 200:
-            local_calls += 1
-            usage_df.loc[usage_df['Month'] == current_month, 'Calls'] = local_calls
+            # Increment the FRESH value and save immediately
+            new_call_count = local_calls + 1
+            usage_df.loc[usage_df['Month'] == current_month, 'Calls'] = new_call_count
             usage_df.to_csv(USAGE_FILE, index=False)
             data = resp.json()
             used = resp.headers.get('x-requests-used', '0')
             rem = resp.headers.get('x-requests-remaining', '0')
             odds_dict = {f"{g['home_team']}_{o['name']}": o['price'] for g in data if g.get('bookmakers') for o in g['bookmakers'][0]['markets'][0]['outcomes']}
-            return odds_dict, used, rem, False, local_calls
+            return odds_dict, used, rem, False, new_call_count
     except: pass
     return {}, "0", "0", False, local_calls
 
