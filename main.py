@@ -212,7 +212,7 @@ def audit_and_stats():
             games = dates[0].get('games', [])
             for g in games:
                 h_name = g.get('teams', {}).get('home', {}).get('team', {}).get('name', '')
-                if h_name in str(row['Matchup']) and int(g.get('gameNumber', 1)) == int(row.get('Game_Num', 1)):
+                if h_name in row['Matchup'] and int(g.get('gameNumber', 1)) == int(row.get('Game_Num', 1)):
                     if g['status']['abstractGameState'] == 'Final' and g['status']['detailedState'] != 'Postponed':
                         winning_team = g['teams']['home']['team']['name'] if g['teams']['home'].get('isWinner') else g['teams']['away']['team']['name']
                         win = 'WIN' if row['Predicted_Winner'] == winning_team else 'LOSS'
@@ -287,13 +287,22 @@ def run_analysis():
     today_date_str = now_mst.strftime("%m/%d/%Y")
     full_timestamp_str = now_mst.strftime("%m/%d/%Y (%I:%M %p)")
     
+    # --- AUTO-REGENERATE CSV IF MISSING ---
+    if not os.path.exists(CSV_FILE):
+        headers = ['Date', 'Matchup', 'Predicted_Winner', 'Odds', 'Confidence', 'Result', 'Profit', 'Game_Num']
+        with open(CSV_FILE, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(headers)
+    
     games_raw = call_stats_api('schedule', {'sportId': 1, 'date': today_date_str, 'hydrate': 'probablePitcher,lineups'})
     games = [g for d in games_raw.get('dates', []) for g in d.get('games', [])]
     
     live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
     new_preds, display_list = [], []
     eval_log_lines = [f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n"]
-    history_df = pd.read_csv(CSV_FILE) if os.path.exists(CSV_FILE) else pd.DataFrame()
+    
+    # Load history for logic and merging
+    history_df = pd.read_csv(CSV_FILE)
 
     for game in games:
         name_map = {}
@@ -312,11 +321,10 @@ def run_analysis():
         a_hand, a_name, a_era = get_player_info(a_p_id) if a_p_id else ('R', 'TBD', '0.00')
         pitcher_header = f"_{a_name} ({a_era}) vs {h_name} ({h_era})_"
 
-        saved_game = pd.DataFrame()
-        if not history_df.empty:
-            saved_game = history_df[(history_df['Date'] == today_date_str) & 
-                                    (history_df['Matchup'].str.contains(home_name)) & 
-                                    (history_df['Game_Num'].astype(int) == game_num)]
+        # Persistence logic
+        saved_game = history_df[(history_df['Date'] == today_date_str) & 
+                                (history_df['Matchup'].str.contains(home_name)) & 
+                                (history_df['Game_Num'].astype(int) == game_num)]
 
         is_live_or_final = status in ['Live', 'In Progress', 'Final'] or detailed_status == 'In Progress'
         
@@ -386,16 +394,18 @@ def run_analysis():
                     if saved_game.empty:
                         new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
                     else:
-                        history_df.loc[saved_game.index, 'Matchup'] = matchup_txt
-                        history_df.loc[saved_game.index, 'Odds'] = w_odds
+                        if not is_live_or_final:
+                            history_df.loc[saved_game.index, 'Matchup'] = matchup_txt
+                            history_df.loc[saved_game.index, 'Odds'] = w_odds
                     
                     game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': lineup_src})
             except: pass
         display_list.append(game_info)
 
-    if not history_df.empty: history_df.to_csv(CSV_FILE, index=False)
-    if new_preds: 
-        pd.DataFrame(new_preds).to_csv(CSV_FILE, mode='a', index=False, header=not os.path.exists(CSV_FILE))
+    # --- SAVE UPDATED HISTORY WITHOUT WIPING ---
+    if new_preds:
+        history_df = pd.concat([history_df, pd.DataFrame(new_preds)], ignore_index=True)
+    history_df.to_csv(CSV_FILE, index=False)
     
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
