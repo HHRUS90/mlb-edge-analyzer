@@ -164,8 +164,10 @@ def get_mlb_odds():
     if not os.path.exists(USAGE_FILE):
         with open(USAGE_FILE, 'w') as f: f.write("Month,Calls\n" + f"{current_month},0\n")
     usage_df = pd.read_csv(USAGE_FILE)
+    
     if current_month not in usage_df['Month'].values:
-        usage_df = pd.concat([usage_df, pd.DataFrame([{'Month': current_month, 'Calls': 0}])], ignore_index=True)
+        new_row = pd.DataFrame([{'Month': current_month, 'Calls': 0}])
+        usage_df = pd.concat([usage_df, new_row], ignore_index=True)
     
     local_calls = int(usage_df.loc[usage_df['Month'] == current_month, 'Calls'].values[0])
     if not ODDS_API_KEY or local_calls >= ODDS_CALL_LIMIT: 
@@ -176,13 +178,14 @@ def get_mlb_odds():
         params = {'apiKey': ODDS_API_KEY, 'bookmakers': 'fanduel', 'markets': 'h2h', 'oddsFormat': 'american'}
         resp = requests.get(url, params=params)
         if resp.status_code == 200:
-            usage_df.loc[usage_df['Month'] == current_month, 'Calls'] += 1
+            local_calls += 1
+            usage_df.loc[usage_df['Month'] == current_month, 'Calls'] = local_calls
             usage_df.to_csv(USAGE_FILE, index=False)
             data = resp.json()
             used = resp.headers.get('x-requests-used', '0')
             rem = resp.headers.get('x-requests-remaining', '0')
             odds_dict = {f"{g['home_team']}_{o['name']}": o['price'] for g in data if g.get('bookmakers') for o in g['bookmakers'][0]['markets'][0]['outcomes']}
-            return odds_dict, used, rem, False, local_calls + 1
+            return odds_dict, used, rem, False, local_calls
     except: pass
     return {}, "0", "0", False, local_calls
 
@@ -308,8 +311,8 @@ def run_analysis():
         f"{t_msg}\n",
         f"{y_msg}\n",
         f"LIFETIME: {life}\n",
-        f"ODDS-API: {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n",
-        f"MLB-STATS-API: {stats_api_calls} Calls (Initial)\n",
+        "", # Index 4: Placeholder for Odds-API
+        "", # Index 5: Placeholder for MLB-Stats-API
         "="*50 + "\n"
     ]
     
