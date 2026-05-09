@@ -310,7 +310,7 @@ def run_analysis():
         f"LIFETIME: {life}\n",
         f"ODDS-API: {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n",
         f"MLB-STATS-API: {stats_api_calls} Calls (Initial)\n",
-        "="*50 + "\n\n"
+        "="*50 + "\n"
     ]
     
     # Load history for logic and merging
@@ -418,6 +418,10 @@ def run_analysis():
     if new_preds:
         history_df = pd.concat([history_df, pd.DataFrame(new_preds)], ignore_index=True)
     history_df.to_csv(CSV_FILE, index=False)
+
+    # Update with correct API calls 
+    eval_log_lines[4] = f"ODDS-API: {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
+    eval_log_lines[5] = f"MLB-STATS-API: {stats_api_calls} Total Calls\n"
     
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
     
