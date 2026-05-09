@@ -298,8 +298,20 @@ def run_analysis():
     games = [g for d in games_raw.get('dates', []) for g in d.get('games', [])]
     
     live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
+    t_msg, y_msg, life = audit_and_stats() # Get existing ledger stats
     new_preds, display_list = [], []
-    eval_log_lines = [f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n"]
+    # eval_log_lines = [f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n"]
+
+    # 2. Initialize Evaluation Log with the new Header Section
+    eval_log_lines = [
+        f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n",
+        f"{t_msg}\n",
+        f"{y_msg}\n",
+        f"LIFETIME: {life}\n",
+        f"ODDS-API: {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n",
+        f"MLB-STATS-API: {stats_api_calls} Calls (Initial)\n",
+        "="*50 + "\n\n"
+    ]
     
     # Load history for logic and merging
     history_df = pd.read_csv(CSV_FILE)
