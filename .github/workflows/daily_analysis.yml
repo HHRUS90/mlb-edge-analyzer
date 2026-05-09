@@ -30,9 +30,9 @@ jobs:
             prediction_history.csv
             api_usage.csv
           # Stable key to prevent run_id mismatch
-          key: mlb-data-cache-v4-${{ runner.os }}
+          key: mlb-data-cache-v5-${{ runner.os }}
           restore-keys: |
-            mlb-data-cache-v4-${{ runner.os }}-
+            mlb-data-cache-v5-${{ runner.os }}-
 
       - name: Install Dependencies
         run: pip install pandas requests MLB-StatsAPI pytz
