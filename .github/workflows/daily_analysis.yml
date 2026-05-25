@@ -1,9 +1,17 @@
 name: MLB Pro Analyzer
 
 on:
-  schedule:
-    - cron: '0 14,18,21 * * *'
+  # Triggered instantly via external API requests (e.g., cron-job.org)
+  repository_dispatch:
+    types: [cron_hourly_trigger]
+  # Allows you to still run it manually via the GitHub UI for troubleshooting
   workflow_dispatch:
+    inputs:
+      force_telegram:
+        description: 'Force Telegram Report Delivery'
+        required: false
+        default: 'false'
+        type: boolean
 
 jobs:
   analyze:
@@ -29,13 +37,29 @@ jobs:
             bvp_cache.json
             prediction_history.csv
             api_usage.csv
-          # Stable key to prevent run_id mismatch
-          key: mlb-data-cache-v5-${{ runner.os }}
+          key: mlb-data-cache-v2-${{ runner.os }}-${{ github.run_id }}
           restore-keys: |
-            mlb-data-cache-v5-${{ runner.os }}-
+            mlb-data-cache-v2-${{ runner.os }}-
 
       - name: Install Dependencies
         run: pip install pandas requests MLB-StatsAPI pytz
+
+      - name: Determine Run Mode
+        id: run_mode
+        run: |
+          # Calculate current hour in America/Denver 
+          DENVER_HOUR=$(TZ="America/Denver" date +%H)
+          echo "Current Denver hour: $DENVER_HOUR"
+          
+          # Send report only during the 9 AM, 12 PM, and 4 PM Denver windows, 
+          # OR if forced manually via workflow_dispatch.
+          if [ "$DENVER_HOUR" = "09" ] || [ "$DENVER_HOUR" = "12" ] || [ "$DENVER_HOUR" = "16" ] || [ "${{ github.event.inputs.force_telegram }}" = "true" ]; then
+            echo "ARGS=--send-report" >> $GITHUB_OUTPUT
+            echo "Report delivery armed."
+          else
+            echo "ARGS=" >> $GITHUB_OUTPUT
+            echo "Silent data collection armed."
+          fi
 
       - name: Run MLB Analysis
         env:
@@ -43,13 +67,15 @@ jobs:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: python main.py
+        run: python main.py ${{ steps.run_mode.outputs.ARGS }}
 
       - name: Commit and Push Updated Data
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git pull origin main # Ensure local is sync'd before pushing
-          git add prediction_history.csv api_usage.csv bvp_cache.json evaluation_log.txt
+          [ -f prediction_history.csv ] && git add prediction_history.csv
+          [ -f api_usage.csv ] && git add api_usage.csv
+          [ -f bvp_cache.json ] && git add bvp_cache.json
+          [ -f evaluation_log.txt ] && git add evaluation_log.txt
           git diff-index --quiet HEAD || git commit -m "Automated Data Update [$(date)]"
-          git push origin main
+          git push
