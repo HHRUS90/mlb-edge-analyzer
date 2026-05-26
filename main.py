@@ -393,13 +393,44 @@ def run_analysis():
             'fatigue': fatigue_txt, 'pitchers': pitcher_header
         }
 
-        # LOCKING ENHANCEMENT: Skip analytical computations if game is active/final and already logged.
+# LOCKING ENHANCEMENT: Skip analytical computations if game is active/final and already logged.
         if is_live_or_final and not saved_game.empty:
             # Game is active/done; reload frozen records from CSV to ensure edge never shifts during live execution.
             winner = saved_game.iloc[0]['Predicted_Winner']
             conf = float(saved_game.iloc[0]['Confidence'])
             w_odds = saved_game.iloc[0]['Odds']
             game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': "Locked Pregame Edge"})
+            
+            # --- FIX: Still parse lineups and run BvP to populate the evaluation log ---
+            try:
+                box = statsapi.boxscore_data(game_id)
+                for side in ['home', 'away']:
+                    for pid, p in box.get(side, {}).get('players', {}).items():
+                        name_map[int(pid.replace('ID',''))] = p['person']['fullName']
+                
+                h_l, a_l = box.get('home',{}).get('battingOrder',[]), box.get('away',{}).get('battingOrder',[])
+                lineup_src = "Official Boxscore" if (h_l and a_l) else "Starters of Last Game"
+                if not h_l: h_l, _ = get_pro_lineup(game['teams']['home']['team']['id'])
+                if not a_l: a_l, _ = get_pro_lineup(game['teams']['away']['team']['id'])
+
+                if h_l and a_l:
+                    h_e, h_pa, h_det, h_ab = get_smoothed_bvp(a_p_id, h_l, a_hand, name_map)
+                    a_e, a_pa, a_det, a_ab = get_smoothed_bvp(h_p_id, a_l, h_hand, name_map)
+                    
+                    # Log generation logic copied here so it updates even when locked
+                    game_lbl = f"GAME: {away_name} @ {home_name} (G{game_num})\n"
+                    if not any(game_lbl in str(line) for line in eval_log_contents):
+                        eval_log_contents.append(game_lbl)
+                        eval_log_contents.append(f"  Lineup Source: {lineup_src} (Locked)\n")
+                        eval_log_contents.append(f"  {home_name} Hitting (vs {a_name}):\n")
+                        eval_log_contents.extend([line + "\n" for line in h_det])
+                        eval_log_contents.append(f"  Aggregated Home OBP: {h_e:.3f} (Total AB: {h_ab})\n\n")
+                        eval_log_contents.append(f"  {away_name} Hitting (vs {h_name}):\n")
+                        eval_log_contents.extend([line + "\n" for line in a_det])
+                        eval_log_contents.append(f"  Aggregated Away OBP: {a_e:.3f} (Total AB: {a_ab})\n")
+                        eval_log_contents.append(f"  PROJECTION (FROZEN): {winner} | {conf}% Edge\n")
+                        eval_log_contents.append("-" * 50 + "\n")
+            except: pass
 
         elif h_p_id and a_p_id and detailed_status != 'Postponed':
             try:
