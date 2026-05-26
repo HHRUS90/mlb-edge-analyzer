@@ -336,7 +336,7 @@ def run_analysis():
             'matchup': matchup_txt, 'time': mst_time, 'raw_time': mst_dt, 
             'is_active': False, 'status': detailed_status if detailed_status == 'Postponed' else status, 
             'score': score_str, 'away_team': away_name, 'home_team': home_name, 'game_num': game_num,
-            'fatigue': fatigue_txt, 'pitchers': pitcher_header
+            'pitchers': pitcher_header
         }
 
         # LOCKING ENHANCEMENT: Skip analytical computations if game is active/final and already logged.
