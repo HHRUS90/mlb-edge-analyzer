@@ -261,7 +261,6 @@ def run_analysis():
     t_msg, y_msg, life = audit_and_stats() # Get existing ledger stats
     new_preds, display_list = [], []
 
-
     # Persistent rolling log layout logic
     eval_log_contents = []
     if os.path.exists(EVAL_LOG):
@@ -270,7 +269,7 @@ def run_analysis():
                 existing_lines = f.readlines()
                 if len(existing_lines) > 7:
                     # Keep all specific player diagnostic breakdowns from earlier in the day
-                    eval_log_contents = existing_lines[7:]
+                    eval_log_contents = existing_lines[8:]
         except:
             pass
             
@@ -282,7 +281,7 @@ def run_analysis():
         f"LIFETIME: {life}\n",
         "", # Index 4: Placeholder for Odds-API
         "", # Index 5: Placeholder for MLB-Stats-API
-        "="*50 + "\n"
+        "="*50 + "\n" # Index 6: The single static bottom separator
     ]
     
     # Load history for logic and merging
