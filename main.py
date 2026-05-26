@@ -295,7 +295,7 @@ def run_analysis():
     
     now_mst = get_mst_now()
     today_date_str = now_mst.strftime("%m/%d/%Y")
-    full_timestamp_str = now_mst.strftime("%m/%d/%Y (%I:%M %p)")
+    full_timestamp_str = now_mst.strftime("%m/%d/%Y (%I:%M %p MDT)")
     
     # --- AUTO-REGENERATE CSV IF MISSING ---
     if not os.path.exists(CSV_FILE):
@@ -314,7 +314,7 @@ def run_analysis():
 
     # 2. Initialize Evaluation Log with the new Header Section
     eval_log_lines = [
-        f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n",
+        f"DETAILED EVALUATION LOG - {full_timestamp_str}\n" + "="*50 + "\n",
         f"{t_msg}\n",
         f"{y_msg}\n",
         f"LIFETIME: {life}\n",
