@@ -7,6 +7,7 @@ import sys
 import pytz
 import time
 import json
+import argparse
 from datetime import datetime, timedelta
 
 # Force unbuffered output for GitHub logs
@@ -287,6 +288,11 @@ def send_telegram(msg):
 # --- MAIN RUN ---
 
 def run_analysis():
+    # Set up argument parsing to check for reporting conditions
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--send-report', action='store_true', help='Triggers Telegram output report generation')
+    args = parser.parse_args()
+    
     now_mst = get_mst_now()
     today_date_str = now_mst.strftime("%m/%d/%Y")
     full_timestamp_str = now_mst.strftime("%m/%d/%Y (%I:%M %p)")
@@ -428,30 +434,32 @@ def run_analysis():
     eval_log_lines[5] = f"MLB-STATS-API: {stats_api_calls} Total Calls\n"
     
     with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
-    
-    t_msg, y_msg, life = audit_and_stats()
-    report = f"⚾ *MLB REPORT: {full_timestamp_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n"
-    report += f"🔑 *ODDS-API:* {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
-    report += f"📊 *MLB-STATS-API:* {stats_api_calls} Calls this run\n\n"
-    
-    active_games = [g for g in display_list if g.get('is_active')]
-    if active_games:
-        best = max(active_games, key=lambda x: x['conf'])
-        report += f"⭐ *BEST PICK:* {best['away_team']} @ {best['home_team']}\n"
-        report += f"👉 PROJECTION: {best['winner']} ({best['odds']}) | {best['conf']}% Edge\n\n"
 
-    for g in sorted(display_list, key=lambda x: (x['raw_time'] or datetime.max)):
-        report += f"• [{g['time']}] {g['matchup']}\n"
-        report += f"  {g['pitchers']}\n"
-        if g['score']:
-            report += f"  {g['score']}\n"
-        if g['fatigue']:
-            report += f"  {g['fatigue']}\n"
-        if g.get('is_active'):
-            report += f"  👉 *{g['winner']}* ({g['odds']}) | {g['conf']}% Edge ({g['src']})\n\n"
-        else:
-            report += f"  ⏳ {g['status']}\n\n"
+    # Transmit execution output if explicitly requested by wrapper logic
+    if args.send_report:
+        t_msg, y_msg, life = audit_and_stats()
+        report = f"⚾ *MLB REPORT: {full_timestamp_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n"
+        report += f"🔑 *ODDS-API:* {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
+        report += f"📊 *MLB-STATS-API:* {stats_api_calls} Calls this run\n\n"
+        
+        active_games = [g for g in display_list if g.get('is_active')]
+        if active_games:
+            best = max(active_games, key=lambda x: x['conf'])
+            report += f"⭐ *BEST PICK:* {best['away_team']} @ {best['home_team']}\n"
+            report += f"👉 PROJECTION: {best['winner']} ({best['odds']}) | {best['conf']}% Edge\n\n"
     
-    send_telegram(report)
+        for g in sorted(display_list, key=lambda x: (x['raw_time'] or datetime.max)):
+            report += f"• [{g['time']}] {g['matchup']}\n"
+            report += f"  {g['pitchers']}\n"
+            if g['score']:
+                report += f"  {g['score']}\n"
+            if g['fatigue']:
+                report += f"  {g['fatigue']}\n"
+            if g.get('is_active'):
+                report += f"  👉 *{g['winner']}* ({g['odds']}) | {g['conf']}% Edge ({g['src']})\n\n"
+            else:
+                report += f"  ⏳ {g['status']}\n\n"
+        
+        send_telegram(report)
 
 if __name__ == "__main__": run_analysis()
