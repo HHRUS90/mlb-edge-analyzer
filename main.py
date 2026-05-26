@@ -311,8 +311,21 @@ def run_analysis():
     t_msg, y_msg, life = audit_and_stats() # Get existing ledger stats
     new_preds, display_list = [], []
 
-    # 2. Initialize Evaluation Log with the new Header Section
-    eval_log_lines = [
+
+    # Persistent rolling log layout logic
+    eval_log_contents = []
+    if os.path.exists(EVAL_LOG):
+        try:
+            with open(EVAL_LOG, 'r') as f:
+                existing_lines = f.readlines()
+                if len(existing_lines) > 7:
+                    # Keep all specific player diagnostic breakdowns from earlier in the day
+                    eval_log_contents = existing_lines[7:]
+        except:
+            pass
+            
+    # Build header metadata template arrays dynamically 
+    eval_log_headers = [
         f"DETAILED EVALUATION LOG - {full_timestamp_str}\n" + "="*50 + "\n",
         f"{t_msg}\n",
         f"{y_msg}\n",
@@ -411,15 +424,19 @@ def run_analysis():
                     if w_odds is None:
                         w_odds = live_odds.get(f"{home_name}_{winner}", -110)
 
-                    eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n  Lineup Source: {lineup_src}\n")
-                    eval_log_lines.append(f"  {home_name} Hitting (vs {a_name}):\n")
-                    eval_log_lines.extend([line + "\n" for line in h_det])
-                    eval_log_lines.append(f"  Aggregated Home OBP: {h_e:.3f} (Total AB: {h_ab})\n\n")
-                    eval_log_lines.append(f"  {away_name} Hitting (vs {h_name}):\n")
-                    eval_log_lines.extend([line + "\n" for line in a_det])
-                    eval_log_lines.append(f"  Aggregated Away OBP: {a_e:.3f} (Total AB: {a_ab})\n")
-                    eval_log_lines.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
-                    eval_log_lines.append("-" * 50 + "\n")
+                    # Only append new analysis to logging contents if it hasn't been added yet
+                    game_lbl = f"GAME: {away_name} @ {home_name} (G{game_num})\n"
+                    if not any(game_lbl in str(line) for line in eval_log_contents):
+                        eval_log_contents.append(game_lbl)
+                        eval_log_contents.append(f"  Lineup Source: {lineup_src}\n")
+                        eval_log_contents.append(f"  {home_name} Hitting (vs {a_name}):\n")
+                        eval_log_contents.extend([line + "\n" for line in h_det])
+                        eval_log_contents.append(f"  Aggregated Home OBP: {h_e:.3f} (Total AB: {h_ab})\n\n")
+                        eval_log_contents.append(f"  {away_name} Hitting (vs {h_name}):\n")
+                        eval_log_contents.extend([line + "\n" for line in a_det])
+                        eval_log_contents.append(f"  Aggregated Away OBP: {a_e:.3f} (Total AB: {a_ab})\n")
+                        eval_log_contents.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
+                        eval_log_contents.append("-" * 50 + "\n")
 
                     if saved_game.empty:
                         new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
@@ -437,11 +454,14 @@ def run_analysis():
         history_df = pd.concat([history_df, pd.DataFrame(new_preds)], ignore_index=True)
     history_df.to_csv(CSV_FILE, index=False)
 
-    # Update with correct API calls 
-    eval_log_lines[4] = f"ODDS-API: {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
-    eval_log_lines[5] = f"MLB-STATS-API: {stats_api_calls} Total Calls\n"
+    # Inject calculations into correct log array positions
+    eval_log_headers[4] = f"ODDS-API: {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
+    eval_log_headers[5] = f"MLB-STATS-API: {stats_api_calls} Total Calls\n"
     
-    with open(EVAL_LOG, 'w') as f: f.writelines(eval_log_lines)
+    # Merge daily audit stats headers smoothly with rolling list components
+    complete_log_output = eval_log_headers + eval_log_contents
+    with open(EVAL_LOG, 'w') as f: 
+        f.writelines(complete_log_output)
 
     # Transmit execution output if explicitly requested by wrapper logic
     if args.send_report:
