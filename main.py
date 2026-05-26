@@ -38,56 +38,6 @@ def get_mst_now():
     tz = pytz.timezone('America/Denver')
     return datetime.now(tz)
 
-# --- BULLPEN FATIGUE LOGIC ---
-
-def get_key_relievers(team_id):
-    """Identifies Closers and Setup men from live depth charts."""
-    key_ids = {}
-    try:
-        depth = call_stats_api('teams', {'teamId': team_id, 'hydrate': 'depthChart'})
-        depth_data = depth.get('teams', [{}])[0].get('depthChart', [])
-        for entry in depth_data:
-            pos = entry.get('position', {}).get('abbreviation')
-            if pos in ['CL', 'SU']:
-                p_id = entry.get('player', {}).get('id')
-                p_name = entry.get('player', {}).get('fullName')
-                if p_id: key_ids[p_id] = f"{p_name} ({pos})"
-    except: pass
-    return key_ids
-
-def check_bullpen_fatigue(team_id, team_name):
-    """Analyzes last 3 days of pitch counts for key relievers."""
-    key_arms = get_key_relievers(team_id)
-    if not key_arms: return ""
-    
-    now = get_mst_now()
-    fatigued_names = []
-    lookback_days = [(now - timedelta(days=i)).strftime("%m/%d/%Y") for i in range(1, 4)]
-    
-    usage_data = {pid: {'pitches': 0, 'appearances': 0} for pid in key_arms}
-    
-    for date_str in lookback_days:
-        try:
-            games = call_stats_api('schedule', {'sportId': 1, 'date': date_str, 'teamId': team_id})
-            for g in games.get('dates', [{}])[0].get('games', []):
-                box = statsapi.boxscore_data(g['gamePk'])
-                for side in ['home', 'away']:
-                    for p_id_str in box[side]['pitchers']:
-                        p_id = int(p_id_str.replace('ID',''))
-                        if p_id in usage_data:
-                            p_stats = box[side]['players'][p_id_str]['stats']['pitching']
-                            usage_data[p_id]['pitches'] += p_stats.get('pitchesThrown', 0)
-                            usage_data[p_id]['appearances'] += 1
-        except: continue
-
-    for pid, data in usage_data.items():
-        if data['appearances'] >= 3 or data['pitches'] >= 50:
-            fatigued_names.append(key_arms[pid].split(' (')[0])
-
-    if fatigued_names:
-        return f"⚠️ {team_name} Bullpen Fatigue: ({', '.join(fatigued_names)})"
-    return ""
-
 # --- CACHE & BVP LOGIC ---
 
 def load_bvp_cache():
@@ -382,10 +332,6 @@ def run_analysis():
         elif status == 'Final':
             score_str = f"✅ **FINAL: {game['teams']['away'].get('score', 0)} - {game['teams']['home'].get('score', 0)}**"
 
-        away_fatigue = check_bullpen_fatigue(game['teams']['away']['team']['id'], away_name)
-        home_fatigue = check_bullpen_fatigue(game['teams']['home']['team']['id'], home_name)
-        fatigue_txt = "\n  ".join(filter(None, [away_fatigue, home_fatigue]))
-
         game_info = {
             'matchup': matchup_txt, 'time': mst_time, 'raw_time': mst_dt, 
             'is_active': False, 'status': detailed_status if detailed_status == 'Postponed' else status, 
@@ -393,7 +339,7 @@ def run_analysis():
             'fatigue': fatigue_txt, 'pitchers': pitcher_header
         }
 
-# LOCKING ENHANCEMENT: Skip analytical computations if game is active/final and already logged.
+        # LOCKING ENHANCEMENT: Skip analytical computations if game is active/final and already logged.
         if is_live_or_final and not saved_game.empty:
             # Game is active/done; reload frozen records from CSV to ensure edge never shifts during live execution.
             winner = saved_game.iloc[0]['Predicted_Winner']
@@ -512,8 +458,6 @@ def run_analysis():
             report += f"  {g['pitchers']}\n"
             if g['score']:
                 report += f"  {g['score']}\n"
-            if g['fatigue']:
-                report += f"  {g['fatigue']}\n"
             if g.get('is_active'):
                 report += f"  👉 *{g['winner']}* ({g['odds']}) | {g['conf']}% Edge ({g['src']})\n\n"
             else:
