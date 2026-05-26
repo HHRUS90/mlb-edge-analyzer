@@ -310,7 +310,6 @@ def run_analysis():
     live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
     t_msg, y_msg, life = audit_and_stats() # Get existing ledger stats
     new_preds, display_list = [], []
-    # eval_log_lines = [f"DETAILED EVALUATION LOG - {today_date_str}\n" + "="*50 + "\n"]
 
     # 2. Initialize Evaluation Log with the new Header Section
     eval_log_lines = [
@@ -332,7 +331,8 @@ def run_analysis():
         h_p_id = game.get('teams', {}).get('home', {}).get('probablePitcher', {}).get('id')
         a_p_id = game.get('teams', {}).get('away', {}).get('probablePitcher', {}).get('id')
         game_num = int(game.get('gameNumber', 1))
-        mst_dt, mst_time = format_mst_time(game.get('gameDate'))
+        parent_match_time = game.get('gameDate')
+        mst_dt, mst_time = format_mst_time(parent_match_time)
         
         status = game.get('status', {}).get('abstractGameState', 'Pre-Game')
         detailed_status = game.get('status', {}).get('detailedState', '')
@@ -380,7 +380,15 @@ def run_analysis():
             'fatigue': fatigue_txt, 'pitchers': pitcher_header
         }
 
-        if h_p_id and a_p_id and detailed_status != 'Postponed':
+        # LOCKING ENHANCEMENT: Skip analytical computations if game is active/final and already logged.
+        if is_live_or_final and not saved_game.empty:
+            # Game is active/done; reload frozen records from CSV to ensure edge never shifts during live execution.
+            winner = saved_game.iloc[0]['Predicted_Winner']
+            conf = float(saved_game.iloc[0]['Confidence'])
+            w_odds = saved_game.iloc[0]['Odds']
+            game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': "Locked Pregame Edge"})
+
+        elif h_p_id and a_p_id and detailed_status != 'Postponed':
             try:
                 box = statsapi.boxscore_data(game_id)
                 for side in ['home', 'away']:
