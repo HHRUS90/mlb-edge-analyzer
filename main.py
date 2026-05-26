@@ -255,7 +255,11 @@ def run_analysis():
             writer.writerow(headers)
     
     games_raw = call_stats_api('schedule', {'sportId': 1, 'date': today_date_str, 'hydrate': 'probablePitcher,lineups'})
-    games = [g for d in games_raw.get('dates', []) for g in d.get('games', [])]
+    unsorted_games = [g for d in games_raw.get('dates', []) for g in d.get('games', [])]
+    
+    # FIX BUG 1: Sort the primary games list chronologically IMMEDIATELY. 
+    # This guarantees the evaluation_log and display_list process matchups in the identical order.
+    games = sorted(unsorted_games, key=lambda x: x.get('gameDate', ''))
     
     live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
     t_msg, y_msg, life = audit_and_stats() # Get existing ledger stats
@@ -340,18 +344,19 @@ def run_analysis():
 
         # LOCKING ENHANCEMENT: Skip analytical computations entirely if game is active/final and already logged.
         if is_live_or_final and not saved_game.empty:
-            # Game is active/done; reload frozen records from CSV to ensure edge never shifts during live execution.
             winner = saved_game.iloc[0]['Predicted_Winner']
             conf = float(saved_game.iloc[0]['Confidence'])
             w_odds = saved_game.iloc[0]['Odds']
-            game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': "Locked Pregame Edge"})
             
+            # FIX BUG 2: Ensure game_info is ALWAYS updated here so Telegram reports matching calculated edges
             # OPTIMIZATION: Do absolutely nothing else. 
             # No boxscore calls, no lineup checking, no BvP evaluations.
             # Your rolling eval_log_contents [8:] logic already preserves the text from earlier runs.
+            game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': "Locked Pregame Edge"})
             pass
             
         elif h_p_id and a_p_id and detailed_status != 'Postponed':
+            game_lbl = f"GAME: {away_name} @ {home_name} (G{game_num})\n"
             try:
                 box = statsapi.boxscore_data(game_id)
                 for side in ['home', 'away']:
@@ -375,7 +380,6 @@ def run_analysis():
                         w_odds = live_odds.get(f"{home_name}_{winner}", -110)
 
                     # Only append new analysis to logging contents if it hasn't been added yet
-                    game_lbl = f"GAME: {away_name} @ {home_name} (G{game_num})\n"
                     if not any(game_lbl in str(line) for line in eval_log_contents):
                         eval_log_contents.append(game_lbl)
                         eval_log_contents.append(f"  Lineup Source: {lineup_src}\n")
@@ -396,7 +400,14 @@ def run_analysis():
                             history_df.loc[saved_game.index, 'Odds'] = w_odds
                     
                     game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': lineup_src})
-            except: pass
+            except Exception as e:
+                # FIX BUG 3: Write a placeholder warning to the text log instead of letting the entire match disappear
+                if not any(game_lbl in str(line) for line in eval_log_contents):
+                    eval_log_contents.append(game_lbl)
+                    eval_log_contents.append(f"  ⚠️ Skipping Analysis: Incomplete data or lineup could not be mapped.\n")
+                    eval_log_contents.append("-" * 50 + "\n")
+                pass
+
         display_list.append(game_info)
 
     # --- SAVE UPDATED HISTORY WITHOUT WIPING ---
@@ -425,7 +436,8 @@ def run_analysis():
             best = max(active_games, key=lambda x: x['conf'])
             report += f"⭐ *BEST PICK:* {best['away_team']} @ {best['home_team']}\n"
             report += f"👉 PROJECTION: {best['winner']} ({best['odds']}) | {best['conf']}% Edge\n\n"
-    
+            
+        # Kept perfectly sorted for Telegram presentation
         for g in sorted(display_list, key=lambda x: (x['raw_time'] or datetime.max)):
             report += f"• [{g['time']}] {g['matchup']}\n"
             report += f"  {g['pitchers']}\n"
