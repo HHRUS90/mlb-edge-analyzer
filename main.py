@@ -198,7 +198,22 @@ def audit_and_stats():
     l_pct = (l_w / l_count * 100) if l_count > 0 else 0.0
     lifetime = f"{l_w}/{l_count} ({l_pct:.1f}%) | {'+$' if l_p>=0 else '-$'}{abs(l_p):,.2f}"
     
-    return get_stat_line(today_str, "TODAY"), get_stat_line(yesterday_str, "YESTERDAY"), lifetime
+    # Calculate Best Picks Lifetime Record (Highest Confidence pick per completed historical date)
+    past_completed_df = df[df['Result'].isin(['WIN', 'LOSS'])]
+    bp_w, bp_l, bp_p = 0, 0, 0.0
+    if not past_completed_df.empty:
+        # Group by Date, and find the index of the maximum confidence pick for each day
+        idx_best_picks = past_completed_df.groupby('Date')['Confidence'].idxmax()
+        best_picks_df = past_completed_df.loc[idx_best_picks]
+        bp_w = (best_picks_df['Result'] == 'WIN').sum()
+        bp_l = (best_picks_df['Result'] == 'LOSS').sum()
+        bp_p = best_picks_df['Profit'].sum()
+    
+    bp_total = bp_w + bp_l
+    bp_pct = (bp_w / bp_total * 100) if bp_total > 0 else 0.0
+    best_picks_line = f"{bp_w}/{bp_total} ({bp_pct:.1f}%) | {'+$' if bp_p>=0 else '-$'}{abs(bp_p):,.2f}"
+    
+    return get_stat_line(today_str, "TODAY"), get_stat_line(yesterday_str, "YESTERDAY"), lifetime, best_picks_line
 
 # --- UTILS ---
 
@@ -262,7 +277,7 @@ def run_analysis():
     games = sorted(unsorted_games, key=lambda x: x.get('gameDate', ''))
     
     live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
-    t_msg, y_msg, life = audit_and_stats() # Get existing ledger stats
+    t_msg, y_msg, life, bp_life = audit_and_stats() # Get existing ledger stats
     new_preds, display_list = [], []
 
     # Persistent rolling log layout logic
@@ -283,9 +298,10 @@ def run_analysis():
         f"{t_msg}\n",
         f"{y_msg}\n",
         f"LIFETIME: {life}\n",
-        "", # Index 4: Placeholder for Odds-API
-        "", # Index 5: Placeholder for MLB-Stats-API
-        "="*50 + "\n" # Index 6: The single static bottom separator
+        f"BEST PICKS LIFETIME: {bp_life}\n",
+        "", # Index 5: Placeholder for Odds-API
+        "", # Index 6: Placeholder for MLB-Stats-API
+        "="*50 + "\n" # Index 7: The single static bottom separator
     ]
     
     # Load history for logic and merging
@@ -416,8 +432,8 @@ def run_analysis():
     history_df.to_csv(CSV_FILE, index=False)
 
     # Inject calculations into correct log array positions
-    eval_log_headers[4] = f"ODDS-API: {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
-    eval_log_headers[5] = f"MLB-STATS-API: {stats_api_calls} Total Calls\n"
+    eval_log_headers[5] = f"ODDS-API: {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
+    eval_log_headers[6] = f"MLB-STATS-API: {stats_api_calls} Total Calls\n"
     
     # Merge daily audit stats headers smoothly with rolling list components
     complete_log_output = eval_log_headers + eval_log_contents
@@ -426,8 +442,9 @@ def run_analysis():
 
     # Transmit execution output if explicitly requested by wrapper logic
     if args.send_report:
-        t_msg, y_msg, life = audit_and_stats()
+        t_msg, y_msg, life, bp_life = audit_and_stats()
         report = f"⚾ *MLB REPORT: {full_timestamp_str}*\n\n{t_msg}\n{y_msg}\n📈 *LIFETIME:* {life}\n"
+        report += f"⭐ *BEST PICKS LIFETIME:* {bp_life}\n"
         report += f"🔑 *ODDS-API:* {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
         report += f"📊 *MLB-STATS-API:* {stats_api_calls} Calls this run\n\n"
         
