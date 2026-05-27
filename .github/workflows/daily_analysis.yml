@@ -51,9 +51,9 @@ jobs:
           DENVER_HOUR=$(TZ="America/Denver" date +%H)
           echo "Current Denver hour: $DENVER_HOUR"
           
-          # Send report only during the 9 AM, 12 PM, and 4 PM Denver windows, 
+          # Send report only during the 9 AM, 11 PM, and 3 PM Denver windows, 
           # OR if forced manually via workflow_dispatch.
-          if [ "$DENVER_HOUR" = "09" ] || [ "$DENVER_HOUR" = "12" ] || [ "$DENVER_HOUR" = "16" ] || [ "${{ github.event.inputs.force_telegram }}" = "true" ]; then
+          if [ "$DENVER_HOUR" = "09" ] || [ "$DENVER_HOUR" = "11" ] || [ "$DENVER_HOUR" = "15" ] || [ "${{ github.event.inputs.force_telegram }}" = "true" ]; then
             echo "ARGS=--send-report" >> $GITHUB_OUTPUT
             echo "Report delivery armed."
           else
