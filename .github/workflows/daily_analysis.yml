@@ -37,9 +37,9 @@ jobs:
             bvp_cache.json
             prediction_history.csv
             api_usage.csv
-          key: mlb-data-cache-v2-${{ runner.os }}-${{ github.run_id }}
+          key: mlb-data-cache-v3-${{ runner.os }}-${{ github.run_id }}
           restore-keys: |
-            mlb-data-cache-v2-${{ runner.os }}-
+            mlb-data-cache-v3-${{ runner.os }}-
 
       - name: Install Dependencies
         run: pip install pandas requests MLB-StatsAPI pytz
