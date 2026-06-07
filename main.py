@@ -270,18 +270,17 @@ def run_analysis():
             writer.writerow(headers)
     
     games_raw = call_stats_api('schedule', {'sportId': 1, 'date': today_date_str, 'hydrate': 'probablePitcher,lineups'})
-    unsorted_games = [g for d in games_raw.get('dates', []) for g in d.get('games', [])]
+    raw_games_list = [g for d in games_raw.get('dates', []) for g in d.get('games', [])]
     
-    # FIX BUG 1: Sort the primary games list chronologically IMMEDIATELY. 
-    # This guarantees the evaluation_log and display_list process matchups in the identical order.
-    games = sorted(unsorted_games, key=lambda x: x.get('gameDate', ''))
+    # Sort chronologically to ensure both Telegram and evaluation log output share the identical sequence
+    games = sorted(raw_games_list, key=lambda x: x.get('gameDate', ''))
     
     live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
-    t_msg, y_msg, life, bp_life = audit_and_stats() # Get existing ledger stats
+#    t_msg, y_msg, life, bp_life = audit_and_stats() # Get existing ledger stats
     new_preds, display_list = [], []
 
-    # --- ENHANCED FIXED ROLLING LAYOUT LOGIC ---
-    eval_log_contents = []
+    # Initialize the log data buffer completely empty so old daily data is fully wiped on this run
+    eval_log_lines = []
     if os.path.exists(EVAL_LOG):
         try:
             with open(EVAL_LOG, 'r') as f:
@@ -405,9 +404,23 @@ def run_analysis():
                 if not a_l:
                     a_l = [p['id'] for p in box.get('away', {}).get('players', {}).values() if 'battingOrder' in p][:9]
 
+# Dynamically determine strict labeling structure
                 if h_l and a_l:
-                    h_e, h_pa, h_det, h_ab = get_smoothed_bvp(a_p_id, h_l, a_hand, name_map)
-                    a_e, a_pa, a_det, a_ab = get_smoothed_bvp(h_p_id, a_l, h_hand, name_map)
+                    lineup_src = "Official Boxscore (Locked)" if is_live_or_final else "Official Boxscore"
+                else:
+                    lineup_src = "Starters of Last Game"
+                    if not h_l: h_l, _ = get_pro_lineup(game['teams']['home']['team']['id'])
+                    if not a_l: a_l, _ = get_pro_lineup(game['teams']['away']['team']['id'])
+
+                # Emergency roster extraction if historical lookup returned empty lists
+                if not h_l:
+                    h_l = [p['id'] for p in box.get('home', {}).get('players', {}).values() if 'battingOrder' in p][:9]
+                if not a_l:
+                    a_l = [p['id'] for p in box.get('away', {}).get('players', {}).values() if 'battingOrder' in p][:9]
+
+                if h_l and a_l and (h_p_id or a_p_id):
+                    h_e, h_pa, h_det, h_ab = get_smoothed_bvp(a_p_id or 0, h_l, a_hand, name_map)
+                    a_e, a_pa, a_det, a_ab = get_smoothed_bvp(h_p_id or 0, a_l, h_hand, name_map)
                     
                     winner = home_name if h_e > a_e else away_name
                     conf = round(abs(h_e - a_e) * 100, 2)
@@ -415,18 +428,19 @@ def run_analysis():
                     if w_odds is None:
                         w_odds = live_odds.get(f"{home_name}_{winner}", -110)
 
-                    # Only append new analysis to logging contents if it hasn't been added yet
-                    if not any(game_lbl in str(line) for line in eval_log_contents):
-                        eval_log_contents.append(game_lbl)
-                        eval_log_contents.append(f"  Lineup Source: {lineup_src}\n")
-                        eval_log_contents.append(f"  {home_name} Hitting (vs {a_name}):\n")
-                        eval_log_contents.extend([line + "\n" for line in h_det])
-                        eval_log_contents.append(f"  Aggregated Home OBP: {h_e:.3f} (Total AB: {h_ab})\n\n")
-                        eval_log_contents.append(f"  {away_name} Hitting (vs {h_name}):\n")
-                        eval_log_contents.extend([line + "\n" for line in a_det])
-                        eval_log_contents.append(f"  Aggregated Away OBP: {a_e:.3f} (Total AB: {a_ab})\n")
-                        eval_log_contents.append(f"  PROJECTION: {winner} | {conf}% Edge\n")
-                        eval_log_contents.append("-" * 50 + "\n")
+                    # Build explicit log layout string formatting
+                    eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n")
+                    eval_log_lines.append(f"  Lineup Source: {lineup_src}\n")
+                    eval_log_lines.append(f"  {home_name} Hitting (vs {a_name}):\n")
+                    eval_log_lines.extend([line + "\n" for line in h_det])
+                    eval_log_lines.append(f"  Aggregated Home OBP: {h_e:.3f} (Total AB: {h_ab})\n")
+                    eval_log_lines.append(f"  {away_name} Hitting (vs {h_name}):\n")
+                    eval_log_lines.extend([line + "\n" for line in a_det])
+                    eval_log_lines.append(f"  Aggregated Away OBP: {a_e:.3f} (Total AB: {a_ab})\n")
+                    
+                    proj_label = "PROJECTION (FROZEN)" if is_live_or_final else "PROJECTION"
+                    eval_log_lines.append(f"  {proj_label}: {winner} | {conf}% Edge\n")
+                    eval_log_lines.append("-" * 50 + "\n")
 
                     if saved_game.empty:
                         new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
@@ -457,8 +471,43 @@ def run_analysis():
     
     # Merge daily audit stats headers smoothly with rolling list components
     complete_log_output = eval_log_headers + eval_log_contents
+# Extract audit details
+    t_msg, y_msg, life = audit_and_stats()
+    
+    # --- ASSEMBLE VERBATIM EVALUATION LOG HEADER BLOCK ---
+    log_header = []
+    header_time_str = now_mst.strftime("%m/%d/%Y (%I:%M %p MDT)")
+    log_header.append(f"DETAILED EVALUATION LOG - {header_time_str}\n")
+    log_header.append("=" * 50 + "\n")
+    log_header.append(f"{t_msg}\n")
+    log_header.append(f"{y_msg}\n")
+    
+    clean_life = life.replace("📈 *LIFETIME:*", "").strip() if "LIFETIME:" in life else life
+    log_header.append(f"LIFETIME: {clean_life}\n")
+    
+    # Parse Best Picks Lifetime performance exact indicators
+    bp_lifetime_str = "0/0 (0.0%) | $0.00"
+    if os.path.exists(CSV_FILE):
+        try:
+            df_bp = pd.read_csv(CSV_FILE)
+            df_bp_fin = df_bp[df_bp['Result'].isin(['WIN', 'LOSS'])]
+            if not df_bp_fin.empty:
+                idx_best = df_bp_fin.groupby('Date')['Confidence'].idxmax()
+                df_best_picks = df_bp_fin.loc[idx_best]
+                bp_w = (df_best_picks['Result'] == 'WIN').sum()
+                bp_p = df_best_picks['Profit'].sum()
+                bp_count = len(df_best_picks)
+                bp_pct = (bp_w / bp_count * 100) if bp_count > 0 else 0.0
+                bp_lifetime_str = f"{bp_w}/{bp_count} ({bp_pct:.1f}%) | {'+$' if bp_p>=0 else '-$'}{abs(bp_p):,.2f}"
+        except: pass
+    log_header.append(f"BEST PICKS LIFETIME: {bp_lifetime_str}\n")
+    log_header.append(f"ODDS-API: {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n")
+    log_header.append(f"MLB-STATS-API: {stats_api_calls} Total Calls\n")
+    log_header.append("=" * 50 + "\n")
+    
+    # Overwrite the log file with 'w' mode passing the new metadata headers ahead of match strings
     with open(EVAL_LOG, 'w') as f: 
-        f.writelines(complete_log_output)
+        f.writelines(log_header + eval_log_lines)
 
     # Transmit execution output if explicitly requested by wrapper logic
     if args.send_report:
