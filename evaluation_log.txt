@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 06/07/2026 (10:31 AM MDT)
+DETAILED EVALUATION LOG - 06/07/2026 (11:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 6/14 (42.9%) | -$254.07
 LIFETIME: 99/185 (53.5%) | +$243.07
 BEST PICKS LIFETIME: 8/14 (57.1%) | +$24.91
-ODDS-API: 103 Calls (Used: 111 | Rem: 389)
-MLB-STATS-API: 320 Total Calls
+ODDS-API: 104 Calls (Used: 112 | Rem: 388)
+MLB-STATS-API: 321 Total Calls
 ==================================================
 GAME: Pittsburgh Pirates @ Atlanta Braves (G1)
   Lineup Source: Official Boxscore
@@ -281,17 +281,17 @@ GAME: Milwaukee Brewers @ Colorado Rockies (G1)
     - Troy Johnston: NO HISTORY | Baseline (2026 Season OBP): 0.371 -> Smoothed OBP: 0.371
   Aggregated Home OBP: 0.306 (Total AB: 0)
   Milwaukee Brewers Hitting (vs Kyle Freeland):
-    - Christian Yelich: 3/20 BvP | Baseline (2026 Season OBP): 0.356 -> Smoothed OBP: 0.219 (AB: 19)
     - Jackson Chourio: 4/9 BvP | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.392 (AB: 8)
     - Brice Turang: 2/7 BvP | Baseline (2026 Season OBP): 0.405 -> Smoothed OBP: 0.356 (AB: 7)
     - William Contreras: 6/16 BvP | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.362 (AB: 14)
-    - Jake Bauers: 1/2 BvP | Baseline (2026 Season OBP): 0.376 -> Smoothed OBP: 0.397 (AB: 2)
+    - Andrew Vaughn: 4/9 BvP | Baseline (2026 Season OBP): 0.388 -> Smoothed OBP: 0.415 (AB: 8)
+    - Gary Sánchez: 3/11 BvP | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.312 (AB: 10)
+    - Garrett Mitchell: NO HISTORY | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.353
+    - Luis Rengifo: 0/6 BvP | Baseline (2026 Season OBP): 0.271 -> Smoothed OBP: 0.169 (AB: 5)
     - Blake Perkins: 0/2 BvP | Baseline (2026 Season OBP): 0.197 -> Smoothed OBP: 0.164 (AB: 2)
-    - Sal Frelick: 4/6 BvP | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.438 (AB: 5)
     - Joey Ortiz: 1/7 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.232 (AB: 7)
-    - David Hamilton: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
-  Aggregated Away OBP: 0.321 (Total AB: 64)
-  PROJECTION: Milwaukee Brewers | 1.47% Edge
+  Aggregated Away OBP: 0.306 (Total AB: 61)
+  PROJECTION: Colorado Rockies | 0.03% Edge
 --------------------------------------------------
 GAME: Washington Nationals @ Arizona Diamondbacks (G1)
   Lineup Source: Official Boxscore
@@ -352,12 +352,12 @@ GAME: New York Mets @ San Diego Padres (G1)
     - Jackson Merrill: 0/2 BvP | Baseline (2026 Season OBP): 0.271 -> Smoothed OBP: 0.226 (AB: 2)
     - Ty France: 0/4 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.231 (AB: 4)
     - Manny Machado: 1/2 BvP | Baseline (2026 Season OBP): 0.258 -> Smoothed OBP: 0.298 (AB: 1)
-    - Jase Bowen: NO HISTORY | Baseline (2026 Season OBP): 0.125 -> Smoothed OBP: 0.125
     - Xander Bogaerts: 0/2 BvP | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.250 (AB: 2)
     - Miguel Andujar: 0/1 BvP | Baseline (2026 Season OBP): 0.285 -> Smoothed OBP: 0.259 (AB: 1)
-    - Sung-Mun Song: NO HISTORY | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.324
+    - Jase Bowen: NO HISTORY | Baseline (2026 Season OBP): 0.125 -> Smoothed OBP: 0.125
+    - Samad Taylor: NO HISTORY | Baseline (Rookie (League Default)): 0.320 -> Smoothed OBP: 0.320
     - Freddy Fermin: NO HISTORY | Baseline (2026 Season OBP): 0.231 -> Smoothed OBP: 0.231
-  Aggregated Home OBP: 0.257 (Total AB: 11)
+  Aggregated Home OBP: 0.256 (Total AB: 11)
   New York Mets Hitting (vs Randy Vásquez):
     - Carson Benge: NO HISTORY | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.311
     - Bo Bichette: 1/6 BvP | Baseline (2026 Season OBP): 0.283 -> Smoothed OBP: 0.239 (AB: 6)
@@ -369,7 +369,7 @@ GAME: New York Mets @ San Diego Padres (G1)
     - Brett Baty: 0/1 BvP | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.273 (AB: 1)
     - Luis Torrens: 0/1 BvP | Baseline (2026 Season OBP): 0.281 -> Smoothed OBP: 0.255 (AB: 1)
   Aggregated Away OBP: 0.300 (Total AB: 17)
-  PROJECTION: New York Mets | 4.29% Edge
+  PROJECTION: New York Mets | 4.33% Edge
 --------------------------------------------------
 GAME: San Francisco Giants @ Chicago Cubs (G1)
   Lineup Source: Official Boxscore
