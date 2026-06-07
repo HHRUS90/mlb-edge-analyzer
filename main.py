@@ -57,12 +57,19 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
     details = []
     total_ob_events, total_pas, total_abs = 0, 0, 0
     cache_updated = False
+    
+    # League default acts as our ultimate safety net baseline
     league_default = 0.310 if p_hand == 'L' else 0.320
+    
+    # BAYESIAN PARAMETER: Number of imaginary PAs to blend into micro-samples
+    # A weight of 10 perfectly balances early-series variance without drowning out historical dominance
+    SMOOTHING_WEIGHT = 10.0
 
     for b_id in lineup_ids:
         b_name = name_map.get(b_id) or f"ID:{b_id}"
         cache_key = f"{pitcher_id}_{b_id}_v5"
         
+        # 1. Fetch or load the Micro-Sample (BvP History)
         if cache_key in cache:
             s = cache[cache_key]
             h, bb, hbp, pa, ab = s['h'], s['bb'], s['hbp'], s['pa'], s.get('ab', 0)
@@ -81,31 +88,46 @@ def get_smoothed_bvp(pitcher_id, lineup_ids, p_hand, name_map):
                                 break
                 cache[cache_key] = {'h': h, 'bb': bb, 'hbp': hbp, 'pa': pa, 'ab': ab}
                 cache_updated = True
-            except: h, bb, hbp, pa, ab = 0, 0, 0, 0, 0
+            except: 
+                h, bb, hbp, pa, ab = 0, 0, 0, 0, 0
 
-        if pa > 0:
-            ob_events = h + bb + hbp
-            total_ob_events += ob_events
-            total_pas += pa
-            total_abs += ab
-            player_obp = ob_events / pa
-            details.append(f"    - {b_name}: {ob_events}/{pa} OBP: {player_obp:.3f} (AB: {ab})")
-        else:
-            try:
-                s_data = call_stats_api('person', {'personId': b_id, 'hydrate': 'stats(group=[hitting],type=[season],season=2026)'})
-                season_obp = float(s_data['people'][0]['stats'][0]['splits'][0]['stat']['obp'])
-                label = "2026 Season OBP"
-            except:
+        # 2. Establish the Macro Baseline (Player's Overall Season OBP)
+        try:
+            s_data = call_stats_api('person', {'personId': b_id, 'hydrate': 'stats(group=[hitting],type=[season],season=2026)'})
+            season_obp = float(s_data['people'][0]['stats'][0]['splits'][0]['stat']['obp'])
+            # If the player is a rookie who hasn't reached base yet (0.000), default to league average
+            if season_obp <= 0.001:
                 season_obp = league_default
-                label = "Rookie (League Default)"
-            
-            total_ob_events += (season_obp * 10)
-            total_pas += 10
-            details.append(f"    - {b_name}: NO HISTORY ({label}: {season_obp:.3f})")
+                baseline_label = "Rookie (League Default)"
+            else:
+                baseline_label = "2026 Season OBP"
+        except:
+            season_obp = league_default
+            baseline_label = "League Default"
 
-    if cache_updated: save_bvp_cache(cache)
-    smoothed = total_ob_events / total_pas if total_pas > 0 else league_default
-    return smoothed, total_pas, details, total_abs
+        # 3. Apply Verbatim Bayesian Smoothing Formula
+        actual_ob_events = h + bb + hbp
+        
+        # Calculate individual smoothed metric
+        smoothed_player_obp = (actual_ob_events + (season_obp * SMOOTHING_WEIGHT)) / (pa + SMOOTHING_WEIGHT)
+        
+        # Accumulate toward team aggregates
+        total_ob_events += smoothed_player_obp  # Summing individual smoothed expected value contributions
+        total_pas += 1                          # Normalize per-hitter to keep team baseline scaled out of 1.000
+        total_abs += ab
+
+        # Append explicitly formatted line entries for your evaluation log file
+        if pa > 0:
+            details.append(f"    - {b_name}: {actual_ob_events}/{pa} BvP | Baseline ({baseline_label}): {season_obp:.3f} -> Smoothed OBP: {smoothed_player_obp:.3f} (AB: {ab})")
+        else:
+            details.append(f"    - {b_name}: NO HISTORY | Baseline ({baseline_label}): {season_obp:.3f} -> Smoothed OBP: {smoothed_player_obp:.3f}")
+
+    if cache_updated: 
+        save_bvp_cache(cache)
+        
+    # Calculate true normalized team aggregate capability
+    smoothed_team_aggregate = total_ob_events / total_pas if total_pas > 0 else league_default
+    return smoothed_team_aggregate, total_pas, details, total_abs
 
 # --- ODDS & AUDIT LOGIC ---
 
