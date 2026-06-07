@@ -384,11 +384,26 @@ def run_analysis():
                     for pid, p in box.get(side, {}).get('players', {}).items():
                         name_map[int(pid.replace('ID',''))] = p['person']['fullName']
                 
-                h_l, a_l = box.get('home',{}).get('battingOrder',[]), box.get('away',{}).get('battingOrder',[])
-                lineup_src = "Official Boxscore" if (h_l and a_l) else "Starters of Last Game"
+                # Try getting official boxscore batting orders first
+                h_l = box.get('home', {}).get('battingOrder', [])
+                a_l = box.get('away', {}).get('battingOrder', [])
                 
-                if not h_l: h_l, _ = get_pro_lineup(game['teams']['home']['team']['id'])
-                if not a_l: a_l, _ = get_pro_lineup(game['teams']['away']['team']['id'])
+                # Determine source and fall back to historical starters if official order isn't live yet
+                if h_l and a_l:
+                    lineup_src = "Official Boxscore (Locked)"
+                else:
+                    lineup_src = "Projected (Starters of Last Game)"
+                    if not h_l:
+                        h_l, _ = get_pro_lineup(game['teams']['home']['team']['id'])
+                    if not a_l:
+                        a_l, _ = get_pro_lineup(game['teams']['away']['team']['id'])
+
+                # CRITICAL FIX: If fallback lists are empty, use an array of the top 9 team hitters 
+                # instead of abandoning the analysis text completely
+                if not h_l:
+                    h_l = [p['id'] for p in box.get('home', {}).get('players', {}).values() if 'battingOrder' in p][:9]
+                if not a_l:
+                    a_l = [p['id'] for p in box.get('away', {}).get('players', {}).values() if 'battingOrder' in p][:9]
 
                 if h_l and a_l:
                     h_e, h_pa, h_det, h_ab = get_smoothed_bvp(a_p_id, h_l, a_hand, name_map)
