@@ -281,32 +281,6 @@ def run_analysis():
 
     # Initialize the log data buffer completely empty so old daily data is fully wiped on this run
     eval_log_lines = []
-    if os.path.exists(EVAL_LOG):
-        try:
-            with open(EVAL_LOG, 'r') as f:
-                first_line = f.readline()
-                # Check if file belongs to today. If from an old day, we drop the contents and start clean.
-                if today_date_str in first_line:
-                    f.seek(0)
-                    existing_lines = f.readlines()
-                    if len(existing_lines) > 7:
-                        # Slice from index 8 onwards, but strip off empty or trailing single '====' artifacts
-                        raw_contents = existing_lines[8:]
-                        eval_log_contents = [line for line in raw_contents if line.strip() and line.strip() != "="*50]
-        except:
-            pass
-            
-    # Build header metadata template arrays dynamically 
-    eval_log_headers = [
-        f"DETAILED EVALUATION LOG - {full_timestamp_str}\n" + "="*50 + "\n",
-        f"{t_msg}\n",
-        f"{y_msg}\n",
-        f"LIFETIME: {life}\n",
-        f"BEST PICKS LIFETIME: {bp_life}\n",
-        "", # Index 5: Placeholder for Odds-API
-        "", # Index 6: Placeholder for MLB-Stats-API
-        "="*50 + "\n" # Index 7: The single static bottom separator
-    ]
     
     # Load history for logic and merging
     history_df = pd.read_csv(CSV_FILE)
@@ -465,14 +439,8 @@ def run_analysis():
         history_df = pd.concat([history_df, pd.DataFrame(new_preds)], ignore_index=True)
     history_df.to_csv(CSV_FILE, index=False)
 
-    # Inject calculations into correct log array positions
-    eval_log_headers[5] = f"ODDS-API: {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n"
-    eval_log_headers[6] = f"MLB-STATS-API: {stats_api_calls} Total Calls\n"
-    
-    # Merge daily audit stats headers smoothly with rolling list components
-    complete_log_output = eval_log_headers + eval_log_contents
-# Extract audit details
-    t_msg, y_msg, life = audit_and_stats()
+    # Extract historical performance metric counters safely from database ledger
+    t_msg, y_msg, life, bp_life = audit_and_stats()
     
     # --- ASSEMBLE VERBATIM EVALUATION LOG HEADER BLOCK ---
     log_header = []
@@ -484,23 +452,7 @@ def run_analysis():
     
     clean_life = life.replace("📈 *LIFETIME:*", "").strip() if "LIFETIME:" in life else life
     log_header.append(f"LIFETIME: {clean_life}\n")
-    
-    # Parse Best Picks Lifetime performance exact indicators
-    bp_lifetime_str = "0/0 (0.0%) | $0.00"
-    if os.path.exists(CSV_FILE):
-        try:
-            df_bp = pd.read_csv(CSV_FILE)
-            df_bp_fin = df_bp[df_bp['Result'].isin(['WIN', 'LOSS'])]
-            if not df_bp_fin.empty:
-                idx_best = df_bp_fin.groupby('Date')['Confidence'].idxmax()
-                df_best_picks = df_bp_fin.loc[idx_best]
-                bp_w = (df_best_picks['Result'] == 'WIN').sum()
-                bp_p = df_best_picks['Profit'].sum()
-                bp_count = len(df_best_picks)
-                bp_pct = (bp_w / bp_count * 100) if bp_count > 0 else 0.0
-                bp_lifetime_str = f"{bp_w}/{bp_count} ({bp_pct:.1f}%) | {'+$' if bp_p>=0 else '-$'}{abs(bp_p):,.2f}"
-        except: pass
-    log_header.append(f"BEST PICKS LIFETIME: {bp_lifetime_str}\n")
+    log_header.append(f"BEST PICKS LIFETIME: {bp_life}\n")
     log_header.append(f"ODDS-API: {local_tracker} Calls (Used: {odds_used} | Rem: {odds_rem})\n")
     log_header.append(f"MLB-STATS-API: {stats_api_calls} Total Calls\n")
     log_header.append("=" * 50 + "\n")
