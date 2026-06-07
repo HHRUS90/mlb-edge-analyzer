@@ -280,15 +280,20 @@ def run_analysis():
     t_msg, y_msg, life, bp_life = audit_and_stats() # Get existing ledger stats
     new_preds, display_list = [], []
 
-    # Persistent rolling log layout logic
+    # --- ENHANCED FIXED ROLLING LAYOUT LOGIC ---
     eval_log_contents = []
     if os.path.exists(EVAL_LOG):
         try:
             with open(EVAL_LOG, 'r') as f:
-                existing_lines = f.readlines()
-                if len(existing_lines) > 7:
-                    # Keep all specific player diagnostic breakdowns from earlier in the day
-                    eval_log_contents = existing_lines[8:]
+                first_line = f.readline()
+                # Check if file belongs to today. If from an old day, we drop the contents and start clean.
+                if today_date_str in first_line:
+                    f.seek(0)
+                    existing_lines = f.readlines()
+                    if len(existing_lines) > 7:
+                        # Slice from index 8 onwards, but strip off empty or trailing single '====' artifacts
+                        raw_contents = existing_lines[8:]
+                        eval_log_contents = [line for line in raw_contents if line.strip() and line.strip() != "="*50]
         except:
             pass
             
