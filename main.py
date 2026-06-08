@@ -318,7 +318,7 @@ def run_analysis():
     # Sort chronologically to ensure both Telegram and evaluation log output share the identical sequence
     games = sorted(raw_games_list, key=lambda x: x.get('gameDate', ''))
     
-live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
+    live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
     new_preds, display_list = [], []
 
     # Parse and load historical text blocks from current log execution space
