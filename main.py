@@ -272,6 +272,27 @@ def format_mst_time(utc):
 def send_telegram(msg):
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", data={'chat_id': TELEGRAM_CHAT_ID, 'text': msg, 'parse_mode': 'Markdown'})
 
+def parse_existing_eval_log():
+    """Reads evaluation_log.txt and extracts previously built game text blocks."""
+    saved_blocks = {}
+    if not os.path.exists(EVAL_LOG):
+        return saved_blocks
+    try:
+        with open(EVAL_LOG, 'r') as f:
+            content = f.read()
+        # Find matches from 'GAME: ' down to the hyphens separator
+        matches = re.findall(r"(GAME: .*?\n-{50}\n)", content, re.DOTALL)
+        for block in matches:
+            # Extract home team and game number using regular expressions
+            match_title = re.search(r"GAME: .*? @ (.*?) \(G(\d+)\)", block)
+            if match_title:
+                h_name = match_title.group(1).strip()
+                g_num = int(match_title.group(2))
+                saved_blocks[(h_name, g_num)] = block
+    except:
+        pass
+    return saved_blocks
+
 # --- MAIN RUN ---
 
 def run_analysis():
@@ -297,11 +318,11 @@ def run_analysis():
     # Sort chronologically to ensure both Telegram and evaluation log output share the identical sequence
     games = sorted(raw_games_list, key=lambda x: x.get('gameDate', ''))
     
-    live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
-#    t_msg, y_msg, life, bp_life = audit_and_stats() # Get existing ledger stats
+live_odds, odds_used, odds_rem, _, local_tracker = get_mlb_odds()
     new_preds, display_list = [], []
 
-    # Initialize the log data buffer completely empty so old daily data is fully wiped on this run
+    # Parse and load historical text blocks from current log execution space
+    existing_blocks = parse_existing_eval_log()
     eval_log_lines = []
     
     # Load history for logic and merging
@@ -358,18 +379,20 @@ def run_analysis():
             'pitchers': pitcher_header
         }
 
-        # LOCKING ENHANCEMENT: Skip analytical computations entirely if game is active/final and already logged.
+        # LOCKING ENHANCEMENT WITH ACCUMULATIVE PERSISTENCE
         if is_live_or_final and not saved_game.empty:
             winner = saved_game.iloc[0]['Predicted_Winner']
             conf = float(saved_game.iloc[0]['Confidence'])
             w_odds = saved_game.iloc[0]['Odds']
             
-            # FIX BUG 2: Ensure game_info is ALWAYS updated here so Telegram reports matching calculated edges
-            # OPTIMIZATION: Do absolutely nothing else. 
-            # No boxscore calls, no lineup checking, no BvP evaluations.
-            # Your rolling eval_log_contents [8:] logic already preserves the text from earlier runs.
             game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': "Locked Pregame Edge"})
-            pass
+            
+            # Check if this specific matchup was already cached in the log file text from a previous pregame run
+            if (home_name, game_num) in existing_blocks:
+                eval_log_lines.append(existing_blocks[(home_name, game_num)])
+            else:
+                # Emergency fallback string if the action workflow runner checks a live game for the absolute first time
+                eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n  Lineup Source: Locked Pregame Edge\n  PROJECTION (FROZEN): {winner} | {conf}% Edge\n" + "-" * 50 + "\n")
             
         elif h_p_id and a_p_id and detailed_status != 'Postponed':
             game_lbl = f"GAME: {away_name} @ {home_name} (G{game_num})\n"
@@ -384,23 +407,6 @@ def run_analysis():
                 a_l = box.get('away', {}).get('battingOrder', [])
                 
                 # Determine source and fall back to historical starters if official order isn't live yet
-                if h_l and a_l:
-                    lineup_src = "Official Boxscore (Locked)"
-                else:
-                    lineup_src = "Projected (Starters of Last Game)"
-                    if not h_l:
-                        h_l, _ = get_pro_lineup(game['teams']['home']['team']['id'])
-                    if not a_l:
-                        a_l, _ = get_pro_lineup(game['teams']['away']['team']['id'])
-
-                # CRITICAL FIX: If fallback lists are empty, use an array of the top 9 team hitters 
-                # instead of abandoning the analysis text completely
-                if not h_l:
-                    h_l = [p['id'] for p in box.get('home', {}).get('players', {}).values() if 'battingOrder' in p][:9]
-                if not a_l:
-                    a_l = [p['id'] for p in box.get('away', {}).get('players', {}).values() if 'battingOrder' in p][:9]
-
-# Dynamically determine strict labeling structure
                 if h_l and a_l:
                     lineup_src = "Official Boxscore (Locked)" if is_live_or_final else "Official Boxscore"
                 else:
@@ -425,18 +431,19 @@ def run_analysis():
                         w_odds = live_odds.get(f"{home_name}_{winner}", -110)
 
                     # Build explicit log layout string formatting
-                    eval_log_lines.append(f"GAME: {away_name} @ {home_name} (G{game_num})\n")
-                    eval_log_lines.append(f"  Lineup Source: {lineup_src}\n")
-                    eval_log_lines.append(f"  {home_name} Hitting (vs {a_name}):\n")
-                    eval_log_lines.extend([line + "\n" for line in h_det])
-                    eval_log_lines.append(f"  Aggregated Home OBP: {h_e:.3f} (Total AB: {h_ab})\n")
-                    eval_log_lines.append(f"  {away_name} Hitting (vs {h_name}):\n")
-                    eval_log_lines.extend([line + "\n" for line in a_det])
-                    eval_log_lines.append(f"  Aggregated Away OBP: {a_e:.3f} (Total AB: {a_ab})\n")
-                    
-                    proj_label = "PROJECTION (FROZEN)" if is_live_or_final else "PROJECTION"
-                    eval_log_lines.append(f"  {proj_label}: {winner} | {conf}% Edge\n")
-                    eval_log_lines.append("-" * 50 + "\n")
+                    game_block_txt = (
+                        f"GAME: {away_name} @ {home_name} (G{game_num})\n"
+                        f"  Lineup Source: {lineup_src}\n"
+                        f"  {home_name} Hitting (vs {a_name}):\n"
+                        + "".join([line + "\n" for line in h_det]) +
+                        f"  Aggregated Home OBP: {h_e:.3f} (Total AB: {h_ab})\n"
+                        f"  {away_name} Hitting (vs {h_name}):\n"
+                        + "".join([line + "\n" for line in a_det]) +
+                        f"  Aggregated Away OBP: {a_e:.3f} (Total AB: {a_ab})\n"
+                        f"  PROJECTION: {winner} | {conf}% Edge\n"
+                        + "-" * 50 + "\n"
+                    )
+                    eval_log_lines.append(game_block_txt)
 
                     if saved_game.empty:
                         new_preds.append({'Date': today_date_str, 'Matchup': matchup_txt, 'Predicted_Winner': winner, 'Odds': w_odds, 'Confidence': conf, 'Result': 'PENDING', 'Profit': 0.0, 'Game_Num': game_num})
@@ -447,11 +454,6 @@ def run_analysis():
                     
                     game_info.update({'is_active': True, 'winner': winner, 'conf': conf, 'odds': format_odds(w_odds), 'src': lineup_src})
             except Exception as e:
-                # FIX BUG 3: Write a placeholder warning to the text log instead of letting the entire match disappear
-                if not any(game_lbl in str(line) for line in eval_log_contents):
-                    eval_log_contents.append(game_lbl)
-                    eval_log_contents.append(f"  ⚠️ Skipping Analysis: Incomplete data or lineup could not be mapped.\n")
-                    eval_log_contents.append("-" * 50 + "\n")
                 pass
 
         display_list.append(game_info)
