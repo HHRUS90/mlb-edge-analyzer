@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 06/08/2026 (03:00 PM MDT)
+DETAILED EVALUATION LOG - 06/08/2026 (04:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 9/15 (60.0%) | +$11.80
 LIFETIME: 9/15 (60.0%) | +$11.80
 BEST PICKS LIFETIME: 1/1 (100.0%) | +$15.38
-ODDS-API: 126 Calls (Used: 134 | Rem: 366)
-MLB-STATS-API: 169 Total Calls
+ODDS-API: 127 Calls (Used: 135 | Rem: 365)
+MLB-STATS-API: 175 Total Calls
 ==================================================
 GAME: Seattle Mariners @ Baltimore Orioles (G1)
   Lineup Source: Official Boxscore
@@ -28,10 +28,10 @@ GAME: Seattle Mariners @ Baltimore Orioles (G1)
     - Luke Raley: NO HISTORY | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.319
     - Dominic Canzone: NO HISTORY | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.338
     - Patrick Wisdom: NO HISTORY | Baseline (2026 Season OBP): 0.200 -> Smoothed OBP: 0.200
-    - Colt Emerson: NO HISTORY | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.319
     - Jhonny Pereda: NO HISTORY | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.358
+    - Ryan Bliss: NO HISTORY | Baseline (Rookie (League Default)): 0.320 -> Smoothed OBP: 0.320
   Aggregated Away OBP: 0.319 (Total AB: 0)
-  PROJECTION: Seattle Mariners | 1.01% Edge
+  PROJECTION: Seattle Mariners | 1.02% Edge
 --------------------------------------------------
 GAME: Boston Red Sox @ Tampa Bay Rays (G1)
   Lineup Source: Official Boxscore
@@ -145,11 +145,11 @@ GAME: Cincinnati Reds @ San Diego Padres (G1)
     - Ty France: 2/6 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.321 (AB: 4)
     - Manny Machado: 1/13 BvP | Baseline (2026 Season OBP): 0.254 -> Smoothed OBP: 0.154 (AB: 13)
     - Xander Bogaerts: 1/6 BvP | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.250 (AB: 6)
-    - Bryce Johnson: NO HISTORY | Baseline (2026 Season OBP): 0.256 -> Smoothed OBP: 0.256
+    - Gavin Sheets: 3/6 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.390 (AB: 5)
     - Jase Bowen: NO HISTORY | Baseline (2026 Season OBP): 0.083 -> Smoothed OBP: 0.083
     - Samad Taylor: NO HISTORY | Baseline (2026 Season OBP): 0.500 -> Smoothed OBP: 0.500
     - Freddy Fermin: 0/2 BvP | Baseline (2026 Season OBP): 0.240 -> Smoothed OBP: 0.200 (AB: 2)
-  Aggregated Home OBP: 0.259 (Total AB: 47)
+  Aggregated Home OBP: 0.273 (Total AB: 52)
   Cincinnati Reds Hitting (vs Walker Buehler):
     - Blake Dunn: NO HISTORY | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.344
     - JJ Bleday: NO HISTORY | Baseline (2026 Season OBP): 0.361 -> Smoothed OBP: 0.361
@@ -161,7 +161,7 @@ GAME: Cincinnati Reds @ San Diego Padres (G1)
     - Tyler Stephenson: 1/8 BvP | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.221 (AB: 7)
     - Edwin Arroyo: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
   Aggregated Away OBP: 0.329 (Total AB: 16)
-  PROJECTION: Cincinnati Reds | 7.0% Edge
+  PROJECTION: Cincinnati Reds | 5.51% Edge
 --------------------------------------------------
 GAME: Washington Nationals @ San Francisco Giants (G1)
   Lineup Source: Starters of Last Game
@@ -184,24 +184,24 @@ GAME: Washington Nationals @ San Francisco Giants (G1)
     - Dylan Crews: NO HISTORY | Baseline (2026 Season OBP): 0.246 -> Smoothed OBP: 0.246
     - Daylen Lile: 2/3 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.391 (AB: 2)
     - Keibert Ruiz: 7/14 BvP | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.416 (AB: 11)
-    - José Tena: 3/3 BvP | Baseline (2026 Season OBP): 0.267 -> Smoothed OBP: 0.436 (AB: 3)
-    - Jacob Young: 1/2 BvP | Baseline (2026 Season OBP): 0.284 -> Smoothed OBP: 0.320 (AB: 2)
-  Aggregated Away OBP: 0.350 (Total AB: 51)
-  PROJECTION: San Francisco Giants | 1.6% Edge
+    - Jorbit Vivas: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
+    - Nasim Nuñez: 0/3 BvP | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.222 (AB: 3)
+  Aggregated Away OBP: 0.326 (Total AB: 49)
+  PROJECTION: San Francisco Giants | 3.92% Edge
 --------------------------------------------------
 GAME: Milwaukee Brewers @ Athletics (G1)
   Lineup Source: Starters of Last Game
   Athletics Hitting (vs Kyle Harrison):
-    - Nick Kurtz: 0/1 BvP | Baseline (2026 Season OBP): 0.431 -> Smoothed OBP: 0.392 (AB: 1)
-    - Henry Bolte: NO HISTORY | Baseline (2026 Season OBP): 0.392 -> Smoothed OBP: 0.392
     - Shea Langeliers: 0/1 BvP | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.315 (AB: 1)
-    - Tyler Soderstrom: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
+    - Nick Kurtz: 0/1 BvP | Baseline (2026 Season OBP): 0.431 -> Smoothed OBP: 0.392 (AB: 1)
+    - Colby Thomas: NO HISTORY | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.300
     - Brent Rooker: 1/1 BvP | Baseline (2026 Season OBP): 0.284 -> Smoothed OBP: 0.349 (AB: 1)
-    - Lawrence Butler: 0/1 BvP | Baseline (2026 Season OBP): 0.257 -> Smoothed OBP: 0.234 (AB: 1)
+    - Max Muncy: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
+    - Tyler Soderstrom: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
+    - Henry Bolte: NO HISTORY | Baseline (2026 Season OBP): 0.392 -> Smoothed OBP: 0.392
     - Zack Gelof: 1/2 BvP | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.347 (AB: 2)
-    - Jeff McNeil: 1/2 BvP | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.337 (AB: 2)
     - Alika Williams: NO HISTORY | Baseline (2026 Season OBP): 0.182 -> Smoothed OBP: 0.182
-  Aggregated Home OBP: 0.319 (Total AB: 8)
+  Aggregated Home OBP: 0.323 (Total AB: 5)
   Milwaukee Brewers Hitting (vs Jeffrey Springs):
     - Jackson Chourio: 1/2 BvP | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.376 (AB: 2)
     - Brice Turang: 2/2 BvP | Baseline (2026 Season OBP): 0.401 -> Smoothed OBP: 0.501 (AB: 1)
@@ -213,5 +213,5 @@ GAME: Milwaukee Brewers @ Athletics (G1)
     - Sal Frelick: 2/2 BvP | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.414 (AB: 1)
     - Joey Ortiz: 0/1 BvP | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.271 (AB: 1)
   Aggregated Away OBP: 0.361 (Total AB: 17)
-  PROJECTION: Milwaukee Brewers | 4.21% Edge
+  PROJECTION: Milwaukee Brewers | 3.8% Edge
 --------------------------------------------------
