@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 06/09/2026 (04:00 PM MDT)
+DETAILED EVALUATION LOG - 06/09/2026 (05:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 4/8 (50.0%) | -$47.34
 LIFETIME: 13/23 (56.5%) | -$35.54
 BEST PICKS LIFETIME: 1/2 (50.0%) | -$84.62
-ODDS-API: 144 Calls (Used: 152 | Rem: 348)
-MLB-STATS-API: 329 Total Calls
+ODDS-API: 145 Calls (Used: 153 | Rem: 347)
+MLB-STATS-API: 197 Total Calls
 ==================================================
 GAME: Seattle Mariners @ Baltimore Orioles (G1)
   Lineup Source: Official Boxscore
@@ -268,7 +268,7 @@ GAME: Atlanta Braves @ Chicago White Sox (G1)
   PROJECTION: Chicago White Sox | 2.74% Edge
 --------------------------------------------------
 GAME: Chicago Cubs @ Colorado Rockies (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Colorado Rockies Hitting (vs Colin Rea):
     - Jake McCarthy: 1/4 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.303 (AB: 3)
     - Willi Castro: 0/3 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.259 (AB: 3)
@@ -282,19 +282,19 @@ GAME: Chicago Cubs @ Colorado Rockies (G1)
   Aggregated Home OBP: 0.313 (Total AB: 9)
   Chicago Cubs Hitting (vs Tomoyuki Sugano):
     - Pete Crow-Armstrong: 0/3 BvP | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.262 (AB: 3)
-    - Michael Conforto: 1/2 BvP | Baseline (2026 Season OBP): 0.356 -> Smoothed OBP: 0.380 (AB: 2)
+    - Moisés Ballesteros: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
     - Michael Busch: 0/3 BvP | Baseline (2026 Season OBP): 0.369 -> Smoothed OBP: 0.284 (AB: 3)
     - Alex Bregman: 0/6 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.204 (AB: 6)
     - Ian Happ: 1/2 BvP | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.372 (AB: 2)
     - Seiya Suzuki: 1/3 BvP | Baseline (2026 Season OBP): 0.336 -> Smoothed OBP: 0.335 (AB: 2)
     - Nico Hoerner: 2/2 BvP | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.443 (AB: 2)
-    - Pedro Ramírez: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
-    - Carson Kelly: NO HISTORY | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.354
-  Aggregated Away OBP: 0.328 (Total AB: 20)
-  PROJECTION: Chicago Cubs | 1.5% Edge
+    - Miguel Amaya: NO HISTORY | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.358
+    - Dansby Swanson: NO HISTORY | Baseline (2026 Season OBP): 0.285 -> Smoothed OBP: 0.285
+  Aggregated Away OBP: 0.318 (Total AB: 18)
+  PROJECTION: Chicago Cubs | 0.43% Edge
 --------------------------------------------------
 GAME: Houston Astros @ Los Angeles Angels (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Angels Hitting (vs Kai-Wei Teng):
     - Zach Neto: 0/1 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.307 (AB: 1)
     - Mike Trout: 0/1 BvP | Baseline (2026 Season OBP): 0.389 -> Smoothed OBP: 0.354 (AB: 1)
@@ -309,18 +309,18 @@ GAME: Houston Astros @ Los Angeles Angels (G1)
   Houston Astros Hitting (vs Walbert Ureña):
     - Jeremy Peña: NO HISTORY | Baseline (2026 Season OBP): 0.356 -> Smoothed OBP: 0.356
     - Yordan Alvarez: 1/1 BvP | Baseline (2026 Season OBP): 0.427 -> Smoothed OBP: 0.479 (AB: 0)
-    - Shay Whitcomb: NO HISTORY | Baseline (2026 Season OBP): 0.167 -> Smoothed OBP: 0.167
+    - Christian Walker: 2/3 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.403 (AB: 3)
     - Isaac Paredes: 1/1 BvP | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.392 (AB: 0)
     - Jose Altuve: 1/2 BvP | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.350 (AB: 1)
-    - Brice Matthews: NO HISTORY | Baseline (2026 Season OBP): 0.255 -> Smoothed OBP: 0.255
     - Cam Smith: 0/1 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.283 (AB: 1)
+    - Joey Loperfido: 1/1 BvP | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.407 (AB: 1)
     - Jake Meyers: 0/2 BvP | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.235 (AB: 2)
-    - Collin Price: NO HISTORY | Baseline (2026 Season OBP): 0.222 -> Smoothed OBP: 0.222
-  Aggregated Away OBP: 0.304 (Total AB: 4)
-  PROJECTION: Los Angeles Angels | 1.67% Edge
+    - Christian Vázquez: NO HISTORY | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.303
+  Aggregated Away OBP: 0.356 (Total AB: 8)
+  PROJECTION: Houston Astros | 3.54% Edge
 --------------------------------------------------
 GAME: Cincinnati Reds @ San Diego Padres (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   San Diego Padres Hitting (vs Chase Burns):
     - Fernando Tatis Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.339
     - Jackson Merrill: NO HISTORY | Baseline (2026 Season OBP): 0.271 -> Smoothed OBP: 0.271
@@ -336,14 +336,14 @@ GAME: Cincinnati Reds @ San Diego Padres (G1)
     - Blake Dunn: NO HISTORY | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.337
     - JJ Bleday: NO HISTORY | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.363
     - Sal Stewart: NO HISTORY | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.348
+    - Nathaniel Lowe: 6/20 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.309 (AB: 19)
     - Spencer Steer: 3/5 BvP | Baseline (2026 Season OBP): 0.345 -> Smoothed OBP: 0.430 (AB: 4)
     - Eugenio Suárez: 5/6 BvP | Baseline (2026 Season OBP): 0.279 -> Smoothed OBP: 0.487 (AB: 3)
-    - Noelvi Marte: 2/5 BvP | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.300 (AB: 4)
     - Matt McLain: 1/3 BvP | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.315 (AB: 3)
     - Tyler Stephenson: 0/3 BvP | Baseline (2026 Season OBP): 0.301 -> Smoothed OBP: 0.232 (AB: 3)
     - Edwin Arroyo: NO HISTORY | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.300
-  Aggregated Away OBP: 0.346 (Total AB: 17)
-  PROJECTION: Cincinnati Reds | 3.73% Edge
+  Aggregated Away OBP: 0.347 (Total AB: 32)
+  PROJECTION: Cincinnati Reds | 3.83% Edge
 --------------------------------------------------
 GAME: Washington Nationals @ San Francisco Giants (G1)
   Lineup Source: Official Boxscore
