@@ -1,37 +1,37 @@
-DETAILED EVALUATION LOG - 06/10/2026 (09:00 AM MDT)
+DETAILED EVALUATION LOG - 06/10/2026 (10:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 8/15 (53.3%) | +$166.18
 LIFETIME: 21/38 (55.3%) | +$130.63
 BEST PICKS LIFETIME: 2/3 (66.7%) | +$31.38
-ODDS-API: 154 Calls (Used: 162 | Rem: 338)
-MLB-STATS-API: 279 Total Calls
+ODDS-API: 155 Calls (Used: 163 | Rem: 337)
+MLB-STATS-API: 281 Total Calls
 ==================================================
 GAME: Boston Red Sox @ Tampa Bay Rays (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Tampa Bay Rays Hitting (vs Jake Bennett):
     - Yandy Díaz: 1/3 BvP | Baseline (2026 Season OBP): 0.401 -> Smoothed OBP: 0.385 (AB: 2)
-    - Junior Caminero: 1/3 BvP | Baseline (2026 Season OBP): 0.376 -> Smoothed OBP: 0.366 (AB: 3)
-    - Chandler Simpson: NO HISTORY | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.307
-    - Ryan Vilade: 1/3 BvP | Baseline (2026 Season OBP): 0.373 -> Smoothed OBP: 0.364 (AB: 3)
     - Austin Slater: NO HISTORY | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.286
-    - Cedric Mullins: 1/2 BvP | Baseline (2026 Season OBP): 0.275 -> Smoothed OBP: 0.312 (AB: 2)
+    - Junior Caminero: 1/3 BvP | Baseline (2026 Season OBP): 0.376 -> Smoothed OBP: 0.366 (AB: 3)
+    - Ryan Vilade: 1/3 BvP | Baseline (2026 Season OBP): 0.373 -> Smoothed OBP: 0.364 (AB: 3)
+    - Jonathan Aranda: 0/3 BvP | Baseline (2026 Season OBP): 0.378 -> Smoothed OBP: 0.291 (AB: 3)
     - Ben Williamson: 1/2 BvP | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.370 (AB: 2)
     - Nick Fortes: 1/2 BvP | Baseline (2026 Season OBP): 0.294 -> Smoothed OBP: 0.328 (AB: 2)
+    - Cedric Mullins: 1/2 BvP | Baseline (2026 Season OBP): 0.275 -> Smoothed OBP: 0.312 (AB: 2)
     - Taylor Walls: 1/2 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.341 (AB: 1)
-  Aggregated Home OBP: 0.340 (Total AB: 15)
+  Aggregated Home OBP: 0.338 (Total AB: 18)
   Boston Red Sox Hitting (vs Drew Rasmussen):
     - Jarren Duran: 2/12 BvP | Baseline (2026 Season OBP): 0.270 -> Smoothed OBP: 0.214 (AB: 12)
     - Ceddanne Rafaela: 1/2 BvP | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.367 (AB: 2)
     - Wilyer Abreu: 1/3 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.337 (AB: 3)
     - Willson Contreras: 2/2 BvP | Baseline (2026 Season OBP): 0.383 -> Smoothed OBP: 0.486 (AB: 1)
-    - Masataka Yoshida: 2/4 BvP | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.378 (AB: 4)
     - Mickey Gasper: 0/1 BvP | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.295 (AB: 1)
+    - Masataka Yoshida: 2/4 BvP | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.378 (AB: 4)
     - Caleb Durbin: 0/2 BvP | Baseline (2026 Season OBP): 0.255 -> Smoothed OBP: 0.212 (AB: 2)
     - Isiah Kiner-Falefa: 3/6 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.392 (AB: 6)
-    - Marcelo Mayer: 0/1 BvP | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.256 (AB: 1)
-  Aggregated Away OBP: 0.326 (Total AB: 32)
-  PROJECTION: Tampa Bay Rays | 1.37% Edge
+    - Andruw Monasterio: NO HISTORY | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.295
+  Aggregated Away OBP: 0.331 (Total AB: 31)
+  PROJECTION: Tampa Bay Rays | 0.76% Edge
 --------------------------------------------------
 GAME: New York Yankees @ Cleveland Guardians (G1)
   Lineup Source: Official Boxscore
@@ -99,17 +99,17 @@ GAME: Cincinnati Reds @ San Diego Padres (G1)
     - Sung-Mun Song: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
   Aggregated Home OBP: 0.288 (Total AB: 43)
   Cincinnati Reds Hitting (vs Michael King):
-    - Blake Dunn: NO HISTORY | Baseline (2026 Season OBP): 0.336 -> Smoothed OBP: 0.336
+    - Matt McLain: 0/3 BvP | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.240 (AB: 3)
     - JJ Bleday: 3/6 BvP | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.409 (AB: 5)
     - Sal Stewart: 1/2 BvP | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.376 (AB: 2)
-    - Dane Myers: NO HISTORY | Baseline (2026 Season OBP): 0.361 -> Smoothed OBP: 0.361
     - Spencer Steer: 1/4 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.312 (AB: 4)
-    - Will Benson: 1/4 BvP | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.296 (AB: 4)
-    - Matt McLain: 0/3 BvP | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.240 (AB: 3)
+    - Nathaniel Lowe: 2/6 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333 (AB: 5)
+    - Eugenio Suárez: 0/5 BvP | Baseline (2026 Season OBP): 0.277 -> Smoothed OBP: 0.185 (AB: 5)
+    - Dane Myers: NO HISTORY | Baseline (2026 Season OBP): 0.361 -> Smoothed OBP: 0.361
+    - Noelvi Marte: NO HISTORY | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.250
     - P.J. Higgins: NO HISTORY | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.296
-    - Edwin Arroyo: NO HISTORY | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.280
-  Aggregated Away OBP: 0.323 (Total AB: 18)
-  PROJECTION: Cincinnati Reds | 3.46% Edge
+  Aggregated Away OBP: 0.307 (Total AB: 24)
+  PROJECTION: Cincinnati Reds | 1.85% Edge
 --------------------------------------------------
 GAME: Seattle Mariners @ Baltimore Orioles (G1)
   Lineup Source: Starters of Last Game
