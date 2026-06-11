@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 06/11/2026 (09:00 AM MDT)
+DETAILED EVALUATION LOG - 06/11/2026 (10:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 9/15 (60.0%) | +$250.28
 LIFETIME: 30/53 (56.6%) | +$380.91
 BEST PICKS LIFETIME: 3/4 (75.0%) | +$114.72
-ODDS-API: 171 Calls (Used: 179 | Rem: 321)
-MLB-STATS-API: 157 Total Calls
+ODDS-API: 172 Calls (Used: 180 | Rem: 320)
+MLB-STATS-API: 152 Total Calls
 ==================================================
 GAME: St. Louis Cardinals @ New York Mets (G1)
   Lineup Source: Official Boxscore
@@ -60,7 +60,7 @@ GAME: Minnesota Twins @ Detroit Tigers (G1)
   PROJECTION: Detroit Tigers | 2.86% Edge
 --------------------------------------------------
 GAME: Arizona Diamondbacks @ Miami Marlins (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Miami Marlins Hitting (vs Merrill Kelly):
     - Liam Hicks: 0/4 BvP | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.249 (AB: 4)
     - Otto Lopez: 5/7 BvP | Baseline (2026 Season OBP): 0.370 -> Smoothed OBP: 0.512 (AB: 7)
@@ -77,16 +77,16 @@ GAME: Arizona Diamondbacks @ Miami Marlins (G1)
     - Corbin Carroll: 0/1 BvP | Baseline (2026 Season OBP): 0.374 -> Smoothed OBP: 0.340 (AB: 1)
     - Gabriel Moreno: 0/1 BvP | Baseline (2026 Season OBP): 0.345 -> Smoothed OBP: 0.314 (AB: 1)
     - Nolan Arenado: 0/1 BvP | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.309 (AB: 1)
-    - Pavin Smith: 1/2 BvP | Baseline (2026 Season OBP): 0.281 -> Smoothed OBP: 0.318 (AB: 2)
     - Geraldo Perdomo: 1/2 BvP | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.372 (AB: 1)
-    - Ildemaro Vargas: NO HISTORY | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.306
-    - Ryan Waldschmidt: NO HISTORY | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.319
+    - LuJames Groover: NO HISTORY | Baseline (2026 Season OBP): 0.200 -> Smoothed OBP: 0.200
     - Tommy Troy: NO HISTORY | Baseline (2026 Season OBP): 0.364 -> Smoothed OBP: 0.364
-  Aggregated Away OBP: 0.324 (Total AB: 7)
-  PROJECTION: Miami Marlins | 0.79% Edge
+    - Aramis Garcia: NO HISTORY | Baseline (2026 Season OBP): 0.176 -> Smoothed OBP: 0.176
+    - Jorge Barrosa: NO HISTORY | Baseline (2026 Season OBP): 0.238 -> Smoothed OBP: 0.238
+  Aggregated Away OBP: 0.287 (Total AB: 5)
+  PROJECTION: Miami Marlins | 4.44% Edge
 --------------------------------------------------
 GAME: Texas Rangers @ Kansas City Royals (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Kansas City Royals Hitting (vs Kumar Rocker):
     - Carter Jensen: NO HISTORY | Baseline (2026 Season OBP): 0.285 -> Smoothed OBP: 0.285
     - Bobby Witt Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.353
@@ -99,12 +99,12 @@ GAME: Texas Rangers @ Kansas City Royals (G1)
     - Isaac Collins: NO HISTORY | Baseline (2026 Season OBP): 0.336 -> Smoothed OBP: 0.336
   Aggregated Home OBP: 0.324 (Total AB: 4)
   Texas Rangers Hitting (vs Michael Wacha):
-    - Jake Burger: 1/6 BvP | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.250 (AB: 6)
+    - Wyatt Langford: 3/10 BvP | Baseline (2026 Season OBP): 0.269 -> Smoothed OBP: 0.285 (AB: 10)
     - Corey Seager: 10/24 BvP | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.376 (AB: 23)
     - Josh Jung: 0/2 BvP | Baseline (2026 Season OBP): 0.369 -> Smoothed OBP: 0.307 (AB: 2)
     - Brandon Nimmo: 3/6 BvP | Baseline (2026 Season OBP): 0.332 -> Smoothed OBP: 0.395 (AB: 4)
-    - Wyatt Langford: 3/10 BvP | Baseline (2026 Season OBP): 0.269 -> Smoothed OBP: 0.285 (AB: 10)
     - Ezequiel Duran: NO HISTORY | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.346
+    - Jake Burger: 1/6 BvP | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.250 (AB: 6)
     - Evan Carter: 3/8 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.331 (AB: 8)
     - Elias Díaz: 2/14 BvP | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.202 (AB: 14)
     - Nicky Lopez: 5/14 BvP | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.351 (AB: 10)
