@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 06/16/2026 (05:00 PM MDT)
+DETAILED EVALUATION LOG - 06/16/2026 (06:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 3/10 (30.0%) | -$455.58
 LIFETIME: 67/114 (58.8%) | +$1,269.66
 BEST PICKS LIFETIME: 5/9 (55.6%) | -$34.97
-ODDS-API: 263 Calls (Used: 271 | Rem: 229)
-MLB-STATS-API: 211 Total Calls
+ODDS-API: 264 Calls (Used: 272 | Rem: 228)
+MLB-STATS-API: 121 Total Calls
 ==================================================
 GAME: Miami Marlins @ Philadelphia Phillies (G1)
   Lineup Source: Official Boxscore
@@ -320,7 +320,7 @@ GAME: Los Angeles Angels @ Arizona Diamondbacks (G1)
   PROJECTION: Los Angeles Angels | 1.33% Edge
 --------------------------------------------------
 GAME: Pittsburgh Pirates @ Athletics (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Athletics Hitting (vs Mitch Keller):
     - Nick Kurtz: 1/2 BvP | Baseline (2026 Season OBP): 0.443 -> Smoothed OBP: 0.452 (AB: 2)
     - Shea Langeliers: 2/7 BvP | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.320 (AB: 7)
@@ -336,17 +336,17 @@ GAME: Pittsburgh Pirates @ Athletics (G1)
     - Spencer Horwitz: NO HISTORY | Baseline (2026 Season OBP): 0.383 -> Smoothed OBP: 0.383
     - Brandon Lowe: NO HISTORY | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.323
     - Bryan Reynolds: NO HISTORY | Baseline (2026 Season OBP): 0.394 -> Smoothed OBP: 0.394
-    - Billy Cook: NO HISTORY | Baseline (2026 Season OBP): 0.190 -> Smoothed OBP: 0.190
+    - Ryan O'Hearn: NO HISTORY | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.340
     - Nick Gonzales: NO HISTORY | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.347
     - Endy Rodríguez: NO HISTORY | Baseline (2026 Season OBP): 0.423 -> Smoothed OBP: 0.423
     - Tyler Callihan: NO HISTORY | Baseline (2026 Season OBP): 0.441 -> Smoothed OBP: 0.441
     - Jake Mangum: NO HISTORY | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.353
-    - Esmerlyn Valdez: NO HISTORY | Baseline (2026 Season OBP): 0.160 -> Smoothed OBP: 0.160
-  Aggregated Away OBP: 0.335 (Total AB: 0)
-  PROJECTION: Pittsburgh Pirates | 0.52% Edge
+    - Jared Triolo: NO HISTORY | Baseline (2026 Season OBP): 0.292 -> Smoothed OBP: 0.292
+  Aggregated Away OBP: 0.366 (Total AB: 0)
+  PROJECTION: Pittsburgh Pirates | 3.66% Edge
 --------------------------------------------------
 GAME: Baltimore Orioles @ Seattle Mariners (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Seattle Mariners Hitting (vs Brandon Young):
     - J.P. Crawford: NO HISTORY | Baseline (2026 Season OBP): 0.356 -> Smoothed OBP: 0.356
     - Cal Raleigh: NO HISTORY | Baseline (2026 Season OBP): 0.243 -> Smoothed OBP: 0.243
@@ -365,14 +365,14 @@ GAME: Baltimore Orioles @ Seattle Mariners (G1)
     - Pete Alonso: 1/6 BvP | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.272 (AB: 6)
     - Samuel Basallo: NO HISTORY | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.321
     - Leody Taveras: 3/18 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.230 (AB: 17)
-    - Coby Mayo: 1/3 BvP | Baseline (2026 Season OBP): 0.259 -> Smoothed OBP: 0.276 (AB: 3)
-    - Jackson Holliday: 0/3 BvP | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.215 (AB: 3)
+    - Colton Cowser: NO HISTORY | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.312
     - Blaze Alexander: NO HISTORY | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.355
-  Aggregated Away OBP: 0.278 (Total AB: 67)
-  PROJECTION: Seattle Mariners | 1.42% Edge
+    - Jackson Holliday: 0/3 BvP | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.215 (AB: 3)
+  Aggregated Away OBP: 0.282 (Total AB: 64)
+  PROJECTION: Seattle Mariners | 1.02% Edge
 --------------------------------------------------
 GAME: Tampa Bay Rays @ Los Angeles Dodgers (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Dodgers Hitting (vs Drew Rasmussen):
     - Shohei Ohtani: 1/6 BvP | Baseline (2026 Season OBP): 0.421 -> Smoothed OBP: 0.326 (AB: 5)
     - Andy Pages: 0/2 BvP | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.263 (AB: 2)
@@ -386,14 +386,14 @@ GAME: Tampa Bay Rays @ Los Angeles Dodgers (G1)
   Aggregated Home OBP: 0.315 (Total AB: 30)
   Tampa Bay Rays Hitting (vs Justin Wrobleski):
     - Yandy Díaz: 0/1 BvP | Baseline (2026 Season OBP): 0.392 -> Smoothed OBP: 0.356 (AB: 1)
+    - Austin Slater: NO HISTORY | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.304
     - Jonathan Aranda: NO HISTORY | Baseline (2026 Season OBP): 0.380 -> Smoothed OBP: 0.380
     - Junior Caminero: 0/1 BvP | Baseline (2026 Season OBP): 0.372 -> Smoothed OBP: 0.338 (AB: 1)
-    - Chandler Simpson: NO HISTORY | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.303
+    - Ryan Vilade: 1/5 BvP | Baseline (2026 Season OBP): 0.361 -> Smoothed OBP: 0.307 (AB: 5)
     - Ben Williamson: NO HISTORY | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.329
-    - Austin Slater: NO HISTORY | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.304
-    - Cedric Mullins: NO HISTORY | Baseline (2026 Season OBP): 0.289 -> Smoothed OBP: 0.289
+    - Chandler Simpson: NO HISTORY | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.303
     - Nick Fortes: 0/1 BvP | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.282 (AB: 1)
     - Taylor Walls: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
-  Aggregated Away OBP: 0.322 (Total AB: 3)
-  PROJECTION: Tampa Bay Rays | 0.72% Edge
+  Aggregated Away OBP: 0.324 (Total AB: 8)
+  PROJECTION: Tampa Bay Rays | 0.93% Edge
 --------------------------------------------------
