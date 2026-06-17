@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 06/17/2026 (04:00 PM MDT)
+DETAILED EVALUATION LOG - 06/17/2026 (05:00 PM MDT)
 ==================================================
-📊 TODAY: 4/6 (66.7%) | +$227.29
+📊 TODAY: 5/8 (62.5%) | +$259.29
 📊 YESTERDAY: 8/15 (53.3%) | +$131.37
-LIFETIME: 79/135 (58.5%) | +$1,628.31
+LIFETIME: 80/137 (58.4%) | +$1,660.31
 BEST PICKS LIFETIME: 6/11 (54.5%) | -$18.97
-ODDS-API: 279 Calls (Used: 287 | Rem: 213)
-MLB-STATS-API: 174 Total Calls
+ODDS-API: 280 Calls (Used: 288 | Rem: 212)
+MLB-STATS-API: 112 Total Calls
 ==================================================
 GAME: New York Mets @ Cincinnati Reds (G1)
   Lineup Source: Official Boxscore
@@ -86,30 +86,30 @@ GAME: Miami Marlins @ Philadelphia Phillies (G1)
   PROJECTION: Miami Marlins | 2.54% Edge
 --------------------------------------------------
 GAME: San Francisco Giants @ Atlanta Braves (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Atlanta Braves Hitting (vs Carson Whisenhunt):
-    - Michael Harris II: NO HISTORY | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.340
     - Mauricio Dubón: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
+    - Drake Baldwin: NO HISTORY | Baseline (2026 Season OBP): 0.385 -> Smoothed OBP: 0.385
     - Matt Olson: NO HISTORY | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.342
     - Ozzie Albies: NO HISTORY | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.330
-    - Dominic Smith: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
     - Austin Riley: NO HISTORY | Baseline (2026 Season OBP): 0.287 -> Smoothed OBP: 0.287
+    - Eli White: NO HISTORY | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.286
     - Jorge Mateo: NO HISTORY | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.330
     - Mike Yastrzemski: NO HISTORY | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.319
     - Sandy León: NO HISTORY | Baseline (2026 Season OBP): 0.095 -> Smoothed OBP: 0.095
-  Aggregated Home OBP: 0.298 (Total AB: 0)
+  Aggregated Home OBP: 0.299 (Total AB: 0)
   San Francisco Giants Hitting (vs JR Ritchie):
-    - Matt Chapman: NO HISTORY | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.342
     - Luis Arraez: NO HISTORY | Baseline (2026 Season OBP): 0.356 -> Smoothed OBP: 0.356
-    - Jonah Cox: NO HISTORY | Baseline (2026 Season OBP): 0.400 -> Smoothed OBP: 0.400
+    - Bryce Eldridge: NO HISTORY | Baseline (2026 Season OBP): 0.413 -> Smoothed OBP: 0.413
+    - Matt Chapman: NO HISTORY | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.342
     - Rafael Devers: NO HISTORY | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.295
-    - Casey Schmitt: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
-    - Willy Adames: NO HISTORY | Baseline (2026 Season OBP): 0.274 -> Smoothed OBP: 0.274
     - Jung Hoo Lee: NO HISTORY | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.362
-    - Daniel Susac: NO HISTORY | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.340
+    - Willy Adames: NO HISTORY | Baseline (2026 Season OBP): 0.274 -> Smoothed OBP: 0.274
+    - Casey Schmitt: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
     - Drew Gilbert: NO HISTORY | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.302
-  Aggregated Away OBP: 0.331 (Total AB: 0)
-  PROJECTION: San Francisco Giants | 3.36% Edge
+    - Eric Haase: NO HISTORY | Baseline (2026 Season OBP): 0.259 -> Smoothed OBP: 0.259
+  Aggregated Away OBP: 0.324 (Total AB: 0)
+  PROJECTION: San Francisco Giants | 2.5% Edge
 --------------------------------------------------
 GAME: Detroit Tigers @ Houston Astros (G1)
   Lineup Source: Official Boxscore
@@ -372,7 +372,7 @@ GAME: Pittsburgh Pirates @ Athletics (G1)
   PROJECTION: Pittsburgh Pirates | 0.07% Edge
 --------------------------------------------------
 GAME: Baltimore Orioles @ Seattle Mariners (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Seattle Mariners Hitting (vs Kyle Bradish):
     - J.P. Crawford: 2/5 BvP | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.375 (AB: 4)
     - Cal Raleigh: 1/7 BvP | Baseline (2026 Season OBP): 0.249 -> Smoothed OBP: 0.205 (AB: 7)
@@ -387,13 +387,13 @@ GAME: Baltimore Orioles @ Seattle Mariners (G1)
   Baltimore Orioles Hitting (vs George Kirby):
     - Taylor Ward: 7/30 BvP | Baseline (2026 Season OBP): 0.402 -> Smoothed OBP: 0.275 (AB: 30)
     - Gunnar Henderson: 7/16 BvP | Baseline (2026 Season OBP): 0.293 -> Smoothed OBP: 0.382 (AB: 16)
-    - Jeremiah Jackson: NO HISTORY | Baseline (2026 Season OBP): 0.275 -> Smoothed OBP: 0.275
+    - Adley Rutschman: 4/19 BvP | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.256 (AB: 19)
     - Pete Alonso: 5/7 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.493 (AB: 5)
     - Samuel Basallo: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
     - Leody Taveras: 1/15 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.175 (AB: 15)
-    - Colton Cowser: 3/8 BvP | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.337 (AB: 8)
-    - Blaze Alexander: 1/2 BvP | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.374 (AB: 2)
+    - Tyler O'Neill: 1/3 BvP | Baseline (2026 Season OBP): 0.285 -> Smoothed OBP: 0.296 (AB: 3)
     - Jackson Holliday: 1/6 BvP | Baseline (2026 Season OBP): 0.271 -> Smoothed OBP: 0.232 (AB: 6)
-  Aggregated Away OBP: 0.318 (Total AB: 82)
-  PROJECTION: Baltimore Orioles | 2.88% Edge
+    - Blaze Alexander: 1/2 BvP | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.374 (AB: 2)
+  Aggregated Away OBP: 0.311 (Total AB: 96)
+  PROJECTION: Baltimore Orioles | 2.21% Edge
 --------------------------------------------------
