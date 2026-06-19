@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 06/18/2026 (05:00 PM MDT)
+DETAILED EVALUATION LOG - 06/18/2026 (06:00 PM MDT)
 ==================================================
 📊 TODAY: 2/4 (50.0%) | +$1.33
 📊 YESTERDAY: 10/14 (71.4%) | +$614.45
 LIFETIME: 87/147 (59.2%) | +$2,016.81
 BEST PICKS LIFETIME: 6/12 (50.0%) | -$118.97
-ODDS-API: 296 Calls (Used: 304 | Rem: 196)
-MLB-STATS-API: 40 Total Calls
+ODDS-API: 297 Calls (Used: 305 | Rem: 195)
+MLB-STATS-API: 59 Total Calls
 ==================================================
 GAME: Toronto Blue Jays @ Boston Red Sox (G1)
   Lineup Source: Official Boxscore
@@ -214,4 +214,30 @@ GAME: St. Louis Cardinals @ Kansas City Royals (G1)
     - Pedro Pagés: 1/6 BvP | Baseline (2026 Season OBP): 0.267 -> Smoothed OBP: 0.229 (AB: 6)
   Aggregated Away OBP: 0.300 (Total AB: 32)
   PROJECTION: Kansas City Royals | 1.24% Edge
+--------------------------------------------------
+GAME: Los Angeles Angels @ Athletics (G1)
+  Lineup Source: Starters of Last Game
+  Athletics Hitting (vs Ryan Johnson):
+    - Zack Gelof: 1/1 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.394 (AB: 1)
+    - Nick Kurtz: 1/1 BvP | Baseline (2026 Season OBP): 0.440 -> Smoothed OBP: 0.491 (AB: 1)
+    - Shea Langeliers: 1/1 BvP | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.401 (AB: 0)
+    - Tyler Soderstrom: 0/1 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.303 (AB: 1)
+    - Jacob Wilson: NO HISTORY | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.309
+    - Jonah Heim: 0/2 BvP | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.262 (AB: 2)
+    - Carlos Cortes: NO HISTORY | Baseline (2026 Season OBP): 0.374 -> Smoothed OBP: 0.374
+    - Henry Bolte: 0/2 BvP | Baseline (2026 Season OBP): 0.381 -> Smoothed OBP: 0.318 (AB: 2)
+    - Jeff McNeil: 1/1 BvP | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.373 (AB: 1)
+  Aggregated Home OBP: 0.358 (Total AB: 8)
+  Los Angeles Angels Hitting (vs Gage Jump):
+    - Zach Neto: NO HISTORY | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.330
+    - Mike Trout: NO HISTORY | Baseline (2026 Season OBP): 0.394 -> Smoothed OBP: 0.394
+    - Jo Adell: NO HISTORY | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.296
+    - Oswald Peraza: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
+    - Vaughn Grissom: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
+    - Denzer Guzman: NO HISTORY | Baseline (2026 Season OBP): 0.265 -> Smoothed OBP: 0.265
+    - Jose Siri: NO HISTORY | Baseline (2026 Season OBP): 0.375 -> Smoothed OBP: 0.375
+    - ID:682515: NO HISTORY | Baseline (2026 Season OBP): 0.500 -> Smoothed OBP: 0.500
+    - Wade Meckler: NO HISTORY | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.346
+  Aggregated Away OBP: 0.348 (Total AB: 0)
+  PROJECTION: Athletics | 1.03% Edge
 --------------------------------------------------
