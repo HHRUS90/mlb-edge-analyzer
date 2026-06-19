@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 06/19/2026 (08:00 AM MDT)
+DETAILED EVALUATION LOG - 06/19/2026 (09:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 5/8 (62.5%) | +$139.01
 LIFETIME: 90/151 (59.6%) | +$2,154.49
 BEST PICKS LIFETIME: 7/12 (58.3%) | +$81.03
-ODDS-API: 303 Calls (Used: 311 | Rem: 189)
-MLB-STATS-API: 503 Total Calls
+ODDS-API: 304 Calls (Used: 312 | Rem: 188)
+MLB-STATS-API: 313 Total Calls
 ==================================================
 GAME: Toronto Blue Jays @ Chicago Cubs (G1)
   Lineup Source: Starters of Last Game
@@ -110,6 +110,32 @@ GAME: Washington Nationals @ Tampa Bay Rays (G1)
     - Nasim Nuñez: 0/1 BvP | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.284 (AB: 1)
   Aggregated Away OBP: 0.319 (Total AB: 8)
   PROJECTION: Tampa Bay Rays | 1.14% Edge
+--------------------------------------------------
+GAME: San Francisco Giants @ Miami Marlins (G1)
+  Lineup Source: Starters of Last Game
+  Miami Marlins Hitting (vs Landen Roupp):
+    - Liam Hicks: 1/3 BvP | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.355 (AB: 3)
+    - Otto Lopez: 0/3 BvP | Baseline (2026 Season OBP): 0.368 -> Smoothed OBP: 0.283 (AB: 3)
+    - Kyle Stowers: 0/4 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.220 (AB: 4)
+    - Xavier Edwards: 1/3 BvP | Baseline (2026 Season OBP): 0.375 -> Smoothed OBP: 0.365 (AB: 2)
+    - Javier Sanoja: NO HISTORY | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.288
+    - Owen Caissie: 0/3 BvP | Baseline (2026 Season OBP): 0.268 -> Smoothed OBP: 0.206 (AB: 3)
+    - Jakob Marsee: 0/3 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.251 (AB: 3)
+    - Joe Mack: NO HISTORY | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.327
+    - Esteury Ruiz: NO HISTORY | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.346
+  Aggregated Home OBP: 0.294 (Total AB: 18)
+  San Francisco Giants Hitting (vs Lake Bachar):
+    - Luis Arraez: 1/1 BvP | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.418 (AB: 1)
+    - Bryce Eldridge: NO HISTORY | Baseline (2026 Season OBP): 0.405 -> Smoothed OBP: 0.405
+    - Matt Chapman: 0/1 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.306 (AB: 1)
+    - Rafael Devers: 0/1 BvP | Baseline (2026 Season OBP): 0.301 -> Smoothed OBP: 0.274 (AB: 1)
+    - Jung Hoo Lee: 1/2 BvP | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.381 (AB: 2)
+    - Willy Adames: 0/2 BvP | Baseline (2026 Season OBP): 0.274 -> Smoothed OBP: 0.228 (AB: 2)
+    - Jonah Cox: NO HISTORY | Baseline (2026 Season OBP): 0.400 -> Smoothed OBP: 0.400
+    - Drew Gilbert: NO HISTORY | Baseline (2026 Season OBP): 0.301 -> Smoothed OBP: 0.301
+    - Eric Haase: 0/1 BvP | Baseline (2026 Season OBP): 0.281 -> Smoothed OBP: 0.255 (AB: 1)
+  Aggregated Away OBP: 0.330 (Total AB: 8)
+  PROJECTION: San Francisco Giants | 3.63% Edge
 --------------------------------------------------
 GAME: Milwaukee Brewers @ Atlanta Braves (G1)
   Lineup Source: Starters of Last Game
