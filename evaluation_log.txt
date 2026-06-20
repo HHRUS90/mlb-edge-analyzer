@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 06/20/2026 (04:00 PM MDT)
+DETAILED EVALUATION LOG - 06/20/2026 (05:00 PM MDT)
 ==================================================
-📊 TODAY: 0/3 (0.0%) | -$300.00
+📊 TODAY: 0/4 (0.0%) | -$400.00
 📊 YESTERDAY: 11/14 (78.6%) | +$501.26
-LIFETIME: 101/168 (60.1%) | +$2,355.75
+LIFETIME: 101/169 (59.8%) | +$2,255.75
 BEST PICKS LIFETIME: 8/14 (57.1%) | +$83.03
-ODDS-API: 327 Calls (Used: 335 | Rem: 165)
-MLB-STATS-API: 173 Total Calls
+ODDS-API: 328 Calls (Used: 336 | Rem: 164)
+MLB-STATS-API: 134 Total Calls
 ==================================================
 GAME: Chicago White Sox @ Detroit Tigers (G1)
   Lineup Source: Official Boxscore
@@ -268,9 +268,8 @@ GAME: Pittsburgh Pirates @ Colorado Rockies (G1)
   PROJECTION: Pittsburgh Pirates | 5.26% Edge
 --------------------------------------------------
 GAME: Los Angeles Angels @ Athletics (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Athletics Hitting (vs Walbert Ureña):
-    - Zack Gelof: 1/3 BvP | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.339 (AB: 2)
     - Nick Kurtz: 1/3 BvP | Baseline (2026 Season OBP): 0.436 -> Smoothed OBP: 0.412 (AB: 3)
     - Shea Langeliers: 1/3 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.337 (AB: 3)
     - Tyler Soderstrom: 0/3 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.264 (AB: 3)
@@ -279,22 +278,23 @@ GAME: Los Angeles Angels @ Athletics (G1)
     - Lawrence Butler: NO HISTORY | Baseline (2026 Season OBP): 0.274 -> Smoothed OBP: 0.274
     - Henry Bolte: 1/3 BvP | Baseline (2026 Season OBP): 0.402 -> Smoothed OBP: 0.386 (AB: 3)
     - Max Muncy: NO HISTORY | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.295
-  Aggregated Home OBP: 0.327 (Total AB: 14)
+    - Jeff McNeil: 1/3 BvP | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.312 (AB: 3)
+  Aggregated Home OBP: 0.324 (Total AB: 15)
   Los Angeles Angels Hitting (vs J.T. Ginn):
     - Zach Neto: 3/9 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.330 (AB: 8)
     - Nolan Schanuel: 2/5 BvP | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.348 (AB: 5)
+    - Vaughn Grissom: NO HISTORY | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.321
     - Jo Adell: 0/7 BvP | Baseline (2026 Season OBP): 0.291 -> Smoothed OBP: 0.171 (AB: 7)
-    - Oswald Peraza: 1/2 BvP | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.345 (AB: 2)
-    - Christian Moore: NO HISTORY | Baseline (2026 Season OBP): 0.111 -> Smoothed OBP: 0.111
-    - Denzer Guzman: NO HISTORY | Baseline (2026 Season OBP): 0.279 -> Smoothed OBP: 0.279
-    - Tyler Heineman: 0/1 BvP | Baseline (2026 Season OBP): 0.205 -> Smoothed OBP: 0.186 (AB: 1)
     - Wade Meckler: NO HISTORY | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.357
+    - Denzer Guzman: NO HISTORY | Baseline (2026 Season OBP): 0.279 -> Smoothed OBP: 0.279
+    - Donovan Walton: NO HISTORY | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.354
     - Jose Siri: 0/1 BvP | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.323 (AB: 1)
-  Aggregated Away OBP: 0.272 (Total AB: 24)
-  PROJECTION: Athletics | 5.45% Edge
+    - Tyler Heineman: 0/1 BvP | Baseline (2026 Season OBP): 0.205 -> Smoothed OBP: 0.186 (AB: 1)
+  Aggregated Away OBP: 0.297 (Total AB: 22)
+  PROJECTION: Athletics | 2.71% Edge
 --------------------------------------------------
 GAME: Baltimore Orioles @ Los Angeles Dodgers (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Dodgers Hitting (vs Trevor Rogers):
     - Shohei Ohtani: 2/6 BvP | Baseline (2026 Season OBP): 0.418 -> Smoothed OBP: 0.386 (AB: 6)
     - Andy Pages: 0/3 BvP | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.244 (AB: 3)
@@ -315,9 +315,9 @@ GAME: Baltimore Orioles @ Los Angeles Dodgers (G1)
     - Colton Cowser: 0/3 BvP | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.244 (AB: 3)
     - Coby Mayo: 0/3 BvP | Baseline (2026 Season OBP): 0.259 -> Smoothed OBP: 0.199 (AB: 3)
     - Jackson Holliday: 1/4 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.282 (AB: 4)
-    - Tyler O'Neill: NO HISTORY | Baseline (2026 Season OBP): 0.277 -> Smoothed OBP: 0.277
-  Aggregated Away OBP: 0.296 (Total AB: 19)
-  PROJECTION: Los Angeles Dodgers | 5.37% Edge
+    - Blaze Alexander: 3/8 BvP | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.366 (AB: 7)
+  Aggregated Away OBP: 0.306 (Total AB: 26)
+  PROJECTION: Los Angeles Dodgers | 4.39% Edge
 --------------------------------------------------
 GAME: Boston Red Sox @ Seattle Mariners (G1)
   Lineup Source: Starters of Last Game
