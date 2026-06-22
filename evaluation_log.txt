@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 06/22/2026 (08:00 AM MDT)
+DETAILED EVALUATION LOG - 06/22/2026 (09:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 6/14 (42.9%) | -$288.00
 LIFETIME: 108/193 (56.0%) | +$1,189.75
 BEST PICKS LIFETIME: 8/15 (53.3%) | -$16.97
-ODDS-API: 351 Calls (Used: 359 | Rem: 141)
-MLB-STATS-API: 432 Total Calls
+ODDS-API: 352 Calls (Used: 360 | Rem: 140)
+MLB-STATS-API: 243 Total Calls
 ==================================================
 GAME: New York Yankees @ Detroit Tigers (G1)
   Lineup Source: Starters of Last Game
@@ -61,17 +61,17 @@ GAME: Kansas City Royals @ Tampa Bay Rays (G1)
 --------------------------------------------------
 GAME: Texas Rangers @ Miami Marlins (G1)
   Lineup Source: Starters of Last Game
-  Miami Marlins Hitting (vs Kumar Rocker):
+  Miami Marlins Hitting (vs Tyler Alexander):
     - Jakob Marsee: NO HISTORY | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.327
     - Griffin Conine: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
-    - Xavier Edwards: NO HISTORY | Baseline (2026 Season OBP): 0.369 -> Smoothed OBP: 0.369
+    - Xavier Edwards: 0/1 BvP | Baseline (2026 Season OBP): 0.369 -> Smoothed OBP: 0.335 (AB: 1)
     - Kyle Stowers: NO HISTORY | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.319
-    - Otto Lopez: NO HISTORY | Baseline (2026 Season OBP): 0.364 -> Smoothed OBP: 0.364
+    - Otto Lopez: 0/1 BvP | Baseline (2026 Season OBP): 0.364 -> Smoothed OBP: 0.331 (AB: 1)
     - Owen Caissie: NO HISTORY | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.282
     - Esteury Ruiz: NO HISTORY | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.360
     - Joe Mack: NO HISTORY | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.311
     - Javier Sanoja: NO HISTORY | Baseline (2026 Season OBP): 0.293 -> Smoothed OBP: 0.293
-  Aggregated Home OBP: 0.326 (Total AB: 0)
+  Aggregated Home OBP: 0.319 (Total AB: 2)
   Texas Rangers Hitting (vs Tyler Phillips):
     - Wyatt Langford: NO HISTORY | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.315
     - Josh Jung: 0/1 BvP | Baseline (2026 Season OBP): 0.368 -> Smoothed OBP: 0.335 (AB: 1)
@@ -83,7 +83,7 @@ GAME: Texas Rangers @ Miami Marlins (G1)
     - Elias Díaz: 0/1 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.283 (AB: 1)
     - Nicky Lopez: NO HISTORY | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.338
   Aggregated Away OBP: 0.327 (Total AB: 7)
-  PROJECTION: Texas Rangers | 0.1% Edge
+  PROJECTION: Texas Rangers | 0.84% Edge
 --------------------------------------------------
 GAME: Houston Astros @ Toronto Blue Jays (G1)
   Lineup Source: Starters of Last Game
