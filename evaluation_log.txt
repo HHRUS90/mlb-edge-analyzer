@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 06/23/2026 (02:00 PM MDT)
+DETAILED EVALUATION LOG - 06/23/2026 (03:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 9/12 (75.0%) | +$627.83
 LIFETIME: 117/205 (57.1%) | +$1,817.58
 BEST PICKS LIFETIME: 9/16 (56.2%) | +$66.36
-ODDS-API: 373 Calls (Used: 381 | Rem: 119)
-MLB-STATS-API: 306 Total Calls
+ODDS-API: 374 Calls (Used: 382 | Rem: 118)
+MLB-STATS-API: 283 Total Calls
 ==================================================
 GAME: Houston Astros @ Toronto Blue Jays (G1)
   Lineup Source: Official Boxscore
@@ -216,7 +216,7 @@ GAME: Milwaukee Brewers @ Cincinnati Reds (G1)
   PROJECTION: Milwaukee Brewers | 2.58% Edge
 --------------------------------------------------
 GAME: Los Angeles Dodgers @ Minnesota Twins (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Minnesota Twins Hitting (vs Justin Wrobleski):
     - Austin Martin: NO HISTORY | Baseline (2026 Season OBP): 0.350 -> Smoothed OBP: 0.350
     - Byron Buxton: NO HISTORY | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333
@@ -233,16 +233,16 @@ GAME: Los Angeles Dodgers @ Minnesota Twins (G1)
     - Andy Pages: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
     - Freddie Freeman: NO HISTORY | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.363
     - Mookie Betts: NO HISTORY | Baseline (2026 Season OBP): 0.279 -> Smoothed OBP: 0.279
+    - Tommy Edman: NO HISTORY | Baseline (2026 Season OBP): 0.444 -> Smoothed OBP: 0.444
     - Max Muncy: NO HISTORY | Baseline (2026 Season OBP): 0.368 -> Smoothed OBP: 0.368
     - Alex Call: NO HISTORY | Baseline (2026 Season OBP): 0.368 -> Smoothed OBP: 0.368
-    - Tommy Edman: NO HISTORY | Baseline (2026 Season OBP): 0.444 -> Smoothed OBP: 0.444
-    - Chuckie Robinson: NO HISTORY | Baseline (Rookie (League Default)): 0.310 -> Smoothed OBP: 0.310
     - Alex Freeland: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
+    - Chuckie Robinson: NO HISTORY | Baseline (Rookie (League Default)): 0.310 -> Smoothed OBP: 0.310
   Aggregated Away OBP: 0.353 (Total AB: 0)
   PROJECTION: Los Angeles Dodgers | 5.71% Edge
 --------------------------------------------------
 GAME: Cleveland Guardians @ Chicago White Sox (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Chicago White Sox Hitting (vs Parker Messick):
     - Miguel Vargas: 0/3 BvP | Baseline (2026 Season OBP): 0.352 -> Smoothed OBP: 0.271 (AB: 3)
     - Randal Grichuk: NO HISTORY | Baseline (2026 Season OBP): 0.301 -> Smoothed OBP: 0.301
@@ -256,19 +256,19 @@ GAME: Cleveland Guardians @ Chicago White Sox (G1)
   Aggregated Home OBP: 0.316 (Total AB: 6)
   Cleveland Guardians Hitting (vs Sean Burke):
     - Travis Bazzana: NO HISTORY | Baseline (2026 Season OBP): 0.373 -> Smoothed OBP: 0.373
-    - Patrick Bailey: NO HISTORY | Baseline (2026 Season OBP): 0.242 -> Smoothed OBP: 0.242
+    - Kyle Manzardo: 4/7 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.426 (AB: 4)
     - Brayan Rocchio: 1/6 BvP | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.282 (AB: 6)
     - Rhys Hoskins: 0/2 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.261 (AB: 2)
-    - Kyle Manzardo: 4/7 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.426 (AB: 4)
-    - Gabriel Arias: 0/4 BvP | Baseline (2026 Season OBP): 0.222 -> Smoothed OBP: 0.159 (AB: 4)
-    - Steven Kwan: 4/9 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.379 (AB: 7)
     - Daniel Schneemann: 2/5 BvP | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.325 (AB: 5)
+    - Kahlil Watson: NO HISTORY | Baseline (2026 Season OBP): 0.077 -> Smoothed OBP: 0.077
+    - Steven Kwan: 4/9 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.379 (AB: 7)
+    - Austin Hedges: 0/3 BvP | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.245 (AB: 3)
     - Petey Halpin: NO HISTORY | Baseline (2026 Season OBP): 0.174 -> Smoothed OBP: 0.174
-  Aggregated Away OBP: 0.291 (Total AB: 28)
-  PROJECTION: Chicago White Sox | 2.47% Edge
+  Aggregated Away OBP: 0.283 (Total AB: 27)
+  PROJECTION: Chicago White Sox | 3.33% Edge
 --------------------------------------------------
 GAME: Arizona Diamondbacks @ St. Louis Cardinals (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   St. Louis Cardinals Hitting (vs Eduardo Rodriguez):
     - JJ Wetherholt: NO HISTORY | Baseline (2026 Season OBP): 0.372 -> Smoothed OBP: 0.372
     - Iván Herrera: NO HISTORY | Baseline (2026 Season OBP): 0.406 -> Smoothed OBP: 0.406
@@ -284,14 +284,14 @@ GAME: Arizona Diamondbacks @ St. Louis Cardinals (G1)
     - Ketel Marte: 1/2 BvP | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.347 (AB: 2)
     - Geraldo Perdomo: 1/1 BvP | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.413 (AB: 1)
     - Corbin Carroll: 0/1 BvP | Baseline (2026 Season OBP): 0.372 -> Smoothed OBP: 0.338 (AB: 1)
-    - Ildemaro Vargas: NO HISTORY | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.304
+    - Gabriel Moreno: NO HISTORY | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.358
+    - Pavin Smith: NO HISTORY | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.278
     - Nolan Arenado: NO HISTORY | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.315
-    - Adrian Del Castillo: 0/1 BvP | Baseline (2026 Season OBP): 0.253 -> Smoothed OBP: 0.230 (AB: 1)
     - Lourdes Gurriel Jr.: 1/2 BvP | Baseline (2026 Season OBP): 0.260 -> Smoothed OBP: 0.300 (AB: 1)
+    - LuJames Groover: NO HISTORY | Baseline (2026 Season OBP): 0.225 -> Smoothed OBP: 0.225
     - Tommy Troy: NO HISTORY | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.321
-    - Tim Tawa: NO HISTORY | Baseline (2026 Season OBP): 0.270 -> Smoothed OBP: 0.270
-  Aggregated Away OBP: 0.315 (Total AB: 6)
-  PROJECTION: St. Louis Cardinals | 2.53% Edge
+  Aggregated Away OBP: 0.322 (Total AB: 5)
+  PROJECTION: St. Louis Cardinals | 1.9% Edge
 --------------------------------------------------
 GAME: Boston Red Sox @ Colorado Rockies (G1)
   Lineup Source: Starters of Last Game
