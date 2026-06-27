@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 06/26/2026 (07:00 PM MDT)
+DETAILED EVALUATION LOG - 06/26/2026 (08:00 PM MDT)
 ==================================================
-📊 TODAY: 0/0 (0.0%) | $0.00
+📊 TODAY: 3/7 (42.9%) | -$192.99
 📊 YESTERDAY: 2/8 (25.0%) | -$430.44
-LIFETIME: 138/244 (56.6%) | +$1,989.10
-BEST PICKS LIFETIME: 11/19 (57.9%) | +$153.89
-ODDS-API: 426 Calls (Used: 434 | Rem: 66)
-MLB-STATS-API: 80 Total Calls
+LIFETIME: 141/251 (56.2%) | +$1,796.11
+BEST PICKS LIFETIME: 12/20 (60.0%) | +$235.86
+ODDS-API: 427 Calls (Used: 435 | Rem: 65)
+MLB-STATS-API: 82 Total Calls
 ==================================================
 GAME: Houston Astros @ Detroit Tigers (G1)
   Lineup Source: Official Boxscore
@@ -370,4 +370,30 @@ GAME: Los Angeles Dodgers @ San Diego Padres (G1)
     - Alex Freeland: NO HISTORY | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.324
   Aggregated Away OBP: 0.358 (Total AB: 27)
   PROJECTION: Los Angeles Dodgers | 3.88% Edge
+--------------------------------------------------
+GAME: Atlanta Braves @ San Francisco Giants (G1)
+  Lineup Source: Official Boxscore (Locked)
+  San Francisco Giants Hitting (vs Reynaldo López):
+    - Luis Arraez: 12/30 BvP | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.390 (AB: 29)
+    - Bryce Eldridge: 0/1 BvP | Baseline (2026 Season OBP): 0.378 -> Smoothed OBP: 0.344 (AB: 1)
+    - Casey Schmitt: 1/1 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.383 (AB: 1)
+    - Rafael Devers: 7/16 BvP | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.383 (AB: 15)
+    - Jung Hoo Lee: NO HISTORY | Baseline (2026 Season OBP): 0.365 -> Smoothed OBP: 0.365
+    - Willy Adames: 1/4 BvP | Baseline (2026 Season OBP): 0.269 -> Smoothed OBP: 0.264 (AB: 4)
+    - Matt Chapman: 6/22 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.292 (AB: 18)
+    - Drew Cavanaugh: NO HISTORY | Baseline (League Default): 0.320 -> Smoothed OBP: 0.320
+    - Victor Bericoto: NO HISTORY | Baseline (2026 Season OBP): 0.231 -> Smoothed OBP: 0.231
+  Aggregated Home OBP: 0.330 (Total AB: 68)
+  Atlanta Braves Hitting (vs Trevor McDonald):
+    - Michael Harris II: NO HISTORY | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.337
+    - Mauricio Dubón: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
+    - Matt Olson: NO HISTORY | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.342
+    - Ozzie Albies: NO HISTORY | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333
+    - Drake Baldwin: NO HISTORY | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.349
+    - Austin Riley: NO HISTORY | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.296
+    - Dominic Smith: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
+    - Mike Yastrzemski: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
+    - Ha-Seong Kim: NO HISTORY | Baseline (2026 Season OBP): 0.167 -> Smoothed OBP: 0.167
+  Aggregated Away OBP: 0.308 (Total AB: 0)
+  PROJECTION: San Francisco Giants | 2.23% Edge
 --------------------------------------------------
