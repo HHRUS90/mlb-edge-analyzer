@@ -1,14 +1,14 @@
-DETAILED EVALUATION LOG - 06/27/2026 (08:00 AM MDT)
+DETAILED EVALUATION LOG - 06/27/2026 (09:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 8/15 (53.3%) | -$59.48
 LIFETIME: 146/259 (56.4%) | +$1,929.62
 BEST PICKS LIFETIME: 12/20 (60.0%) | +$214.87
-ODDS-API: 431 Calls (Used: 439 | Rem: 61)
-MLB-STATS-API: 549 Total Calls
+ODDS-API: 432 Calls (Used: 440 | Rem: 60)
+MLB-STATS-API: 318 Total Calls
 ==================================================
 GAME: Houston Astros @ Detroit Tigers (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Detroit Tigers Hitting (vs Kai-Wei Teng):
     - Kevin McGonigle: NO HISTORY | Baseline (2026 Season OBP): 0.391 -> Smoothed OBP: 0.391
     - Colt Keith: NO HISTORY | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.299
@@ -22,19 +22,19 @@ GAME: Houston Astros @ Detroit Tigers (G1)
   Aggregated Home OBP: 0.305 (Total AB: 2)
   Houston Astros Hitting (vs Framber Valdez):
     - Jeremy Peña: NO HISTORY | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.354
-    - Jake Meyers: NO HISTORY | Baseline (2026 Season OBP): 0.259 -> Smoothed OBP: 0.259
-    - Raynel Delgado: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
+    - Isaac Paredes: 2/5 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.362 (AB: 3)
+    - Jose Altuve: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
     - Christian Walker: 3/5 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.401 (AB: 2)
-    - Brice Matthews: NO HISTORY | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.250
-    - Joey Loperfido: NO HISTORY | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.324
-    - Yainer Diaz: NO HISTORY | Baseline (2026 Season OBP): 0.273 -> Smoothed OBP: 0.273
     - Cam Smith: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
-    - Taylor Trammell: NO HISTORY | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.337
-  Aggregated Away OBP: 0.313 (Total AB: 2)
-  PROJECTION: Houston Astros | 0.78% Edge
+    - Yainer Diaz: NO HISTORY | Baseline (2026 Season OBP): 0.273 -> Smoothed OBP: 0.273
+    - Jake Meyers: NO HISTORY | Baseline (2026 Season OBP): 0.259 -> Smoothed OBP: 0.259
+    - Brice Matthews: NO HISTORY | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.250
+    - Christian Vázquez: 1/4 BvP | Baseline (2026 Season OBP): 0.274 -> Smoothed OBP: 0.267 (AB: 4)
+  Aggregated Away OBP: 0.309 (Total AB: 9)
+  PROJECTION: Houston Astros | 0.37% Edge
 --------------------------------------------------
 GAME: New York Yankees @ Boston Red Sox (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Boston Red Sox Hitting (vs Gerrit Cole):
     - Masataka Yoshida: 3/10 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.312 (AB: 10)
     - Ceddanne Rafaela: 0/2 BvP | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.276 (AB: 2)
@@ -49,15 +49,15 @@ GAME: New York Yankees @ Boston Red Sox (G1)
   New York Yankees Hitting (vs Jake Bennett):
     - Paul Goldschmidt: NO HISTORY | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.355
     - Ben Rice: NO HISTORY | Baseline (2026 Season OBP): 0.371 -> Smoothed OBP: 0.371
+    - Amed Rosario: NO HISTORY | Baseline (2026 Season OBP): 0.281 -> Smoothed OBP: 0.281
     - Cody Bellinger: NO HISTORY | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.360
     - Jasson Domínguez: NO HISTORY | Baseline (2026 Season OBP): 0.272 -> Smoothed OBP: 0.272
     - José Caballero: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
-    - Jazz Chisholm Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
+    - Max Schuemann: NO HISTORY | Baseline (2026 Season OBP): 0.381 -> Smoothed OBP: 0.381
     - Anthony Volpe: NO HISTORY | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.363
-    - Spencer Jones: NO HISTORY | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.324
     - Austin Wells: NO HISTORY | Baseline (2026 Season OBP): 0.268 -> Smoothed OBP: 0.268
-  Aggregated Away OBP: 0.327 (Total AB: 0)
-  PROJECTION: New York Yankees | 1.04% Edge
+  Aggregated Away OBP: 0.330 (Total AB: 0)
+  PROJECTION: New York Yankees | 1.35% Edge
 --------------------------------------------------
 GAME: Texas Rangers @ Toronto Blue Jays (G1)
   Lineup Source: Starters of Last Game
