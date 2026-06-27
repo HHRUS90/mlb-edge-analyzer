@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 06/27/2026 (02:00 PM MDT)
+DETAILED EVALUATION LOG - 06/27/2026 (03:00 PM MDT)
 ==================================================
 📊 TODAY: 1/2 (50.0%) | +$14.00
 📊 YESTERDAY: 8/15 (53.3%) | -$59.48
 LIFETIME: 147/261 (56.3%) | +$1,943.62
 BEST PICKS LIFETIME: 12/21 (57.1%) | +$114.87
-ODDS-API: 437 Calls (Used: 445 | Rem: 55)
-MLB-STATS-API: 252 Total Calls
+ODDS-API: 438 Calls (Used: 446 | Rem: 54)
+MLB-STATS-API: 217 Total Calls
 ==================================================
 GAME: Houston Astros @ Detroit Tigers (G1)
   Lineup Source: Official Boxscore
@@ -190,7 +190,7 @@ GAME: Arizona Diamondbacks @ Tampa Bay Rays (G1)
   PROJECTION: Tampa Bay Rays | 2.47% Edge
 --------------------------------------------------
 GAME: Washington Nationals @ Baltimore Orioles (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Baltimore Orioles Hitting (vs Foster Griffin):
     - Taylor Ward: 1/1 BvP | Baseline (2026 Season OBP): 0.392 -> Smoothed OBP: 0.447 (AB: 1)
     - Gunnar Henderson: NO HISTORY | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.295
@@ -204,16 +204,16 @@ GAME: Washington Nationals @ Baltimore Orioles (G1)
   Aggregated Home OBP: 0.309 (Total AB: 1)
   Washington Nationals Hitting (vs Brandon Young):
     - James Wood: 2/3 BvP | Baseline (2026 Season OBP): 0.383 -> Smoothed OBP: 0.448 (AB: 2)
-    - Curtis Mead: NO HISTORY | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.324
-    - Jorbit Vivas: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
+    - Luis García Jr.: 1/2 BvP | Baseline (2026 Season OBP): 0.292 -> Smoothed OBP: 0.327 (AB: 2)
+    - José Tena: 1/2 BvP | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.315 (AB: 1)
     - CJ Abrams: 0/2 BvP | Baseline (2026 Season OBP): 0.365 -> Smoothed OBP: 0.304 (AB: 2)
     - Dylan Crews: NO HISTORY | Baseline (2026 Season OBP): 0.265 -> Smoothed OBP: 0.265
     - Daylen Lile: 1/2 BvP | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.339 (AB: 2)
-    - José Tena: 1/2 BvP | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.315 (AB: 1)
-    - Luis García Jr.: 1/2 BvP | Baseline (2026 Season OBP): 0.292 -> Smoothed OBP: 0.327 (AB: 2)
-    - Keibert Ruiz: 1/2 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.335 (AB: 1)
-  Aggregated Away OBP: 0.332 (Total AB: 10)
-  PROJECTION: Washington Nationals | 2.29% Edge
+    - Jorbit Vivas: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
+    - Nasim Nuñez: 0/2 BvP | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.268 (AB: 2)
+    - Drew Millas: NO HISTORY | Baseline (2026 Season OBP): 0.262 -> Smoothed OBP: 0.262
+  Aggregated Away OBP: 0.318 (Total AB: 11)
+  PROJECTION: Washington Nationals | 0.86% Edge
 --------------------------------------------------
 GAME: Seattle Mariners @ Cleveland Guardians (G1)
   Lineup Source: Official Boxscore
@@ -332,18 +332,18 @@ GAME: Los Angeles Dodgers @ San Diego Padres (G1)
     - Sung-Mun Song: NO HISTORY | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.311
     - Rodolfo Durán: 1/2 BvP | Baseline (2026 Season OBP): 0.239 -> Smoothed OBP: 0.282 (AB: 1)
   Aggregated Home OBP: 0.337 (Total AB: 26)
-  Los Angeles Dodgers Hitting (vs Randy Vásquez):
-    - Shohei Ohtani: 3/9 BvP | Baseline (2026 Season OBP): 0.412 -> Smoothed OBP: 0.375 (AB: 7)
-    - Andy Pages: 3/8 BvP | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.344 (AB: 8)
-    - Freddie Freeman: 4/8 BvP | Baseline (2026 Season OBP): 0.377 -> Smoothed OBP: 0.432 (AB: 7)
-    - Mookie Betts: 1/9 BvP | Baseline (2026 Season OBP): 0.294 -> Smoothed OBP: 0.207 (AB: 7)
+  Los Angeles Dodgers Hitting (vs Kyle Hart):
+    - Shohei Ohtani: NO HISTORY | Baseline (2026 Season OBP): 0.412 -> Smoothed OBP: 0.412
+    - Andy Pages: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
+    - Freddie Freeman: 1/2 BvP | Baseline (2026 Season OBP): 0.377 -> Smoothed OBP: 0.397 (AB: 2)
+    - Mookie Betts: NO HISTORY | Baseline (2026 Season OBP): 0.294 -> Smoothed OBP: 0.294
     - Alex Call: NO HISTORY | Baseline (2026 Season OBP): 0.376 -> Smoothed OBP: 0.376
-    - Miguel Rojas: 1/1 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.387 (AB: 1)
-    - Tommy Edman: 0/2 BvP | Baseline (2026 Season OBP): 0.429 -> Smoothed OBP: 0.357 (AB: 2)
+    - Miguel Rojas: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
+    - Tommy Edman: NO HISTORY | Baseline (2026 Season OBP): 0.429 -> Smoothed OBP: 0.429
     - Dalton Rushing: NO HISTORY | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.325
-    - Alex Freeland: 1/2 BvP | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.349 (AB: 2)
-  Aggregated Away OBP: 0.350 (Total AB: 34)
-  PROJECTION: Los Angeles Dodgers | 1.36% Edge
+    - Alex Freeland: NO HISTORY | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.319
+  Aggregated Away OBP: 0.355 (Total AB: 2)
+  PROJECTION: Los Angeles Dodgers | 1.86% Edge
 --------------------------------------------------
 GAME: Atlanta Braves @ San Francisco Giants (G1)
   Lineup Source: Starters of Last Game
