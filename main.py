@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
 sys.stdout.reconfigure(line_buffering=True)
 
 # --- CONFIGURATION ---
-ODDS_CALL_LIMIT = 450         
+ODDS_CALL_LIMIT = 490        
 UNIT_SIZE = 100               
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
