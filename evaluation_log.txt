@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/04/2026 (09:00 AM MDT)
+DETAILED EVALUATION LOG - 07/04/2026 (10:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 7/13 (53.8%) | +$4.83
 LIFETIME: 199/352 (56.5%) | +$2,631.49
 BEST PICKS LIFETIME: 16/27 (59.3%) | +$246.58
-ODDS-API: 51 Calls (Used: 55 | Rem: 445)
-MLB-STATS-API: 304 Total Calls
+ODDS-API: 52 Calls (Used: 56 | Rem: 444)
+MLB-STATS-API: 316 Total Calls
 ==================================================
 GAME: Pittsburgh Pirates @ Washington Nationals (G1)
   Lineup Source: Official Boxscore
@@ -254,18 +254,18 @@ GAME: San Francisco Giants @ Colorado Rockies (G1)
     - Kyle Karros: 1/2 BvP | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.386 (AB: 2)
     - Ezequiel Tovar: 2/3 BvP | Baseline (2026 Season OBP): 0.254 -> Smoothed OBP: 0.349 (AB: 2)
   Aggregated Home OBP: 0.337 (Total AB: 15)
-  San Francisco Giants Hitting (vs Tomoyuki Sugano):
+  San Francisco Giants Hitting (vs Sean Sullivan):
     - Jonah Cox: NO HISTORY | Baseline (2026 Season OBP): 0.269 -> Smoothed OBP: 0.269
     - Casey Schmitt: NO HISTORY | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.306
-    - Heliot Ramos: 2/3 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.391 (AB: 3)
-    - Rafael Devers: 3/3 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.468 (AB: 3)
-    - Drew Gilbert: 2/2 BvP | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.428 (AB: 2)
-    - Christian Koss: 1/2 BvP | Baseline (2026 Season OBP): 0.150 -> Smoothed OBP: 0.208 (AB: 2)
+    - Heliot Ramos: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
+    - Rafael Devers: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
+    - Drew Gilbert: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
+    - Christian Koss: NO HISTORY | Baseline (2026 Season OBP): 0.150 -> Smoothed OBP: 0.150
     - Bryce Eldridge: NO HISTORY | Baseline (2026 Season OBP): 0.367 -> Smoothed OBP: 0.367
     - Victor Bericoto: NO HISTORY | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.295
     - Drew Cavanaugh: NO HISTORY | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.278
-  Aggregated Away OBP: 0.334 (Total AB: 10)
-  PROJECTION: Colorado Rockies | 0.29% Edge
+  Aggregated Away OBP: 0.288 (Total AB: 0)
+  PROJECTION: Colorado Rockies | 4.91% Edge
 --------------------------------------------------
 GAME: Philadelphia Phillies @ Kansas City Royals (G1)
   Lineup Source: Starters of Last Game
@@ -373,17 +373,17 @@ GAME: Milwaukee Brewers @ Arizona Diamondbacks (G1)
 --------------------------------------------------
 GAME: San Diego Padres @ Los Angeles Dodgers (G1)
   Lineup Source: Starters of Last Game
-  Los Angeles Dodgers Hitting (vs Griffin Canning):
-    - Miguel Rojas: 1/3 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.341 (AB: 2)
-    - Andy Pages: 2/6 BvP | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.332 (AB: 6)
-    - Freddie Freeman: 3/12 BvP | Baseline (2026 Season OBP): 0.383 -> Smoothed OBP: 0.310 (AB: 11)
-    - Mookie Betts: 5/16 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.308 (AB: 14)
-    - Max Muncy: 5/16 BvP | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.332 (AB: 12)
-    - Kyle Tucker: 6/22 BvP | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.296 (AB: 20)
-    - Teoscar Hernández: 5/15 BvP | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.336 (AB: 15)
-    - Dalton Rushing: 1/2 BvP | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.368 (AB: 2)
-    - Tommy Edman: 2/6 BvP | Baseline (2026 Season OBP): 0.462 -> Smoothed OBP: 0.414 (AB: 5)
-  Aggregated Home OBP: 0.338 (Total AB: 87)
+  Los Angeles Dodgers Hitting (vs Wandy Peralta):
+    - Miguel Rojas: 2/11 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.259 (AB: 11)
+    - Andy Pages: 2/5 BvP | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.354 (AB: 5)
+    - Freddie Freeman: 7/15 BvP | Baseline (2026 Season OBP): 0.383 -> Smoothed OBP: 0.433 (AB: 13)
+    - Mookie Betts: 2/10 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.251 (AB: 10)
+    - Max Muncy: 3/10 BvP | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.331 (AB: 9)
+    - Kyle Tucker: 1/2 BvP | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.373 (AB: 2)
+    - Teoscar Hernández: 0/1 BvP | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.310 (AB: 1)
+    - Dalton Rushing: 2/2 BvP | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.452 (AB: 1)
+    - Tommy Edman: 2/6 BvP | Baseline (2026 Season OBP): 0.462 -> Smoothed OBP: 0.414 (AB: 6)
+  Aggregated Home OBP: 0.353 (Total AB: 58)
   San Diego Padres Hitting (vs Yoshinobu Yamamoto):
     - Fernando Tatis Jr.: 2/4 BvP | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.386 (AB: 3)
     - Jake Cronenworth: 5/8 BvP | Baseline (2026 Season OBP): 0.290 -> Smoothed OBP: 0.439 (AB: 7)
@@ -395,5 +395,5 @@ GAME: San Diego Padres @ Los Angeles Dodgers (G1)
     - Samad Taylor: NO HISTORY | Baseline (2026 Season OBP): 0.415 -> Smoothed OBP: 0.415
     - Miguel Andujar: 3/6 BvP | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.378 (AB: 6)
   Aggregated Away OBP: 0.364 (Total AB: 41)
-  PROJECTION: San Diego Padres | 2.6% Edge
+  PROJECTION: San Diego Padres | 1.06% Edge
 --------------------------------------------------
