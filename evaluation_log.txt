@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/06/2026 (04:00 PM MDT)
+DETAILED EVALUATION LOG - 07/06/2026 (05:00 PM MDT)
 ==================================================
 📊 TODAY: 1/1 (100.0%) | +$48.78
 📊 YESTERDAY: 7/15 (46.7%) | -$163.16
 LIFETIME: 213/383 (55.6%) | +$2,094.55
 BEST PICKS LIFETIME: 18/30 (60.0%) | +$281.57
-ODDS-API: 90 Calls (Used: 94 | Rem: 406)
-MLB-STATS-API: 159 Total Calls
+ODDS-API: 91 Calls (Used: 95 | Rem: 405)
+MLB-STATS-API: 100 Total Calls
 ==================================================
 GAME: Philadelphia Phillies @ Kansas City Royals (G1)
   Lineup Source: Official Boxscore
@@ -138,7 +138,7 @@ GAME: Milwaukee Brewers @ St. Louis Cardinals (G1)
   PROJECTION: Milwaukee Brewers | 1.94% Edge
 --------------------------------------------------
 GAME: Arizona Diamondbacks @ San Diego Padres (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   San Diego Padres Hitting (vs Brandon Pfaadt):
     - Fernando Tatis Jr.: 7/27 BvP | Baseline (2026 Season OBP): 0.345 -> Smoothed OBP: 0.282 (AB: 26)
     - Jake Cronenworth: 10/25 BvP | Baseline (2026 Season OBP): 0.277 -> Smoothed OBP: 0.365 (AB: 22)
@@ -155,16 +155,16 @@ GAME: Arizona Diamondbacks @ San Diego Padres (G1)
     - Geraldo Perdomo: 0/6 BvP | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.221 (AB: 6)
     - Corbin Carroll: 0/2 BvP | Baseline (2026 Season OBP): 0.356 -> Smoothed OBP: 0.297 (AB: 2)
     - Gabriel Moreno: 1/2 BvP | Baseline (2026 Season OBP): 0.369 -> Smoothed OBP: 0.391 (AB: 1)
+    - Lourdes Gurriel Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.272 -> Smoothed OBP: 0.272
     - Max Kepler: 1/3 BvP | Baseline (2026 Season OBP): 0.105 -> Smoothed OBP: 0.158 (AB: 3)
+    - Nolan Arenado: 8/35 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.247 (AB: 34)
     - Ildemaro Vargas: 2/6 BvP | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.316 (AB: 6)
-    - Tim Tawa: 0/1 BvP | Baseline (2026 Season OBP): 0.273 -> Smoothed OBP: 0.248 (AB: 1)
-    - Pavin Smith: 1/15 BvP | Baseline (2026 Season OBP): 0.259 -> Smoothed OBP: 0.144 (AB: 15)
     - Tommy Troy: NO HISTORY | Baseline (2026 Season OBP): 0.292 -> Smoothed OBP: 0.292
-  Aggregated Away OBP: 0.269 (Total AB: 61)
-  PROJECTION: San Diego Padres | 4.57% Edge
+  Aggregated Away OBP: 0.283 (Total AB: 79)
+  PROJECTION: San Diego Padres | 3.16% Edge
 --------------------------------------------------
 GAME: Toronto Blue Jays @ San Francisco Giants (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   San Francisco Giants Hitting (vs Kevin Gausman):
     - Heliot Ramos: 1/3 BvP | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.313 (AB: 3)
     - Luis Arraez: 9/12 BvP | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.574 (AB: 12)
@@ -177,17 +177,17 @@ GAME: Toronto Blue Jays @ San Francisco Giants (G1)
     - Eric Haase: 2/7 BvP | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.265 (AB: 7)
   Aggregated Home OBP: 0.342 (Total AB: 61)
   Toronto Blue Jays Hitting (vs Landen Roupp):
+    - Ernie Clement: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
     - Nathan Lukes: NO HISTORY | Baseline (2026 Season OBP): 0.332 -> Smoothed OBP: 0.332
     - Vladimir Guerrero Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.348
     - Kazuma Okamoto: NO HISTORY | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.315
+    - Sean Keys: NO HISTORY | Baseline (2026 Season OBP): 0.190 -> Smoothed OBP: 0.190
     - Alejandro Kirk: NO HISTORY | Baseline (2026 Season OBP): 0.247 -> Smoothed OBP: 0.247
     - Daulton Varsho: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
-    - Ernie Clement: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
-    - Brandon Valenzuela: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
-    - Luis Urías: 1/3 BvP | Baseline (2026 Season OBP): 0.409 -> Smoothed OBP: 0.392 (AB: 3)
     - Myles Straw: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
-  Aggregated Away OBP: 0.321 (Total AB: 3)
-  PROJECTION: San Francisco Giants | 2.16% Edge
+    - Andrés Giménez: NO HISTORY | Baseline (2026 Season OBP): 0.283 -> Smoothed OBP: 0.283
+  Aggregated Away OBP: 0.294 (Total AB: 0)
+  PROJECTION: San Francisco Giants | 4.81% Edge
 --------------------------------------------------
 GAME: Colorado Rockies @ Los Angeles Dodgers (G1)
   Lineup Source: Official Boxscore
