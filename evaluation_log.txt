@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/06/2026 (02:00 PM MDT)
+DETAILED EVALUATION LOG - 07/06/2026 (03:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 7/15 (46.7%) | -$163.16
 LIFETIME: 212/382 (55.5%) | +$2,045.77
 BEST PICKS LIFETIME: 17/29 (58.6%) | +$232.79
-ODDS-API: 88 Calls (Used: 92 | Rem: 408)
-MLB-STATS-API: 162 Total Calls
+ODDS-API: 89 Calls (Used: 93 | Rem: 407)
+MLB-STATS-API: 153 Total Calls
 ==================================================
 GAME: Philadelphia Phillies @ Kansas City Royals (G1)
   Lineup Source: Official Boxscore
@@ -116,14 +116,14 @@ GAME: Milwaukee Brewers @ St. Louis Cardinals (G1)
   St. Louis Cardinals Hitting (vs Shane Drohan):
     - JJ Wetherholt: 1/2 BvP | Baseline (2026 Season OBP): 0.364 -> Smoothed OBP: 0.387 (AB: 2)
     - Iván Herrera: 0/2 BvP | Baseline (2026 Season OBP): 0.393 -> Smoothed OBP: 0.328 (AB: 2)
-    - Alec Burleson: 0/2 BvP | Baseline (2026 Season OBP): 0.345 -> Smoothed OBP: 0.287 (AB: 2)
     - Jordan Walker: 1/2 BvP | Baseline (2026 Season OBP): 0.352 -> Smoothed OBP: 0.377 (AB: 1)
-    - Lars Nootbaar: NO HISTORY | Baseline (2026 Season OBP): 0.356 -> Smoothed OBP: 0.356
+    - Nelson Velázquez: NO HISTORY | Baseline (2026 Season OBP): 0.365 -> Smoothed OBP: 0.365
+    - José Fermín: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
     - Masyn Winn: 0/1 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.294 (AB: 1)
     - Nathan Church: NO HISTORY | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.300
-    - José Fermín: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
-    - Nelson Velázquez: NO HISTORY | Baseline (2026 Season OBP): 0.365 -> Smoothed OBP: 0.365
-  Aggregated Home OBP: 0.335 (Total AB: 8)
+    - Blaze Jordan: NO HISTORY | Baseline (2026 Season OBP): 0.265 -> Smoothed OBP: 0.265
+    - Pedro Pagés: NO HISTORY | Baseline (2026 Season OBP): 0.255 -> Smoothed OBP: 0.255
+  Aggregated Home OBP: 0.321 (Total AB: 6)
   Milwaukee Brewers Hitting (vs Dustin May):
     - Brice Turang: NO HISTORY | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.363
     - Jackson Chourio: NO HISTORY | Baseline (2026 Season OBP): 0.352 -> Smoothed OBP: 0.352
@@ -135,7 +135,7 @@ GAME: Milwaukee Brewers @ St. Louis Cardinals (G1)
     - David Hamilton: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
     - Joey Ortiz: NO HISTORY | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.282
   Aggregated Away OBP: 0.337 (Total AB: 0)
-  PROJECTION: Milwaukee Brewers | 0.24% Edge
+  PROJECTION: Milwaukee Brewers | 1.62% Edge
 --------------------------------------------------
 GAME: Arizona Diamondbacks @ San Diego Padres (G1)
   Lineup Source: Starters of Last Game
@@ -203,15 +203,15 @@ GAME: Colorado Rockies @ Los Angeles Dodgers (G1)
     - Dalton Rushing: 0/2 BvP | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.283 (AB: 1)
   Aggregated Home OBP: 0.341 (Total AB: 143)
   Colorado Rockies Hitting (vs Eric Lauer):
-    - Jake McCarthy: 1/6 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.277 (AB: 6)
-    - Cole Carrigg: NO HISTORY | Baseline (2026 Season OBP): 0.374 -> Smoothed OBP: 0.374
+    - Willi Castro: 1/1 BvP | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.399 (AB: 1)
+    - Kyle Karros: NO HISTORY | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.360
     - Hunter Goodman: 1/3 BvP | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.322 (AB: 3)
     - TJ Rumfield: NO HISTORY | Baseline (2026 Season OBP): 0.380 -> Smoothed OBP: 0.380
+    - Cole Carrigg: NO HISTORY | Baseline (2026 Season OBP): 0.374 -> Smoothed OBP: 0.374
     - Tyler Freeman: 1/3 BvP | Baseline (2026 Season OBP): 0.350 -> Smoothed OBP: 0.346 (AB: 3)
-    - Kyle Karros: NO HISTORY | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.360
-    - Edouard Julien: 1/2 BvP | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.367 (AB: 2)
-    - Brett Sullivan: NO HISTORY | Baseline (2026 Season OBP): 0.260 -> Smoothed OBP: 0.260
-    - Willi Castro: 1/1 BvP | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.399 (AB: 1)
-  Aggregated Away OBP: 0.343 (Total AB: 15)
-  PROJECTION: Colorado Rockies | 0.17% Edge
+    - Jake McCarthy: 1/6 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.277 (AB: 6)
+    - Troy Johnston: NO HISTORY | Baseline (2026 Season OBP): 0.383 -> Smoothed OBP: 0.383
+    - Ezequiel Tovar: 3/5 BvP | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.367 (AB: 5)
+  Aggregated Away OBP: 0.356 (Total AB: 18)
+  PROJECTION: Colorado Rockies | 1.53% Edge
 --------------------------------------------------
