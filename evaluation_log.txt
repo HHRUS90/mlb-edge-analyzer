@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/07/2026 (10:00 AM MDT)
+DETAILED EVALUATION LOG - 07/07/2026 (11:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 5/8 (62.5%) | +$82.31
 LIFETIME: 217/390 (55.6%) | +$2,128.08
 BEST PICKS LIFETIME: 18/30 (60.0%) | +$281.57
-ODDS-API: 100 Calls (Used: 104 | Rem: 396)
-MLB-STATS-API: 325 Total Calls
+ODDS-API: 101 Calls (Used: 105 | Rem: 395)
+MLB-STATS-API: 315 Total Calls
 ==================================================
 GAME: Milwaukee Brewers @ St. Louis Cardinals (G1)
   Lineup Source: Official Boxscore
@@ -240,6 +240,32 @@ GAME: Boston Red Sox @ Chicago White Sox (G1)
     - Tsung-Che Cheng: NO HISTORY | Baseline (2026 Season OBP): 0.238 -> Smoothed OBP: 0.238
   Aggregated Away OBP: 0.312 (Total AB: 0)
   PROJECTION: Chicago White Sox | 1.16% Edge
+--------------------------------------------------
+GAME: Milwaukee Brewers @ St. Louis Cardinals (G2)
+  Lineup Source: Starters of Last Game
+  St. Louis Cardinals Hitting (vs Robert Gasser):
+    - JJ Wetherholt: NO HISTORY | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.360
+    - Iván Herrera: 4/4 BvP | Baseline (2026 Season OBP): 0.389 -> Smoothed OBP: 0.564 (AB: 2)
+    - Jordan Walker: 0/1 BvP | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.321 (AB: 1)
+    - Lars Nootbaar: 0/5 BvP | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.235 (AB: 5)
+    - José Fermín: 0/4 BvP | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.232 (AB: 4)
+    - Masyn Winn: 1/2 BvP | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.354 (AB: 2)
+    - Nathan Church: NO HISTORY | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.300
+    - Alec Burleson: 1/4 BvP | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.317 (AB: 3)
+    - Bryan Torres: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
+  Aggregated Home OBP: 0.331 (Total AB: 17)
+  Milwaukee Brewers Hitting (vs Hunter Dobbins):
+    - Christian Yelich: 1/1 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.385 (AB: 0)
+    - Jackson Chourio: 0/1 BvP | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.317 (AB: 1)
+    - Brice Turang: 0/1 BvP | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.329 (AB: 1)
+    - William Contreras: 1/2 BvP | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.378 (AB: 1)
+    - Jake Bauers: 1/2 BvP | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.385 (AB: 1)
+    - Garrett Mitchell: NO HISTORY | Baseline (2026 Season OBP): 0.364 -> Smoothed OBP: 0.364
+    - Sal Frelick: 1/2 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.342 (AB: 2)
+    - Cooper Pratt: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
+    - Joey Ortiz: 0/2 BvP | Baseline (2026 Season OBP): 0.281 -> Smoothed OBP: 0.234 (AB: 2)
+  Aggregated Away OBP: 0.339 (Total AB: 8)
+  PROJECTION: Milwaukee Brewers | 0.75% Edge
 --------------------------------------------------
 GAME: Los Angeles Angels @ Texas Rangers (G1)
   Lineup Source: Starters of Last Game
