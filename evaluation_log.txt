@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/09/2026 (02:00 PM MDT)
+DETAILED EVALUATION LOG - 07/09/2026 (03:00 PM MDT)
 ==================================================
-📊 TODAY: 0/1 (0.0%) | -$100.00
+📊 TODAY: 1/6 (16.7%) | -$405.66
 📊 YESTERDAY: 7/15 (46.7%) | -$19.59
-LIFETIME: 229/422 (54.3%) | +$1,428.50
+LIFETIME: 230/427 (53.9%) | +$1,122.84
 BEST PICKS LIFETIME: 19/33 (57.6%) | +$179.61
-ODDS-API: 136 Calls (Used: 140 | Rem: 360)
-MLB-STATS-API: 181 Total Calls
+ODDS-API: 137 Calls (Used: 141 | Rem: 359)
+MLB-STATS-API: 170 Total Calls
 ==================================================
 GAME: Atlanta Braves @ Pittsburgh Pirates (G1)
   Lineup Source: Official Boxscore
@@ -242,7 +242,7 @@ GAME: Philadelphia Phillies @ Cincinnati Reds (G1)
   PROJECTION: Cincinnati Reds | 4.29% Edge
 --------------------------------------------------
 GAME: Milwaukee Brewers @ St. Louis Cardinals (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   St. Louis Cardinals Hitting (vs Logan Henderson):
     - JJ Wetherholt: NO HISTORY | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.358
     - Iván Herrera: NO HISTORY | Baseline (2026 Season OBP): 0.386 -> Smoothed OBP: 0.386
@@ -255,31 +255,31 @@ GAME: Milwaukee Brewers @ St. Louis Cardinals (G1)
     - Nathan Church: NO HISTORY | Baseline (2026 Season OBP): 0.290 -> Smoothed OBP: 0.290
   Aggregated Home OBP: 0.332 (Total AB: 0)
   Milwaukee Brewers Hitting (vs Andre Pallante):
-    - Christian Yelich: 2/12 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.239 (AB: 12)
-    - Jackson Chourio: 9/14 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.515 (AB: 8)
-    - Jake Bauers: 6/8 BvP | Baseline (2026 Season OBP): 0.365 -> Smoothed OBP: 0.536 (AB: 5)
-    - William Contreras: 5/16 BvP | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.327 (AB: 14)
     - Garrett Mitchell: 3/6 BvP | Baseline (2026 Season OBP): 0.366 -> Smoothed OBP: 0.416 (AB: 5)
-    - Luis Lara: NO HISTORY | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333
-    - Cooper Pratt: NO HISTORY | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.351
-    - Sal Frelick: 4/14 BvP | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.293 (AB: 12)
+    - Jackson Chourio: 9/14 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.515 (AB: 8)
+    - Brice Turang: 7/16 BvP | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.408 (AB: 15)
+    - William Contreras: 5/16 BvP | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.327 (AB: 14)
+    - Jake Bauers: 6/8 BvP | Baseline (2026 Season OBP): 0.365 -> Smoothed OBP: 0.536 (AB: 5)
     - Andrew Vaughn: 1/3 BvP | Baseline (2026 Season OBP): 0.417 -> Smoothed OBP: 0.398 (AB: 3)
-  Aggregated Away OBP: 0.379 (Total AB: 59)
-  PROJECTION: Milwaukee Brewers | 4.64% Edge
+    - Sal Frelick: 4/14 BvP | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.293 (AB: 12)
+    - Cooper Pratt: NO HISTORY | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.351
+    - Joey Ortiz: 2/9 BvP | Baseline (2026 Season OBP): 0.293 -> Smoothed OBP: 0.259 (AB: 7)
+  Aggregated Away OBP: 0.389 (Total AB: 69)
+  PROJECTION: Milwaukee Brewers | 5.69% Edge
 --------------------------------------------------
 GAME: Los Angeles Angels @ Texas Rangers (G1)
   Lineup Source: Starters of Last Game
   Texas Rangers Hitting (vs Reid Detmers):
-    - Kyle Higashioka: 1/5 BvP | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.271 (AB: 5)
-    - Josh Smith: 0/6 BvP | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.195 (AB: 6)
-    - Jake Burger: 2/6 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.318 (AB: 5)
     - Justin Foscue: 0/3 BvP | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.268 (AB: 3)
+    - Wyatt Langford: 1/5 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.283 (AB: 5)
+    - Brandon Nimmo: 1/4 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.304 (AB: 3)
+    - Josh Jung: 1/12 BvP | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.210 (AB: 11)
+    - Jake Burger: 2/6 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.318 (AB: 5)
     - Ezequiel Duran: 1/18 BvP | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.149 (AB: 18)
-    - Evan Carter: NO HISTORY | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.300
-    - Alejandro Osuna: NO HISTORY | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.351
-    - Elias Díaz: NO HISTORY | Baseline (2026 Season OBP): 0.287 -> Smoothed OBP: 0.287
+    - Kyle Higashioka: 1/5 BvP | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.271 (AB: 5)
     - Cam Cauley: NO HISTORY | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.278
-  Aggregated Home OBP: 0.269 (Total AB: 37)
+    - Alejandro Osuna: NO HISTORY | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.351
+  Aggregated Home OBP: 0.270 (Total AB: 50)
   Los Angeles Angels Hitting (vs Nathan Eovaldi):
     - Zach Neto: 5/14 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.344 (AB: 12)
     - Mike Trout: 12/38 BvP | Baseline (2026 Season OBP): 0.394 -> Smoothed OBP: 0.332 (AB: 34)
@@ -291,7 +291,7 @@ GAME: Los Angeles Angels @ Texas Rangers (G1)
     - Logan O'Hoppe: 2/5 BvP | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.321 (AB: 3)
     - Josh Lowe: 5/10 BvP | Baseline (2026 Season OBP): 0.254 -> Smoothed OBP: 0.377 (AB: 8)
   Aggregated Away OBP: 0.319 (Total AB: 79)
-  PROJECTION: Los Angeles Angels | 5.07% Edge
+  PROJECTION: Los Angeles Angels | 4.9% Edge
 --------------------------------------------------
 GAME: Arizona Diamondbacks @ San Diego Padres (G1)
   Lineup Source: Starters of Last Game
