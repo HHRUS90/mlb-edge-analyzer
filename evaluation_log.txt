@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/09/2026 (09:00 AM MDT)
+DETAILED EVALUATION LOG - 07/09/2026 (10:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 7/15 (46.7%) | -$19.59
 LIFETIME: 229/421 (54.4%) | +$1,528.50
 BEST PICKS LIFETIME: 19/32 (59.4%) | +$279.61
-ODDS-API: 131 Calls (Used: 135 | Rem: 365)
-MLB-STATS-API: 279 Total Calls
+ODDS-API: 132 Calls (Used: 136 | Rem: 364)
+MLB-STATS-API: 262 Total Calls
 ==================================================
 GAME: Atlanta Braves @ Pittsburgh Pirates (G1)
   Lineup Source: Official Boxscore
@@ -112,33 +112,33 @@ GAME: Chicago Cubs @ Baltimore Orioles (G1)
   PROJECTION: Chicago Cubs | 4.16% Edge
 --------------------------------------------------
 GAME: Cleveland Guardians @ Minnesota Twins (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Minnesota Twins Hitting (vs Gavin Williams):
-    - Austin Martin: 5/8 BvP | Baseline (2026 Season OBP): 0.361 -> Smoothed OBP: 0.478 (AB: 7)
+    - Trevor Larnach: 1/10 BvP | Baseline (2026 Season OBP): 0.380 -> Smoothed OBP: 0.240 (AB: 9)
     - Brooks Lee: 4/10 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.354 (AB: 8)
     - Kody Clemens: 2/9 BvP | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.272 (AB: 9)
     - Josh Bell: 1/3 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.315 (AB: 3)
     - Royce Lewis: 2/15 BvP | Baseline (2026 Season OBP): 0.290 -> Smoothed OBP: 0.196 (AB: 15)
-    - Alex Jackson: NO HISTORY | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.340
-    - Luke Keaschall: 0/3 BvP | Baseline (2026 Season OBP): 0.345 -> Smoothed OBP: 0.265 (AB: 3)
     - Alan Roden: 0/5 BvP | Baseline (2026 Season OBP): 0.400 -> Smoothed OBP: 0.267 (AB: 5)
-    - Ryan Kreidler: NO HISTORY | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.321
-  Aggregated Home OBP: 0.312 (Total AB: 50)
+    - Luke Keaschall: 0/3 BvP | Baseline (2026 Season OBP): 0.345 -> Smoothed OBP: 0.265 (AB: 3)
+    - Tristan Gray: NO HISTORY | Baseline (2026 Season OBP): 0.267 -> Smoothed OBP: 0.267
+    - Alex Jackson: NO HISTORY | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.340
+  Aggregated Home OBP: 0.279 (Total AB: 52)
   Cleveland Guardians Hitting (vs Bailey Ober):
-    - Steven Kwan: 3/23 BvP | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.191 (AB: 23)
-    - Chase DeLauter: NO HISTORY | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.346
-    - Brayan Rocchio: 2/16 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.209 (AB: 16)
-    - Rhys Hoskins: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
     - Travis Bazzana: NO HISTORY | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.338
-    - Daniel Schneemann: 5/10 BvP | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.390 (AB: 9)
+    - Brayan Rocchio: 2/16 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.209 (AB: 16)
+    - Chase DeLauter: NO HISTORY | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.346
     - Kyle Manzardo: 3/13 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.266 (AB: 13)
-    - Austin Hedges: 0/3 BvP | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.268 (AB: 2)
     - Kahlil Watson: NO HISTORY | Baseline (2026 Season OBP): 0.258 -> Smoothed OBP: 0.258
-  Aggregated Away OBP: 0.287 (Total AB: 63)
-  PROJECTION: Minnesota Twins | 2.48% Edge
+    - Gabriel Arias: 4/9 BvP | Baseline (2026 Season OBP): 0.259 -> Smoothed OBP: 0.347 (AB: 9)
+    - Daniel Schneemann: 5/10 BvP | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.390 (AB: 9)
+    - Patrick Bailey: 0/2 BvP | Baseline (2026 Season OBP): 0.232 -> Smoothed OBP: 0.193 (AB: 2)
+    - Steven Kwan: 3/23 BvP | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.191 (AB: 23)
+  Aggregated Away OBP: 0.282 (Total AB: 72)
+  PROJECTION: Cleveland Guardians | 0.24% Edge
 --------------------------------------------------
 GAME: Boston Red Sox @ Chicago White Sox (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Chicago White Sox Hitting (vs Patrick Sandoval):
     - Chase Meidroth: NO HISTORY | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.337
     - Randal Grichuk: 1/3 BvP | Baseline (2026 Season OBP): 0.283 -> Smoothed OBP: 0.295 (AB: 3)
@@ -151,17 +151,17 @@ GAME: Boston Red Sox @ Chicago White Sox (G1)
     - Drew Romo: NO HISTORY | Baseline (2026 Season OBP): 0.237 -> Smoothed OBP: 0.237
   Aggregated Home OBP: 0.305 (Total AB: 4)
   Boston Red Sox Hitting (vs Anthony Kay):
-    - Andruw Monasterio: NO HISTORY | Baseline (2026 Season OBP): 0.268 -> Smoothed OBP: 0.268
+    - Anthony Seigler: NO HISTORY | Baseline (2026 Season OBP): 0.379 -> Smoothed OBP: 0.379
     - Ceddanne Rafaela: NO HISTORY | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333
     - Wilyer Abreu: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
     - Romy Gonzalez: NO HISTORY | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.357
-    - Masataka Yoshida: NO HISTORY | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.335
     - Caleb Durbin: NO HISTORY | Baseline (2026 Season OBP): 0.289 -> Smoothed OBP: 0.289
-    - Jarren Duran: 0/1 BvP | Baseline (2026 Season OBP): 0.261 -> Smoothed OBP: 0.237 (AB: 1)
-    - Carlos Narváez: NO HISTORY | Baseline (2026 Season OBP): 0.257 -> Smoothed OBP: 0.257
-    - Tsung-Che Cheng: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
-  Aggregated Away OBP: 0.303 (Total AB: 1)
-  PROJECTION: Chicago White Sox | 0.2% Edge
+    - Andruw Monasterio: NO HISTORY | Baseline (2026 Season OBP): 0.268 -> Smoothed OBP: 0.268
+    - Nate Eaton: NO HISTORY | Baseline (2026 Season OBP): 0.294 -> Smoothed OBP: 0.294
+    - Brett Harris: NO HISTORY | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333
+    - Connor Wong: 0/1 BvP | Baseline (2026 Season OBP): 0.387 -> Smoothed OBP: 0.352 (AB: 1)
+  Aggregated Away OBP: 0.326 (Total AB: 1)
+  PROJECTION: Boston Red Sox | 2.12% Edge
 --------------------------------------------------
 GAME: Athletics @ Detroit Tigers (G1)
   Lineup Source: Starters of Last Game
