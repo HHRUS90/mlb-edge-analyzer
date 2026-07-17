@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/17/2026 (04:00 PM MDT)
+DETAILED EVALUATION LOG - 07/17/2026 (05:00 PM MDT)
 ==================================================
 📊 TODAY: 0/1 (0.0%) | -$100.00
 📊 YESTERDAY: 0/1 (0.0%) | -$100.00
 LIFETIME: 251/482 (52.1%) | -$204.41
 BEST PICKS LIFETIME: 21/39 (53.8%) | -$54.86
-ODDS-API: 266 Calls (Used: 266 | Rem: 234)
-MLB-STATS-API: 294 Total Calls
+ODDS-API: 267 Calls (Used: 267 | Rem: 233)
+MLB-STATS-API: 210 Total Calls
 ==================================================
 GAME: Tampa Bay Rays @ Boston Red Sox (G1)
   Lineup Source: Official Boxscore
@@ -294,7 +294,7 @@ GAME: Cincinnati Reds @ Colorado Rockies (G1)
   PROJECTION: Colorado Rockies | 2.11% Edge
 --------------------------------------------------
 GAME: Detroit Tigers @ Los Angeles Angels (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Angels Hitting (vs Troy Melton):
     - Zach Neto: 0/1 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.296 (AB: 1)
     - Mike Trout: 0/1 BvP | Baseline (2026 Season OBP): 0.390 -> Smoothed OBP: 0.355 (AB: 1)
@@ -307,20 +307,20 @@ GAME: Detroit Tigers @ Los Angeles Angels (G1)
     - Logan O'Hoppe: 0/1 BvP | Baseline (2026 Season OBP): 0.276 -> Smoothed OBP: 0.251 (AB: 1)
   Aggregated Home OBP: 0.301 (Total AB: 6)
   Detroit Tigers Hitting (vs Reid Detmers):
+    - Matt Vierling: 1/1 BvP | Baseline (2026 Season OBP): 0.261 -> Smoothed OBP: 0.328 (AB: 1)
     - Kevin McGonigle: NO HISTORY | Baseline (2026 Season OBP): 0.392 -> Smoothed OBP: 0.392
     - Dillon Dingler: 1/1 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.385 (AB: 1)
-    - Colt Keith: NO HISTORY | Baseline (2026 Season OBP): 0.294 -> Smoothed OBP: 0.294
-    - Riley Greene: 3/4 BvP | Baseline (2026 Season OBP): 0.380 -> Smoothed OBP: 0.486 (AB: 3)
     - Spencer Torkelson: 0/2 BvP | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.254 (AB: 2)
+    - Riley Greene: 3/4 BvP | Baseline (2026 Season OBP): 0.380 -> Smoothed OBP: 0.486 (AB: 3)
     - Eduardo Valencia: NO HISTORY | Baseline (2026 Season OBP): 0.545 -> Smoothed OBP: 0.545
+    - Hao-Yu Lee: NO HISTORY | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.288
+    - Ben Malgeri: NO HISTORY | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.357
     - Zach McKinstry: 1/1 BvP | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.344 (AB: 1)
-    - Matt Vierling: 1/1 BvP | Baseline (2026 Season OBP): 0.261 -> Smoothed OBP: 0.328 (AB: 1)
-    - James Outman: 2/5 BvP | Baseline (2026 Season OBP): 0.221 -> Smoothed OBP: 0.281 (AB: 5)
-  Aggregated Away OBP: 0.368 (Total AB: 13)
-  PROJECTION: Detroit Tigers | 6.61% Edge
+  Aggregated Away OBP: 0.375 (Total AB: 8)
+  PROJECTION: Detroit Tigers | 7.39% Edge
 --------------------------------------------------
 GAME: Washington Nationals @ Athletics (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Athletics Hitting (vs Cade Cavalli):
     - Carlos Cortes: NO HISTORY | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.357
     - Jacob Wilson: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
@@ -334,30 +334,30 @@ GAME: Washington Nationals @ Athletics (G1)
   Aggregated Home OBP: 0.331 (Total AB: 7)
   Washington Nationals Hitting (vs Gage Jump):
     - James Wood: NO HISTORY | Baseline (2026 Season OBP): 0.410 -> Smoothed OBP: 0.410
-    - Andrés Chaparro: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
     - Curtis Mead: NO HISTORY | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.341
+    - Andrés Chaparro: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
     - CJ Abrams: NO HISTORY | Baseline (2026 Season OBP): 0.352 -> Smoothed OBP: 0.352
     - Dylan Crews: NO HISTORY | Baseline (2026 Season OBP): 0.270 -> Smoothed OBP: 0.270
+    - Harry Ford: NO HISTORY | Baseline (League Default): 0.310 -> Smoothed OBP: 0.310
     - Daylen Lile: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
+    - Jacob Young: NO HISTORY | Baseline (2026 Season OBP): 0.275 -> Smoothed OBP: 0.275
     - Nasim Nuñez: NO HISTORY | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.327
-    - Jorbit Vivas: NO HISTORY | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.319
-    - Keibert Ruiz: NO HISTORY | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.302
-  Aggregated Away OBP: 0.325 (Total AB: 0)
-  PROJECTION: Athletics | 0.61% Edge
+  Aggregated Away OBP: 0.321 (Total AB: 0)
+  PROJECTION: Athletics | 1.01% Edge
 --------------------------------------------------
 GAME: St. Louis Cardinals @ Arizona Diamondbacks (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Arizona Diamondbacks Hitting (vs Michael McGreevy):
     - Ketel Marte: NO HISTORY | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.311
     - Geraldo Perdomo: NO HISTORY | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.354
     - Corbin Carroll: NO HISTORY | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.347
     - Gabriel Moreno: NO HISTORY | Baseline (2026 Season OBP): 0.385 -> Smoothed OBP: 0.385
-    - Jorge Barrosa: NO HISTORY | Baseline (2026 Season OBP): 0.258 -> Smoothed OBP: 0.258
-    - Ildemaro Vargas: NO HISTORY | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.302
+    - Max Kepler: NO HISTORY | Baseline (2026 Season OBP): 0.211 -> Smoothed OBP: 0.211
+    - Lourdes Gurriel Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.259 -> Smoothed OBP: 0.259
     - Nolan Arenado: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
+    - Ildemaro Vargas: NO HISTORY | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.302
     - Tim Tawa: NO HISTORY | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.295
-    - Ryan Waldschmidt: NO HISTORY | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.307
-  Aggregated Home OBP: 0.320 (Total AB: 0)
+  Aggregated Home OBP: 0.309 (Total AB: 0)
   St. Louis Cardinals Hitting (vs Merrill Kelly):
     - JJ Wetherholt: NO HISTORY | Baseline (2026 Season OBP): 0.356 -> Smoothed OBP: 0.356
     - Iván Herrera: 2/6 BvP | Baseline (2026 Season OBP): 0.381 -> Smoothed OBP: 0.363 (AB: 6)
@@ -369,7 +369,7 @@ GAME: St. Louis Cardinals @ Arizona Diamondbacks (G1)
     - José Fermín: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
     - Jimmy Crooks: NO HISTORY | Baseline (2026 Season OBP): 0.271 -> Smoothed OBP: 0.271
   Aggregated Away OBP: 0.314 (Total AB: 36)
-  PROJECTION: Arizona Diamondbacks | 0.56% Edge
+  PROJECTION: St. Louis Cardinals | 0.49% Edge
 --------------------------------------------------
 GAME: San Francisco Giants @ Seattle Mariners (G1)
   Lineup Source: Official Boxscore
