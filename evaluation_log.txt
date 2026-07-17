@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/17/2026 (09:00 AM MDT)
+DETAILED EVALUATION LOG - 07/17/2026 (10:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 0/1 (0.0%) | -$100.00
 LIFETIME: 251/481 (52.2%) | -$104.41
 BEST PICKS LIFETIME: 21/38 (55.3%) | +$45.14
-ODDS-API: 259 Calls (Used: 259 | Rem: 241)
-MLB-STATS-API: 276 Total Calls
+ODDS-API: 260 Calls (Used: 260 | Rem: 240)
+MLB-STATS-API: 298 Total Calls
 ==================================================
 GAME: Tampa Bay Rays @ Boston Red Sox (G1)
   Lineup Source: Official Boxscore
@@ -318,6 +318,32 @@ GAME: Washington Nationals @ Athletics (G1)
     - Keibert Ruiz: NO HISTORY | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.302
   Aggregated Away OBP: 0.325 (Total AB: 0)
   PROJECTION: Washington Nationals | 1.39% Edge
+--------------------------------------------------
+GAME: St. Louis Cardinals @ Arizona Diamondbacks (G1)
+  Lineup Source: Starters of Last Game
+  Arizona Diamondbacks Hitting (vs Michael McGreevy):
+    - Ketel Marte: NO HISTORY | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.311
+    - Geraldo Perdomo: NO HISTORY | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.354
+    - Corbin Carroll: NO HISTORY | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.347
+    - Gabriel Moreno: NO HISTORY | Baseline (2026 Season OBP): 0.385 -> Smoothed OBP: 0.385
+    - Jorge Barrosa: NO HISTORY | Baseline (2026 Season OBP): 0.258 -> Smoothed OBP: 0.258
+    - Ildemaro Vargas: NO HISTORY | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.302
+    - Nolan Arenado: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
+    - Tim Tawa: NO HISTORY | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.295
+    - Ryan Waldschmidt: NO HISTORY | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.307
+  Aggregated Home OBP: 0.320 (Total AB: 0)
+  St. Louis Cardinals Hitting (vs Merrill Kelly):
+    - JJ Wetherholt: NO HISTORY | Baseline (2026 Season OBP): 0.356 -> Smoothed OBP: 0.356
+    - Iván Herrera: 2/6 BvP | Baseline (2026 Season OBP): 0.381 -> Smoothed OBP: 0.363 (AB: 6)
+    - Jordan Walker: 3/9 BvP | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.344 (AB: 7)
+    - Alec Burleson: 2/9 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.283 (AB: 8)
+    - Lars Nootbaar: 4/11 BvP | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.360 (AB: 9)
+    - Masyn Winn: 1/6 BvP | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.259 (AB: 6)
+    - Bryan Torres: NO HISTORY | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.250
+    - José Fermín: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
+    - Jimmy Crooks: NO HISTORY | Baseline (2026 Season OBP): 0.271 -> Smoothed OBP: 0.271
+  Aggregated Away OBP: 0.311 (Total AB: 36)
+  PROJECTION: Arizona Diamondbacks | 0.9% Edge
 --------------------------------------------------
 GAME: San Francisco Giants @ Seattle Mariners (G1)
   Lineup Source: Starters of Last Game
