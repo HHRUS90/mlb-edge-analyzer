@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/18/2026 (02:00 PM MDT)
+DETAILED EVALUATION LOG - 07/18/2026 (03:00 PM MDT)
 ==================================================
-📊 TODAY: 1/1 (100.0%) | +$96.15
+📊 TODAY: 1/2 (50.0%) | -$3.85
 📊 YESTERDAY: 8/14 (57.1%) | +$91.72
-LIFETIME: 260/496 (52.4%) | +$83.46
-BEST PICKS LIFETIME: 23/40 (57.5%) | +$193.93
-ODDS-API: 280 Calls (Used: 280 | Rem: 220)
-MLB-STATS-API: 138 Total Calls
+LIFETIME: 260/497 (52.3%) | -$16.54
+BEST PICKS LIFETIME: 22/40 (55.0%) | -$2.23
+ODDS-API: 281 Calls (Used: 281 | Rem: 219)
+MLB-STATS-API: 139 Total Calls
 ==================================================
 GAME: Pittsburgh Pirates @ Cleveland Guardians (G1)
   Lineup Source: Official Boxscore
@@ -293,13 +293,39 @@ GAME: Miami Marlins @ Milwaukee Brewers (G1)
   Aggregated Away OBP: 0.337 (Total AB: 0)
   PROJECTION: Milwaukee Brewers | 1.0% Edge
 --------------------------------------------------
-GAME: San Francisco Giants @ Seattle Mariners (G1)
+GAME: Pittsburgh Pirates @ Cleveland Guardians (G2)
   Lineup Source: Starters of Last Game
+  Cleveland Guardians Hitting (vs Mason Montgomery):
+    - Travis Bazzana: NO HISTORY | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.329
+    - Brayan Rocchio: 0/1 BvP | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.308 (AB: 1)
+    - Chase DeLauter: NO HISTORY | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.344
+    - Rhys Hoskins: 0/1 BvP | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.286 (AB: 1)
+    - Daniel Schneemann: 0/1 BvP | Baseline (2026 Season OBP): 0.276 -> Smoothed OBP: 0.251 (AB: 1)
+    - David Fry: 1/2 BvP | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.346 (AB: 2)
+    - Petey Halpin: NO HISTORY | Baseline (2026 Season OBP): 0.206 -> Smoothed OBP: 0.206
+    - Austin Hedges: NO HISTORY | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.348
+    - Steven Kwan: 0/2 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.282 (AB: 2)
+  Aggregated Home OBP: 0.300 (Total AB: 7)
+  Pittsburgh Pirates Hitting (vs Logan Allen):
+    - Jake Mangum: 2/3 BvP | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.428 (AB: 2)
+    - Tyler Callihan: NO HISTORY | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.323
+    - Jacob Gonzalez: NO HISTORY | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.327
+    - Esmerlyn Valdez: NO HISTORY | Baseline (2026 Season OBP): 0.367 -> Smoothed OBP: 0.367
+    - Billy Cook: NO HISTORY | Baseline (2026 Season OBP): 0.171 -> Smoothed OBP: 0.171
+    - Nick Gonzales: 0/2 BvP | Baseline (2026 Season OBP): 0.371 -> Smoothed OBP: 0.309 (AB: 2)
+    - Marcell Ozuna: 2/5 BvP | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.325 (AB: 4)
+    - Jared Triolo: 1/4 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.287 (AB: 4)
+    - Henry Davis: 1/2 BvP | Baseline (2026 Season OBP): 0.267 -> Smoothed OBP: 0.306 (AB: 1)
+  Aggregated Away OBP: 0.316 (Total AB: 13)
+  PROJECTION: Pittsburgh Pirates | 1.6% Edge
+--------------------------------------------------
+GAME: San Francisco Giants @ Seattle Mariners (G1)
+  Lineup Source: Official Boxscore
   Seattle Mariners Hitting (vs Logan Webb):
     - J.P. Crawford: 3/9 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333 (AB: 8)
     - Julio Rodríguez: 1/4 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.302 (AB: 3)
-    - Randy Arozarena: 1/5 BvP | Baseline (2026 Season OBP): 0.376 -> Smoothed OBP: 0.317 (AB: 4)
     - Dominic Canzone: NO HISTORY | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333
+    - Randy Arozarena: 1/5 BvP | Baseline (2026 Season OBP): 0.376 -> Smoothed OBP: 0.317 (AB: 4)
     - Josh Naylor: 1/3 BvP | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.321 (AB: 3)
     - Cal Raleigh: 0/3 BvP | Baseline (2026 Season OBP): 0.271 -> Smoothed OBP: 0.208 (AB: 3)
     - Cole Young: NO HISTORY | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.311
@@ -315,9 +341,9 @@ GAME: San Francisco Giants @ Seattle Mariners (G1)
     - Jung Hoo Lee: 2/3 BvP | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.415 (AB: 3)
     - Willy Adames: 1/3 BvP | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.292 (AB: 3)
     - Drew Gilbert: NO HISTORY | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.315
-    - Drew Cavanaugh: NO HISTORY | Baseline (2026 Season OBP): 0.390 -> Smoothed OBP: 0.390
-  Aggregated Away OBP: 0.328 (Total AB: 23)
-  PROJECTION: San Francisco Giants | 3.47% Edge
+    - Daniel Susac: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
+  Aggregated Away OBP: 0.319 (Total AB: 23)
+  PROJECTION: San Francisco Giants | 2.58% Edge
 --------------------------------------------------
 GAME: Los Angeles Dodgers @ New York Yankees (G1)
   Lineup Source: Starters of Last Game
