@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/19/2026 (03:00 PM MDT)
+DETAILED EVALUATION LOG - 07/19/2026 (04:00 PM MDT)
 ==================================================
-📊 TODAY: 4/6 (66.7%) | +$137.66
+📊 TODAY: 5/11 (45.5%) | -$124.34
 📊 YESTERDAY: 6/15 (40.0%) | -$316.43
-LIFETIME: 269/516 (52.1%) | -$191.46
-BEST PICKS LIFETIME: 23/41 (56.1%) | +$95.81
-ODDS-API: 297 Calls (Used: 298 | Rem: 202)
-MLB-STATS-API: 45 Total Calls
+LIFETIME: 270/521 (51.8%) | -$453.46
+BEST PICKS LIFETIME: 22/41 (53.7%) | -$102.23
+ODDS-API: 298 Calls (Used: 299 | Rem: 201)
+MLB-STATS-API: 79 Total Calls
 ==================================================
 GAME: Chicago White Sox @ Toronto Blue Jays (G1)
   Lineup Source: Official Boxscore
@@ -396,4 +396,30 @@ GAME: St. Louis Cardinals @ Arizona Diamondbacks (G1)
     - Blaze Jordan: NO HISTORY | Baseline (2026 Season OBP): 0.253 -> Smoothed OBP: 0.253
   Aggregated Away OBP: 0.332 (Total AB: 0)
   PROJECTION: St. Louis Cardinals | 0.01% Edge
+--------------------------------------------------
+GAME: Los Angeles Dodgers @ New York Yankees (G2)
+  Lineup Source: Official Boxscore
+  New York Yankees Hitting (vs Will Klein):
+    - Trent Grisham: NO HISTORY | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.338
+    - Ben Rice: NO HISTORY | Baseline (2026 Season OBP): 0.372 -> Smoothed OBP: 0.372
+    - Paul Goldschmidt: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
+    - Cody Bellinger: NO HISTORY | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.341
+    - Jasson Domínguez: NO HISTORY | Baseline (2026 Season OBP): 0.265 -> Smoothed OBP: 0.265
+    - Jazz Chisholm Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.302
+    - Anthony Volpe: NO HISTORY | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.342
+    - Austin Wells: NO HISTORY | Baseline (2026 Season OBP): 0.244 -> Smoothed OBP: 0.244
+    - José Caballero: NO HISTORY | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.297
+  Aggregated Home OBP: 0.313 (Total AB: 0)
+  Los Angeles Dodgers Hitting (vs Ryan Yarbrough):
+    - Shohei Ohtani: 5/14 BvP | Baseline (2026 Season OBP): 0.400 -> Smoothed OBP: 0.375 (AB: 13)
+    - Andy Pages: 1/2 BvP | Baseline (2026 Season OBP): 0.336 -> Smoothed OBP: 0.363 (AB: 2)
+    - Freddie Freeman: 0/9 BvP | Baseline (2026 Season OBP): 0.369 -> Smoothed OBP: 0.194 (AB: 8)
+    - Mookie Betts: 3/14 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.248 (AB: 13)
+    - Kyle Tucker: 3/6 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.399 (AB: 4)
+    - Miguel Rojas: 1/12 BvP | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.198 (AB: 12)
+    - Teoscar Hernández: 15/41 BvP | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.356 (AB: 39)
+    - Max Muncy: 2/6 BvP | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.349 (AB: 4)
+    - Eliezer Alfonzo: NO HISTORY | Baseline (Rookie (League Default)): 0.310 -> Smoothed OBP: 0.310
+  Aggregated Away OBP: 0.310 (Total AB: 95)
+  PROJECTION: New York Yankees | 0.27% Edge
 --------------------------------------------------
