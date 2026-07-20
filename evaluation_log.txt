@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/20/2026 (04:00 PM MDT)
+DETAILED EVALUATION LOG - 07/20/2026 (05:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 7/16 (43.8%) | -$274.95
 LIFETIME: 272/526 (51.7%) | -$604.07
 BEST PICKS LIFETIME: 22/41 (53.7%) | -$102.23
-ODDS-API: 313 Calls (Used: 314 | Rem: 186)
-MLB-STATS-API: 332 Total Calls
+ODDS-API: 314 Calls (Used: 315 | Rem: 185)
+MLB-STATS-API: 214 Total Calls
 ==================================================
 GAME: Minnesota Twins @ Cleveland Guardians (G1)
   Lineup Source: Official Boxscore
@@ -320,18 +320,18 @@ GAME: Washington Nationals @ Colorado Rockies (G1)
   PROJECTION: Washington Nationals | 0.43% Edge
 --------------------------------------------------
 GAME: Athletics @ Arizona Diamondbacks (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Arizona Diamondbacks Hitting (vs Jeffrey Springs):
     - Ketel Marte: 1/4 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.295 (AB: 3)
     - Geraldo Perdomo: 0/2 BvP | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.296 (AB: 2)
-    - Jorge Barrosa: NO HISTORY | Baseline (2026 Season OBP): 0.256 -> Smoothed OBP: 0.256
-    - Gabriel Moreno: NO HISTORY | Baseline (2026 Season OBP): 0.389 -> Smoothed OBP: 0.389
-    - Max Kepler: NO HISTORY | Baseline (2026 Season OBP): 0.235 -> Smoothed OBP: 0.235
-    - Tyler Locklear: NO HISTORY | Baseline (2026 Season OBP): 0.500 -> Smoothed OBP: 0.500
-    - Nolan Arenado: 1/6 BvP | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.261 (AB: 6)
     - Tim Tawa: NO HISTORY | Baseline (2026 Season OBP): 0.291 -> Smoothed OBP: 0.291
+    - Gabriel Moreno: NO HISTORY | Baseline (2026 Season OBP): 0.389 -> Smoothed OBP: 0.389
+    - Ildemaro Vargas: NO HISTORY | Baseline (2026 Season OBP): 0.301 -> Smoothed OBP: 0.301
+    - Nolan Arenado: 1/6 BvP | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.261 (AB: 6)
+    - Tyler Locklear: NO HISTORY | Baseline (2026 Season OBP): 0.500 -> Smoothed OBP: 0.500
     - Ryan Waldschmidt: NO HISTORY | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.306
-  Aggregated Home OBP: 0.314 (Total AB: 11)
+    - Jorge Barrosa: NO HISTORY | Baseline (2026 Season OBP): 0.256 -> Smoothed OBP: 0.256
+  Aggregated Home OBP: 0.322 (Total AB: 11)
   Athletics Hitting (vs Mitch Bratt):
     - Jacob Wilson: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
     - Tyler Soderstrom: NO HISTORY | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.344
@@ -343,7 +343,7 @@ GAME: Athletics @ Arizona Diamondbacks (G1)
     - Alika Williams: NO HISTORY | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.297
     - Henry Bolte: NO HISTORY | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.341
   Aggregated Away OBP: 0.318 (Total AB: 0)
-  PROJECTION: Athletics | 0.37% Edge
+  PROJECTION: Arizona Diamondbacks | 0.37% Edge
 --------------------------------------------------
 GAME: Cincinnati Reds @ Seattle Mariners (G1)
   Lineup Source: Official Boxscore
@@ -372,28 +372,28 @@ GAME: Cincinnati Reds @ Seattle Mariners (G1)
   PROJECTION: Seattle Mariners | 1.72% Edge
 --------------------------------------------------
 GAME: St. Louis Cardinals @ Los Angeles Angels (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Angels Hitting (vs Kyle Leahy):
     - Zach Neto: 0/1 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.296 (AB: 1)
     - Mike Trout: 0/1 BvP | Baseline (2026 Season OBP): 0.390 -> Smoothed OBP: 0.355 (AB: 1)
     - Nolan Schanuel: 0/2 BvP | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.290 (AB: 2)
     - Jorge Soler: 0/1 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.268 (AB: 1)
-    - Denzer Guzman: NO HISTORY | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.295
-    - Jose Siri: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
+    - Vaughn Grissom: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
+    - Josh Lowe: 0/1 BvP | Baseline (2026 Season OBP): 0.249 -> Smoothed OBP: 0.226 (AB: 1)
     - Jo Adell: 0/2 BvP | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.235 (AB: 2)
-    - Oswald Peraza: NO HISTORY | Baseline (2026 Season OBP): 0.285 -> Smoothed OBP: 0.285
-    - Tyler Heineman: NO HISTORY | Baseline (2026 Season OBP): 0.234 -> Smoothed OBP: 0.234
-  Aggregated Home OBP: 0.286 (Total AB: 7)
+    - Denzer Guzman: NO HISTORY | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.295
+    - Logan O'Hoppe: 0/1 BvP | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.256 (AB: 1)
+  Aggregated Home OBP: 0.283 (Total AB: 9)
   St. Louis Cardinals Hitting (vs José Soriano):
     - JJ Wetherholt: NO HISTORY | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.357
-    - Pedro Pagés: NO HISTORY | Baseline (2026 Season OBP): 0.247 -> Smoothed OBP: 0.247
-    - Jordan Walker: NO HISTORY | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.354
-    - Nathan Church: NO HISTORY | Baseline (2026 Season OBP): 0.268 -> Smoothed OBP: 0.268
+    - Iván Herrera: 0/2 BvP | Baseline (2026 Season OBP): 0.374 -> Smoothed OBP: 0.312 (AB: 2)
     - Alec Burleson: NO HISTORY | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.342
-    - Masyn Winn: 2/2 BvP | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.432 (AB: 1)
-    - José Fermín: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
+    - Jordan Walker: NO HISTORY | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.354
     - Lars Nootbaar: 1/3 BvP | Baseline (2026 Season OBP): 0.366 -> Smoothed OBP: 0.358 (AB: 2)
+    - Masyn Winn: 2/2 BvP | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.432 (AB: 1)
+    - Nathan Church: NO HISTORY | Baseline (2026 Season OBP): 0.268 -> Smoothed OBP: 0.268
     - Blaze Jordan: NO HISTORY | Baseline (2026 Season OBP): 0.273 -> Smoothed OBP: 0.273
-  Aggregated Away OBP: 0.329 (Total AB: 3)
-  PROJECTION: St. Louis Cardinals | 4.27% Edge
+    - Jimmy Crooks: NO HISTORY | Baseline (2026 Season OBP): 0.293 -> Smoothed OBP: 0.293
+  Aggregated Away OBP: 0.332 (Total AB: 5)
+  PROJECTION: St. Louis Cardinals | 4.91% Edge
 --------------------------------------------------
