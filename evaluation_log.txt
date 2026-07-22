@@ -1,37 +1,37 @@
-DETAILED EVALUATION LOG - 07/22/2026 (08:00 AM MDT)
+DETAILED EVALUATION LOG - 07/22/2026 (09:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 5/13 (38.5%) | -$384.38
 LIFETIME: 283/554 (51.1%) | -$1,382.38
 BEST PICKS LIFETIME: 24/43 (55.8%) | +$65.64
-ODDS-API: 337 Calls (Used: 339 | Rem: 161)
-MLB-STATS-API: 587 Total Calls
+ODDS-API: 338 Calls (Used: 340 | Rem: 160)
+MLB-STATS-API: 343 Total Calls
 ==================================================
 GAME: Pittsburgh Pirates @ New York Yankees (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   New York Yankees Hitting (vs Mitch Keller):
     - Trent Grisham: 8/14 BvP | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.470 (AB: 12)
     - Ben Rice: 2/3 BvP | Baseline (2026 Season OBP): 0.372 -> Smoothed OBP: 0.440 (AB: 2)
-    - Paul Goldschmidt: 12/38 BvP | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.316 (AB: 35)
+    - Spencer Jones: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
     - Cody Bellinger: 5/13 BvP | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.367 (AB: 13)
-    - Jazz Chisholm Jr.: 3/7 BvP | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.355 (AB: 5)
     - Jasson Domínguez: 2/2 BvP | Baseline (2026 Season OBP): 0.265 -> Smoothed OBP: 0.388 (AB: 2)
+    - Jazz Chisholm Jr.: 3/7 BvP | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.355 (AB: 5)
+    - José Caballero: NO HISTORY | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.299
     - Ryan McMahon: 3/10 BvP | Baseline (2026 Season OBP): 0.277 -> Smoothed OBP: 0.289 (AB: 8)
     - Austin Wells: 1/3 BvP | Baseline (2026 Season OBP): 0.253 -> Smoothed OBP: 0.272 (AB: 2)
-    - José Caballero: NO HISTORY | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.299
-  Aggregated Home OBP: 0.355 (Total AB: 79)
+  Aggregated Home OBP: 0.355 (Total AB: 44)
   Pittsburgh Pirates Hitting (vs Gerrit Cole):
-    - Nick Gonzales: NO HISTORY | Baseline (2026 Season OBP): 0.368 -> Smoothed OBP: 0.368
+    - Jake Mangum: NO HISTORY | Baseline (2026 Season OBP): 0.352 -> Smoothed OBP: 0.352
     - Brandon Lowe: 10/36 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.285 (AB: 33)
     - Bryan Reynolds: 2/3 BvP | Baseline (2026 Season OBP): 0.399 -> Smoothed OBP: 0.461 (AB: 2)
     - Esmerlyn Valdez: NO HISTORY | Baseline (2026 Season OBP): 0.377 -> Smoothed OBP: 0.377
     - Ryan O'Hearn: 2/19 BvP | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.188 (AB: 19)
-    - Marcell Ozuna: 7/20 BvP | Baseline (2026 Season OBP): 0.291 -> Smoothed OBP: 0.330 (AB: 18)
+    - Nick Gonzales: NO HISTORY | Baseline (2026 Season OBP): 0.368 -> Smoothed OBP: 0.368
     - Jacob Gonzalez: NO HISTORY | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.324
-    - Rafael Flores Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.500 -> Smoothed OBP: 0.500
-    - Jake Mangum: NO HISTORY | Baseline (2026 Season OBP): 0.352 -> Smoothed OBP: 0.352
-  Aggregated Away OBP: 0.354 (Total AB: 72)
-  PROJECTION: New York Yankees | 0.1% Edge
+    - Henry Davis: NO HISTORY | Baseline (2026 Season OBP): 0.263 -> Smoothed OBP: 0.263
+    - Tyler Callihan: NO HISTORY | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.319
+  Aggregated Away OBP: 0.326 (Total AB: 54)
+  PROJECTION: New York Yankees | 2.87% Edge
 --------------------------------------------------
 GAME: Baltimore Orioles @ Boston Red Sox (G1)
   Lineup Source: Starters of Last Game
@@ -64,14 +64,14 @@ GAME: San Francisco Giants @ Kansas City Royals (G1)
   Kansas City Royals Hitting (vs Landen Roupp):
     - Carter Jensen: NO HISTORY | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.309
     - Lane Thomas: 1/1 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.398 (AB: 1)
-    - Isaac Collins: NO HISTORY | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.348
-    - Salvador Perez: 0/2 BvP | Baseline (2026 Season OBP): 0.258 -> Smoothed OBP: 0.215 (AB: 2)
     - Vinnie Pasquantino: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
-    - Starling Marte: 0/1 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.303 (AB: 1)
+    - Salvador Perez: 0/2 BvP | Baseline (2026 Season OBP): 0.258 -> Smoothed OBP: 0.215 (AB: 2)
     - Michael Massey: 0/3 BvP | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.235 (AB: 3)
-    - Nick Loftin: NO HISTORY | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.329
-    - Tyler Tolbert: NO HISTORY | Baseline (2026 Season OBP): 0.364 -> Smoothed OBP: 0.364
-  Aggregated Home OBP: 0.313 (Total AB: 7)
+    - Isaac Collins: NO HISTORY | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.348
+    - Starling Marte: 0/1 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.303 (AB: 1)
+    - Josh Rojas: 2/3 BvP | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.346 (AB: 2)
+    - Andrew Velazquez: NO HISTORY | Baseline (League Default): 0.320 -> Smoothed OBP: 0.320
+  Aggregated Home OBP: 0.310 (Total AB: 9)
   San Francisco Giants Hitting (vs Seth Lugo):
     - Heliot Ramos: 0/3 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.238 (AB: 3)
     - Bryce Eldridge: NO HISTORY | Baseline (2026 Season OBP): 0.364 -> Smoothed OBP: 0.364
@@ -83,7 +83,7 @@ GAME: San Francisco Giants @ Kansas City Royals (G1)
     - Drew Gilbert: NO HISTORY | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.307
     - Christian Koss: NO HISTORY | Baseline (2026 Season OBP): 0.217 -> Smoothed OBP: 0.217
   Aggregated Away OBP: 0.312 (Total AB: 21)
-  PROJECTION: Kansas City Royals | 0.12% Edge
+  PROJECTION: San Francisco Giants | 0.18% Edge
 --------------------------------------------------
 GAME: New York Mets @ Milwaukee Brewers (G1)
   Lineup Source: Starters of Last Game
