@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/23/2026 (09:00 AM MDT)
+DETAILED EVALUATION LOG - 07/23/2026 (10:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 10/17 (58.8%) | +$123.32
 LIFETIME: 293/571 (51.3%) | -$1,259.06
 BEST PICKS LIFETIME: 24/44 (54.5%) | -$34.36
-ODDS-API: 355 Calls (Used: 357 | Rem: 143)
-MLB-STATS-API: 109 Total Calls
+ODDS-API: 356 Calls (Used: 358 | Rem: 142)
+MLB-STATS-API: 99 Total Calls
 ==================================================
 GAME: San Diego Padres @ Atlanta Braves (G1)
   Lineup Source: Official Boxscore
@@ -34,7 +34,7 @@ GAME: San Diego Padres @ Atlanta Braves (G1)
   PROJECTION: Atlanta Braves | 3.25% Edge
 --------------------------------------------------
 GAME: Minnesota Twins @ Cleveland Guardians (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Cleveland Guardians Hitting (vs Taj Bradley):
     - Steven Kwan: 2/6 BvP | Baseline (2026 Season OBP): 0.350 -> Smoothed OBP: 0.344 (AB: 5)
     - José Ramírez: 4/9 BvP | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.389 (AB: 8)
@@ -47,31 +47,31 @@ GAME: Minnesota Twins @ Cleveland Guardians (G1)
     - Petey Halpin: NO HISTORY | Baseline (2026 Season OBP): 0.235 -> Smoothed OBP: 0.235
   Aggregated Home OBP: 0.326 (Total AB: 17)
   Minnesota Twins Hitting (vs Gavin Williams):
-    - Austin Martin: 5/8 BvP | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.474 (AB: 7)
     - Brooks Lee: 4/10 BvP | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.355 (AB: 8)
-    - Kody Clemens: 2/9 BvP | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.262 (AB: 9)
+    - Byron Buxton: 5/11 BvP | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.395 (AB: 10)
+    - Ryan Jeffers: 6/16 BvP | Baseline (2026 Season OBP): 0.398 -> Smoothed OBP: 0.384 (AB: 16)
     - Josh Bell: 1/3 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.314 (AB: 3)
+    - Kody Clemens: 2/9 BvP | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.262 (AB: 9)
     - Royce Lewis: 2/15 BvP | Baseline (2026 Season OBP): 0.292 -> Smoothed OBP: 0.197 (AB: 15)
-    - Ryan Kreidler: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
-    - Alan Roden: 0/5 BvP | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.200 (AB: 5)
+    - Austin Martin: 5/8 BvP | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.474 (AB: 7)
     - Luke Keaschall: 0/3 BvP | Baseline (2026 Season OBP): 0.352 -> Smoothed OBP: 0.271 (AB: 3)
-    - Alex Jackson: NO HISTORY | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.355
-  Aggregated Away OBP: 0.303 (Total AB: 50)
-  PROJECTION: Cleveland Guardians | 2.29% Edge
+    - Ryan Kreidler: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
+  Aggregated Away OBP: 0.328 (Total AB: 71)
+  PROJECTION: Minnesota Twins | 0.2% Edge
 --------------------------------------------------
 GAME: Tampa Bay Rays @ Toronto Blue Jays (G1)
   Lineup Source: Starters of Last Game
-  Toronto Blue Jays Hitting (vs Ian Seymour):
-    - Ernie Clement: 4/8 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.401 (AB: 8)
-    - Nathan Lukes: NO HISTORY | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.339
-    - Vladimir Guerrero Jr.: 1/6 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.274 (AB: 6)
-    - George Springer: 4/7 BvP | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.415 (AB: 6)
+  Toronto Blue Jays Hitting (vs Casey Legumina):
+    - Ernie Clement: 2/3 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.401 (AB: 3)
+    - Nathan Lukes: 0/2 BvP | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.283 (AB: 2)
+    - Vladimir Guerrero Jr.: 0/4 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.241 (AB: 4)
+    - George Springer: 2/4 BvP | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.361 (AB: 3)
     - Luis Urías: NO HISTORY | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333
-    - Alejandro Kirk: 2/5 BvP | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.332 (AB: 4)
-    - Daulton Varsho: 1/5 BvP | Baseline (2026 Season OBP): 0.301 -> Smoothed OBP: 0.267 (AB: 5)
-    - Kazuma Okamoto: NO HISTORY | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.309
-    - Andrés Giménez: 1/2 BvP | Baseline (2026 Season OBP): 0.267 -> Smoothed OBP: 0.306 (AB: 2)
-  Aggregated Home OBP: 0.331 (Total AB: 31)
+    - Alejandro Kirk: 0/1 BvP | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.271 (AB: 1)
+    - Daulton Varsho: 1/3 BvP | Baseline (2026 Season OBP): 0.301 -> Smoothed OBP: 0.308 (AB: 2)
+    - Kazuma Okamoto: 1/2 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.341 (AB: 2)
+    - Andrés Giménez: 0/4 BvP | Baseline (2026 Season OBP): 0.267 -> Smoothed OBP: 0.191 (AB: 4)
+  Aggregated Home OBP: 0.303 (Total AB: 21)
   Tampa Bay Rays Hitting (vs Shane Bieber):
     - Yandy Díaz: 0/3 BvP | Baseline (2026 Season OBP): 0.383 -> Smoothed OBP: 0.295 (AB: 3)
     - Jonathan Aranda: 1/2 BvP | Baseline (2026 Season OBP): 0.382 -> Smoothed OBP: 0.402 (AB: 2)
@@ -83,7 +83,7 @@ GAME: Tampa Bay Rays @ Toronto Blue Jays (G1)
     - Ben Williamson: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
     - Nick Fortes: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
   Aggregated Away OBP: 0.315 (Total AB: 19)
-  PROJECTION: Toronto Blue Jays | 1.6% Edge
+  PROJECTION: Tampa Bay Rays | 1.13% Edge
 --------------------------------------------------
 GAME: Arizona Diamondbacks @ St. Louis Cardinals (G1)
   Lineup Source: Starters of Last Game
