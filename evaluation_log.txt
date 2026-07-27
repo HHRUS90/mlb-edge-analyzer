@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/27/2026 (02:00 PM MDT)
+DETAILED EVALUATION LOG - 07/27/2026 (03:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 9/15 (60.0%) | +$135.86
 LIFETIME: 323/621 (52.0%) | -$598.14
 BEST PICKS LIFETIME: 27/48 (56.2%) | +$75.67
-ODDS-API: 424 Calls (Used: 426 | Rem: 74)
-MLB-STATS-API: 235 Total Calls
+ODDS-API: 425 Calls (Used: 427 | Rem: 73)
+MLB-STATS-API: 238 Total Calls
 ==================================================
 GAME: Seattle Mariners @ Texas Rangers (G1)
   Lineup Source: Official Boxscore
@@ -190,7 +190,7 @@ GAME: Atlanta Braves @ New York Mets (G1)
   PROJECTION: New York Mets | 2.3% Edge
 --------------------------------------------------
 GAME: New York Yankees @ Chicago White Sox (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Chicago White Sox Hitting (vs Max Fried):
     - Randal Grichuk: 6/17 BvP | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.326 (AB: 16)
     - Munetaka Murakami: NO HISTORY | Baseline (2026 Season OBP): 0.378 -> Smoothed OBP: 0.378
@@ -203,17 +203,43 @@ GAME: New York Yankees @ Chicago White Sox (G1)
     - Luisangel Acuña: 0/2 BvP | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.232 (AB: 1)
   Aggregated Home OBP: 0.313 (Total AB: 28)
   New York Yankees Hitting (vs Noah Schultz):
-    - Paul Goldschmidt: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
+    - Max Schuemann: NO HISTORY | Baseline (2026 Season OBP): 0.378 -> Smoothed OBP: 0.378
     - Ben Rice: NO HISTORY | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.360
-    - Ryan McMahon: NO HISTORY | Baseline (2026 Season OBP): 0.271 -> Smoothed OBP: 0.271
+    - Paul Goldschmidt: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
     - Jasson Domínguez: NO HISTORY | Baseline (2026 Season OBP): 0.261 -> Smoothed OBP: 0.261
     - Anthony Volpe: NO HISTORY | Baseline (2026 Season OBP): 0.345 -> Smoothed OBP: 0.345
-    - Trent Grisham: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
-    - Spencer Jones: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
+    - Jazz Chisholm Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.297
     - José Caballero: NO HISTORY | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.288
-    - Austin Wells: NO HISTORY | Baseline (2026 Season OBP): 0.267 -> Smoothed OBP: 0.267
-  Aggregated Away OBP: 0.305 (Total AB: 0)
-  PROJECTION: Chicago White Sox | 0.77% Edge
+    - Spencer Jones: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
+    - Ali Sánchez: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
+  Aggregated Away OBP: 0.318 (Total AB: 0)
+  PROJECTION: New York Yankees | 0.53% Edge
+--------------------------------------------------
+GAME: Chicago Cubs @ St. Louis Cardinals (G1)
+  Lineup Source: Official Boxscore
+  St. Louis Cardinals Hitting (vs David Peterson):
+    - JJ Wetherholt: 1/2 BvP | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.374 (AB: 2)
+    - Jordan Walker: 2/4 BvP | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.390 (AB: 4)
+    - Iván Herrera: 2/2 BvP | Baseline (2026 Season OBP): 0.366 -> Smoothed OBP: 0.472 (AB: 1)
+    - Alec Burleson: 0/2 BvP | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.290 (AB: 2)
+    - Masyn Winn: 2/2 BvP | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.429 (AB: 1)
+    - Nelson Velázquez: 1/4 BvP | Baseline (2026 Season OBP): 0.289 -> Smoothed OBP: 0.278 (AB: 4)
+    - José Fermín: 2/3 BvP | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.398 (AB: 3)
+    - Lars Nootbaar: 0/2 BvP | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.288 (AB: 2)
+    - Blaze Jordan: NO HISTORY | Baseline (2026 Season OBP): 0.257 -> Smoothed OBP: 0.257
+  Aggregated Home OBP: 0.353 (Total AB: 19)
+  Chicago Cubs Hitting (vs Matthew Liberatore):
+    - Pete Crow-Armstrong: 3/8 BvP | Baseline (2026 Season OBP): 0.388 -> Smoothed OBP: 0.382 (AB: 7)
+    - Seiya Suzuki: 2/10 BvP | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.277 (AB: 9)
+    - Alex Bregman: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
+    - Carson Kelly: 2/6 BvP | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.343 (AB: 6)
+    - Michael Busch: 2/5 BvP | Baseline (2026 Season OBP): 0.368 -> Smoothed OBP: 0.379 (AB: 5)
+    - Nico Hoerner: 4/9 BvP | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.375 (AB: 8)
+    - Ian Happ: 5/10 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.416 (AB: 6)
+    - Dansby Swanson: 3/11 BvP | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.285 (AB: 10)
+    - Miguel Amaya: 1/1 BvP | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.415 (AB: 1)
+  Aggregated Away OBP: 0.356 (Total AB: 52)
+  PROJECTION: Chicago Cubs | 0.3% Edge
 --------------------------------------------------
 GAME: Houston Astros @ Los Angeles Angels (G1)
   Lineup Source: Starters of Last Game
