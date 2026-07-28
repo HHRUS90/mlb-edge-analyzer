@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/27/2026 (05:00 PM MDT)
+DETAILED EVALUATION LOG - 07/27/2026 (06:00 PM MDT)
 ==================================================
 📊 TODAY: 0/1 (0.0%) | -$100.00
 📊 YESTERDAY: 9/15 (60.0%) | +$135.86
 LIFETIME: 323/622 (51.9%) | -$698.14
 BEST PICKS LIFETIME: 27/49 (55.1%) | -$24.33
-ODDS-API: 427 Calls (Used: 429 | Rem: 71)
-MLB-STATS-API: 151 Total Calls
+ODDS-API: 428 Calls (Used: 430 | Rem: 70)
+MLB-STATS-API: 108 Total Calls
 ==================================================
 GAME: Seattle Mariners @ Texas Rangers (G1)
   Lineup Source: Official Boxscore
@@ -137,32 +137,6 @@ GAME: Toronto Blue Jays @ Washington Nationals (G1)
   Aggregated Away OBP: 0.310 (Total AB: 0)
   PROJECTION: Washington Nationals | 1.75% Edge
 --------------------------------------------------
-GAME: Cleveland Guardians @ Cincinnati Reds (G1)
-  Lineup Source: Official Boxscore
-  Cincinnati Reds Hitting (vs Slade Cecconi):
-    - Elly De La Cruz: 3/12 BvP | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.297 (AB: 11)
-    - Sal Stewart: NO HISTORY | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.329
-    - JJ Bleday: 0/3 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.264 (AB: 3)
-    - Eugenio Suárez: NO HISTORY | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.280
-    - Nathaniel Lowe: 2/6 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333 (AB: 6)
-    - Tyler Stephenson: 3/7 BvP | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.365 (AB: 7)
-    - Dane Myers: NO HISTORY | Baseline (2026 Season OBP): 0.356 -> Smoothed OBP: 0.356
-    - Edwin Arroyo: NO HISTORY | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.288
-    - TJ Friedl: 2/12 BvP | Baseline (2026 Season OBP): 0.259 -> Smoothed OBP: 0.209 (AB: 11)
-  Aggregated Home OBP: 0.302 (Total AB: 38)
-  Cleveland Guardians Hitting (vs Chase Burns):
-    - Steven Kwan: NO HISTORY | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.351
-    - José Ramírez: NO HISTORY | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.335
-    - Chase DeLauter: NO HISTORY | Baseline (2026 Season OBP): 0.352 -> Smoothed OBP: 0.352
-    - Travis Bazzana: NO HISTORY | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.335
-    - Brayan Rocchio: NO HISTORY | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.328
-    - Kyle Manzardo: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
-    - Gabriel Arias: NO HISTORY | Baseline (2026 Season OBP): 0.291 -> Smoothed OBP: 0.291
-    - Patrick Bailey: 0/2 BvP | Baseline (2026 Season OBP): 0.255 -> Smoothed OBP: 0.212 (AB: 2)
-    - Petey Halpin: NO HISTORY | Baseline (2026 Season OBP): 0.215 -> Smoothed OBP: 0.215
-  Aggregated Away OBP: 0.302 (Total AB: 2)
-  PROJECTION: Cincinnati Reds | 0.03% Edge
---------------------------------------------------
 GAME: Atlanta Braves @ New York Mets (G1)
   Lineup Source: Official Boxscore
   New York Mets Hitting (vs Martín Pérez):
@@ -188,6 +162,32 @@ GAME: Atlanta Braves @ New York Mets (G1)
     - Jim Jarvis: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
   Aggregated Away OBP: 0.326 (Total AB: 0)
   PROJECTION: New York Mets | 3.37% Edge
+--------------------------------------------------
+GAME: Cleveland Guardians @ Cincinnati Reds (G1)
+  Lineup Source: Official Boxscore
+  Cincinnati Reds Hitting (vs Slade Cecconi):
+    - Elly De La Cruz: 3/12 BvP | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.297 (AB: 11)
+    - Sal Stewart: NO HISTORY | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.329
+    - JJ Bleday: 0/3 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.264 (AB: 3)
+    - Eugenio Suárez: NO HISTORY | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.280
+    - Nathaniel Lowe: 2/6 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333 (AB: 6)
+    - Tyler Stephenson: 3/7 BvP | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.365 (AB: 7)
+    - Dane Myers: NO HISTORY | Baseline (2026 Season OBP): 0.356 -> Smoothed OBP: 0.356
+    - Edwin Arroyo: NO HISTORY | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.288
+    - TJ Friedl: 2/12 BvP | Baseline (2026 Season OBP): 0.259 -> Smoothed OBP: 0.209 (AB: 11)
+  Aggregated Home OBP: 0.302 (Total AB: 38)
+  Cleveland Guardians Hitting (vs Chase Burns):
+    - Steven Kwan: NO HISTORY | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.351
+    - José Ramírez: NO HISTORY | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.335
+    - Chase DeLauter: NO HISTORY | Baseline (2026 Season OBP): 0.352 -> Smoothed OBP: 0.352
+    - Travis Bazzana: NO HISTORY | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.335
+    - Brayan Rocchio: NO HISTORY | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.328
+    - Kyle Manzardo: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
+    - Gabriel Arias: NO HISTORY | Baseline (2026 Season OBP): 0.291 -> Smoothed OBP: 0.291
+    - Patrick Bailey: 0/2 BvP | Baseline (2026 Season OBP): 0.255 -> Smoothed OBP: 0.212 (AB: 2)
+    - Petey Halpin: NO HISTORY | Baseline (2026 Season OBP): 0.215 -> Smoothed OBP: 0.215
+  Aggregated Away OBP: 0.302 (Total AB: 2)
+  PROJECTION: Cincinnati Reds | 0.03% Edge
 --------------------------------------------------
 GAME: New York Yankees @ Chicago White Sox (G1)
   Lineup Source: Official Boxscore
