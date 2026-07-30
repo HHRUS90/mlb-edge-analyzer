@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 07/30/2026 (04:05 PM MDT)
+DETAILED EVALUATION LOG - 07/30/2026 (05:00 PM MDT)
 ==================================================
 📊 TODAY: 3/4 (75.0%) | +$129.71
 📊 YESTERDAY: 7/16 (43.8%) | -$310.33
 LIFETIME: 346/667 (51.9%) | -$998.66
 BEST PICKS LIFETIME: 29/52 (55.8%) | +$64.96
-ODDS-API: 474 Calls (Used: 476 | Rem: 24)
-MLB-STATS-API: 123 Total Calls
+ODDS-API: 475 Calls (Used: 477 | Rem: 23)
+MLB-STATS-API: 81 Total Calls
 ==================================================
 GAME: Texas Rangers @ Tampa Bay Rays (G1)
   Lineup Source: Official Boxscore
@@ -190,18 +190,18 @@ GAME: Washington Nationals @ Atlanta Braves (G1)
   PROJECTION: Washington Nationals | 1.07% Edge
 --------------------------------------------------
 GAME: Boston Red Sox @ Athletics (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Athletics Hitting (vs Sonny Gray):
+    - Nick Kurtz: NO HISTORY | Baseline (2026 Season OBP): 0.399 -> Smoothed OBP: 0.399
     - Jacob Wilson: 2/4 BvP | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.359 (AB: 3)
-    - Jeff McNeil: 2/8 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.283 (AB: 8)
-    - Tommy White: NO HISTORY | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.348
     - Tyler Soderstrom: 0/3 BvP | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.263 (AB: 3)
     - Jonah Heim: 1/4 BvP | Baseline (2026 Season OBP): 0.281 -> Smoothed OBP: 0.272 (AB: 4)
-    - Carlos Cortes: NO HISTORY | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.340
-    - Henry Bolte: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
+    - Tommy White: NO HISTORY | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.348
     - Lawrence Butler: 3/7 BvP | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.356 (AB: 5)
+    - Jeff McNeil: 2/8 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.283 (AB: 8)
+    - Carlos Cortes: NO HISTORY | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.340
     - Donovan Walton: 1/2 BvP | Baseline (2026 Season OBP): 0.374 -> Smoothed OBP: 0.395 (AB: 1)
-  Aggregated Home OBP: 0.327 (Total AB: 24)
+  Aggregated Home OBP: 0.335 (Total AB: 24)
   Boston Red Sox Hitting (vs Mason Barnett):
     - Anthony Seigler: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
     - Ceddanne Rafaela: 1/2 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.351 (AB: 2)
@@ -213,10 +213,10 @@ GAME: Boston Red Sox @ Athletics (G1)
     - Andruw Monasterio: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
     - Connor Wong: 1/2 BvP | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.379 (AB: 2)
   Aggregated Away OBP: 0.355 (Total AB: 12)
-  PROJECTION: Boston Red Sox | 2.83% Edge
+  PROJECTION: Boston Red Sox | 2.01% Edge
 --------------------------------------------------
 GAME: Seattle Mariners @ Los Angeles Dodgers (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Dodgers Hitting (vs Bryan Woo):
     - Tommy Edman: 0/2 BvP | Baseline (2026 Season OBP): 0.403 -> Smoothed OBP: 0.336 (AB: 2)
     - Andy Pages: NO HISTORY | Baseline (2026 Season OBP): 0.334 -> Smoothed OBP: 0.334
@@ -231,13 +231,13 @@ GAME: Seattle Mariners @ Los Angeles Dodgers (G1)
   Seattle Mariners Hitting (vs Roki Sasaki):
     - Cole Young: 0/1 BvP | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.290 (AB: 1)
     - Randy Arozarena: 1/1 BvP | Baseline (2026 Season OBP): 0.371 -> Smoothed OBP: 0.428 (AB: 1)
-    - Julio Rodríguez: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
     - Dominic Canzone: NO HISTORY | Baseline (2026 Season OBP): 0.336 -> Smoothed OBP: 0.336
-    - Cal Raleigh: 0/1 BvP | Baseline (2026 Season OBP): 0.269 -> Smoothed OBP: 0.245 (AB: 1)
+    - Julio Rodríguez: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
     - Josh Naylor: 1/2 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.353 (AB: 2)
+    - Cal Raleigh: 0/1 BvP | Baseline (2026 Season OBP): 0.269 -> Smoothed OBP: 0.245 (AB: 1)
     - Luke Raley: NO HISTORY | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.286
     - Weston Wilson: NO HISTORY | Baseline (2026 Season OBP): 0.291 -> Smoothed OBP: 0.291
-    - J.P. Crawford: 0/1 BvP | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.300 (AB: 1)
-  Aggregated Away OBP: 0.316 (Total AB: 6)
-  PROJECTION: Los Angeles Dodgers | 7.84% Edge
+    - Colt Emerson: NO HISTORY | Baseline (2026 Season OBP): 0.263 -> Smoothed OBP: 0.263
+  Aggregated Away OBP: 0.312 (Total AB: 5)
+  PROJECTION: Los Angeles Dodgers | 8.25% Edge
 --------------------------------------------------
