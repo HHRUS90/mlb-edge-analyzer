@@ -1,37 +1,37 @@
-DETAILED EVALUATION LOG - 07/31/2026 (09:00 AM MDT)
+DETAILED EVALUATION LOG - 07/31/2026 (10:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 5/10 (50.0%) | -$92.85
 LIFETIME: 348/673 (51.7%) | -$1,221.22
 BEST PICKS LIFETIME: 29/52 (55.8%) | +$64.96
-ODDS-API: 484 Calls (Used: 486 | Rem: 14)
-MLB-STATS-API: 296 Total Calls
+ODDS-API: 485 Calls (Used: 487 | Rem: 13)
+MLB-STATS-API: 282 Total Calls
 ==================================================
 GAME: New York Yankees @ Chicago Cubs (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Chicago Cubs Hitting (vs Will Warren):
     - Pete Crow-Armstrong: 0/3 BvP | Baseline (2026 Season OBP): 0.382 -> Smoothed OBP: 0.294 (AB: 3)
-    - Seiya Suzuki: 1/3 BvP | Baseline (2026 Season OBP): 0.361 -> Smoothed OBP: 0.355 (AB: 3)
+    - Pedro Ramírez: NO HISTORY | Baseline (2026 Season OBP): 0.364 -> Smoothed OBP: 0.364
     - Michael Busch: 1/3 BvP | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.353 (AB: 3)
     - Alex Bregman: 2/6 BvP | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.338 (AB: 4)
     - Ian Happ: 2/3 BvP | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.408 (AB: 2)
     - Nico Hoerner: 0/2 BvP | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.267 (AB: 2)
-    - Aaron Civale: NO HISTORY | Baseline (Rookie (League Default)): 0.320 -> Smoothed OBP: 0.320
-    - Carson Kelly: 2/3 BvP | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.422 (AB: 3)
+    - Michael Conforto: 0/1 BvP | Baseline (2026 Season OBP): 0.332 -> Smoothed OBP: 0.302 (AB: 0)
     - Dansby Swanson: 0/2 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.246 (AB: 2)
-  Aggregated Home OBP: 0.334 (Total AB: 22)
+    - Miguel Amaya: NO HISTORY | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.354
+  Aggregated Home OBP: 0.325 (Total AB: 16)
   New York Yankees Hitting (vs Shota Imanaga):
-    - Trent Grisham: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
-    - Ben Rice: NO HISTORY | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.359
-    - Jasson Domínguez: 0/2 BvP | Baseline (2026 Season OBP): 0.272 -> Smoothed OBP: 0.227 (AB: 2)
     - Paul Goldschmidt: 3/10 BvP | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.307 (AB: 10)
-    - Max Schuemann: 0/2 BvP | Baseline (2026 Season OBP): 0.345 -> Smoothed OBP: 0.287 (AB: 2)
-    - José Caballero: NO HISTORY | Baseline (2026 Season OBP): 0.289 -> Smoothed OBP: 0.289
+    - Ben Rice: NO HISTORY | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.359
+    - Amed Rosario: NO HISTORY | Baseline (2026 Season OBP): 0.276 -> Smoothed OBP: 0.276
+    - Jasson Domínguez: 0/2 BvP | Baseline (2026 Season OBP): 0.272 -> Smoothed OBP: 0.227 (AB: 2)
+    - Trent Grisham: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
     - Anthony Volpe: 0/2 BvP | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.279 (AB: 2)
-    - Ryan McMahon: 0/2 BvP | Baseline (2026 Season OBP): 0.270 -> Smoothed OBP: 0.225 (AB: 2)
+    - Spencer Jones: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
     - Ali Sánchez: 1/3 BvP | Baseline (2026 Season OBP): 0.283 -> Smoothed OBP: 0.295 (AB: 3)
-  Aggregated Away OBP: 0.287 (Total AB: 21)
-  PROJECTION: Chicago Cubs | 4.62% Edge
+    - José Caballero: NO HISTORY | Baseline (2026 Season OBP): 0.289 -> Smoothed OBP: 0.289
+  Aggregated Away OBP: 0.296 (Total AB: 17)
+  PROJECTION: Chicago Cubs | 2.88% Edge
 --------------------------------------------------
 GAME: Pittsburgh Pirates @ Cincinnati Reds (G1)
   Lineup Source: Starters of Last Game
@@ -266,32 +266,6 @@ GAME: Milwaukee Brewers @ Los Angeles Angels (G1)
     - Cooper Pratt: NO HISTORY | Baseline (2026 Season OBP): 0.367 -> Smoothed OBP: 0.367
   Aggregated Away OBP: 0.356 (Total AB: 1)
   PROJECTION: Milwaukee Brewers | 3.44% Edge
---------------------------------------------------
-GAME: Detroit Tigers @ Athletics (G1)
-  Lineup Source: Starters of Last Game
-  Athletics Hitting (vs Casey Mize):
-    - Nick Kurtz: 3/3 BvP | Baseline (2026 Season OBP): 0.397 -> Smoothed OBP: 0.536 (AB: 2)
-    - Jacob Wilson: NO HISTORY | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.306
-    - Tyler Soderstrom: 1/2 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.365 (AB: 2)
-    - Brian Serven: NO HISTORY | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.286
-    - Tommy White: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
-    - Lawrence Butler: 0/2 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.258 (AB: 2)
-    - Jeff McNeil: 1/4 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.291 (AB: 4)
-    - Alika Williams: 1/2 BvP | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.323 (AB: 2)
-    - Colby Thomas: NO HISTORY | Baseline (2026 Season OBP): 0.235 -> Smoothed OBP: 0.235
-  Aggregated Home OBP: 0.324 (Total AB: 12)
-  Detroit Tigers Hitting (vs Jeffrey Springs):
-    - James Outman: NO HISTORY | Baseline (2026 Season OBP): 0.223 -> Smoothed OBP: 0.223
-    - Kevin McGonigle: NO HISTORY | Baseline (2026 Season OBP): 0.388 -> Smoothed OBP: 0.388
-    - Ben Malgeri: NO HISTORY | Baseline (2026 Season OBP): 0.381 -> Smoothed OBP: 0.381
-    - Dillon Dingler: NO HISTORY | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333
-    - Riley Greene: 0/8 BvP | Baseline (2026 Season OBP): 0.370 -> Smoothed OBP: 0.206 (AB: 7)
-    - Eduardo Valencia: NO HISTORY | Baseline (2026 Season OBP): 0.417 -> Smoothed OBP: 0.417
-    - Spencer Torkelson: 1/4 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.287 (AB: 4)
-    - Zach McKinstry: 1/2 BvP | Baseline (2026 Season OBP): 0.283 -> Smoothed OBP: 0.319 (AB: 2)
-    - Javier Báez: 4/8 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.393 (AB: 7)
-  Aggregated Away OBP: 0.327 (Total AB: 20)
-  PROJECTION: Detroit Tigers | 0.3% Edge
 --------------------------------------------------
 GAME: San Francisco Giants @ San Diego Padres (G1)
   Lineup Source: Starters of Last Game
