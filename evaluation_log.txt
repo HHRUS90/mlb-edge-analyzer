@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/03/2026 (01:00 PM MDT)
+DETAILED EVALUATION LOG - 08/03/2026 (02:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 6/15 (40.0%) | -$262.99
 LIFETIME: 377/718 (52.5%) | +$95.41
 BEST PICKS LIFETIME: 31/55 (56.4%) | +$147.02
-ODDS-API: 38 Calls (Used: 38 | Rem: 462)
-MLB-STATS-API: 134 Total Calls
+ODDS-API: 39 Calls (Used: 39 | Rem: 461)
+MLB-STATS-API: 167 Total Calls
 ==================================================
 GAME: Washington Nationals @ Philadelphia Phillies (G1)
   Lineup Source: Starters of Last Game
@@ -84,6 +84,32 @@ GAME: Pittsburgh Pirates @ Milwaukee Brewers (G1)
     - Jhostynxon Garcia: NO HISTORY | Baseline (2026 Season OBP): 0.213 -> Smoothed OBP: 0.213
   Aggregated Away OBP: 0.338 (Total AB: 0)
   PROJECTION: Milwaukee Brewers | 5.23% Edge
+--------------------------------------------------
+GAME: San Francisco Giants @ Texas Rangers (G1)
+  Lineup Source: Starters of Last Game
+  Texas Rangers Hitting (vs Logan Webb):
+    - Joc Pederson: 4/16 BvP | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.285 (AB: 13)
+    - Wyatt Langford: 1/3 BvP | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.321 (AB: 3)
+    - Corey Seager: 2/11 BvP | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.236 (AB: 11)
+    - Brandon Nimmo: 6/23 BvP | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.285 (AB: 20)
+    - Evan Carter: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
+    - Jake Burger: NO HISTORY | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.296
+    - Ezequiel Duran: 4/6 BvP | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.449 (AB: 5)
+    - Austin Wynns: 1/2 BvP | Baseline (2026 Season OBP): 0.141 -> Smoothed OBP: 0.201 (AB: 2)
+    - Nicky Lopez: 2/9 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.277 (AB: 9)
+  Aggregated Home OBP: 0.297 (Total AB: 63)
+  San Francisco Giants Hitting (vs Cal Quantrill):
+    - ID:650333: 8/33 BvP | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.270 (AB: 32)
+    - Bryce Eldridge: NO HISTORY | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.348
+    - Heliot Ramos: 2/8 BvP | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.280 (AB: 7)
+    - Rafael Devers: 8/15 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.450 (AB: 14)
+    - Jung Hoo Lee: 2/5 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.359 (AB: 5)
+    - Willy Adames: 3/10 BvP | Baseline (2026 Season OBP): 0.281 -> Smoothed OBP: 0.291 (AB: 9)
+    - Christian Koss: 1/2 BvP | Baseline (2026 Season OBP): 0.222 -> Smoothed OBP: 0.268 (AB: 2)
+    - Daniel Susac: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
+    - Grant McCray: NO HISTORY | Baseline (2026 Season OBP): 0.217 -> Smoothed OBP: 0.217
+  Aggregated Away OBP: 0.310 (Total AB: 69)
+  PROJECTION: San Francisco Giants | 1.31% Edge
 --------------------------------------------------
 GAME: Toronto Blue Jays @ Houston Astros (G1)
   Lineup Source: Starters of Last Game
