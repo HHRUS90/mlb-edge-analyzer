@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/05/2026 (04:00 PM MDT)
+DETAILED EVALUATION LOG - 08/05/2026 (05:00 PM MDT)
 ==================================================
 📊 TODAY: 1/4 (25.0%) | -$213.79
 📊 YESTERDAY: 8/15 (53.3%) | +$1.97
 LIFETIME: 391/745 (52.5%) | +$364.52
 BEST PICKS LIFETIME: 32/58 (55.2%) | +$71.02
-ODDS-API: 73 Calls (Used: 73 | Rem: 427)
-MLB-STATS-API: 246 Total Calls
+ODDS-API: 74 Calls (Used: 74 | Rem: 426)
+MLB-STATS-API: 139 Total Calls
 ==================================================
 GAME: Toronto Blue Jays @ Houston Astros (G1)
   Lineup Source: Official Boxscore
@@ -346,33 +346,33 @@ GAME: Pittsburgh Pirates @ Milwaukee Brewers (G1)
   PROJECTION: Pittsburgh Pirates | 0.99% Edge
 --------------------------------------------------
 GAME: San Diego Padres @ Arizona Diamondbacks (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Arizona Diamondbacks Hitting (vs Casey Mize):
+    - Lars Nootbaar: 0/2 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.281 (AB: 2)
     - Corbin Carroll: 3/5 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.425 (AB: 4)
     - Geraldo Perdomo: 2/5 BvP | Baseline (2026 Season OBP): 0.361 -> Smoothed OBP: 0.374 (AB: 3)
-    - Jorge Barrosa: NO HISTORY | Baseline (2026 Season OBP): 0.277 -> Smoothed OBP: 0.277
-    - Ketel Marte: 1/5 BvP | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.269 (AB: 5)
-    - Nolan Arenado: 0/2 BvP | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.271 (AB: 2)
-    - Lars Nootbaar: 0/2 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.281 (AB: 2)
+    - Gabriel Moreno: 1/3 BvP | Baseline (2026 Season OBP): 0.380 -> Smoothed OBP: 0.369 (AB: 3)
     - Tim Tawa: NO HISTORY | Baseline (2026 Season OBP): 0.273 -> Smoothed OBP: 0.273
+    - Ildemaro Vargas: 0/2 BvP | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.264 (AB: 1)
     - James McCann: 2/5 BvP | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.360 (AB: 3)
+    - Tyler Locklear: NO HISTORY | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.355
     - Ryan Waldschmidt: NO HISTORY | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.329
-  Aggregated Home OBP: 0.318 (Total AB: 19)
+  Aggregated Home OBP: 0.337 (Total AB: 16)
   San Diego Padres Hitting (vs Mitch Bratt):
-    - Gage Workman: NO HISTORY | Baseline (2026 Season OBP): 0.150 -> Smoothed OBP: 0.150
+    - Fernando Tatis Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.350 -> Smoothed OBP: 0.350
     - Luis Rengifo: NO HISTORY | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.321
     - Manny Machado: NO HISTORY | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.295
     - Ty France: NO HISTORY | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.343
     - Jackson Merrill: NO HISTORY | Baseline (2026 Season OBP): 0.292 -> Smoothed OBP: 0.292
-    - Sung-Mun Song: NO HISTORY | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.311
-    - Freddy Fermin: NO HISTORY | Baseline (2026 Season OBP): 0.270 -> Smoothed OBP: 0.270
+    - Xander Bogaerts: NO HISTORY | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.319
+    - Luis Campusano: NO HISTORY | Baseline (2026 Season OBP): 0.410 -> Smoothed OBP: 0.410
     - Jake Cronenworth: NO HISTORY | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.307
     - Jase Bowen: NO HISTORY | Baseline (2026 Season OBP): 0.208 -> Smoothed OBP: 0.208
-  Aggregated Away OBP: 0.277 (Total AB: 0)
-  PROJECTION: Arizona Diamondbacks | 4.02% Edge
+  Aggregated Away OBP: 0.316 (Total AB: 0)
+  PROJECTION: Arizona Diamondbacks | 2.05% Edge
 --------------------------------------------------
 GAME: Detroit Tigers @ Seattle Mariners (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Seattle Mariners Hitting (vs Drew Anderson):
     - Cole Young: 1/2 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.356 (AB: 2)
     - Randy Arozarena: 0/1 BvP | Baseline (2026 Season OBP): 0.377 -> Smoothed OBP: 0.343 (AB: 1)
@@ -386,14 +386,14 @@ GAME: Detroit Tigers @ Seattle Mariners (G1)
   Aggregated Home OBP: 0.330 (Total AB: 12)
   Detroit Tigers Hitting (vs Bryan Woo):
     - Kevin McGonigle: NO HISTORY | Baseline (2026 Season OBP): 0.391 -> Smoothed OBP: 0.391
-    - James Outman: NO HISTORY | Baseline (2026 Season OBP): 0.228 -> Smoothed OBP: 0.228
+    - Gleyber Torres: 4/8 BvP | Baseline (2026 Season OBP): 0.386 -> Smoothed OBP: 0.437 (AB: 8)
     - Dillon Dingler: 0/3 BvP | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.258 (AB: 3)
     - Riley Greene: NO HISTORY | Baseline (2026 Season OBP): 0.369 -> Smoothed OBP: 0.369
     - Colt Keith: 0/6 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.201 (AB: 6)
     - Spencer Torkelson: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
     - Max Clark: NO HISTORY | Baseline (2026 Season OBP): 0.500 -> Smoothed OBP: 0.500
-    - Hao-Yu Lee: NO HISTORY | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.297
+    - Eduardo Valencia: NO HISTORY | Baseline (2026 Season OBP): 0.469 -> Smoothed OBP: 0.469
     - Zach McKinstry: 2/5 BvP | Baseline (2026 Season OBP): 0.293 -> Smoothed OBP: 0.329 (AB: 4)
-  Aggregated Away OBP: 0.320 (Total AB: 13)
-  PROJECTION: Seattle Mariners | 0.96% Edge
+  Aggregated Away OBP: 0.362 (Total AB: 21)
+  PROJECTION: Detroit Tigers | 3.27% Edge
 --------------------------------------------------
