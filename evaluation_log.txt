@@ -1,25 +1,25 @@
-DETAILED EVALUATION LOG - 08/06/2026 (09:00 AM MDT)
+DETAILED EVALUATION LOG - 08/06/2026 (10:04 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 6/15 (40.0%) | -$372.99
 LIFETIME: 396/756 (52.4%) | +$205.32
 BEST PICKS LIFETIME: 32/58 (55.2%) | +$71.02
-ODDS-API: 82 Calls (Used: 82 | Rem: 418)
-MLB-STATS-API: 237 Total Calls
+ODDS-API: 83 Calls (Used: 83 | Rem: 417)
+MLB-STATS-API: 235 Total Calls
 ==================================================
 GAME: Los Angeles Angels @ Baltimore Orioles (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Baltimore Orioles Hitting (vs Ryan Johnson):
     - Dylan Beavers: NO HISTORY | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.325
     - Pete Alonso: NO HISTORY | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.342
     - Gunnar Henderson: NO HISTORY | Baseline (2026 Season OBP): 0.294 -> Smoothed OBP: 0.294
-    - Leody Taveras: 0/1 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.275 (AB: 1)
-    - Coby Mayo: NO HISTORY | Baseline (2026 Season OBP): 0.271 -> Smoothed OBP: 0.271
     - Christian Encarnacion-Strand: NO HISTORY | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.327
     - Jackson Holliday: NO HISTORY | Baseline (2026 Season OBP): 0.350 -> Smoothed OBP: 0.350
+    - Leody Taveras: 0/1 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.275 (AB: 1)
+    - Jeremiah Jackson: NO HISTORY | Baseline (2026 Season OBP): 0.266 -> Smoothed OBP: 0.266
     - Colton Cowser: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
-    - Carlos Narváez: NO HISTORY | Baseline (2026 Season OBP): 0.258 -> Smoothed OBP: 0.258
-  Aggregated Home OBP: 0.306 (Total AB: 1)
+    - Yohel Pozo: NO HISTORY | Baseline (2026 Season OBP): 0.225 -> Smoothed OBP: 0.225
+  Aggregated Home OBP: 0.302 (Total AB: 1)
   Los Angeles Angels Hitting (vs Brandon Young):
     - Wade Meckler: NO HISTORY | Baseline (2026 Season OBP): 0.376 -> Smoothed OBP: 0.376
     - Mike Trout: NO HISTORY | Baseline (2026 Season OBP): 0.386 -> Smoothed OBP: 0.386
@@ -31,7 +31,7 @@ GAME: Los Angeles Angels @ Baltimore Orioles (G1)
     - Josh Lowe: NO HISTORY | Baseline (2026 Season OBP): 0.255 -> Smoothed OBP: 0.255
     - Oswald Peraza: NO HISTORY | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.282
   Aggregated Away OBP: 0.322 (Total AB: 0)
-  PROJECTION: Los Angeles Angels | 1.56% Edge
+  PROJECTION: Los Angeles Angels | 1.98% Edge
 --------------------------------------------------
 GAME: Athletics @ Cincinnati Reds (G1)
   Lineup Source: Official Boxscore
@@ -112,30 +112,30 @@ GAME: Pittsburgh Pirates @ Milwaukee Brewers (G1)
   PROJECTION: Pittsburgh Pirates | 5.04% Edge
 --------------------------------------------------
 GAME: Toronto Blue Jays @ Chicago Cubs (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Chicago Cubs Hitting (vs Dylan Cease):
     - Pete Crow-Armstrong: 0/1 BvP | Baseline (2026 Season OBP): 0.386 -> Smoothed OBP: 0.351 (AB: 1)
     - Seiya Suzuki: 1/2 BvP | Baseline (2026 Season OBP): 0.366 -> Smoothed OBP: 0.388 (AB: 2)
-    - Alex Bregman: 3/15 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.255 (AB: 15)
-    - Miguel Amaya: 1/4 BvP | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.315 (AB: 4)
     - Michael Busch: 3/9 BvP | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.345 (AB: 8)
-    - Nico Hoerner: 6/13 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.401 (AB: 9)
+    - Alex Bregman: 3/15 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.255 (AB: 15)
     - Ian Happ: 0/2 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.272 (AB: 2)
+    - Nico Hoerner: 6/13 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.401 (AB: 9)
+    - Michael Conforto: 8/21 BvP | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.363 (AB: 19)
     - Dansby Swanson: 0/5 BvP | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.197 (AB: 5)
-    - Tyrone Taylor: 1/6 BvP | Baseline (2026 Season OBP): 0.290 -> Smoothed OBP: 0.244 (AB: 6)
-  Aggregated Home OBP: 0.308 (Total AB: 52)
+    - Miguel Amaya: 1/4 BvP | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.315 (AB: 4)
+  Aggregated Home OBP: 0.321 (Total AB: 65)
   Toronto Blue Jays Hitting (vs David Peterson):
-    - Nathan Lukes: NO HISTORY | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.323
-    - Kazuma Okamoto: NO HISTORY | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.302
-    - Jesús Sánchez: 0/3 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.241 (AB: 3)
-    - George Springer: 1/3 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.324 (AB: 3)
-    - Alejandro Kirk: 2/5 BvP | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.343 (AB: 5)
-    - Luis Urías: 2/7 BvP | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.304 (AB: 6)
-    - Ernie Clement: 3/5 BvP | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.407 (AB: 3)
-    - Andrés Giménez: 1/3 BvP | Baseline (2026 Season OBP): 0.273 -> Smoothed OBP: 0.287 (AB: 2)
     - Myles Straw: 1/2 BvP | Baseline (2026 Season OBP): 0.284 -> Smoothed OBP: 0.320 (AB: 2)
-  Aggregated Away OBP: 0.317 (Total AB: 24)
-  PROJECTION: Toronto Blue Jays | 0.91% Edge
+    - Kazuma Okamoto: NO HISTORY | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.302
+    - Alejandro Kirk: 2/5 BvP | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.343 (AB: 5)
+    - George Springer: 1/3 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.324 (AB: 3)
+    - Nathan Lukes: NO HISTORY | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.323
+    - Ernie Clement: 3/5 BvP | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.407 (AB: 3)
+    - Luis Urías: 2/7 BvP | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.304 (AB: 6)
+    - Davis Schneider: 1/4 BvP | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.271 (AB: 4)
+    - Andrés Giménez: 1/3 BvP | Baseline (2026 Season OBP): 0.273 -> Smoothed OBP: 0.287 (AB: 2)
+  Aggregated Away OBP: 0.320 (Total AB: 25)
+  PROJECTION: Chicago Cubs | 0.08% Edge
 --------------------------------------------------
 GAME: Detroit Tigers @ Seattle Mariners (G1)
   Lineup Source: Starters of Last Game
