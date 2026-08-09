@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/09/2026 (10:00 AM MDT)
+DETAILED EVALUATION LOG - 08/09/2026 (11:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 11/15 (73.3%) | +$727.12
 LIFETIME: 418/797 (52.4%) | +$389.26
 BEST PICKS LIFETIME: 34/61 (55.7%) | +$140.46
-ODDS-API: 127 Calls (Used: 127 | Rem: 373)
-MLB-STATS-API: 298 Total Calls
+ODDS-API: 128 Calls (Used: 128 | Rem: 372)
+MLB-STATS-API: 285 Total Calls
 ==================================================
 GAME: Cincinnati Reds @ Washington Nationals (G1)
   Lineup Source: Official Boxscore
@@ -268,7 +268,7 @@ GAME: Colorado Rockies @ St. Louis Cardinals (G1)
   PROJECTION: St. Louis Cardinals | 0.11% Edge
 --------------------------------------------------
 GAME: Baltimore Orioles @ Texas Rangers (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Texas Rangers Hitting (vs Cade Povich):
     - Wyatt Langford: 1/2 BvP | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.346 (AB: 2)
     - Corey Seager: 2/3 BvP | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.388 (AB: 2)
@@ -282,30 +282,30 @@ GAME: Baltimore Orioles @ Texas Rangers (G1)
   Aggregated Home OBP: 0.326 (Total AB: 8)
   Baltimore Orioles Hitting (vs Kumar Rocker):
     - Gunnar Henderson: NO HISTORY | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.295
-    - Christian Franklin: NO HISTORY | Baseline (2026 Season OBP): 0.222 -> Smoothed OBP: 0.222
+    - Pete Alonso: NO HISTORY | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.340
     - Jackson Holliday: NO HISTORY | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.349
     - Tyler O'Neill: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
     - Dylan Beavers: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
     - Leody Taveras: NO HISTORY | Baseline (2026 Season OBP): 0.301 -> Smoothed OBP: 0.301
-    - Christian Encarnacion-Strand: 0/2 BvP | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.258 (AB: 2)
     - Coby Mayo: NO HISTORY | Baseline (2026 Season OBP): 0.270 -> Smoothed OBP: 0.270
+    - Colton Cowser: NO HISTORY | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.312
     - Carlos Narváez: NO HISTORY | Baseline (2026 Season OBP): 0.255 -> Smoothed OBP: 0.255
-  Aggregated Away OBP: 0.287 (Total AB: 2)
-  PROJECTION: Texas Rangers | 3.83% Edge
+  Aggregated Away OBP: 0.306 (Total AB: 0)
+  PROJECTION: Texas Rangers | 1.92% Edge
 --------------------------------------------------
 GAME: Detroit Tigers @ San Francisco Giants (G1)
   Lineup Source: Starters of Last Game
   San Francisco Giants Hitting (vs Troy Melton):
     - Bryce Eldridge: NO HISTORY | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.342
-    - Nate Furman: NO HISTORY | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.250
-    - Buddy Kennedy: NO HISTORY | Baseline (2026 Season OBP): 0.154 -> Smoothed OBP: 0.154
-    - Grant McCray: NO HISTORY | Baseline (2026 Season OBP): 0.270 -> Smoothed OBP: 0.270
+    - Jung Hoo Lee: NO HISTORY | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.337
+    - Willy Adames: NO HISTORY | Baseline (2026 Season OBP): 0.279 -> Smoothed OBP: 0.279
+    - Rafael Devers: NO HISTORY | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.319
     - Osleivis Basabe: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
     - Drew Gilbert: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
-    - Eddys Leonard: NO HISTORY | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.250
     - Daniel Susac: NO HISTORY | Baseline (2026 Season OBP): 0.293 -> Smoothed OBP: 0.293
+    - Grant McCray: NO HISTORY | Baseline (2026 Season OBP): 0.270 -> Smoothed OBP: 0.270
     - Christian Koss: NO HISTORY | Baseline (2026 Season OBP): 0.193 -> Smoothed OBP: 0.193
-  Aggregated Home OBP: 0.265 (Total AB: 0)
+  Aggregated Home OBP: 0.296 (Total AB: 0)
   Detroit Tigers Hitting (vs Logan Webb):
     - Kevin McGonigle: NO HISTORY | Baseline (2026 Season OBP): 0.392 -> Smoothed OBP: 0.392
     - James Outman: 6/11 BvP | Baseline (2026 Season OBP): 0.232 -> Smoothed OBP: 0.396 (AB: 9)
@@ -317,7 +317,7 @@ GAME: Detroit Tigers @ San Francisco Giants (G1)
     - Hao-Yu Lee: NO HISTORY | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.296
     - Zach McKinstry: 0/7 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.178 (AB: 7)
   Aggregated Away OBP: 0.328 (Total AB: 25)
-  PROJECTION: Detroit Tigers | 6.3% Edge
+  PROJECTION: Detroit Tigers | 3.18% Edge
 --------------------------------------------------
 GAME: Los Angeles Dodgers @ Arizona Diamondbacks (G1)
   Lineup Source: Starters of Last Game
@@ -336,14 +336,14 @@ GAME: Los Angeles Dodgers @ Arizona Diamondbacks (G1)
     - Shohei Ohtani: 11/26 BvP | Baseline (2026 Season OBP): 0.398 -> Smoothed OBP: 0.416 (AB: 20)
     - Andy Pages: 2/7 BvP | Baseline (2026 Season OBP): 0.336 -> Smoothed OBP: 0.315 (AB: 7)
     - Freddie Freeman: 12/20 BvP | Baseline (2026 Season OBP): 0.378 -> Smoothed OBP: 0.526 (AB: 17)
-    - Max Muncy: 0/6 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.214 (AB: 6)
+    - Tommy Edman: 0/2 BvP | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.298 (AB: 2)
     - Mookie Betts: 5/16 BvP | Baseline (2026 Season OBP): 0.287 -> Smoothed OBP: 0.303 (AB: 13)
     - Kyle Tucker: 5/21 BvP | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.271 (AB: 18)
-    - Tommy Edman: 0/2 BvP | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.298 (AB: 2)
     - Teoscar Hernández: 10/29 BvP | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.338 (AB: 28)
-    - Hunter Feduccia: NO HISTORY | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.307
-  Aggregated Away OBP: 0.332 (Total AB: 111)
-  PROJECTION: Los Angeles Dodgers | 0.48% Edge
+    - Enrique Hernández: 8/15 BvP | Baseline (2026 Season OBP): 0.263 -> Smoothed OBP: 0.425 (AB: 15)
+    - Ben Rortvedt: NO HISTORY | Baseline (Rookie (League Default)): 0.310 -> Smoothed OBP: 0.310
+  Aggregated Away OBP: 0.356 (Total AB: 120)
+  PROJECTION: Los Angeles Dodgers | 2.86% Edge
 --------------------------------------------------
 GAME: Tampa Bay Rays @ Seattle Mariners (G1)
   Lineup Source: Starters of Last Game
