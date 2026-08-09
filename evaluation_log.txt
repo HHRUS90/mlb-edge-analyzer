@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/09/2026 (11:00 AM MDT)
+DETAILED EVALUATION LOG - 08/09/2026 (12:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 11/15 (73.3%) | +$727.12
 LIFETIME: 418/797 (52.4%) | +$389.26
 BEST PICKS LIFETIME: 34/61 (55.7%) | +$140.46
-ODDS-API: 128 Calls (Used: 128 | Rem: 372)
-MLB-STATS-API: 285 Total Calls
+ODDS-API: 129 Calls (Used: 129 | Rem: 371)
+MLB-STATS-API: 119 Total Calls
 ==================================================
 GAME: Cincinnati Reds @ Washington Nationals (G1)
   Lineup Source: Official Boxscore
@@ -294,7 +294,7 @@ GAME: Baltimore Orioles @ Texas Rangers (G1)
   PROJECTION: Texas Rangers | 1.92% Edge
 --------------------------------------------------
 GAME: Detroit Tigers @ San Francisco Giants (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   San Francisco Giants Hitting (vs Troy Melton):
     - Bryce Eldridge: NO HISTORY | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.342
     - Jung Hoo Lee: NO HISTORY | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.337
@@ -308,16 +308,16 @@ GAME: Detroit Tigers @ San Francisco Giants (G1)
   Aggregated Home OBP: 0.296 (Total AB: 0)
   Detroit Tigers Hitting (vs Logan Webb):
     - Kevin McGonigle: NO HISTORY | Baseline (2026 Season OBP): 0.392 -> Smoothed OBP: 0.392
-    - James Outman: 6/11 BvP | Baseline (2026 Season OBP): 0.232 -> Smoothed OBP: 0.396 (AB: 9)
+    - Gleyber Torres: 4/9 BvP | Baseline (2026 Season OBP): 0.378 -> Smoothed OBP: 0.409 (AB: 7)
     - Dillon Dingler: 0/6 BvP | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.213 (AB: 6)
-    - Ben Malgeri: NO HISTORY | Baseline (2026 Season OBP): 0.404 -> Smoothed OBP: 0.404
-    - Eduardo Valencia: NO HISTORY | Baseline (2026 Season OBP): 0.410 -> Smoothed OBP: 0.410
+    - Riley Greene: 3/6 BvP | Baseline (2026 Season OBP): 0.368 -> Smoothed OBP: 0.417 (AB: 6)
+    - Colt Keith: 1/6 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.265 (AB: 6)
     - Spencer Torkelson: 0/3 BvP | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.242 (AB: 3)
     - Max Clark: NO HISTORY | Baseline (2026 Season OBP): 0.421 -> Smoothed OBP: 0.421
-    - Hao-Yu Lee: NO HISTORY | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.296
+    - Eduardo Valencia: NO HISTORY | Baseline (2026 Season OBP): 0.410 -> Smoothed OBP: 0.410
     - Zach McKinstry: 0/7 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.178 (AB: 7)
-  Aggregated Away OBP: 0.328 (Total AB: 25)
-  PROJECTION: Detroit Tigers | 3.18% Edge
+  Aggregated Away OBP: 0.327 (Total AB: 35)
+  PROJECTION: Detroit Tigers | 3.13% Edge
 --------------------------------------------------
 GAME: Los Angeles Dodgers @ Arizona Diamondbacks (G1)
   Lineup Source: Starters of Last Game
@@ -354,10 +354,10 @@ GAME: Tampa Bay Rays @ Seattle Mariners (G1)
     - Dominic Canzone: 0/1 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.295 (AB: 1)
     - Julio Rodríguez: 0/1 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.294 (AB: 1)
     - Josh Naylor: 1/1 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.387 (AB: 1)
-    - Brendan Donovan: NO HISTORY | Baseline (2026 Season OBP): 0.365 -> Smoothed OBP: 0.365
     - Cal Raleigh: 1/1 BvP | Baseline (2026 Season OBP): 0.270 -> Smoothed OBP: 0.336 (AB: 0)
+    - Weston Wilson: NO HISTORY | Baseline (2026 Season OBP): 0.287 -> Smoothed OBP: 0.287
     - Colt Emerson: NO HISTORY | Baseline (2026 Season OBP): 0.258 -> Smoothed OBP: 0.258
-  Aggregated Home OBP: 0.336 (Total AB: 6)
+  Aggregated Home OBP: 0.327 (Total AB: 6)
   Tampa Bay Rays Hitting (vs Emerson Hancock):
     - Yandy Díaz: 2/2 BvP | Baseline (2026 Season OBP): 0.365 -> Smoothed OBP: 0.471 (AB: 2)
     - Jonathan Aranda: NO HISTORY | Baseline (2026 Season OBP): 0.374 -> Smoothed OBP: 0.374
@@ -369,5 +369,5 @@ GAME: Tampa Bay Rays @ Seattle Mariners (G1)
     - Richie Palacios: NO HISTORY | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333
     - Taylor Walls: NO HISTORY | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.304
   Aggregated Away OBP: 0.363 (Total AB: 6)
-  PROJECTION: Tampa Bay Rays | 2.68% Edge
+  PROJECTION: Tampa Bay Rays | 3.55% Edge
 --------------------------------------------------
