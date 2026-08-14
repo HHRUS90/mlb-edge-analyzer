@@ -1,10 +1,10 @@
-DETAILED EVALUATION LOG - 08/13/2026 (05:00 PM MDT)
+DETAILED EVALUATION LOG - 08/13/2026 (06:00 PM MDT)
 ==================================================
 📊 TODAY: 2/6 (33.3%) | -$216.57
 📊 YESTERDAY: 9/15 (60.0%) | +$338.54
 LIFETIME: 450/858 (52.4%) | +$404.62
 BEST PICKS LIFETIME: 35/66 (53.0%) | -$177.57
-ODDS-API: 198 Calls (Used: 198 | Rem: 302)
+ODDS-API: 199 Calls (Used: 199 | Rem: 301)
 MLB-STATS-API: 62 Total Calls
 ==================================================
 GAME: Cleveland Guardians @ Detroit Tigers (G1)
@@ -190,33 +190,33 @@ GAME: Philadelphia Phillies @ Minnesota Twins (G1)
   PROJECTION: Philadelphia Phillies | 4.96% Edge
 --------------------------------------------------
 GAME: Texas Rangers @ Los Angeles Angels (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Angels Hitting (vs Jacob deGrom):
     - Wade Meckler: 2/2 BvP | Baseline (2026 Season OBP): 0.370 -> Smoothed OBP: 0.475 (AB: 1)
     - Mike Trout: 6/11 BvP | Baseline (2026 Season OBP): 0.386 -> Smoothed OBP: 0.470 (AB: 6)
     - Nolan Schanuel: 1/8 BvP | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.248 (AB: 8)
-    - Zach Neto: 6/11 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.433 (AB: 10)
-    - Moisés Ballesteros: 0/3 BvP | Baseline (2026 Season OBP): 0.292 -> Smoothed OBP: 0.225 (AB: 3)
     - Vaughn Grissom: 1/3 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.316 (AB: 3)
+    - Moisés Ballesteros: 0/3 BvP | Baseline (2026 Season OBP): 0.292 -> Smoothed OBP: 0.225 (AB: 3)
+    - Denzer Guzman: NO HISTORY | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.278
+    - Josh Lowe: NO HISTORY | Baseline (2026 Season OBP): 0.262 -> Smoothed OBP: 0.262
     - Jose Siri: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
     - Adam Frazier: 5/12 BvP | Baseline (2026 Season OBP): 0.287 -> Smoothed OBP: 0.358 (AB: 12)
-    - Denzer Guzman: NO HISTORY | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.278
-  Aggregated Home OBP: 0.347 (Total AB: 43)
+  Aggregated Home OBP: 0.328 (Total AB: 33)
   Texas Rangers Hitting (vs Walbert Ureña):
-    - Justin Foscue: 0/2 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.269 (AB: 2)
-    - Brandon Nimmo: 1/3 BvP | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.340 (AB: 3)
-    - Corey Seager: NO HISTORY | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.300
-    - Ezequiel Duran: 0/2 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.270 (AB: 1)
-    - Jarred Kelenic: 1/2 BvP | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.331 (AB: 1)
-    - Jake Burger: 1/3 BvP | Baseline (2026 Season OBP): 0.293 -> Smoothed OBP: 0.302 (AB: 2)
+    - Joc Pederson: 1/3 BvP | Baseline (2026 Season OBP): 0.345 -> Smoothed OBP: 0.342 (AB: 3)
     - Wyatt Langford: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
-    - Elias Díaz: NO HISTORY | Baseline (2026 Season OBP): 0.263 -> Smoothed OBP: 0.263
+    - Corey Seager: NO HISTORY | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.300
+    - Brandon Nimmo: 1/3 BvP | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.340 (AB: 3)
+    - Ezequiel Duran: 0/2 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.270 (AB: 1)
+    - Evan Carter: 0/2 BvP | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.253 (AB: 2)
     - Nicky Lopez: NO HISTORY | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.312
-  Aggregated Away OBP: 0.300 (Total AB: 9)
-  PROJECTION: Los Angeles Angels | 4.62% Edge
+    - Austin Wynns: NO HISTORY | Baseline (2026 Season OBP): 0.177 -> Smoothed OBP: 0.177
+    - Justin Foscue: 0/2 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.269 (AB: 2)
+  Aggregated Away OBP: 0.287 (Total AB: 11)
+  PROJECTION: Los Angeles Angels | 4.1% Edge
 --------------------------------------------------
 GAME: Milwaukee Brewers @ Los Angeles Dodgers (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Dodgers Hitting (vs Shane Drohan):
     - Shohei Ohtani: 0/1 BvP | Baseline (2026 Season OBP): 0.393 -> Smoothed OBP: 0.357 (AB: 1)
     - Andy Pages: 1/3 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.336 (AB: 3)
@@ -230,14 +230,14 @@ GAME: Milwaukee Brewers @ Los Angeles Dodgers (G1)
   Aggregated Home OBP: 0.310 (Total AB: 12)
   Milwaukee Brewers Hitting (vs Roki Sasaki):
     - Jackson Chourio: 2/3 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.414 (AB: 3)
-    - Brice Turang: 2/3 BvP | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.431 (AB: 2)
-    - Luis Lara: NO HISTORY | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.329
-    - Jake Bauers: 1/1 BvP | Baseline (2026 Season OBP): 0.374 -> Smoothed OBP: 0.431 (AB: 1)
-    - Jihwan Bae: NO HISTORY | Baseline (2026 Season OBP): 0.667 -> Smoothed OBP: 0.667
-    - Gary Sánchez: 1/2 BvP | Baseline (2026 Season OBP): 0.379 -> Smoothed OBP: 0.399 (AB: 1)
     - Garrett Mitchell: NO HISTORY | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.353
-    - David Hamilton: 0/2 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.259 (AB: 2)
+    - Gary Sánchez: 1/2 BvP | Baseline (2026 Season OBP): 0.379 -> Smoothed OBP: 0.399 (AB: 1)
+    - Jake Bauers: 1/1 BvP | Baseline (2026 Season OBP): 0.374 -> Smoothed OBP: 0.431 (AB: 1)
+    - Andrew Vaughn: 0/2 BvP | Baseline (2026 Season OBP): 0.383 -> Smoothed OBP: 0.319 (AB: 2)
+    - Christian Yelich: 0/2 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.261 (AB: 2)
+    - William Contreras: 1/1 BvP | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.392 (AB: 1)
     - Joey Ortiz: 0/2 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.259 (AB: 2)
-  Aggregated Away OBP: 0.394 (Total AB: 11)
-  PROJECTION: Milwaukee Brewers | 8.39% Edge
+    - David Hamilton: 0/2 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.259 (AB: 2)
+  Aggregated Away OBP: 0.343 (Total AB: 14)
+  PROJECTION: Milwaukee Brewers | 3.34% Edge
 --------------------------------------------------
