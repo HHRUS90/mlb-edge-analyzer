@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/14/2026 (03:00 PM MDT)
+DETAILED EVALUATION LOG - 08/14/2026 (04:00 PM MDT)
 ==================================================
 📊 TODAY: 1/1 (100.0%) | +$54.35
 📊 YESTERDAY: 5/9 (55.6%) | +$124.18
 LIFETIME: 454/862 (52.7%) | +$799.72
 BEST PICKS LIFETIME: 37/67 (55.2%) | +$128.78
-ODDS-API: 212 Calls (Used: 212 | Rem: 288)
-MLB-STATS-API: 267 Total Calls
+ODDS-API: 213 Calls (Used: 213 | Rem: 287)
+MLB-STATS-API: 242 Total Calls
 ==================================================
 GAME: St. Louis Cardinals @ Chicago Cubs (G1)
   Lineup Source: Official Boxscore
@@ -268,30 +268,30 @@ GAME: Seattle Mariners @ Houston Astros (G1)
   PROJECTION: Houston Astros | 0.72% Edge
 --------------------------------------------------
 GAME: Kansas City Royals @ Los Angeles Angels (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Angels Hitting (vs Seth Lugo):
     - Wade Meckler: 0/2 BvP | Baseline (2026 Season OBP): 0.371 -> Smoothed OBP: 0.309 (AB: 2)
     - Mike Trout: 2/4 BvP | Baseline (2026 Season OBP): 0.388 -> Smoothed OBP: 0.420 (AB: 3)
     - Nolan Schanuel: 2/7 BvP | Baseline (2026 Season OBP): 0.350 -> Smoothed OBP: 0.324 (AB: 7)
-    - Vaughn Grissom: 0/1 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.281 (AB: 1)
+    - Zach Neto: 3/10 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.304 (AB: 10)
     - Moisés Ballesteros: NO HISTORY | Baseline (2026 Season OBP): 0.290 -> Smoothed OBP: 0.290
-    - Denzer Guzman: NO HISTORY | Baseline (2026 Season OBP): 0.289 -> Smoothed OBP: 0.289
+    - Vaughn Grissom: 0/1 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.281 (AB: 1)
     - Josh Lowe: 2/3 BvP | Baseline (2026 Season OBP): 0.266 -> Smoothed OBP: 0.358 (AB: 3)
-    - Jose Siri: 0/3 BvP | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.242 (AB: 3)
-    - Adam Frazier: 2/7 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.291 (AB: 7)
-  Aggregated Home OBP: 0.312 (Total AB: 26)
+    - Denzer Guzman: NO HISTORY | Baseline (2026 Season OBP): 0.289 -> Smoothed OBP: 0.289
+    - Tyler Heineman: 0/1 BvP | Baseline (2026 Season OBP): 0.226 -> Smoothed OBP: 0.205 (AB: 1)
+  Aggregated Home OBP: 0.309 (Total AB: 27)
   Kansas City Royals Hitting (vs Grayson Rodriguez):
-    - Nick Loftin: NO HISTORY | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.328
+    - Carter Jensen: NO HISTORY | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.299
     - Bobby Witt Jr.: 2/3 BvP | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.427 (AB: 2)
     - Jac Caglianone: NO HISTORY | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.321
-    - Luke Maile: NO HISTORY | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.300
-    - John Rave: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
-    - Carter Jensen: NO HISTORY | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.299
-    - Isaac Collins: NO HISTORY | Baseline (2026 Season OBP): 0.332 -> Smoothed OBP: 0.332
+    - Nick Loftin: NO HISTORY | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.328
     - Michael Massey: 0/2 BvP | Baseline (2026 Season OBP): 0.290 -> Smoothed OBP: 0.242 (AB: 2)
+    - Isaac Collins: NO HISTORY | Baseline (2026 Season OBP): 0.332 -> Smoothed OBP: 0.332
+    - John Rave: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
     - Josh Rojas: 4/5 BvP | Baseline (2026 Season OBP): 0.267 -> Smoothed OBP: 0.445 (AB: 3)
-  Aggregated Away OBP: 0.333 (Total AB: 7)
-  PROJECTION: Kansas City Royals | 2.19% Edge
+    - Kyle Isbel: 1/2 BvP | Baseline (2026 Season OBP): 0.279 -> Smoothed OBP: 0.316 (AB: 2)
+  Aggregated Away OBP: 0.335 (Total AB: 9)
+  PROJECTION: Kansas City Royals | 2.62% Edge
 --------------------------------------------------
 GAME: Milwaukee Brewers @ Los Angeles Dodgers (G1)
   Lineup Source: Starters of Last Game
@@ -320,18 +320,18 @@ GAME: Milwaukee Brewers @ Los Angeles Dodgers (G1)
   PROJECTION: Los Angeles Dodgers | 1.37% Edge
 --------------------------------------------------
 GAME: Colorado Rockies @ San Francisco Giants (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   San Francisco Giants Hitting (vs Kyle Freeland):
-    - Jung Hoo Lee: 2/5 BvP | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.352 (AB: 4)
-    - Buddy Kennedy: 2/8 BvP | Baseline (2026 Season OBP): 0.148 -> Smoothed OBP: 0.193 (AB: 7)
-    - Bryce Eldridge: NO HISTORY | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.340
+    - Jonah Cox: NO HISTORY | Baseline (2026 Season OBP): 0.269 -> Smoothed OBP: 0.269
     - Rafael Devers: 2/7 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.306 (AB: 7)
+    - Bryce Eldridge: NO HISTORY | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.340
     - Victor Bericoto: NO HISTORY | Baseline (2026 Season OBP): 0.284 -> Smoothed OBP: 0.284
-    - Drew Gilbert: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
+    - Jung Hoo Lee: 2/5 BvP | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.352 (AB: 4)
     - Osleivis Basabe: NO HISTORY | Baseline (2026 Season OBP): 0.267 -> Smoothed OBP: 0.267
+    - Buddy Kennedy: 2/8 BvP | Baseline (2026 Season OBP): 0.148 -> Smoothed OBP: 0.193 (AB: 7)
     - Andrew Knizner: 0/4 BvP | Baseline (Rookie (League Default)): 0.310 -> Smoothed OBP: 0.221 (AB: 4)
     - Christian Koss: 1/2 BvP | Baseline (2026 Season OBP): 0.219 -> Smoothed OBP: 0.266 (AB: 2)
-  Aggregated Home OBP: 0.284 (Total AB: 24)
+  Aggregated Home OBP: 0.278 (Total AB: 24)
   Colorado Rockies Hitting (vs Landen Roupp):
     - Jake McCarthy: 0/3 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.259 (AB: 3)
     - Mickey Moniak: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
@@ -343,5 +343,5 @@ GAME: Colorado Rockies @ San Francisco Giants (G1)
     - Ezequiel Tovar: NO HISTORY | Baseline (2026 Season OBP): 0.252 -> Smoothed OBP: 0.252
     - Brett Sullivan: NO HISTORY | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.278
   Aggregated Away OBP: 0.297 (Total AB: 8)
-  PROJECTION: Colorado Rockies | 1.36% Edge
+  PROJECTION: Colorado Rockies | 1.95% Edge
 --------------------------------------------------
