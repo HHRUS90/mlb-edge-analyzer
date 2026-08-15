@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/15/2026 (03:00 PM MDT)
+DETAILED EVALUATION LOG - 08/15/2026 (04:00 PM MDT)
 ==================================================
-📊 TODAY: 0/2 (0.0%) | -$200.00
+📊 TODAY: 0/3 (0.0%) | -$300.00
 📊 YESTERDAY: 11/14 (78.6%) | +$871.93
-LIFETIME: 464/877 (52.9%) | +$1,417.30
+LIFETIME: 464/878 (52.8%) | +$1,317.30
 BEST PICKS LIFETIME: 37/68 (54.4%) | +$98.43
-ODDS-API: 228 Calls (Used: 228 | Rem: 272)
-MLB-STATS-API: 230 Total Calls
+ODDS-API: 229 Calls (Used: 229 | Rem: 271)
+MLB-STATS-API: 214 Total Calls
 ==================================================
 GAME: Chicago White Sox @ Detroit Tigers (G1)
   Lineup Source: Official Boxscore
@@ -346,44 +346,44 @@ GAME: Milwaukee Brewers @ Los Angeles Dodgers (G1)
   PROJECTION: Milwaukee Brewers | 2.76% Edge
 --------------------------------------------------
 GAME: Kansas City Royals @ Los Angeles Angels (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Angels Hitting (vs Randy Dobnak):
-    - Oswald Peraza: NO HISTORY | Baseline (2026 Season OBP): 0.276 -> Smoothed OBP: 0.276
+    - Wade Meckler: NO HISTORY | Baseline (2026 Season OBP): 0.367 -> Smoothed OBP: 0.367
     - Mike Trout: 1/1 BvP | Baseline (2026 Season OBP): 0.386 -> Smoothed OBP: 0.442 (AB: 1)
     - Nolan Schanuel: NO HISTORY | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.351
     - Zach Neto: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
     - Moisés Ballesteros: NO HISTORY | Baseline (2026 Season OBP): 0.284 -> Smoothed OBP: 0.284
-    - Vaughn Grissom: NO HISTORY | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.305
     - Josh Lowe: NO HISTORY | Baseline (2026 Season OBP): 0.266 -> Smoothed OBP: 0.266
     - Denzer Guzman: NO HISTORY | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.288
-    - Jose Siri: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
-  Aggregated Home OBP: 0.316 (Total AB: 1)
+    - Adam Frazier: 0/3 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.227 (AB: 3)
+    - Tyler Heineman: NO HISTORY | Baseline (2026 Season OBP): 0.243 -> Smoothed OBP: 0.243
+  Aggregated Home OBP: 0.309 (Total AB: 4)
   Kansas City Royals Hitting (vs Reid Detmers):
-    - Carter Jensen: 0/2 BvP | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.248 (AB: 2)
+    - Nick Loftin: 1/4 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.305 (AB: 4)
     - Bobby Witt Jr.: 4/12 BvP | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.345 (AB: 11)
     - Jac Caglianone: NO HISTORY | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.325
-    - Nick Loftin: 1/4 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.305 (AB: 4)
-    - Michael Massey: 2/7 BvP | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.292 (AB: 7)
+    - Salvador Perez: 3/10 BvP | Baseline (2026 Season OBP): 0.262 -> Smoothed OBP: 0.281 (AB: 8)
     - Isaac Collins: 1/2 BvP | Baseline (2026 Season OBP): 0.332 -> Smoothed OBP: 0.360 (AB: 2)
-    - John Rave: NO HISTORY | Baseline (2026 Season OBP): 0.291 -> Smoothed OBP: 0.291
-    - Josh Rojas: NO HISTORY | Baseline (2026 Season OBP): 0.253 -> Smoothed OBP: 0.253
-    - Kyle Isbel: 0/2 BvP | Baseline (2026 Season OBP): 0.279 -> Smoothed OBP: 0.233 (AB: 2)
-  Aggregated Away OBP: 0.295 (Total AB: 28)
-  PROJECTION: Los Angeles Angels | 2.12% Edge
+    - Michael Massey: 2/7 BvP | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.292 (AB: 7)
+    - Starling Marte: 2/5 BvP | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.335 (AB: 4)
+    - Luke Maile: NO HISTORY | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.300
+    - Tyler Tolbert: NO HISTORY | Baseline (2026 Season OBP): 0.370 -> Smoothed OBP: 0.370
+  Aggregated Away OBP: 0.324 (Total AB: 36)
+  PROJECTION: Kansas City Royals | 1.5% Edge
 --------------------------------------------------
 GAME: Texas Rangers @ Athletics (G1)
   Lineup Source: Starters of Last Game
   Athletics Hitting (vs MacKenzie Gore):
-    - Jeff McNeil: 10/16 BvP | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.507 (AB: 14)
-    - Alika Williams: 1/2 BvP | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.339 (AB: 2)
-    - Tyler Soderstrom: 3/8 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.354 (AB: 6)
+    - Henry Bolte: NO HISTORY | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.330
     - Zack Gelof: 1/6 BvP | Baseline (2026 Season OBP): 0.336 -> Smoothed OBP: 0.273 (AB: 5)
+    - Jeff McNeil: 10/16 BvP | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.507 (AB: 14)
+    - Jonah Heim: 1/3 BvP | Baseline (2026 Season OBP): 0.271 -> Smoothed OBP: 0.285 (AB: 3)
+    - Tommy White: NO HISTORY | Baseline (2026 Season OBP): 0.269 -> Smoothed OBP: 0.269
     - Lawrence Butler: 0/2 BvP | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.247 (AB: 2)
     - Max Muncy: 2/5 BvP | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.320 (AB: 3)
-    - Tommy White: NO HISTORY | Baseline (2026 Season OBP): 0.269 -> Smoothed OBP: 0.269
-    - Jonah Heim: 1/3 BvP | Baseline (2026 Season OBP): 0.271 -> Smoothed OBP: 0.285 (AB: 3)
-    - Henry Bolte: NO HISTORY | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.330
-  Aggregated Home OBP: 0.325 (Total AB: 35)
+    - Brian Serven: 2/2 BvP | Baseline (2026 Season OBP): 0.214 -> Smoothed OBP: 0.345 (AB: 1)
+    - Alika Williams: 1/2 BvP | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.339 (AB: 2)
+  Aggregated Home OBP: 0.324 (Total AB: 30)
   Texas Rangers Hitting (vs J.T. Ginn):
     - Wyatt Langford: 7/14 BvP | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.423 (AB: 13)
     - Brandon Nimmo: 3/8 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.354 (AB: 7)
@@ -395,5 +395,5 @@ GAME: Texas Rangers @ Athletics (G1)
     - Elias Díaz: NO HISTORY | Baseline (2026 Season OBP): 0.255 -> Smoothed OBP: 0.255
     - Evan Carter: 2/6 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.314 (AB: 4)
   Aggregated Away OBP: 0.306 (Total AB: 49)
-  PROJECTION: Athletics | 1.92% Edge
+  PROJECTION: Athletics | 1.81% Edge
 --------------------------------------------------
