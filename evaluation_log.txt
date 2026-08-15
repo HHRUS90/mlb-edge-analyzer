@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/14/2026 (05:00 PM MDT)
+DETAILED EVALUATION LOG - 08/14/2026 (06:00 PM MDT)
 ==================================================
 📊 TODAY: 1/1 (100.0%) | +$54.35
 📊 YESTERDAY: 5/9 (55.6%) | +$124.18
 LIFETIME: 454/862 (52.7%) | +$799.72
 BEST PICKS LIFETIME: 37/67 (55.2%) | +$128.78
-ODDS-API: 214 Calls (Used: 214 | Rem: 286)
-MLB-STATS-API: 114 Total Calls
+ODDS-API: 215 Calls (Used: 215 | Rem: 285)
+MLB-STATS-API: 150 Total Calls
 ==================================================
 GAME: St. Louis Cardinals @ Chicago Cubs (G1)
   Lineup Source: Official Boxscore
@@ -293,8 +293,34 @@ GAME: Kansas City Royals @ Los Angeles Angels (G1)
   Aggregated Away OBP: 0.335 (Total AB: 9)
   PROJECTION: Kansas City Royals | 2.62% Edge
 --------------------------------------------------
+GAME: Texas Rangers @ Athletics (G1)
+  Lineup Source: Official Boxscore
+  Athletics Hitting (vs Kumar Rocker):
+    - Jeff McNeil: 2/5 BvP | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.341 (AB: 4)
+    - Jacob Wilson: 5/9 BvP | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.421 (AB: 9)
+    - Tyler Soderstrom: 7/10 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.519 (AB: 7)
+    - Zack Gelof: 0/2 BvP | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.276 (AB: 2)
+    - Lawrence Butler: 2/9 BvP | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.262 (AB: 9)
+    - Carlos Cortes: 3/6 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.396 (AB: 5)
+    - Donovan Walton: NO HISTORY | Baseline (2026 Season OBP): 0.369 -> Smoothed OBP: 0.369
+    - Jonah Heim: NO HISTORY | Baseline (2026 Season OBP): 0.271 -> Smoothed OBP: 0.271
+    - Henry Bolte: NO HISTORY | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.335
+  Aggregated Home OBP: 0.354 (Total AB: 36)
+  Texas Rangers Hitting (vs Gage Jump):
+    - Wyatt Langford: NO HISTORY | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.315
+    - Brandon Nimmo: NO HISTORY | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.342
+    - Corey Seager: NO HISTORY | Baseline (2026 Season OBP): 0.301 -> Smoothed OBP: 0.301
+    - Ezequiel Duran: NO HISTORY | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.321
+    - Jake Burger: NO HISTORY | Baseline (2026 Season OBP): 0.293 -> Smoothed OBP: 0.293
+    - Justin Foscue: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
+    - Cody Freeman: NO HISTORY | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.278
+    - Elias Díaz: NO HISTORY | Baseline (2026 Season OBP): 0.261 -> Smoothed OBP: 0.261
+    - Evan Carter: NO HISTORY | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.303
+  Aggregated Away OBP: 0.303 (Total AB: 0)
+  PROJECTION: Athletics | 5.09% Edge
+--------------------------------------------------
 GAME: Milwaukee Brewers @ Los Angeles Dodgers (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Dodgers Hitting (vs Robert Gasser):
     - Shohei Ohtani: 0/1 BvP | Baseline (2026 Season OBP): 0.391 -> Smoothed OBP: 0.355 (AB: 1)
     - Andy Pages: 1/2 BvP | Baseline (2026 Season OBP): 0.334 -> Smoothed OBP: 0.362 (AB: 2)
@@ -307,15 +333,15 @@ GAME: Milwaukee Brewers @ Los Angeles Dodgers (G1)
     - Hunter Feduccia: NO HISTORY | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.306
   Aggregated Home OBP: 0.330 (Total AB: 11)
   Milwaukee Brewers Hitting (vs Yoshinobu Yamamoto):
-    - Jackson Chourio: 1/4 BvP | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.314 (AB: 4)
     - Garrett Mitchell: 2/3 BvP | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.424 (AB: 2)
-    - Luis Lara: NO HISTORY | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.329
+    - Jackson Chourio: 1/4 BvP | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.314 (AB: 4)
     - Jake Bauers: 0/3 BvP | Baseline (2026 Season OBP): 0.375 -> Smoothed OBP: 0.288 (AB: 3)
     - Andrew Vaughn: 0/4 BvP | Baseline (2026 Season OBP): 0.391 -> Smoothed OBP: 0.279 (AB: 4)
     - Christian Yelich: 0/1 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.283 (AB: 1)
     - William Contreras: 2/4 BvP | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.377 (AB: 3)
-    - Joey Ortiz: 1/3 BvP | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.321 (AB: 3)
+    - Luis Lara: NO HISTORY | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.329
     - David Hamilton: 0/3 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.241 (AB: 3)
+    - Joey Ortiz: 1/3 BvP | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.321 (AB: 3)
   Aggregated Away OBP: 0.317 (Total AB: 23)
   PROJECTION: Los Angeles Dodgers | 1.27% Edge
 --------------------------------------------------
