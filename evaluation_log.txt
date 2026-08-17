@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/17/2026 (04:00 PM MDT)
+DETAILED EVALUATION LOG - 08/17/2026 (05:00 PM MDT)
 ==================================================
 📊 TODAY: 1/1 (100.0%) | +$86.21
 📊 YESTERDAY: 6/15 (40.0%) | -$237.44
 LIFETIME: 477/906 (52.6%) | +$1,162.12
 BEST PICKS LIFETIME: 39/70 (55.7%) | +$324.64
-ODDS-API: 261 Calls (Used: 261 | Rem: 239)
-MLB-STATS-API: 202 Total Calls
+ODDS-API: 262 Calls (Used: 262 | Rem: 238)
+MLB-STATS-API: 121 Total Calls
 ==================================================
 GAME: St. Louis Cardinals @ Cincinnati Reds (G1)
   Lineup Source: Official Boxscore
@@ -138,7 +138,7 @@ GAME: Detroit Tigers @ Pittsburgh Pirates (G1)
   PROJECTION: Detroit Tigers | 1.96% Edge
 --------------------------------------------------
 GAME: Arizona Diamondbacks @ Boston Red Sox (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Boston Red Sox Hitting (vs Mitch Bratt):
     - Nick Sogard: NO HISTORY | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.353
     - Ceddanne Rafaela: NO HISTORY | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.323
@@ -151,17 +151,14 @@ GAME: Arizona Diamondbacks @ Boston Red Sox (G1)
     - Eli White: NO HISTORY | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.286
   Aggregated Home OBP: 0.330 (Total AB: 0)
   Arizona Diamondbacks Hitting (vs Alec Gamboa):
-    - Geraldo Perdomo: NO HISTORY | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.357
+    - Ildemaro Vargas: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
     - Corbin Carroll: NO HISTORY | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.344
     - Gabriel Moreno: NO HISTORY | Baseline (2026 Season OBP): 0.385 -> Smoothed OBP: 0.385
-    - Ketel Marte: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
-    - Max Kepler: NO HISTORY | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.282
-    - Ildemaro Vargas: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
+    - Geraldo Perdomo: NO HISTORY | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.357
+    - Jordan Lawlar: NO HISTORY | Baseline (2026 Season OBP): 0.409 -> Smoothed OBP: 0.409
     - Tim Tawa: NO HISTORY | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.286
-    - James McCann: NO HISTORY | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.330
-    - Jorge Barrosa: NO HISTORY | Baseline (2026 Season OBP): 0.284 -> Smoothed OBP: 0.284
-  Aggregated Away OBP: 0.322 (Total AB: 0)
-  PROJECTION: Boston Red Sox | 0.79% Edge
+  Aggregated Away OBP: 0.349 (Total AB: 0)
+  PROJECTION: Arizona Diamondbacks | 1.95% Edge
 --------------------------------------------------
 GAME: San Diego Padres @ New York Mets (G1)
   Lineup Source: Official Boxscore
@@ -204,16 +201,16 @@ GAME: Athletics @ Kansas City Royals (G1)
   Aggregated Home OBP: 0.294 (Total AB: 14)
   Athletics Hitting (vs Michael Wacha):
     - Jeff McNeil: 6/11 BvP | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.435 (AB: 9)
-    - Jacob Wilson: 3/8 BvP | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.332 (AB: 8)
+    - Henry Bolte: NO HISTORY | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.339
     - Lawrence Butler: 4/8 BvP | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.388 (AB: 7)
     - Zack Gelof: 0/3 BvP | Baseline (2026 Season OBP): 0.332 -> Smoothed OBP: 0.255 (AB: 2)
     - Carlos Cortes: 3/5 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.425 (AB: 4)
-    - Henry Bolte: NO HISTORY | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.339
-    - Donovan Walton: NO HISTORY | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.362
     - Tommy White: NO HISTORY | Baseline (2026 Season OBP): 0.287 -> Smoothed OBP: 0.287
+    - Donovan Walton: NO HISTORY | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.362
+    - Alika Williams: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
     - Brian Serven: NO HISTORY | Baseline (2026 Season OBP): 0.219 -> Smoothed OBP: 0.219
-  Aggregated Away OBP: 0.338 (Total AB: 30)
-  PROJECTION: Athletics | 4.38% Edge
+  Aggregated Away OBP: 0.336 (Total AB: 22)
+  PROJECTION: Athletics | 4.13% Edge
 --------------------------------------------------
 GAME: Atlanta Braves @ Minnesota Twins (G1)
   Lineup Source: Official Boxscore
