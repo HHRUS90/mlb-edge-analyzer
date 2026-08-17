@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/17/2026 (09:00 AM MDT)
+DETAILED EVALUATION LOG - 08/17/2026 (10:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 6/15 (40.0%) | -$237.44
 LIFETIME: 476/905 (52.6%) | +$1,075.91
 BEST PICKS LIFETIME: 38/69 (55.1%) | +$238.43
-ODDS-API: 254 Calls (Used: 254 | Rem: 246)
-MLB-STATS-API: 230 Total Calls
+ODDS-API: 255 Calls (Used: 255 | Rem: 245)
+MLB-STATS-API: 250 Total Calls
 ==================================================
 GAME: St. Louis Cardinals @ Cincinnati Reds (G1)
   Lineup Source: Official Boxscore
@@ -136,6 +136,32 @@ GAME: Detroit Tigers @ Pittsburgh Pirates (G1)
     - Javier Báez: 1/2 BvP | Baseline (2026 Season OBP): 0.294 -> Smoothed OBP: 0.328 (AB: 2)
   Aggregated Away OBP: 0.334 (Total AB: 9)
   PROJECTION: Detroit Tigers | 2.35% Edge
+--------------------------------------------------
+GAME: Arizona Diamondbacks @ Boston Red Sox (G1)
+  Lineup Source: Starters of Last Game
+  Boston Red Sox Hitting (vs Mitch Bratt):
+    - Nick Sogard: NO HISTORY | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.353
+    - Ceddanne Rafaela: NO HISTORY | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.323
+    - Wilyer Abreu: NO HISTORY | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.335
+    - Adley Rutschman: NO HISTORY | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.327
+    - Caleb Durbin: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
+    - Andruw Monasterio: NO HISTORY | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.327
+    - Eli White: NO HISTORY | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.286
+    - Anthony Seigler: NO HISTORY | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.321
+    - Connor Wong: NO HISTORY | Baseline (2026 Season OBP): 0.332 -> Smoothed OBP: 0.332
+  Aggregated Home OBP: 0.325 (Total AB: 0)
+  Arizona Diamondbacks Hitting (vs Alec Gamboa):
+    - Geraldo Perdomo: NO HISTORY | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.357
+    - Corbin Carroll: NO HISTORY | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.344
+    - Gabriel Moreno: NO HISTORY | Baseline (2026 Season OBP): 0.385 -> Smoothed OBP: 0.385
+    - Ketel Marte: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
+    - Max Kepler: NO HISTORY | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.282
+    - Ildemaro Vargas: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
+    - Tim Tawa: NO HISTORY | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.286
+    - James McCann: NO HISTORY | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.330
+    - Jorge Barrosa: NO HISTORY | Baseline (2026 Season OBP): 0.284 -> Smoothed OBP: 0.284
+  Aggregated Away OBP: 0.322 (Total AB: 0)
+  PROJECTION: Boston Red Sox | 0.33% Edge
 --------------------------------------------------
 GAME: San Diego Padres @ New York Mets (G1)
   Lineup Source: Starters of Last Game
