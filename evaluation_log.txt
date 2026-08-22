@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/22/2026 (12:00 PM MDT)
+DETAILED EVALUATION LOG - 08/22/2026 (01:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 7/15 (46.7%) | -$324.93
 LIFETIME: 513/970 (52.9%) | +$1,436.12
 BEST PICKS LIFETIME: 41/74 (55.4%) | +$225.88
-ODDS-API: 337 Calls (Used: 337 | Rem: 163)
-MLB-STATS-API: 260 Total Calls
+ODDS-API: 338 Calls (Used: 338 | Rem: 162)
+MLB-STATS-API: 262 Total Calls
 ==================================================
 GAME: Toronto Blue Jays @ New York Yankees (G1)
   Lineup Source: Official Boxscore
@@ -114,16 +114,16 @@ GAME: Tampa Bay Rays @ Baltimore Orioles (G1)
 GAME: Los Angeles Angels @ Texas Rangers (G1)
   Lineup Source: Starters of Last Game
   Texas Rangers Hitting (vs Ryan Johnson):
-    - Justin Foscue: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
+    - Joc Pederson: NO HISTORY | Baseline (2026 Season OBP): 0.332 -> Smoothed OBP: 0.332
     - Corey Seager: 1/1 BvP | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.378 (AB: 1)
     - Wyatt Langford: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
     - Brandon Nimmo: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
     - Ezequiel Duran: NO HISTORY | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.327
-    - Jake Burger: 0/1 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.268 (AB: 1)
-    - Nicky Lopez: NO HISTORY | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.300
-    - Danny Jansen: NO HISTORY | Baseline (2026 Season OBP): 0.264 -> Smoothed OBP: 0.264
     - Evan Carter: NO HISTORY | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.299
-  Aggregated Home OBP: 0.312 (Total AB: 2)
+    - Jake Burger: 0/1 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.268 (AB: 1)
+    - Cody Freeman: NO HISTORY | Baseline (2026 Season OBP): 0.364 -> Smoothed OBP: 0.364
+    - Danny Jansen: NO HISTORY | Baseline (2026 Season OBP): 0.264 -> Smoothed OBP: 0.264
+  Aggregated Home OBP: 0.320 (Total AB: 2)
   Los Angeles Angels Hitting (vs Cody Bradford):
     - Zach Neto: 3/6 BvP | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.384 (AB: 6)
     - Mike Trout: NO HISTORY | Baseline (2026 Season OBP): 0.379 -> Smoothed OBP: 0.379
@@ -135,7 +135,7 @@ GAME: Los Angeles Angels @ Texas Rangers (G1)
     - Tyler Heineman: NO HISTORY | Baseline (2026 Season OBP): 0.233 -> Smoothed OBP: 0.233
     - Oswald Peraza: NO HISTORY | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.278
   Aggregated Away OBP: 0.306 (Total AB: 8)
-  PROJECTION: Texas Rangers | 0.63% Edge
+  PROJECTION: Texas Rangers | 1.41% Edge
 --------------------------------------------------
 GAME: Athletics @ Houston Astros (G1)
   Lineup Source: Starters of Last Game
@@ -199,9 +199,9 @@ GAME: Detroit Tigers @ Kansas City Royals (G1)
     - Vinnie Pasquantino: 1/1 BvP | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.392 (AB: 1)
     - Nick Loftin: 0/2 BvP | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.268 (AB: 2)
     - Michael Massey: 1/1 BvP | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.373 (AB: 1)
-    - Isaac Collins: 0/2 BvP | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.273 (AB: 2)
+    - Tyler Tolbert: NO HISTORY | Baseline (2026 Season OBP): 0.369 -> Smoothed OBP: 0.369
     - Kyle Isbel: 0/2 BvP | Baseline (2026 Season OBP): 0.283 -> Smoothed OBP: 0.236 (AB: 1)
-  Aggregated Home OBP: 0.323 (Total AB: 11)
+  Aggregated Home OBP: 0.334 (Total AB: 9)
   Detroit Tigers Hitting (vs Michael Wacha):
     - Gleyber Torres: 5/6 BvP | Baseline (2026 Season OBP): 0.375 -> Smoothed OBP: 0.547 (AB: 4)
     - Zach McKinstry: 6/13 BvP | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.394 (AB: 13)
@@ -213,7 +213,7 @@ GAME: Detroit Tigers @ Kansas City Royals (G1)
     - Max Clark: NO HISTORY | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.316
     - Javier Báez: 15/40 BvP | Baseline (2026 Season OBP): 0.284 -> Smoothed OBP: 0.357 (AB: 35)
   Aggregated Away OBP: 0.351 (Total AB: 98)
-  PROJECTION: Detroit Tigers | 2.84% Edge
+  PROJECTION: Detroit Tigers | 1.78% Edge
 --------------------------------------------------
 GAME: Pittsburgh Pirates @ Los Angeles Dodgers (G1)
   Lineup Source: Starters of Last Game
