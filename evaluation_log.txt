@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/22/2026 (02:00 PM MDT)
+DETAILED EVALUATION LOG - 08/22/2026 (03:00 PM MDT)
 ==================================================
-📊 TODAY: 0/0 (0.0%) | $0.00
+📊 TODAY: 1/2 (50.0%) | -$35.90
 📊 YESTERDAY: 7/15 (46.7%) | -$324.93
-LIFETIME: 513/970 (52.9%) | +$1,436.12
-BEST PICKS LIFETIME: 41/74 (55.4%) | +$225.88
-ODDS-API: 339 Calls (Used: 339 | Rem: 161)
-MLB-STATS-API: 290 Total Calls
+LIFETIME: 514/972 (52.9%) | +$1,400.22
+BEST PICKS LIFETIME: 42/75 (56.0%) | +$289.98
+ODDS-API: 340 Calls (Used: 340 | Rem: 160)
+MLB-STATS-API: 267 Total Calls
 ==================================================
 GAME: Toronto Blue Jays @ New York Yankees (G1)
   Lineup Source: Official Boxscore
@@ -112,7 +112,7 @@ GAME: St. Louis Cardinals @ Philadelphia Phillies (G1)
   PROJECTION: Philadelphia Phillies | 1.61% Edge
 --------------------------------------------------
 GAME: Tampa Bay Rays @ Baltimore Orioles (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Baltimore Orioles Hitting (vs Shane McClanahan):
     - Jackson Holliday: 3/6 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.392 (AB: 5)
     - Pete Alonso: 3/6 BvP | Baseline (2026 Season OBP): 0.361 -> Smoothed OBP: 0.413 (AB: 5)
@@ -126,16 +126,16 @@ GAME: Tampa Bay Rays @ Baltimore Orioles (G1)
   Aggregated Home OBP: 0.332 (Total AB: 30)
   Tampa Bay Rays Hitting (vs Brandon Young):
     - Yandy Díaz: NO HISTORY | Baseline (2026 Season OBP): 0.374 -> Smoothed OBP: 0.374
-    - Ryan Vilade: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
     - Jonathan Aranda: NO HISTORY | Baseline (2026 Season OBP): 0.365 -> Smoothed OBP: 0.365
-    - Junior Caminero: NO HISTORY | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.363
     - Chandler Simpson: NO HISTORY | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.335
-    - Jorge Mateo: NO HISTORY | Baseline (2026 Season OBP): 0.273 -> Smoothed OBP: 0.273
-    - Cedric Mullins: NO HISTORY | Baseline (2026 Season OBP): 0.285 -> Smoothed OBP: 0.285
+    - Junior Caminero: NO HISTORY | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.363
     - Liam Hicks: 2/5 BvP | Baseline (2026 Season OBP): 0.370 -> Smoothed OBP: 0.380 (AB: 4)
+    - Jonny DeLuca: NO HISTORY | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.296
+    - Richie Palacios: NO HISTORY | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.339
+    - Cedric Mullins: NO HISTORY | Baseline (2026 Season OBP): 0.285 -> Smoothed OBP: 0.285
     - Taylor Walls: NO HISTORY | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.306
-  Aggregated Away OBP: 0.334 (Total AB: 4)
-  PROJECTION: Tampa Bay Rays | 0.17% Edge
+  Aggregated Away OBP: 0.338 (Total AB: 4)
+  PROJECTION: Tampa Bay Rays | 0.57% Edge
 --------------------------------------------------
 GAME: Los Angeles Angels @ Texas Rangers (G1)
   Lineup Source: Starters of Last Game
@@ -164,33 +164,33 @@ GAME: Los Angeles Angels @ Texas Rangers (G1)
   PROJECTION: Texas Rangers | 1.41% Edge
 --------------------------------------------------
 GAME: Athletics @ Houston Astros (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Houston Astros Hitting (vs Jacob Lopez):
-    - Jose Altuve: 5/8 BvP | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.450 (AB: 5)
-    - Taylor Trammell: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
+    - Jeremy Peña: 0/3 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.260 (AB: 3)
+    - Yordan Alvarez: 2/3 BvP | Baseline (2026 Season OBP): 0.434 -> Smoothed OBP: 0.488 (AB: 2)
     - Isaac Paredes: 2/3 BvP | Baseline (2026 Season OBP): 0.356 -> Smoothed OBP: 0.428 (AB: 1)
-    - Daulton Varsho: 1/3 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.304 (AB: 3)
+    - Jose Altuve: 5/8 BvP | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.450 (AB: 5)
     - Christian Walker: 2/7 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.299 (AB: 6)
+    - Daulton Varsho: 1/3 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.304 (AB: 3)
     - Yainer Diaz: 1/7 BvP | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.225 (AB: 7)
     - Cam Smith: 2/8 BvP | Baseline (2026 Season OBP): 0.285 -> Smoothed OBP: 0.269 (AB: 6)
-    - Raynel Delgado: NO HISTORY | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.300
-    - Nick Allen: 1/2 BvP | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.336 (AB: 2)
-  Aggregated Home OBP: 0.323 (Total AB: 30)
+    - LaMonte Wade Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.346
+  Aggregated Home OBP: 0.341 (Total AB: 33)
   Athletics Hitting (vs Hunter Brown):
     - Henry Bolte: NO HISTORY | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.341
     - Jeff McNeil: 1/3 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.318 (AB: 3)
     - Zack Gelof: 1/11 BvP | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.202 (AB: 11)
-    - Alika Williams: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
+    - Carlos Cortes: 1/2 BvP | Baseline (2026 Season OBP): 0.336 -> Smoothed OBP: 0.363 (AB: 2)
     - Lawrence Butler: 5/16 BvP | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.310 (AB: 16)
     - Tommy White: NO HISTORY | Baseline (2026 Season OBP): 0.274 -> Smoothed OBP: 0.274
     - Jonah Heim: 4/16 BvP | Baseline (2026 Season OBP): 0.272 -> Smoothed OBP: 0.258 (AB: 14)
     - Donovan Walton: NO HISTORY | Baseline (2026 Season OBP): 0.376 -> Smoothed OBP: 0.376
     - Max Muncy: NO HISTORY | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.288
-  Aggregated Away OBP: 0.296 (Total AB: 44)
-  PROJECTION: Houston Astros | 2.7% Edge
+  Aggregated Away OBP: 0.303 (Total AB: 46)
+  PROJECTION: Houston Astros | 3.75% Edge
 --------------------------------------------------
 GAME: New York Mets @ Chicago White Sox (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Chicago White Sox Hitting (vs Christian Scott):
     - Sam Antonacci: NO HISTORY | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.363
     - Munetaka Murakami: NO HISTORY | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.362
@@ -346,7 +346,7 @@ GAME: Cincinnati Reds @ Arizona Diamondbacks (G1)
   PROJECTION: Arizona Diamondbacks | 2.53% Edge
 --------------------------------------------------
 GAME: Cleveland Guardians @ Colorado Rockies (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Colorado Rockies Hitting (vs Tanner Bibee):
     - Jake McCarthy: 2/5 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.355 (AB: 5)
     - Mickey Moniak: 2/8 BvP | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.282 (AB: 8)
@@ -360,7 +360,7 @@ GAME: Cleveland Guardians @ Colorado Rockies (G1)
   Aggregated Home OBP: 0.337 (Total AB: 26)
   Cleveland Guardians Hitting (vs Gabriel Hughes):
     - Steven Kwan: NO HISTORY | Baseline (2026 Season OBP): 0.374 -> Smoothed OBP: 0.374
-    - Angel Martínez: NO HISTORY | Baseline (2026 Season OBP): 0.272 -> Smoothed OBP: 0.272
+    - Chase DeLauter: NO HISTORY | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.359
     - José Ramírez: NO HISTORY | Baseline (2026 Season OBP): 0.336 -> Smoothed OBP: 0.336
     - Jo Adell: NO HISTORY | Baseline (2026 Season OBP): 0.290 -> Smoothed OBP: 0.290
     - Nathaniel Lowe: NO HISTORY | Baseline (2026 Season OBP): 0.334 -> Smoothed OBP: 0.334
@@ -368,8 +368,8 @@ GAME: Cleveland Guardians @ Colorado Rockies (G1)
     - Travis Bazzana: NO HISTORY | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333
     - Patrick Bailey: NO HISTORY | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.250
     - Petey Halpin: NO HISTORY | Baseline (2026 Season OBP): 0.248 -> Smoothed OBP: 0.248
-  Aggregated Away OBP: 0.313 (Total AB: 0)
-  PROJECTION: Colorado Rockies | 2.34% Edge
+  Aggregated Away OBP: 0.323 (Total AB: 0)
+  PROJECTION: Colorado Rockies | 1.37% Edge
 --------------------------------------------------
 GAME: Minnesota Twins @ San Diego Padres (G1)
   Lineup Source: Starters of Last Game
