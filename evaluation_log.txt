@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/24/2026 (09:00 AM MDT)
+DETAILED EVALUATION LOG - 08/24/2026 (10:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 8/15 (53.3%) | -$184.97
 LIFETIME: 527/1000 (52.7%) | +$912.53
 BEST PICKS LIFETIME: 42/76 (55.3%) | +$171.33
-ODDS-API: 366 Calls (Used: 366 | Rem: 134)
-MLB-STATS-API: 171 Total Calls
+ODDS-API: 367 Calls (Used: 367 | Rem: 133)
+MLB-STATS-API: 201 Total Calls
 ==================================================
 GAME: Tampa Bay Rays @ Detroit Tigers (G1)
   Lineup Source: Starters of Last Game
@@ -84,6 +84,32 @@ GAME: Colorado Rockies @ Washington Nationals (G1)
     - Ezequiel Tovar: NO HISTORY | Baseline (2026 Season OBP): 0.254 -> Smoothed OBP: 0.254
   Aggregated Away OBP: 0.332 (Total AB: 5)
   PROJECTION: Colorado Rockies | 3.51% Edge
+--------------------------------------------------
+GAME: Texas Rangers @ Chicago White Sox (G1)
+  Lineup Source: Starters of Last Game
+  Chicago White Sox Hitting (vs Kumar Rocker):
+    - Brenton Doyle: NO HISTORY | Baseline (2026 Season OBP): 0.267 -> Smoothed OBP: 0.267
+    - Munetaka Murakami: NO HISTORY | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.359
+    - Miguel Vargas: 0/2 BvP | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.297 (AB: 2)
+    - Luisangel Acuña: NO HISTORY | Baseline (2026 Season OBP): 0.264 -> Smoothed OBP: 0.264
+    - Braden Montgomery: NO HISTORY | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.324
+    - Colson Montgomery: NO HISTORY | Baseline (2026 Season OBP): 0.291 -> Smoothed OBP: 0.291
+    - Chase Meidroth: 1/3 BvP | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.340 (AB: 3)
+    - Tristan Peters: NO HISTORY | Baseline (2026 Season OBP): 0.334 -> Smoothed OBP: 0.334
+    - Jake Rogers: 0/2 BvP | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.233 (AB: 2)
+  Aggregated Home OBP: 0.301 (Total AB: 7)
+  Texas Rangers Hitting (vs José Urquidy):
+    - Evan Carter: 1/3 BvP | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.305 (AB: 3)
+    - Corey Seager: 3/9 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.327 (AB: 9)
+    - Wyatt Langford: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
+    - Brandon Nimmo: 1/3 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.328 (AB: 3)
+    - Ezequiel Duran: 1/2 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.355 (AB: 2)
+    - Jake Burger: NO HISTORY | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.296
+    - Joc Pederson: 0/4 BvP | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.236 (AB: 4)
+    - Cody Freeman: NO HISTORY | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.359
+    - Elias Díaz: NO HISTORY | Baseline (2026 Season OBP): 0.253 -> Smoothed OBP: 0.253
+  Aggregated Away OBP: 0.309 (Total AB: 21)
+  PROJECTION: Texas Rangers | 0.74% Edge
 --------------------------------------------------
 GAME: Cleveland Guardians @ Los Angeles Angels (G1)
   Lineup Source: Starters of Last Game
