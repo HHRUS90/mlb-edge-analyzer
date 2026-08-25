@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/25/2026 (12:00 PM MDT)
+DETAILED EVALUATION LOG - 08/25/2026 (01:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 4/10 (40.0%) | -$250.43
 LIFETIME: 531/1010 (52.6%) | +$662.10
 BEST PICKS LIFETIME: 42/77 (54.5%) | +$71.33
-ODDS-API: 385 Calls (Used: 385 | Rem: 115)
-MLB-STATS-API: 256 Total Calls
+ODDS-API: 386 Calls (Used: 386 | Rem: 114)
+MLB-STATS-API: 294 Total Calls
 ==================================================
 GAME: Tampa Bay Rays @ Detroit Tigers (G1)
   Lineup Source: Starters of Last Game
@@ -32,6 +32,32 @@ GAME: Tampa Bay Rays @ Detroit Tigers (G1)
     - Taylor Walls: NO HISTORY | Baseline (2026 Season OBP): 0.301 -> Smoothed OBP: 0.301
   Aggregated Away OBP: 0.324 (Total AB: 0)
   PROJECTION: Detroit Tigers | 0.69% Edge
+--------------------------------------------------
+GAME: Boston Red Sox @ Miami Marlins (G1)
+  Lineup Source: Starters of Last Game
+  Miami Marlins Hitting (vs Payton Tolle):
+    - Otto Lopez: NO HISTORY | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.344
+    - Heriberto Hernández: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
+    - Agustín Ramírez: NO HISTORY | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.335
+    - Javier Sanoja: NO HISTORY | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.315
+    - Xavier Edwards: NO HISTORY | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.363
+    - Leo Jiménez: NO HISTORY | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.309
+    - Griffin Conine: NO HISTORY | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.358
+    - Esteury Ruiz: NO HISTORY | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.362
+    - Brian Navarreto: NO HISTORY | Baseline (2026 Season OBP): 0.229 -> Smoothed OBP: 0.229
+  Aggregated Home OBP: 0.325 (Total AB: 0)
+  Boston Red Sox Hitting (vs Tyler Phillips):
+    - Nick Sogard: NO HISTORY | Baseline (2026 Season OBP): 0.395 -> Smoothed OBP: 0.395
+    - Ceddanne Rafaela: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
+    - Wilyer Abreu: NO HISTORY | Baseline (2026 Season OBP): 0.336 -> Smoothed OBP: 0.336
+    - Willson Contreras: 0/1 BvP | Baseline (2026 Season OBP): 0.390 -> Smoothed OBP: 0.355 (AB: 1)
+    - Adley Rutschman: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
+    - Caleb Durbin: 1/4 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.303 (AB: 4)
+    - Jarren Duran: 0/1 BvP | Baseline (2026 Season OBP): 0.267 -> Smoothed OBP: 0.243 (AB: 1)
+    - Eli White: 1/4 BvP | Baseline (2026 Season OBP): 0.284 -> Smoothed OBP: 0.274 (AB: 4)
+    - Anthony Seigler: 0/1 BvP | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.295 (AB: 1)
+  Aggregated Away OBP: 0.316 (Total AB: 11)
+  PROJECTION: Miami Marlins | 0.9% Edge
 --------------------------------------------------
 GAME: Houston Astros @ New York Yankees (G1)
   Lineup Source: Starters of Last Game
