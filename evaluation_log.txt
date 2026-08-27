@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/27/2026 (02:00 PM MDT)
+DETAILED EVALUATION LOG - 08/27/2026 (03:00 PM MDT)
 ==================================================
-📊 TODAY: 0/0 (0.0%) | $0.00
+📊 TODAY: 1/2 (50.0%) | -$27.54
 📊 YESTERDAY: 10/15 (66.7%) | +$377.86
-LIFETIME: 550/1040 (52.9%) | +$1,312.82
-BEST PICKS LIFETIME: 43/79 (54.4%) | +$14.81
-ODDS-API: 419 Calls (Used: 419 | Rem: 81)
-MLB-STATS-API: 121 Total Calls
+LIFETIME: 551/1042 (52.9%) | +$1,285.28
+BEST PICKS LIFETIME: 44/80 (55.0%) | +$87.28
+ODDS-API: 420 Calls (Used: 420 | Rem: 80)
+MLB-STATS-API: 116 Total Calls
 ==================================================
 GAME: Colorado Rockies @ Washington Nationals (G1)
   Lineup Source: Official Boxscore
@@ -60,7 +60,7 @@ GAME: Baltimore Orioles @ St. Louis Cardinals (G1)
   PROJECTION: Baltimore Orioles | 1.22% Edge
 --------------------------------------------------
 GAME: Houston Astros @ New York Yankees (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   New York Yankees Hitting (vs Hayden Wesneski):
     - Trent Grisham: 0/2 BvP | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.263 (AB: 1)
     - Ben Rice: NO HISTORY | Baseline (2026 Season OBP): 0.350 -> Smoothed OBP: 0.350
@@ -79,11 +79,11 @@ GAME: Houston Astros @ New York Yankees (G1)
     - Jose Altuve: 4/13 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.309 (AB: 10)
     - Daulton Varsho: 2/11 BvP | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.238 (AB: 11)
     - Christian Walker: NO HISTORY | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.304
-    - Nelson Velázquez: NO HISTORY | Baseline (2026 Season OBP): 0.264 -> Smoothed OBP: 0.264
-    - LaMonte Wade Jr.: 1/3 BvP | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.331 (AB: 2)
-    - Christian Vázquez: 0/5 BvP | Baseline (2026 Season OBP): 0.269 -> Smoothed OBP: 0.179 (AB: 5)
-  Aggregated Away OBP: 0.279 (Total AB: 64)
-  PROJECTION: New York Yankees | 2.92% Edge
+    - Yainer Diaz: NO HISTORY | Baseline (2026 Season OBP): 0.290 -> Smoothed OBP: 0.290
+    - Taylor Trammell: NO HISTORY | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.296
+    - Cam Smith: NO HISTORY | Baseline (2026 Season OBP): 0.283 -> Smoothed OBP: 0.283
+  Aggregated Away OBP: 0.290 (Total AB: 57)
+  PROJECTION: New York Yankees | 1.86% Edge
 --------------------------------------------------
 GAME: Kansas City Royals @ Toronto Blue Jays (G1)
   Lineup Source: Official Boxscore
@@ -138,18 +138,18 @@ GAME: Milwaukee Brewers @ New York Mets (G1)
   PROJECTION: Milwaukee Brewers | 2.9% Edge
 --------------------------------------------------
 GAME: Los Angeles Dodgers @ Atlanta Braves (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Atlanta Braves Hitting (vs Yoshinobu Yamamoto):
     - Drake Baldwin: NO HISTORY | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.357
-    - Ronald Acuña Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
+    - Ozzie Albies: 0/2 BvP | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.258 (AB: 2)
     - Matt Olson: 1/4 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.312 (AB: 3)
     - Mauricio Dubón: NO HISTORY | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.315
     - Michael Harris II: 2/4 BvP | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.371 (AB: 3)
-    - Ozzie Albies: 0/2 BvP | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.258 (AB: 2)
     - Lane Thomas: 1/3 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.326 (AB: 2)
+    - Mike Yastrzemski: 3/8 BvP | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.342 (AB: 6)
     - Austin Riley: 1/3 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.304 (AB: 3)
     - Ha-Seong Kim: 2/6 BvP | Baseline (2026 Season OBP): 0.174 -> Smoothed OBP: 0.234 (AB: 5)
-  Aggregated Home OBP: 0.312 (Total AB: 18)
+  Aggregated Home OBP: 0.313 (Total AB: 24)
   Los Angeles Dodgers Hitting (vs Chris Sale):
     - Shohei Ohtani: 4/12 BvP | Baseline (2026 Season OBP): 0.388 -> Smoothed OBP: 0.358 (AB: 11)
     - Tommy Edman: 3/9 BvP | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.343 (AB: 8)
@@ -161,7 +161,7 @@ GAME: Los Angeles Dodgers @ Atlanta Braves (G1)
     - Enrique Hernández: 0/6 BvP | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.174 (AB: 6)
     - Ben Rortvedt: NO HISTORY | Baseline (2026 Season OBP): 0.150 -> Smoothed OBP: 0.150
   Aggregated Away OBP: 0.293 (Total AB: 82)
-  PROJECTION: Atlanta Braves | 1.93% Edge
+  PROJECTION: Atlanta Braves | 2.05% Edge
 --------------------------------------------------
 GAME: Arizona Diamondbacks @ San Francisco Giants (G1)
   Lineup Source: Starters of Last Game
