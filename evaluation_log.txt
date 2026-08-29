@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 08/29/2026 (02:00 PM MDT)
+DETAILED EVALUATION LOG - 08/29/2026 (03:00 PM MDT)
 ==================================================
-📊 TODAY: 1/1 (100.0%) | +$162.00
+📊 TODAY: 1/3 (33.3%) | -$38.00
 📊 YESTERDAY: 8/15 (53.3%) | -$195.42
-LIFETIME: 563/1063 (53.0%) | +$1,287.69
+LIFETIME: 563/1065 (52.9%) | +$1,087.69
 BEST PICKS LIFETIME: 45/82 (54.9%) | +$117.63
-ODDS-API: 451 Calls (Used: 451 | Rem: 49)
-MLB-STATS-API: 122 Total Calls
+ODDS-API: 452 Calls (Used: 452 | Rem: 48)
+MLB-STATS-API: 140 Total Calls
 ==================================================
 GAME: Boston Red Sox @ New York Yankees (G1)
   Lineup Source: Official Boxscore
@@ -319,8 +319,34 @@ GAME: Colorado Rockies @ Atlanta Braves (G1)
   Aggregated Away OBP: 0.305 (Total AB: 33)
   PROJECTION: Atlanta Braves | 3.3% Edge
 --------------------------------------------------
-GAME: Texas Rangers @ Milwaukee Brewers (G1)
+GAME: Boston Red Sox @ New York Yankees (G2)
   Lineup Source: Starters of Last Game
+  New York Yankees Hitting (vs Alec Gamboa):
+    - Paul Goldschmidt: NO HISTORY | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.307
+    - Ben Rice: NO HISTORY | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.349
+    - Cody Bellinger: NO HISTORY | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.342
+    - Spencer Jones: NO HISTORY | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.306
+    - Trent Grisham: NO HISTORY | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.312
+    - George Lombard Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.306
+    - Jazz Chisholm Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.305
+    - José Caballero: NO HISTORY | Baseline (2026 Season OBP): 0.290 -> Smoothed OBP: 0.290
+    - Austin Wells: NO HISTORY | Baseline (2026 Season OBP): 0.274 -> Smoothed OBP: 0.274
+  Aggregated Home OBP: 0.310 (Total AB: 0)
+  Boston Red Sox Hitting (vs Max Fried):
+    - Jahmai Jones: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
+    - Ceddanne Rafaela: 0/2 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.269 (AB: 2)
+    - Wilyer Abreu: 1/3 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333 (AB: 3)
+    - Willson Contreras: 4/12 BvP | Baseline (2026 Season OBP): 0.383 -> Smoothed OBP: 0.356 (AB: 10)
+    - Caleb Durbin: 0/3 BvP | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.252 (AB: 3)
+    - Andruw Monasterio: 1/3 BvP | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.318 (AB: 2)
+    - Nick Sogard: 2/3 BvP | Baseline (2026 Season OBP): 0.371 -> Smoothed OBP: 0.439 (AB: 3)
+    - Connor Wong: 4/14 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.303 (AB: 13)
+    - Eli White: NO HISTORY | Baseline (2026 Season OBP): 0.284 -> Smoothed OBP: 0.284
+  Aggregated Away OBP: 0.318 (Total AB: 36)
+  PROJECTION: Boston Red Sox | 0.8% Edge
+--------------------------------------------------
+GAME: Texas Rangers @ Milwaukee Brewers (G1)
+  Lineup Source: Official Boxscore
   Milwaukee Brewers Hitting (vs Cal Quantrill):
     - Brice Turang: 1/7 BvP | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.265 (AB: 7)
     - Jackson Chourio: 4/6 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.464 (AB: 5)
@@ -333,17 +359,17 @@ GAME: Texas Rangers @ Milwaukee Brewers (G1)
     - David Hamilton: 1/3 BvP | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.322 (AB: 2)
   Aggregated Home OBP: 0.355 (Total AB: 27)
   Texas Rangers Hitting (vs Shane Drohan):
-    - Elias Díaz: NO HISTORY | Baseline (2026 Season OBP): 0.254 -> Smoothed OBP: 0.254
+    - Justin Foscue: NO HISTORY | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.325
     - Corey Seager: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
     - Wyatt Langford: NO HISTORY | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333
     - Brandon Nimmo: NO HISTORY | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.324
     - Ezequiel Duran: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
-    - Justin Foscue: NO HISTORY | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.325
     - Jake Burger: NO HISTORY | Baseline (2026 Season OBP): 0.301 -> Smoothed OBP: 0.301
-    - Cody Freeman: NO HISTORY | Baseline (2026 Season OBP): 0.345 -> Smoothed OBP: 0.345
     - Danny Jansen: NO HISTORY | Baseline (2026 Season OBP): 0.268 -> Smoothed OBP: 0.268
-  Aggregated Away OBP: 0.311 (Total AB: 0)
-  PROJECTION: Milwaukee Brewers | 4.44% Edge
+    - Logan O'Hoppe: NO HISTORY | Baseline (2026 Season OBP): 0.269 -> Smoothed OBP: 0.269
+    - Cody Freeman: NO HISTORY | Baseline (2026 Season OBP): 0.345 -> Smoothed OBP: 0.345
+  Aggregated Away OBP: 0.313 (Total AB: 0)
+  PROJECTION: Milwaukee Brewers | 4.27% Edge
 --------------------------------------------------
 GAME: Baltimore Orioles @ Athletics (G1)
   Lineup Source: Starters of Last Game
