@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 09/01/2026 (09:00 AM MDT)
+DETAILED EVALUATION LOG - 09/01/2026 (10:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 5/12 (41.7%) | -$267.79
 LIFETIME: 578/1105 (52.3%) | -$145.28
 BEST PICKS LIFETIME: 46/84 (54.8%) | -$6.99
-ODDS-API: 2 Calls (Used: 5 | Rem: 495)
-MLB-STATS-API: 296 Total Calls
+ODDS-API: 3 Calls (Used: 6 | Rem: 494)
+MLB-STATS-API: 334 Total Calls
 ==================================================
 GAME: San Diego Padres @ Cincinnati Reds (G1)
   Lineup Source: Starters of Last Game
@@ -110,6 +110,32 @@ GAME: Toronto Blue Jays @ Cleveland Guardians (G1)
     - Myles Straw: NO HISTORY | Baseline (2026 Season OBP): 0.289 -> Smoothed OBP: 0.289
   Aggregated Away OBP: 0.361 (Total AB: 39)
   PROJECTION: Toronto Blue Jays | 4.24% Edge
+--------------------------------------------------
+GAME: Seattle Mariners @ Boston Red Sox (G1)
+  Lineup Source: Starters of Last Game
+  Boston Red Sox Hitting (vs Bryan Woo):
+    - Roman Anthony: 0/3 BvP | Baseline (2026 Season OBP): 0.367 -> Smoothed OBP: 0.282 (AB: 3)
+    - Mickey Gasper: NO HISTORY | Baseline (2026 Season OBP): 0.375 -> Smoothed OBP: 0.375
+    - Ceddanne Rafaela: 0/2 BvP | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.266 (AB: 2)
+    - Eli White: NO HISTORY | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.282
+    - Nick Sogard: NO HISTORY | Baseline (2026 Season OBP): 0.370 -> Smoothed OBP: 0.370
+    - Caleb Durbin: NO HISTORY | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.327
+    - Jarren Duran: 1/6 BvP | Baseline (2026 Season OBP): 0.264 -> Smoothed OBP: 0.228 (AB: 6)
+    - Trevor Story: 0/5 BvP | Baseline (2026 Season OBP): 0.255 -> Smoothed OBP: 0.170 (AB: 5)
+    - Connor Wong: NO HISTORY | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.324
+  Aggregated Home OBP: 0.292 (Total AB: 16)
+  Seattle Mariners Hitting (vs Jedixson Paez):
+    - Randy Arozarena: NO HISTORY | Baseline (2026 Season OBP): 0.371 -> Smoothed OBP: 0.371
+    - Brock Rodden: NO HISTORY | Baseline (2026 Season OBP): 0.239 -> Smoothed OBP: 0.239
+    - Julio Rodríguez: NO HISTORY | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.305
+    - Cal Raleigh: NO HISTORY | Baseline (2026 Season OBP): 0.287 -> Smoothed OBP: 0.287
+    - Josh Naylor: NO HISTORY | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.328
+    - Victor Robles: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
+    - Cole Young: NO HISTORY | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.306
+    - Weston Wilson: NO HISTORY | Baseline (2026 Season OBP): 0.292 -> Smoothed OBP: 0.292
+    - J.P. Crawford: NO HISTORY | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.327
+  Aggregated Away OBP: 0.309 (Total AB: 0)
+  PROJECTION: Seattle Mariners | 1.7% Edge
 --------------------------------------------------
 GAME: Atlanta Braves @ Washington Nationals (G1)
   Lineup Source: Starters of Last Game
