@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 09/01/2026 (03:00 PM MDT)
+DETAILED EVALUATION LOG - 09/01/2026 (04:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 5/12 (41.7%) | -$267.79
 LIFETIME: 578/1105 (52.3%) | -$145.28
 BEST PICKS LIFETIME: 46/84 (54.8%) | -$6.99
-ODDS-API: 8 Calls (Used: 11 | Rem: 489)
-MLB-STATS-API: 334 Total Calls
+ODDS-API: 9 Calls (Used: 12 | Rem: 488)
+MLB-STATS-API: 319 Total Calls
 ==================================================
 GAME: San Diego Padres @ Cincinnati Reds (G1)
   Lineup Source: Official Boxscore
@@ -47,17 +47,17 @@ GAME: San Francisco Giants @ Pittsburgh Pirates (G1)
     - Henry Davis: 1/6 BvP | Baseline (2026 Season OBP): 0.263 -> Smoothed OBP: 0.227 (AB: 6)
   Aggregated Home OBP: 0.295 (Total AB: 54)
   San Francisco Giants Hitting (vs Paul Skenes):
-    - Drew Gilbert: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
+    - Turner Hill: NO HISTORY | Baseline (2026 Season OBP): 0.366 -> Smoothed OBP: 0.366
     - Rafael Devers: NO HISTORY | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.330
     - Bryce Eldridge: NO HISTORY | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.354
-    - Turner Hill: NO HISTORY | Baseline (2026 Season OBP): 0.366 -> Smoothed OBP: 0.366
+    - Jonah Cox: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
     - Jung Hoo Lee: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
     - Osleivis Basabe: NO HISTORY | Baseline (2026 Season OBP): 0.245 -> Smoothed OBP: 0.245
     - Drew Cavanaugh: NO HISTORY | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.325
     - Shay Whitcomb: NO HISTORY | Baseline (2026 Season OBP): 0.118 -> Smoothed OBP: 0.118
     - Christian Koss: NO HISTORY | Baseline (2026 Season OBP): 0.238 -> Smoothed OBP: 0.238
-  Aggregated Away OBP: 0.293 (Total AB: 0)
-  PROJECTION: Pittsburgh Pirates | 0.29% Edge
+  Aggregated Away OBP: 0.292 (Total AB: 0)
+  PROJECTION: Pittsburgh Pirates | 0.37% Edge
 --------------------------------------------------
 GAME: New York Mets @ Tampa Bay Rays (G1)
   Lineup Source: Official Boxscore
@@ -297,15 +297,15 @@ GAME: Baltimore Orioles @ Colorado Rockies (G1)
   Lineup Source: Starters of Last Game
   Colorado Rockies Hitting (vs Kyle Bradish):
     - Jake McCarthy: NO HISTORY | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.330
-    - Connor Norby: NO HISTORY | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.330
+    - Mickey Moniak: NO HISTORY | Baseline (2026 Season OBP): 0.294 -> Smoothed OBP: 0.294
     - Hunter Goodman: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
     - TJ Rumfield: NO HISTORY | Baseline (2026 Season OBP): 0.383 -> Smoothed OBP: 0.383
-    - Willi Castro: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
-    - Mickey Moniak: NO HISTORY | Baseline (2026 Season OBP): 0.294 -> Smoothed OBP: 0.294
     - Cole Carrigg: NO HISTORY | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.341
-    - Ryan Ritter: NO HISTORY | Baseline (2026 Season OBP): 0.222 -> Smoothed OBP: 0.222
+    - Connor Norby: NO HISTORY | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.330
+    - Brett Sullivan: NO HISTORY | Baseline (2026 Season OBP): 0.277 -> Smoothed OBP: 0.277
+    - Adael Amador: NO HISTORY | Baseline (2026 Season OBP): 0.462 -> Smoothed OBP: 0.462
     - Zac Veen: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
-  Aggregated Home OBP: 0.319 (Total AB: 0)
+  Aggregated Home OBP: 0.339 (Total AB: 0)
   Baltimore Orioles Hitting (vs Gabriel Hughes):
     - Jackson Holliday: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
     - Pete Alonso: NO HISTORY | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.360
@@ -317,7 +317,7 @@ GAME: Baltimore Orioles @ Colorado Rockies (G1)
     - Colton Cowser: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
     - Leody Taveras: NO HISTORY | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.299
   Aggregated Away OBP: 0.315 (Total AB: 0)
-  PROJECTION: Colorado Rockies | 0.32% Edge
+  PROJECTION: Colorado Rockies | 2.39% Edge
 --------------------------------------------------
 GAME: New York Yankees @ Los Angeles Angels (G1)
   Lineup Source: Starters of Last Game
@@ -385,15 +385,15 @@ GAME: St. Louis Cardinals @ Los Angeles Dodgers (G1)
     - ID:666163: NO HISTORY | Baseline (2026 Season OBP): 0.185 -> Smoothed OBP: 0.185
   Aggregated Home OBP: 0.300 (Total AB: 26)
   St. Louis Cardinals Hitting (vs Eric Lauer):
-    - Joshua Báez: NO HISTORY | Baseline (2026 Season OBP): 0.220 -> Smoothed OBP: 0.220
-    - Iván Herrera: 1/2 BvP | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.382 (AB: 1)
-    - Alec Burleson: 0/2 BvP | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.294 (AB: 2)
-    - Jordan Walker: 1/2 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.369 (AB: 2)
-    - Nolan Gorman: 0/4 BvP | Baseline (2026 Season OBP): 0.270 -> Smoothed OBP: 0.193 (AB: 4)
     - José Fermín: NO HISTORY | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.306
-    - Nathan Church: NO HISTORY | Baseline (2026 Season OBP): 0.283 -> Smoothed OBP: 0.283
+    - Iván Herrera: 1/2 BvP | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.382 (AB: 1)
+    - Jordan Walker: 1/2 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.369 (AB: 2)
+    - Alec Burleson: 0/2 BvP | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.294 (AB: 2)
+    - Joshua Báez: NO HISTORY | Baseline (2026 Season OBP): 0.220 -> Smoothed OBP: 0.220
+    - Leo Bernal: NO HISTORY | Baseline (League Default): 0.310 -> Smoothed OBP: 0.310
     - Ramón Urías: 1/4 BvP | Baseline (2026 Season OBP): 0.267 -> Smoothed OBP: 0.262 (AB: 4)
     - Thomas Saggese: NO HISTORY | Baseline (2026 Season OBP): 0.264 -> Smoothed OBP: 0.264
-  Aggregated Away OBP: 0.286 (Total AB: 13)
-  PROJECTION: Los Angeles Dodgers | 1.39% Edge
+    - Nathan Church: NO HISTORY | Baseline (2026 Season OBP): 0.283 -> Smoothed OBP: 0.283
+  Aggregated Away OBP: 0.299 (Total AB: 9)
+  PROJECTION: Los Angeles Dodgers | 0.09% Edge
 --------------------------------------------------
