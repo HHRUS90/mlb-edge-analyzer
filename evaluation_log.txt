@@ -1,25 +1,25 @@
-DETAILED EVALUATION LOG - 09/03/2026 (08:00 AM MDT)
+DETAILED EVALUATION LOG - 09/03/2026 (09:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 4/15 (26.7%) | -$815.26
 LIFETIME: 591/1135 (52.1%) | -$669.84
 BEST PICKS LIFETIME: 47/86 (54.7%) | -$10.84
-ODDS-API: 33 Calls (Used: 36 | Rem: 464)
-MLB-STATS-API: 322 Total Calls
+ODDS-API: 34 Calls (Used: 37 | Rem: 463)
+MLB-STATS-API: 194 Total Calls
 ==================================================
 GAME: San Francisco Giants @ Pittsburgh Pirates (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Pittsburgh Pirates Hitting (vs Blade Tidwell):
     - Spencer Horwitz: NO HISTORY | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.347
     - Brandon Lowe: NO HISTORY | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.324
     - Bryan Reynolds: 1/2 BvP | Baseline (2026 Season OBP): 0.369 -> Smoothed OBP: 0.391 (AB: 2)
     - Nick Gonzales: 1/2 BvP | Baseline (2026 Season OBP): 0.372 -> Smoothed OBP: 0.393 (AB: 1)
     - Oneil Cruz: NO HISTORY | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.357
-    - Esmerlyn Valdez: NO HISTORY | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.349
-    - Rafael Flores Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.299
     - Jake Mangum: NO HISTORY | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.341
+    - Rafael Flores Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.299
     - Jacob Gonzalez: NO HISTORY | Baseline (2026 Season OBP): 0.279 -> Smoothed OBP: 0.279
-  Aggregated Home OBP: 0.342 (Total AB: 3)
+    - Jared Triolo: 0/2 BvP | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.266 (AB: 2)
+  Aggregated Home OBP: 0.333 (Total AB: 5)
   San Francisco Giants Hitting (vs Lake Bachar):
     - Drew Gilbert: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
     - Rafael Devers: 0/1 BvP | Baseline (2026 Season OBP): 0.336 -> Smoothed OBP: 0.305 (AB: 1)
@@ -31,10 +31,10 @@ GAME: San Francisco Giants @ Pittsburgh Pirates (G1)
     - Nate Furman: NO HISTORY | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.280
     - Christian Koss: 0/1 BvP | Baseline (2026 Season OBP): 0.245 -> Smoothed OBP: 0.223 (AB: 1)
   Aggregated Away OBP: 0.293 (Total AB: 3)
-  PROJECTION: Pittsburgh Pirates | 4.96% Edge
+  PROJECTION: Pittsburgh Pirates | 4.03% Edge
 --------------------------------------------------
 GAME: Toronto Blue Jays @ Cleveland Guardians (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Cleveland Guardians Hitting (vs José Soriano):
     - Steven Kwan: 5/10 BvP | Baseline (2026 Season OBP): 0.374 -> Smoothed OBP: 0.437 (AB: 7)
     - Chase DeLauter: NO HISTORY | Baseline (2026 Season OBP): 0.365 -> Smoothed OBP: 0.365
@@ -48,16 +48,16 @@ GAME: Toronto Blue Jays @ Cleveland Guardians (G1)
   Aggregated Home OBP: 0.350 (Total AB: 35)
   Toronto Blue Jays Hitting (vs Tanner Bibee):
     - Brett Bateman: NO HISTORY | Baseline (2026 Season OBP): 0.368 -> Smoothed OBP: 0.368
+    - Nathan Lukes: 2/5 BvP | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.344 (AB: 5)
+    - Vladimir Guerrero Jr.: 6/11 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.444 (AB: 9)
     - Jesús Sánchez: NO HISTORY | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.321
     - Sean Keys: NO HISTORY | Baseline (2026 Season OBP): 0.211 -> Smoothed OBP: 0.211
-    - Alejandro Kirk: 2/5 BvP | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.363 (AB: 5)
-    - Charles McAdoo: NO HISTORY | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.288
-    - Nathan Lukes: 2/5 BvP | Baseline (2026 Season OBP): 0.316 -> Smoothed OBP: 0.344 (AB: 5)
-    - Ernie Clement: 0/3 BvP | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.231 (AB: 3)
     - Josh Smith: 1/7 BvP | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.238 (AB: 7)
-    - Myles Straw: 1/2 BvP | Baseline (2026 Season OBP): 0.293 -> Smoothed OBP: 0.327 (AB: 1)
-  Aggregated Away OBP: 0.299 (Total AB: 21)
-  PROJECTION: Cleveland Guardians | 5.08% Edge
+    - Andrés Giménez: 2/5 BvP | Baseline (2026 Season OBP): 0.289 -> Smoothed OBP: 0.326 (AB: 5)
+    - Ernie Clement: 0/3 BvP | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.231 (AB: 3)
+    - Brandon Valenzuela: NO HISTORY | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.304
+  Aggregated Away OBP: 0.310 (Total AB: 29)
+  PROJECTION: Cleveland Guardians | 4.02% Edge
 --------------------------------------------------
 GAME: Chicago White Sox @ Houston Astros (G1)
   Lineup Source: Starters of Last Game
