@@ -1,10 +1,10 @@
-DETAILED EVALUATION LOG - 09/03/2026 (02:00 PM MDT)
+DETAILED EVALUATION LOG - 09/03/2026 (03:00 PM MDT)
 ==================================================
-📊 TODAY: 1/1 (100.0%) | +$60.24
+📊 TODAY: 1/3 (33.3%) | -$139.76
 📊 YESTERDAY: 4/15 (26.7%) | -$815.26
-LIFETIME: 592/1136 (52.1%) | -$609.60
-BEST PICKS LIFETIME: 48/87 (55.2%) | +$49.40
-ODDS-API: 39 Calls (Used: 42 | Rem: 458)
+LIFETIME: 592/1138 (52.0%) | -$809.60
+BEST PICKS LIFETIME: 47/87 (54.0%) | -$110.84
+ODDS-API: 40 Calls (Used: 43 | Rem: 457)
 MLB-STATS-API: 141 Total Calls
 ==================================================
 GAME: San Francisco Giants @ Pittsburgh Pirates (G1)
@@ -112,33 +112,33 @@ GAME: Boston Red Sox @ Baltimore Orioles (G1)
   PROJECTION: Boston Red Sox | 3.6% Edge
 --------------------------------------------------
 GAME: Milwaukee Brewers @ Chicago Cubs (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Chicago Cubs Hitting (vs Logan Henderson):
     - Pete Crow-Armstrong: NO HISTORY | Baseline (2026 Season OBP): 0.375 -> Smoothed OBP: 0.375
     - Seiya Suzuki: NO HISTORY | Baseline (2026 Season OBP): 0.371 -> Smoothed OBP: 0.371
-    - Alex Bregman: NO HISTORY | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.346
     - Michael Busch: NO HISTORY | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.346
-    - Nico Hoerner: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
+    - Alex Bregman: NO HISTORY | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.346
     - Ian Happ: NO HISTORY | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.325
-    - Matt Shaw: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
+    - Nico Hoerner: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
+    - Pedro Ramírez: NO HISTORY | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.347
     - Michael Conforto: NO HISTORY | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.324
-    - BJ Murray Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.200 -> Smoothed OBP: 0.200
-  Aggregated Home OBP: 0.326 (Total AB: 0)
+    - Carson Kelly: NO HISTORY | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.344
+  Aggregated Home OBP: 0.344 (Total AB: 0)
   Milwaukee Brewers Hitting (vs Kevin Gausman):
     - Jackson Chourio: 1/3 BvP | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.344 (AB: 3)
     - Brice Turang: 1/9 BvP | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.235 (AB: 9)
-    - Sal Frelick: 3/6 BvP | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.378 (AB: 5)
     - William Contreras: 2/9 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.286 (AB: 8)
     - Jake Bauers: 3/9 BvP | Baseline (2026 Season OBP): 0.390 -> Smoothed OBP: 0.363 (AB: 7)
-    - Luis Lara: NO HISTORY | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.351
+    - Andrew Vaughn: 3/12 BvP | Baseline (2026 Season OBP): 0.399 -> Smoothed OBP: 0.318 (AB: 12)
     - Christian Yelich: 4/15 BvP | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.289 (AB: 14)
+    - Garrett Mitchell: 0/2 BvP | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.296 (AB: 2)
     - Joey Ortiz: 1/5 BvP | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.280 (AB: 5)
-    - Cooper Pratt: NO HISTORY | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.344
-  Aggregated Away OBP: 0.319 (Total AB: 51)
-  PROJECTION: Chicago Cubs | 0.73% Edge
+    - David Hamilton: 2/10 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.257 (AB: 10)
+  Aggregated Away OBP: 0.296 (Total AB: 70)
+  PROJECTION: Chicago Cubs | 4.76% Edge
 --------------------------------------------------
 GAME: Miami Marlins @ Kansas City Royals (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Kansas City Royals Hitting (vs Sandy Alcantara):
     - Carter Jensen: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
     - Bobby Witt Jr.: 0/3 BvP | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.277 (AB: 3)
@@ -152,16 +152,16 @@ GAME: Miami Marlins @ Kansas City Royals (G1)
   Aggregated Home OBP: 0.326 (Total AB: 26)
   Miami Marlins Hitting (vs Michael Wacha):
     - Heriberto Hernández: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
-    - Otto Lopez: 0/2 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.282 (AB: 2)
     - Kyle Stowers: 1/4 BvP | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.308 (AB: 3)
-    - Agustín Ramírez: 0/2 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.273 (AB: 2)
+    - Otto Lopez: 0/2 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.282 (AB: 2)
+    - Griffin Conine: NO HISTORY | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.357
     - Javier Sanoja: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
     - Jakob Marsee: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
-    - Griffin Conine: NO HISTORY | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.357
-    - Jared Serna: NO HISTORY | Baseline (2026 Season OBP): 0.400 -> Smoothed OBP: 0.400
+    - Agustín Ramírez: 0/2 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.273 (AB: 2)
     - Joe Mack: NO HISTORY | Baseline (2026 Season OBP): 0.287 -> Smoothed OBP: 0.287
-  Aggregated Away OBP: 0.320 (Total AB: 7)
-  PROJECTION: Kansas City Royals | 0.59% Edge
+    - Graham Pauley: 0/2 BvP | Baseline (2026 Season OBP): 0.237 -> Smoothed OBP: 0.198 (AB: 2)
+  Aggregated Away OBP: 0.298 (Total AB: 9)
+  PROJECTION: Kansas City Royals | 2.84% Edge
 --------------------------------------------------
 GAME: Tampa Bay Rays @ Texas Rangers (G1)
   Lineup Source: Starters of Last Game
