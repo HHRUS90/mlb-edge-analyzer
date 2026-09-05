@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 09/05/2026 (04:00 PM MDT)
+DETAILED EVALUATION LOG - 09/05/2026 (05:00 PM MDT)
 ==================================================
-📊 TODAY: 0/0 (0.0%) | $0.00
+📊 TODAY: 0/1 (0.0%) | -$100.00
 📊 YESTERDAY: 8/16 (50.0%) | +$43.99
-LIFETIME: 605/1160 (52.2%) | -$388.98
-BEST PICKS LIFETIME: 48/88 (54.5%) | +$23.16
-ODDS-API: 73 Calls (Used: 76 | Rem: 424)
-MLB-STATS-API: 246 Total Calls
+LIFETIME: 605/1161 (52.1%) | -$488.98
+BEST PICKS LIFETIME: 48/89 (53.9%) | -$76.84
+ODDS-API: 74 Calls (Used: 77 | Rem: 423)
+MLB-STATS-API: 103 Total Calls
 ==================================================
 GAME: San Francisco Giants @ New York Mets (G1)
   Lineup Source: Official Boxscore
@@ -320,7 +320,7 @@ GAME: New York Yankees @ San Diego Padres (G1)
   PROJECTION: San Diego Padres | 3.09% Edge
 --------------------------------------------------
 GAME: St. Louis Cardinals @ Colorado Rockies (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Colorado Rockies Hitting (vs Matthew Liberatore):
     - Jake McCarthy: NO HISTORY | Baseline (2026 Season OBP): 0.332 -> Smoothed OBP: 0.332
     - Connor Norby: NO HISTORY | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.323
@@ -333,13 +333,13 @@ GAME: St. Louis Cardinals @ Colorado Rockies (G1)
     - Ezequiel Tovar: 2/4 BvP | Baseline (2026 Season OBP): 0.258 -> Smoothed OBP: 0.327 (AB: 4)
   Aggregated Home OBP: 0.345 (Total AB: 8)
   St. Louis Cardinals Hitting (vs Mason Adams):
-    - José Fermín: NO HISTORY | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.303
+    - Bryan Torres: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
     - Iván Herrera: NO HISTORY | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.359
     - Alec Burleson: NO HISTORY | Baseline (2026 Season OBP): 0.345 -> Smoothed OBP: 0.345
     - Jordan Walker: NO HISTORY | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.343
     - Leo Bernal: NO HISTORY | Baseline (2026 Season OBP): 0.412 -> Smoothed OBP: 0.412
-    - Victor Scott II: NO HISTORY | Baseline (2026 Season OBP): 0.280 -> Smoothed OBP: 0.280
-    - Ramón Urías: NO HISTORY | Baseline (2026 Season OBP): 0.274 -> Smoothed OBP: 0.274
+    - Joshua Báez: NO HISTORY | Baseline (2026 Season OBP): 0.274 -> Smoothed OBP: 0.274
+    - Nolan Gorman: NO HISTORY | Baseline (2026 Season OBP): 0.266 -> Smoothed OBP: 0.266
     - Thomas Saggese: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
     - Nathan Church: NO HISTORY | Baseline (2026 Season OBP): 0.284 -> Smoothed OBP: 0.284
   Aggregated Away OBP: 0.323 (Total AB: 0)
@@ -372,7 +372,7 @@ GAME: Washington Nationals @ Los Angeles Dodgers (G1)
   PROJECTION: Los Angeles Dodgers | 3.26% Edge
 --------------------------------------------------
 GAME: Athletics @ Seattle Mariners (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Seattle Mariners Hitting (vs Jeffrey Springs):
     - Randy Arozarena: 4/12 BvP | Baseline (2026 Season OBP): 0.370 -> Smoothed OBP: 0.350 (AB: 11)
     - Dominic Canzone: 0/2 BvP | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.274 (AB: 2)
@@ -389,11 +389,11 @@ GAME: Athletics @ Seattle Mariners (G1)
     - Jeff McNeil: 3/7 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.365 (AB: 6)
     - Zack Gelof: 4/7 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.427 (AB: 7)
     - Lawrence Butler: 2/9 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.277 (AB: 9)
-    - Denzel Clarke: NO HISTORY | Baseline (2026 Season OBP): 0.234 -> Smoothed OBP: 0.234
     - Jonah Heim: 4/19 BvP | Baseline (2026 Season OBP): 0.273 -> Smoothed OBP: 0.232 (AB: 19)
     - Max Muncy: NO HISTORY | Baseline (2026 Season OBP): 0.293 -> Smoothed OBP: 0.293
     - Donovan Walton: NO HISTORY | Baseline (2026 Season OBP): 0.376 -> Smoothed OBP: 0.376
     - Alika Williams: NO HISTORY | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.311
+    - Denzel Clarke: NO HISTORY | Baseline (2026 Season OBP): 0.234 -> Smoothed OBP: 0.234
   Aggregated Away OBP: 0.319 (Total AB: 41)
   PROJECTION: Athletics | 3.93% Edge
 --------------------------------------------------
