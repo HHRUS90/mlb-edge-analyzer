@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 09/05/2026 (03:00 PM MDT)
+DETAILED EVALUATION LOG - 09/05/2026 (04:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 8/16 (50.0%) | +$43.99
 LIFETIME: 605/1160 (52.2%) | -$388.98
 BEST PICKS LIFETIME: 48/88 (54.5%) | +$23.16
-ODDS-API: 72 Calls (Used: 75 | Rem: 425)
-MLB-STATS-API: 288 Total Calls
+ODDS-API: 73 Calls (Used: 76 | Rem: 424)
+MLB-STATS-API: 246 Total Calls
 ==================================================
 GAME: San Francisco Giants @ New York Mets (G1)
   Lineup Source: Official Boxscore
@@ -346,7 +346,7 @@ GAME: St. Louis Cardinals @ Colorado Rockies (G1)
   PROJECTION: Colorado Rockies | 2.24% Edge
 --------------------------------------------------
 GAME: Washington Nationals @ Los Angeles Dodgers (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Dodgers Hitting (vs Cade Cavalli):
     - Tommy Edman: NO HISTORY | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.349
     - Freddie Freeman: NO HISTORY | Baseline (2026 Season OBP): 0.380 -> Smoothed OBP: 0.380
@@ -360,16 +360,16 @@ GAME: Washington Nationals @ Los Angeles Dodgers (G1)
   Aggregated Home OBP: 0.331 (Total AB: 0)
   Washington Nationals Hitting (vs Tyler Glasnow):
     - James Wood: 0/3 BvP | Baseline (2026 Season OBP): 0.392 -> Smoothed OBP: 0.302 (AB: 3)
-    - Andrés Chaparro: NO HISTORY | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.359
-    - Dylan Crews: NO HISTORY | Baseline (2026 Season OBP): 0.287 -> Smoothed OBP: 0.287
+    - Daylen Lile: 0/3 BvP | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.236 (AB: 3)
+    - Abimelec Ortiz: NO HISTORY | Baseline (2026 Season OBP): 0.248 -> Smoothed OBP: 0.248
     - CJ Abrams: 4/6 BvP | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.463 (AB: 4)
     - Brady House: 0/3 BvP | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.236 (AB: 3)
-    - Abimelec Ortiz: NO HISTORY | Baseline (2026 Season OBP): 0.248 -> Smoothed OBP: 0.248
-    - José Tena: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
-    - Daylen Lile: 0/3 BvP | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.236 (AB: 3)
     - Jorbit Vivas: 0/2 BvP | Baseline (2026 Season OBP): 0.334 -> Smoothed OBP: 0.278 (AB: 2)
-  Aggregated Away OBP: 0.302 (Total AB: 15)
-  PROJECTION: Los Angeles Dodgers | 2.84% Edge
+    - José Tena: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
+    - Keibert Ruiz: NO HISTORY | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.321
+    - Dylan Crews: NO HISTORY | Baseline (2026 Season OBP): 0.287 -> Smoothed OBP: 0.287
+  Aggregated Away OBP: 0.298 (Total AB: 15)
+  PROJECTION: Los Angeles Dodgers | 3.26% Edge
 --------------------------------------------------
 GAME: Athletics @ Seattle Mariners (G1)
   Lineup Source: Starters of Last Game
@@ -379,11 +379,11 @@ GAME: Athletics @ Seattle Mariners (G1)
     - Julio Rodríguez: 4/14 BvP | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.293 (AB: 14)
     - Cal Raleigh: 1/11 BvP | Baseline (2026 Season OBP): 0.291 -> Smoothed OBP: 0.186 (AB: 10)
     - Josh Naylor: 2/4 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.376 (AB: 3)
-    - Cole Young: 0/2 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.257 (AB: 2)
     - J.P. Crawford: 2/14 BvP | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.228 (AB: 13)
     - Taylor Ward: 3/12 BvP | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.299 (AB: 11)
-    - Patrick Wisdom: NO HISTORY | Baseline (2026 Season OBP): 0.160 -> Smoothed OBP: 0.160
-  Aggregated Home OBP: 0.269 (Total AB: 66)
+    - Cole Young: 0/2 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.257 (AB: 2)
+    - Weston Wilson: 0/2 BvP | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.253 (AB: 2)
+  Aggregated Home OBP: 0.280 (Total AB: 68)
   Athletics Hitting (vs George Kirby):
     - Henry Bolte: NO HISTORY | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.354
     - Jeff McNeil: 3/7 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.365 (AB: 6)
@@ -395,5 +395,5 @@ GAME: Athletics @ Seattle Mariners (G1)
     - Donovan Walton: NO HISTORY | Baseline (2026 Season OBP): 0.376 -> Smoothed OBP: 0.376
     - Alika Williams: NO HISTORY | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.311
   Aggregated Away OBP: 0.319 (Total AB: 41)
-  PROJECTION: Athletics | 4.96% Edge
+  PROJECTION: Athletics | 3.93% Edge
 --------------------------------------------------
