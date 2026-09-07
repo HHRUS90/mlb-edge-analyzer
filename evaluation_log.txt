@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 09/07/2026 (09:00 AM MDT)
+DETAILED EVALUATION LOG - 09/07/2026 (10:00 AM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 6/15 (40.0%) | -$354.15
 LIFETIME: 619/1190 (52.0%) | -$751.36
 BEST PICKS LIFETIME: 50/90 (55.6%) | +$171.31
-ODDS-API: 98 Calls (Used: 101 | Rem: 399)
-MLB-STATS-API: 253 Total Calls
+ODDS-API: 99 Calls (Used: 102 | Rem: 398)
+MLB-STATS-API: 216 Total Calls
 ==================================================
 GAME: Atlanta Braves @ Philadelphia Phillies (G1)
   Lineup Source: Official Boxscore
@@ -138,44 +138,44 @@ GAME: Arizona Diamondbacks @ Kansas City Royals (G1)
   PROJECTION: Arizona Diamondbacks | 1.75% Edge
 --------------------------------------------------
 GAME: Chicago Cubs @ Milwaukee Brewers (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Milwaukee Brewers Hitting (vs Matthew Boyd):
-    - Sal Frelick: 3/6 BvP | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.374 (AB: 5)
-    - Christian Yelich: 1/4 BvP | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.301 (AB: 3)
     - Jackson Chourio: 2/3 BvP | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.415 (AB: 1)
-    - Jake Bauers: 1/11 BvP | Baseline (2026 Season OBP): 0.396 -> Smoothed OBP: 0.236 (AB: 11)
-    - Andrew Vaughn: 5/14 BvP | Baseline (2026 Season OBP): 0.399 -> Smoothed OBP: 0.375 (AB: 12)
     - Brice Turang: 2/8 BvP | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.306 (AB: 7)
+    - William Contreras: 1/3 BvP | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.338 (AB: 3)
+    - Andrew Vaughn: 5/14 BvP | Baseline (2026 Season OBP): 0.399 -> Smoothed OBP: 0.375 (AB: 12)
+    - Christian Yelich: 1/4 BvP | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.301 (AB: 3)
+    - Luis Lara: NO HISTORY | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.340
     - Cooper Pratt: NO HISTORY | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.343
-    - Gary Sánchez: 3/8 BvP | Baseline (2026 Season OBP): 0.352 -> Smoothed OBP: 0.362 (AB: 7)
-    - David Hamilton: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
-  Aggregated Home OBP: 0.337 (Total AB: 46)
+    - Garrett Mitchell: NO HISTORY | Baseline (2026 Season OBP): 0.354 -> Smoothed OBP: 0.354
+    - Joey Ortiz: 0/2 BvP | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.265 (AB: 1)
+  Aggregated Home OBP: 0.337 (Total AB: 27)
   Chicago Cubs Hitting (vs Robert Gasser):
     - Pete Crow-Armstrong: 1/1 BvP | Baseline (2026 Season OBP): 0.374 -> Smoothed OBP: 0.431 (AB: 0)
     - Seiya Suzuki: 1/3 BvP | Baseline (2026 Season OBP): 0.369 -> Smoothed OBP: 0.361 (AB: 3)
-    - Matt Shaw: 0/1 BvP | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.301 (AB: 1)
-    - BJ Murray Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.167 -> Smoothed OBP: 0.167
-    - Michael Conforto: NO HISTORY | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.335
-    - Gabriel Arias: NO HISTORY | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.286
-    - Pedro Ramírez: NO HISTORY | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.325
-    - Carson Kelly: 0/1 BvP | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.308 (AB: 1)
+    - Alex Bregman: NO HISTORY | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.348
     - Tyrone Taylor: NO HISTORY | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333
-  Aggregated Away OBP: 0.316 (Total AB: 5)
-  PROJECTION: Milwaukee Brewers | 2.02% Edge
+    - Nico Hoerner: 1/3 BvP | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.323 (AB: 3)
+    - Matt Shaw: 0/1 BvP | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.301 (AB: 1)
+    - Carson Kelly: 0/1 BvP | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.308 (AB: 1)
+    - BJ Murray Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.167 -> Smoothed OBP: 0.167
+    - Pedro Ramírez: NO HISTORY | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.325
+  Aggregated Away OBP: 0.322 (Total AB: 8)
+  PROJECTION: Milwaukee Brewers | 1.56% Edge
 --------------------------------------------------
 GAME: Minnesota Twins @ Detroit Tigers (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Detroit Tigers Hitting (vs Joe Ryan):
-    - Kevin McGonigle: 1/3 BvP | Baseline (2026 Season OBP): 0.373 -> Smoothed OBP: 0.364 (AB: 3)
-    - Hao-Yu Lee: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
     - Colt Keith: 3/11 BvP | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.295 (AB: 11)
+    - Kevin McGonigle: 1/3 BvP | Baseline (2026 Season OBP): 0.373 -> Smoothed OBP: 0.364 (AB: 3)
+    - Gleyber Torres: 6/11 BvP | Baseline (2026 Season OBP): 0.371 -> Smoothed OBP: 0.462 (AB: 7)
     - Riley Greene: 5/15 BvP | Baseline (2026 Season OBP): 0.365 -> Smoothed OBP: 0.346 (AB: 14)
     - Dillon Dingler: NO HISTORY | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.309
-    - Brett Callahan: NO HISTORY | Baseline (2026 Season OBP): 0.279 -> Smoothed OBP: 0.279
-    - Ben Malgeri: NO HISTORY | Baseline (2026 Season OBP): 0.352 -> Smoothed OBP: 0.352
+    - Zach McKinstry: 3/11 BvP | Baseline (2026 Season OBP): 0.290 -> Smoothed OBP: 0.281 (AB: 11)
+    - Spencer Torkelson: 6/17 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.338 (AB: 15)
     - Max Clark: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
     - John Peck: NO HISTORY | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.286
-  Aggregated Home OBP: 0.318 (Total AB: 28)
+  Aggregated Home OBP: 0.334 (Total AB: 61)
   Minnesota Twins Hitting (vs Troy Melton):
     - Luke Keaschall: NO HISTORY | Baseline (2026 Season OBP): 0.364 -> Smoothed OBP: 0.364
     - Brooks Lee: 0/1 BvP | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.271 (AB: 1)
@@ -187,7 +187,7 @@ GAME: Minnesota Twins @ Detroit Tigers (G1)
     - Kaelen Culpepper: NO HISTORY | Baseline (2026 Season OBP): 0.350 -> Smoothed OBP: 0.350
     - Walker Jenkins: NO HISTORY | Baseline (2026 Season OBP): 0.258 -> Smoothed OBP: 0.258
   Aggregated Away OBP: 0.310 (Total AB: 4)
-  PROJECTION: Detroit Tigers | 0.84% Edge
+  PROJECTION: Detroit Tigers | 2.37% Edge
 --------------------------------------------------
 GAME: Washington Nationals @ San Diego Padres (G1)
   Lineup Source: Starters of Last Game
