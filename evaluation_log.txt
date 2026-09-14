@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 09/14/2026 (04:00 PM MDT)
+DETAILED EVALUATION LOG - 09/14/2026 (05:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 8/15 (53.3%) | -$91.68
 LIFETIME: 672/1281 (52.5%) | -$72.22
 BEST PICKS LIFETIME: 54/97 (55.7%) | +$160.30
-ODDS-API: 217 Calls (Used: 220 | Rem: 280)
-MLB-STATS-API: 215 Total Calls
+ODDS-API: 218 Calls (Used: 221 | Rem: 279)
+MLB-STATS-API: 145 Total Calls
 ==================================================
 GAME: Los Angeles Dodgers @ Cincinnati Reds (G1)
   Lineup Source: Official Boxscore
@@ -216,18 +216,18 @@ GAME: San Diego Padres @ Colorado Rockies (G1)
   PROJECTION: Colorado Rockies | 2.95% Edge
 --------------------------------------------------
 GAME: Seattle Mariners @ Los Angeles Angels (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Angels Hitting (vs Kade Anderson):
     - Zach Neto: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
     - Mike Trout: NO HISTORY | Baseline (2026 Season OBP): 0.379 -> Smoothed OBP: 0.379
-    - Wade Meckler: NO HISTORY | Baseline (2026 Season OBP): 0.371 -> Smoothed OBP: 0.371
+    - Jose Siri: NO HISTORY | Baseline (2026 Season OBP): 0.281 -> Smoothed OBP: 0.281
     - Vaughn Grissom: NO HISTORY | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.303
-    - Moisés Ballesteros: NO HISTORY | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.282
-    - Denzer Guzman: NO HISTORY | Baseline (2026 Season OBP): 0.265 -> Smoothed OBP: 0.265
-    - Josh Lowe: NO HISTORY | Baseline (2026 Season OBP): 0.275 -> Smoothed OBP: 0.275
-    - Adam Frazier: NO HISTORY | Baseline (2026 Season OBP): 0.307 -> Smoothed OBP: 0.307
     - Christian Moore: NO HISTORY | Baseline (2026 Season OBP): 0.240 -> Smoothed OBP: 0.240
-  Aggregated Home OBP: 0.305 (Total AB: 0)
+    - Denzer Guzman: NO HISTORY | Baseline (2026 Season OBP): 0.265 -> Smoothed OBP: 0.265
+    - Travis d'Arnaud: NO HISTORY | Baseline (2026 Season OBP): 0.274 -> Smoothed OBP: 0.274
+    - Kyren Paris: NO HISTORY | Baseline (2026 Season OBP): 0.188 -> Smoothed OBP: 0.188
+    - Wade Meckler: NO HISTORY | Baseline (2026 Season OBP): 0.371 -> Smoothed OBP: 0.371
+  Aggregated Home OBP: 0.291 (Total AB: 0)
   Seattle Mariners Hitting (vs Reid Detmers):
     - J.P. Crawford: 11/23 BvP | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.438 (AB: 20)
     - Randy Arozarena: 5/15 BvP | Baseline (2026 Season OBP): 0.373 -> Smoothed OBP: 0.349 (AB: 13)
@@ -235,14 +235,14 @@ GAME: Seattle Mariners @ Los Angeles Angels (G1)
     - Cal Raleigh: 2/15 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.198 (AB: 15)
     - Julio Rodríguez: 9/16 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.462 (AB: 13)
     - Josh Naylor: 3/13 BvP | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.273 (AB: 13)
+    - Michael Arroyo: NO HISTORY | Baseline (2026 Season OBP): 0.500 -> Smoothed OBP: 0.500
     - Cole Young: 0/2 BvP | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.260 (AB: 2)
-    - Brock Rodden: NO HISTORY | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.323
-    - Jhonny Pereda: NO HISTORY | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.355
-  Aggregated Away OBP: 0.332 (Total AB: 76)
-  PROJECTION: Seattle Mariners | 2.69% Edge
+    - Weston Wilson: NO HISTORY | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.302
+  Aggregated Away OBP: 0.345 (Total AB: 76)
+  PROJECTION: Seattle Mariners | 5.41% Edge
 --------------------------------------------------
 GAME: Miami Marlins @ Arizona Diamondbacks (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Arizona Diamondbacks Hitting (vs Sandy Alcantara):
     - Lars Nootbaar: 4/14 BvP | Baseline (2026 Season OBP): 0.345 -> Smoothed OBP: 0.310 (AB: 12)
     - Ketel Marte: 3/10 BvP | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.309 (AB: 8)
@@ -257,13 +257,13 @@ GAME: Miami Marlins @ Arizona Diamondbacks (G1)
   Miami Marlins Hitting (vs Corbin Burnes):
     - Kyle Stowers: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
     - Heriberto Hernández: NO HISTORY | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.311
-    - Otto Lopez: 0/3 BvP | Baseline (2026 Season OBP): 0.350 -> Smoothed OBP: 0.269 (AB: 3)
-    - Griffin Conine: NO HISTORY | Baseline (2026 Season OBP): 0.361 -> Smoothed OBP: 0.361
     - Xavier Edwards: 2/4 BvP | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.401 (AB: 4)
+    - Griffin Conine: NO HISTORY | Baseline (2026 Season OBP): 0.361 -> Smoothed OBP: 0.361
+    - Otto Lopez: 0/3 BvP | Baseline (2026 Season OBP): 0.350 -> Smoothed OBP: 0.269 (AB: 3)
     - Jakob Marsee: NO HISTORY | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.339
     - Javier Sanoja: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
+    - Joe Mack: NO HISTORY | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.282
     - Agustín Ramírez: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
-    - Esteury Ruiz: 0/3 BvP | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.261 (AB: 3)
-  Aggregated Away OBP: 0.325 (Total AB: 10)
-  PROJECTION: Miami Marlins | 0.56% Edge
+  Aggregated Away OBP: 0.327 (Total AB: 7)
+  PROJECTION: Miami Marlins | 0.79% Edge
 --------------------------------------------------
