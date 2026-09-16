@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 09/16/2026 (04:00 PM MDT)
+DETAILED EVALUATION LOG - 09/16/2026 (05:00 PM MDT)
 ==================================================
 📊 TODAY: 2/4 (50.0%) | -$62.51
 📊 YESTERDAY: 9/15 (60.0%) | +$144.23
 LIFETIME: 689/1310 (52.6%) | +$82.45
 BEST PICKS LIFETIME: 55/100 (55.0%) | +$6.81
-ODDS-API: 249 Calls (Used: 252 | Rem: 248)
-MLB-STATS-API: 250 Total Calls
+ODDS-API: 250 Calls (Used: 253 | Rem: 247)
+MLB-STATS-API: 152 Total Calls
 ==================================================
 GAME: Chicago White Sox @ Cleveland Guardians (G1)
   Lineup Source: Official Boxscore
@@ -346,7 +346,7 @@ GAME: San Diego Padres @ Colorado Rockies (G1)
   PROJECTION: Colorado Rockies | 3.61% Edge
 --------------------------------------------------
 GAME: Seattle Mariners @ Los Angeles Angels (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Los Angeles Angels Hitting (vs George Kirby):
     - Zach Neto: 3/11 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.296 (AB: 7)
     - Mike Trout: 8/18 BvP | Baseline (2026 Season OBP): 0.379 -> Smoothed OBP: 0.421 (AB: 14)
@@ -365,14 +365,14 @@ GAME: Seattle Mariners @ Los Angeles Angels (G1)
     - Cal Raleigh: 4/11 BvP | Baseline (2026 Season OBP): 0.292 -> Smoothed OBP: 0.330 (AB: 10)
     - Julio Rodríguez: 4/18 BvP | Baseline (2026 Season OBP): 0.301 -> Smoothed OBP: 0.250 (AB: 18)
     - Josh Naylor: 3/8 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.348 (AB: 8)
-    - Cole Young: NO HISTORY | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.309
     - Taylor Ward: 5/14 BvP | Baseline (2026 Season OBP): 0.361 -> Smoothed OBP: 0.359 (AB: 14)
-    - Michael Arroyo: NO HISTORY | Baseline (2026 Season OBP): 0.444 -> Smoothed OBP: 0.444
-  Aggregated Away OBP: 0.325 (Total AB: 93)
-  PROJECTION: Seattle Mariners | 1.64% Edge
+    - Cole Young: NO HISTORY | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.309
+    - Weston Wilson: NO HISTORY | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.303
+  Aggregated Away OBP: 0.309 (Total AB: 93)
+  PROJECTION: Seattle Mariners | 0.07% Edge
 --------------------------------------------------
 GAME: Miami Marlins @ Arizona Diamondbacks (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Arizona Diamondbacks Hitting (vs Ryan Gusto):
     - Lars Nootbaar: NO HISTORY | Baseline (2026 Season OBP): 0.346 -> Smoothed OBP: 0.346
     - Ketel Marte: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
@@ -388,12 +388,12 @@ GAME: Miami Marlins @ Arizona Diamondbacks (G1)
     - Kyle Stowers: 2/5 BvP | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.352 (AB: 5)
     - Heriberto Hernández: 1/4 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.294 (AB: 4)
     - Otto Lopez: 5/7 BvP | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.498 (AB: 7)
-    - Esteury Ruiz: 1/3 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.337 (AB: 3)
+    - Griffin Conine: 0/2 BvP | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.300 (AB: 2)
     - Javier Sanoja: 1/2 BvP | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.359 (AB: 1)
     - Jakob Marsee: 1/3 BvP | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.339 (AB: 3)
-    - Brian Navarreto: 1/2 BvP | Baseline (2026 Season OBP): 0.196 -> Smoothed OBP: 0.247 (AB: 2)
-    - Jared Serna: NO HISTORY | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.250
-    - Deyvison De Los Santos: NO HISTORY | Baseline (2026 Season OBP): 0.263 -> Smoothed OBP: 0.263
-  Aggregated Away OBP: 0.327 (Total AB: 25)
-  PROJECTION: Miami Marlins | 0.26% Edge
+    - Xavier Edwards: 2/8 BvP | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.312 (AB: 8)
+    - Joe Mack: NO HISTORY | Baseline (2026 Season OBP): 0.285 -> Smoothed OBP: 0.285
+    - Esteury Ruiz: 1/3 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.337 (AB: 3)
+  Aggregated Away OBP: 0.342 (Total AB: 33)
+  PROJECTION: Miami Marlins | 1.79% Edge
 --------------------------------------------------
