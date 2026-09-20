@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 09/20/2026 (12:00 PM MDT)
+DETAILED EVALUATION LOG - 09/20/2026 (01:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 7/15 (46.7%) | -$278.70
 LIFETIME: 715/1360 (52.6%) | -$152.63
 BEST PICKS LIFETIME: 56/103 (54.4%) | -$170.97
-ODDS-API: 309 Calls (Used: 312 | Rem: 188)
-MLB-STATS-API: 174 Total Calls
+ODDS-API: 310 Calls (Used: 313 | Rem: 187)
+MLB-STATS-API: 190 Total Calls
 ==================================================
 GAME: Philadelphia Phillies @ New York Mets (G1)
   Lineup Source: Official Boxscore
@@ -292,6 +292,32 @@ GAME: Minnesota Twins @ Los Angeles Angels (G1)
     - Ben Ross: NO HISTORY | Baseline (2026 Season OBP): 0.133 -> Smoothed OBP: 0.133
   Aggregated Away OBP: 0.274 (Total AB: 1)
   PROJECTION: Los Angeles Angels | 1.48% Edge
+--------------------------------------------------
+GAME: San Francisco Giants @ Los Angeles Dodgers (G1)
+  Lineup Source: Official Boxscore
+  Los Angeles Dodgers Hitting (vs Matt Wilkinson):
+    - Mookie Betts: NO HISTORY | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.327
+    - Tommy Edman: NO HISTORY | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.329
+    - Teoscar Hernández: NO HISTORY | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333
+    - Freddie Freeman: NO HISTORY | Baseline (2026 Season OBP): 0.367 -> Smoothed OBP: 0.367
+    - Miguel Rojas: NO HISTORY | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.311
+    - Max Muncy: NO HISTORY | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.351
+    - Josue De Paula: NO HISTORY | Baseline (2026 Season OBP): 0.471 -> Smoothed OBP: 0.471
+    - Enrique Hernández: NO HISTORY | Baseline (2026 Season OBP): 0.274 -> Smoothed OBP: 0.274
+    - Hunter Feduccia: NO HISTORY | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.323
+  Aggregated Home OBP: 0.343 (Total AB: 0)
+  San Francisco Giants Hitting (vs Jack Dreyer):
+    - Jonah Cox: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
+    - Jung Hoo Lee: 2/4 BvP | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.370 (AB: 4)
+    - Victor Bericoto: NO HISTORY | Baseline (2026 Season OBP): 0.269 -> Smoothed OBP: 0.269
+    - Andrew Knizner: NO HISTORY | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.297
+    - Brett Harris: NO HISTORY | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.286
+    - Scott Bandura: NO HISTORY | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.286
+    - Shay Whitcomb: NO HISTORY | Baseline (2026 Season OBP): 0.204 -> Smoothed OBP: 0.204
+    - Grant McCray: NO HISTORY | Baseline (2026 Season OBP): 0.265 -> Smoothed OBP: 0.265
+    - Christian Koss: NO HISTORY | Baseline (2026 Season OBP): 0.276 -> Smoothed OBP: 0.276
+  Aggregated Away OBP: 0.287 (Total AB: 4)
+  PROJECTION: Los Angeles Dodgers | 5.63% Edge
 --------------------------------------------------
 GAME: Miami Marlins @ San Diego Padres (G1)
   Lineup Source: Official Boxscore
