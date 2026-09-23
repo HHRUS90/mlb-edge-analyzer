@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 09/23/2026 (02:00 PM MDT)
+DETAILED EVALUATION LOG - 09/23/2026 (03:00 PM MDT)
 ==================================================
-📊 TODAY: 0/1 (0.0%) | -$100.00
+📊 TODAY: 1/2 (50.0%) | -$16.67
 📊 YESTERDAY: 8/15 (53.3%) | +$74.60
-LIFETIME: 735/1394 (52.7%) | +$285.80
+LIFETIME: 736/1395 (52.8%) | +$369.13
 BEST PICKS LIFETIME: 59/107 (55.1%) | -$99.08
-ODDS-API: 359 Calls (Used: 362 | Rem: 138)
-MLB-STATS-API: 273 Total Calls
+ODDS-API: 360 Calls (Used: 363 | Rem: 137)
+MLB-STATS-API: 275 Total Calls
 ==================================================
 GAME: Washington Nationals @ Detroit Tigers (G1)
   Lineup Source: Official Boxscore
@@ -112,7 +112,7 @@ GAME: St. Louis Cardinals @ Pittsburgh Pirates (G1)
   PROJECTION: St. Louis Cardinals | 1.77% Edge
 --------------------------------------------------
 GAME: Milwaukee Brewers @ Philadelphia Phillies (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Philadelphia Phillies Hitting (vs Logan Henderson):
     - Kyle Schwarber: NO HISTORY | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.353
     - Trea Turner: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
@@ -130,15 +130,15 @@ GAME: Milwaukee Brewers @ Philadelphia Phillies (G1)
     - Brice Turang: 6/14 BvP | Baseline (2026 Season OBP): 0.364 -> Smoothed OBP: 0.402 (AB: 12)
     - William Contreras: 10/31 BvP | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.327 (AB: 29)
     - Jake Bauers: 1/5 BvP | Baseline (2026 Season OBP): 0.396 -> Smoothed OBP: 0.331 (AB: 5)
+    - Joey Ortiz: 1/6 BvP | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.266 (AB: 6)
     - Christian Yelich: 12/40 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.303 (AB: 39)
-    - Luis Lara: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
-    - Cooper Pratt: NO HISTORY | Baseline (2026 Season OBP): 0.344 -> Smoothed OBP: 0.344
+    - Sal Frelick: 1/10 BvP | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.198 (AB: 10)
     - David Hamilton: 1/3 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.314 (AB: 3)
-  Aggregated Away OBP: 0.321 (Total AB: 96)
-  PROJECTION: Philadelphia Phillies | 0.48% Edge
+  Aggregated Away OBP: 0.299 (Total AB: 112)
+  PROJECTION: Philadelphia Phillies | 2.66% Edge
 --------------------------------------------------
 GAME: Tampa Bay Rays @ New York Yankees (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   New York Yankees Hitting (vs Mason Englert):
     - Ben Rice: 1/2 BvP | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.383 (AB: 2)
     - George Lombard Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.289 -> Smoothed OBP: 0.289
@@ -151,31 +151,31 @@ GAME: Tampa Bay Rays @ New York Yankees (G1)
     - Ali Sánchez: NO HISTORY | Baseline (2026 Season OBP): 0.265 -> Smoothed OBP: 0.265
   Aggregated Home OBP: 0.306 (Total AB: 11)
   Tampa Bay Rays Hitting (vs Gerrit Cole):
-    - Yandy Díaz: 1/8 BvP | Baseline (2026 Season OBP): 0.357 -> Smoothed OBP: 0.254 (AB: 7)
+    - Victor Mesa Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.322 -> Smoothed OBP: 0.322
     - Jonathan Aranda: 0/3 BvP | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.276 (AB: 3)
     - Junior Caminero: 1/3 BvP | Baseline (2026 Season OBP): 0.361 -> Smoothed OBP: 0.355 (AB: 2)
+    - Liam Hicks: NO HISTORY | Baseline (2026 Season OBP): 0.369 -> Smoothed OBP: 0.369
     - Jonny DeLuca: 0/2 BvP | Baseline (2026 Season OBP): 0.287 -> Smoothed OBP: 0.239 (AB: 2)
-    - Chandler Simpson: 1/3 BvP | Baseline (2026 Season OBP): 0.336 -> Smoothed OBP: 0.335 (AB: 3)
-    - Ben Williamson: NO HISTORY | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.304
-    - Nick Fortes: 0/2 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.259 (AB: 2)
-    - Taylor Walls: 3/12 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.276 (AB: 9)
+    - Richie Palacios: 2/7 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.310 (AB: 6)
+    - Ryan Vilade: NO HISTORY | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.330
     - Cedric Mullins: 11/33 BvP | Baseline (2026 Season OBP): 0.284 -> Smoothed OBP: 0.322 (AB: 33)
-  Aggregated Away OBP: 0.291 (Total AB: 61)
-  PROJECTION: New York Yankees | 1.46% Edge
+    - Jorge Mateo: 2/9 BvP | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.237 (AB: 9)
+  Aggregated Away OBP: 0.307 (Total AB: 55)
+  PROJECTION: Tampa Bay Rays | 0.08% Edge
 --------------------------------------------------
 GAME: Cleveland Guardians @ Boston Red Sox (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Boston Red Sox Hitting (vs Foster Griffin):
     - Roman Anthony: NO HISTORY | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.329
     - Nick Sogard: NO HISTORY | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.341
-    - Mickey Gasper: NO HISTORY | Baseline (2026 Season OBP): 0.364 -> Smoothed OBP: 0.364
+    - Jahmai Jones: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
     - Wilyer Abreu: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
     - Adley Rutschman: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
+    - Ceddanne Rafaela: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
     - Caleb Durbin: NO HISTORY | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.338
+    - Trevor Story: NO HISTORY | Baseline (2026 Season OBP): 0.278 -> Smoothed OBP: 0.278
     - Andruw Monasterio: NO HISTORY | Baseline (2026 Season OBP): 0.298 -> Smoothed OBP: 0.298
-    - Isiah Kiner-Falefa: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
-    - Jarren Duran: NO HISTORY | Baseline (2026 Season OBP): 0.263 -> Smoothed OBP: 0.263
-  Aggregated Home OBP: 0.322 (Total AB: 0)
+  Aggregated Home OBP: 0.316 (Total AB: 0)
   Cleveland Guardians Hitting (vs Sonny Gray):
     - Steven Kwan: 8/28 BvP | Baseline (2026 Season OBP): 0.378 -> Smoothed OBP: 0.310 (AB: 27)
     - José Ramírez: 0/2 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.269 (AB: 2)
@@ -187,7 +187,7 @@ GAME: Cleveland Guardians @ Boston Red Sox (G1)
     - Petey Halpin: NO HISTORY | Baseline (2026 Season OBP): 0.260 -> Smoothed OBP: 0.260
     - Brayan Rocchio: NO HISTORY | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.311
   Aggregated Away OBP: 0.287 (Total AB: 51)
-  PROJECTION: Boston Red Sox | 3.49% Edge
+  PROJECTION: Boston Red Sox | 2.92% Edge
 --------------------------------------------------
 GAME: Cincinnati Reds @ Atlanta Braves (G1)
   Lineup Source: Official Boxscore
@@ -216,7 +216,7 @@ GAME: Cincinnati Reds @ Atlanta Braves (G1)
   PROJECTION: Atlanta Braves | 4.99% Edge
 --------------------------------------------------
 GAME: Chicago White Sox @ Kansas City Royals (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Kansas City Royals Hitting (vs Bryan Hudson):
     - Carter Jensen: 0/1 BvP | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.291 (AB: 1)
     - Bobby Witt Jr.: 1/2 BvP | Baseline (2026 Season OBP): 0.362 -> Smoothed OBP: 0.385 (AB: 1)
@@ -229,17 +229,17 @@ GAME: Chicago White Sox @ Kansas City Royals (G1)
     - Isaac Collins: 0/2 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.269 (AB: 2)
   Aggregated Home OBP: 0.315 (Total AB: 13)
   Chicago White Sox Hitting (vs Seth Lugo):
-    - Luisangel Acuña: 0/2 BvP | Baseline (2026 Season OBP): 0.259 -> Smoothed OBP: 0.216 (AB: 2)
-    - Andrew Benintendi: 5/17 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.297 (AB: 14)
-    - Randal Grichuk: 4/10 BvP | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.359 (AB: 10)
-    - Munetaka Murakami: 3/6 BvP | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.405 (AB: 4)
-    - Chase Meidroth: 1/13 BvP | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.194 (AB: 11)
+    - Sam Antonacci: 1/3 BvP | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.356 (AB: 3)
     - Kyle Teel: 2/2 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.418 (AB: 1)
-    - Brenton Doyle: 3/9 BvP | Baseline (2026 Season OBP): 0.276 -> Smoothed OBP: 0.303 (AB: 7)
-    - Colson Montgomery: 3/6 BvP | Baseline (2026 Season OBP): 0.290 -> Smoothed OBP: 0.369 (AB: 6)
+    - Miguel Vargas: 4/12 BvP | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.347 (AB: 9)
+    - Munetaka Murakami: 3/6 BvP | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.405 (AB: 4)
+    - Andrew Benintendi: 5/17 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.297 (AB: 14)
     - Tristan Peters: 1/4 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.316 (AB: 4)
-  Aggregated Away OBP: 0.320 (Total AB: 59)
-  PROJECTION: Chicago White Sox | 0.43% Edge
+    - Chase Meidroth: 1/13 BvP | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.194 (AB: 11)
+    - Colson Montgomery: 3/6 BvP | Baseline (2026 Season OBP): 0.290 -> Smoothed OBP: 0.369 (AB: 6)
+    - Braden Montgomery: NO HISTORY | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.305
+  Aggregated Away OBP: 0.334 (Total AB: 52)
+  PROJECTION: Chicago White Sox | 1.88% Edge
 --------------------------------------------------
 GAME: Miami Marlins @ Chicago Cubs (G1)
   Lineup Source: Starters of Last Game
@@ -247,13 +247,13 @@ GAME: Miami Marlins @ Chicago Cubs (G1)
     - Pete Crow-Armstrong: 0/2 BvP | Baseline (2026 Season OBP): 0.373 -> Smoothed OBP: 0.311 (AB: 2)
     - Seiya Suzuki: 1/2 BvP | Baseline (2026 Season OBP): 0.365 -> Smoothed OBP: 0.388 (AB: 2)
     - Michael Busch: 1/2 BvP | Baseline (2026 Season OBP): 0.352 -> Smoothed OBP: 0.377 (AB: 2)
-    - Matt Shaw: 1/2 BvP | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.353 (AB: 2)
+    - Michael Conforto: 1/2 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.364 (AB: 1)
     - Ian Happ: 0/2 BvP | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.274 (AB: 2)
     - Nico Hoerner: 0/2 BvP | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.264 (AB: 2)
     - Pedro Ramírez: NO HISTORY | Baseline (2026 Season OBP): 0.317 -> Smoothed OBP: 0.317
-    - Carson Kelly: NO HISTORY | Baseline (2026 Season OBP): 0.342 -> Smoothed OBP: 0.342
     - Dansby Swanson: 2/2 BvP | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.417 (AB: 2)
-  Aggregated Home OBP: 0.338 (Total AB: 14)
+    - Miguel Amaya: NO HISTORY | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.339
+  Aggregated Home OBP: 0.339 (Total AB: 13)
   Miami Marlins Hitting (vs Kevin Gausman):
     - Heriberto Hernández: 0/3 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.241 (AB: 3)
     - Otto Lopez: 1/3 BvP | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.345 (AB: 3)
@@ -265,36 +265,36 @@ GAME: Miami Marlins @ Chicago Cubs (G1)
     - Graham Pauley: NO HISTORY | Baseline (2026 Season OBP): 0.253 -> Smoothed OBP: 0.253
     - Jakob Marsee: 1/3 BvP | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.345 (AB: 3)
   Aggregated Away OBP: 0.315 (Total AB: 11)
-  PROJECTION: Chicago Cubs | 2.32% Edge
+  PROJECTION: Chicago Cubs | 2.41% Edge
 --------------------------------------------------
 GAME: New York Mets @ Texas Rangers (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Texas Rangers Hitting (vs Nolan McLean):
     - Wyatt Langford: 0/3 BvP | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.259 (AB: 3)
     - Corey Seager: NO HISTORY | Baseline (2026 Season OBP): 0.318 -> Smoothed OBP: 0.318
     - Josh Jung: 0/3 BvP | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.276 (AB: 3)
-    - Jake Burger: NO HISTORY | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.305
     - Brandon Nimmo: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
     - Ezequiel Duran: NO HISTORY | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.324
+    - Jake Burger: NO HISTORY | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.305
     - Nicky Lopez: NO HISTORY | Baseline (2026 Season OBP): 0.320 -> Smoothed OBP: 0.320
-    - Alejandro Osuna: 1/2 BvP | Baseline (2026 Season OBP): 0.347 -> Smoothed OBP: 0.372 (AB: 2)
     - Danny Jansen: NO HISTORY | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.296
-  Aggregated Home OBP: 0.311 (Total AB: 8)
+    - Evan Carter: NO HISTORY | Baseline (2026 Season OBP): 0.289 -> Smoothed OBP: 0.289
+  Aggregated Home OBP: 0.301 (Total AB: 6)
   New York Mets Hitting (vs Cody Bradford):
     - Francisco Lindor: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
     - Juan Soto: 1/5 BvP | Baseline (2026 Season OBP): 0.389 -> Smoothed OBP: 0.326 (AB: 4)
     - Bo Bichette: 1/1 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.375 (AB: 1)
-    - Brett Baty: NO HISTORY | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.312
+    - Mark Vientos: NO HISTORY | Baseline (2026 Season OBP): 0.265 -> Smoothed OBP: 0.265
     - Carson Benge: NO HISTORY | Baseline (2026 Season OBP): 0.341 -> Smoothed OBP: 0.341
     - Marcus Semien: NO HISTORY | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.282
     - Francisco Alvarez: NO HISTORY | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.313
     - A.J. Ewing: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
-    - Luis Torrens: NO HISTORY | Baseline (2026 Season OBP): 0.299 -> Smoothed OBP: 0.299
-  Aggregated Away OBP: 0.320 (Total AB: 5)
-  PROJECTION: New York Mets | 0.97% Edge
+    - Nick Morabito: NO HISTORY | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.282
+  Aggregated Away OBP: 0.313 (Total AB: 5)
+  PROJECTION: New York Mets | 1.19% Edge
 --------------------------------------------------
 GAME: Arizona Diamondbacks @ Colorado Rockies (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Colorado Rockies Hitting (vs Merrill Kelly):
     - Jake McCarthy: 1/6 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.274 (AB: 6)
     - Cole Carrigg: NO HISTORY | Baseline (2026 Season OBP): 0.337 -> Smoothed OBP: 0.337
@@ -307,17 +307,17 @@ GAME: Arizona Diamondbacks @ Colorado Rockies (G1)
     - Ezequiel Tovar: 8/18 BvP | Baseline (2026 Season OBP): 0.262 -> Smoothed OBP: 0.379 (AB: 18)
   Aggregated Home OBP: 0.319 (Total AB: 54)
   Arizona Diamondbacks Hitting (vs Mason Adams):
-    - Ildemaro Vargas: NO HISTORY | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.300
+    - Lars Nootbaar: NO HISTORY | Baseline (2026 Season OBP): 0.339 -> Smoothed OBP: 0.339
     - Ketel Marte: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
     - Gabriel Moreno: NO HISTORY | Baseline (2026 Season OBP): 0.384 -> Smoothed OBP: 0.384
     - Geraldo Perdomo: NO HISTORY | Baseline (2026 Season OBP): 0.365 -> Smoothed OBP: 0.365
+    - Pavin Smith: NO HISTORY | Baseline (2026 Season OBP): 0.255 -> Smoothed OBP: 0.255
     - Nolan Arenado: NO HISTORY | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.325
-    - Jordan Lawlar: NO HISTORY | Baseline (2026 Season OBP): 0.323 -> Smoothed OBP: 0.323
     - Corbin Carroll: NO HISTORY | Baseline (2026 Season OBP): 0.331 -> Smoothed OBP: 0.331
+    - Jesús Sánchez: NO HISTORY | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.314
     - Tim Tawa: NO HISTORY | Baseline (2026 Season OBP): 0.294 -> Smoothed OBP: 0.294
-    - Jose Fernandez: NO HISTORY | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.296
-  Aggregated Away OBP: 0.326 (Total AB: 0)
-  PROJECTION: Arizona Diamondbacks | 0.72% Edge
+  Aggregated Away OBP: 0.325 (Total AB: 0)
+  PROJECTION: Arizona Diamondbacks | 0.59% Edge
 --------------------------------------------------
 GAME: Los Angeles Angels @ Athletics (G1)
   Lineup Source: Starters of Last Game
