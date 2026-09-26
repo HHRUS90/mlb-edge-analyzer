@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 09/25/2026 (05:00 PM MDT)
+DETAILED EVALUATION LOG - 09/25/2026 (06:00 PM MDT)
 ==================================================
 📊 TODAY: 0/2 (0.0%) | -$200.00
 📊 YESTERDAY: 4/12 (33.3%) | -$560.97
 LIFETIME: 749/1423 (52.6%) | -$134.09
 BEST PICKS LIFETIME: 60/109 (55.0%) | -$142.27
-ODDS-API: 394 Calls (Used: 397 | Rem: 103)
-MLB-STATS-API: 227 Total Calls
+ODDS-API: 395 Calls (Used: 398 | Rem: 102)
+MLB-STATS-API: 123 Total Calls
 ==================================================
 GAME: Chicago Cubs @ Boston Red Sox (G1)
   Lineup Source: Official Boxscore
@@ -58,6 +58,10 @@ GAME: Baltimore Orioles @ New York Yankees (G1)
     - Carlos Narváez: NO HISTORY | Baseline (2026 Season OBP): 0.242 -> Smoothed OBP: 0.242
   Aggregated Away OBP: 0.297 (Total AB: 0)
   PROJECTION: New York Yankees | 1.89% Edge
+--------------------------------------------------
+GAME: Baltimore Orioles @ New York Yankees (G2)
+  Lineup Source: Locked Pregame Edge
+  PROJECTION (FROZEN): New York Yankees | 4.24% Edge
 --------------------------------------------------
 GAME: Chicago Cubs @ Boston Red Sox (G2)
   Lineup Source: Official Boxscore
@@ -320,7 +324,7 @@ GAME: Texas Rangers @ Minnesota Twins (G1)
   PROJECTION: Minnesota Twins | 0.37% Edge
 --------------------------------------------------
 GAME: Houston Astros @ Athletics (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Athletics Hitting (vs Hunter Brown):
     - Henry Bolte: NO HISTORY | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.358
     - Lawrence Butler: 5/16 BvP | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.318 (AB: 16)
@@ -334,16 +338,16 @@ GAME: Houston Astros @ Athletics (G1)
   Aggregated Home OBP: 0.303 (Total AB: 58)
   Houston Astros Hitting (vs Jacob Lopez):
     - Jeremy Peña: 0/3 BvP | Baseline (2026 Season OBP): 0.324 -> Smoothed OBP: 0.249 (AB: 3)
-    - Jorge Barrosa: 0/2 BvP | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.240 (AB: 2)
+    - Yordan Alvarez: 2/3 BvP | Baseline (2026 Season OBP): 0.432 -> Smoothed OBP: 0.486 (AB: 2)
     - Isaac Paredes: 2/3 BvP | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.430 (AB: 1)
     - Jose Altuve: 5/8 BvP | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.448 (AB: 5)
     - Yainer Diaz: 1/7 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.240 (AB: 7)
     - Christian Walker: 2/7 BvP | Baseline (2026 Season OBP): 0.295 -> Smoothed OBP: 0.291 (AB: 6)
     - Cam Smith: 2/8 BvP | Baseline (2026 Season OBP): 0.273 -> Smoothed OBP: 0.263 (AB: 6)
     - Lucas Spence: NO HISTORY | Baseline (2026 Season OBP): 0.286 -> Smoothed OBP: 0.286
-    - Christian Vázquez: NO HISTORY | Baseline (2026 Season OBP): 0.261 -> Smoothed OBP: 0.261
-  Aggregated Away OBP: 0.301 (Total AB: 30)
-  PROJECTION: Athletics | 0.19% Edge
+    - Jorge Barrosa: 0/2 BvP | Baseline (2026 Season OBP): 0.288 -> Smoothed OBP: 0.240 (AB: 2)
+  Aggregated Away OBP: 0.326 (Total AB: 32)
+  PROJECTION: Houston Astros | 2.32% Edge
 --------------------------------------------------
 GAME: Arizona Diamondbacks @ San Diego Padres (G1)
   Lineup Source: Official Boxscore
@@ -372,7 +376,7 @@ GAME: Arizona Diamondbacks @ San Diego Padres (G1)
   PROJECTION: San Diego Padres | 1.68% Edge
 --------------------------------------------------
 GAME: Los Angeles Angels @ Seattle Mariners (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Seattle Mariners Hitting (vs Reid Detmers):
     - Randy Arozarena: 5/15 BvP | Baseline (2026 Season OBP): 0.380 -> Smoothed OBP: 0.352 (AB: 13)
     - Dominic Canzone: NO HISTORY | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.330
@@ -387,15 +391,15 @@ GAME: Los Angeles Angels @ Seattle Mariners (G1)
   Los Angeles Angels Hitting (vs Bryce Miller):
     - Zach Neto: 5/17 BvP | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.306 (AB: 14)
     - Mike Trout: 2/8 BvP | Baseline (2026 Season OBP): 0.385 -> Smoothed OBP: 0.325 (AB: 8)
-    - Jose Siri: 1/4 BvP | Baseline (2026 Season OBP): 0.290 -> Smoothed OBP: 0.279 (AB: 4)
+    - Wade Meckler: NO HISTORY | Baseline (2026 Season OBP): 0.373 -> Smoothed OBP: 0.373
     - Vaughn Grissom: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
     - Moisés Ballesteros: NO HISTORY | Baseline (2026 Season OBP): 0.285 -> Smoothed OBP: 0.285
-    - Denzer Guzman: NO HISTORY | Baseline (2026 Season OBP): 0.267 -> Smoothed OBP: 0.267
     - Josh Lowe: 5/7 BvP | Baseline (2026 Season OBP): 0.276 -> Smoothed OBP: 0.456 (AB: 7)
     - Christian Moore: NO HISTORY | Baseline (2026 Season OBP): 0.237 -> Smoothed OBP: 0.237
+    - Travis d'Arnaud: 2/6 BvP | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.281 (AB: 5)
     - Bryce Teodosio: 1/2 BvP | Baseline (2026 Season OBP): 0.254 -> Smoothed OBP: 0.295 (AB: 2)
-  Aggregated Away OBP: 0.306 (Total AB: 35)
-  PROJECTION: Seattle Mariners | 3.2% Edge
+  Aggregated Away OBP: 0.319 (Total AB: 36)
+  PROJECTION: Seattle Mariners | 1.99% Edge
 --------------------------------------------------
 GAME: Los Angeles Dodgers @ San Francisco Giants (G1)
   Lineup Source: Official Boxscore
