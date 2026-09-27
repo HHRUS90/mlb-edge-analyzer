@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 09/26/2026 (05:00 PM MDT)
+DETAILED EVALUATION LOG - 09/26/2026 (06:00 PM MDT)
 ==================================================
 📊 TODAY: 2/5 (40.0%) | -$164.67
 📊 YESTERDAY: 8/17 (47.1%) | -$252.74
 LIFETIME: 759/1443 (52.6%) | -$351.50
 BEST PICKS LIFETIME: 62/110 (56.4%) | +$54.36
-ODDS-API: 410 Calls (Used: 413 | Rem: 87)
-MLB-STATS-API: 90 Total Calls
+ODDS-API: 411 Calls (Used: 414 | Rem: 86)
+MLB-STATS-API: 99 Total Calls
 ==================================================
 GAME: New York Mets @ Washington Nationals (G1)
   Lineup Source: Official Boxscore
@@ -267,8 +267,34 @@ GAME: Tampa Bay Rays @ Philadelphia Phillies (G1)
   Aggregated Away OBP: 0.304 (Total AB: 10)
   PROJECTION: Philadelphia Phillies | 2.79% Edge
 --------------------------------------------------
+GAME: Arizona Diamondbacks @ San Diego Padres (G1)
+  Lineup Source: Official Boxscore
+  San Diego Padres Hitting (vs Taylor Clarke):
+    - Fernando Tatis Jr.: 3/9 BvP | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.347 (AB: 8)
+    - Dustin Harris: NO HISTORY | Baseline (2026 Season OBP): 0.350 -> Smoothed OBP: 0.350
+    - Manny Machado: 4/13 BvP | Baseline (2026 Season OBP): 0.302 -> Smoothed OBP: 0.305 (AB: 11)
+    - Jackson Merrill: 1/2 BvP | Baseline (2026 Season OBP): 0.301 -> Smoothed OBP: 0.334 (AB: 2)
+    - Ty France: 2/4 BvP | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.400 (AB: 3)
+    - Gavin Sheets: 2/2 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.427 (AB: 2)
+    - Xander Bogaerts: 1/4 BvP | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.306 (AB: 3)
+    - Jake Cronenworth: 3/11 BvP | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.287 (AB: 10)
+    - Ethan Salas: NO HISTORY | Baseline (2026 Season OBP): 0.250 -> Smoothed OBP: 0.250
+  Aggregated Home OBP: 0.334 (Total AB: 39)
+  Arizona Diamondbacks Hitting (vs Walker Buehler):
+    - Lars Nootbaar: 1/3 BvP | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.341 (AB: 3)
+    - Ketel Marte: 11/30 BvP | Baseline (2026 Season OBP): 0.315 -> Smoothed OBP: 0.354 (AB: 27)
+    - Gabriel Moreno: 1/2 BvP | Baseline (2026 Season OBP): 0.387 -> Smoothed OBP: 0.406 (AB: 1)
+    - Geraldo Perdomo: 0/6 BvP | Baseline (2026 Season OBP): 0.369 -> Smoothed OBP: 0.231 (AB: 6)
+    - Corbin Carroll: 0/2 BvP | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.274 (AB: 2)
+    - Nolan Arenado: 8/35 BvP | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.251 (AB: 34)
+    - Pavin Smith: 1/15 BvP | Baseline (2026 Season OBP): 0.270 -> Smoothed OBP: 0.148 (AB: 15)
+    - James McCann: 1/2 BvP | Baseline (2026 Season OBP): 0.314 -> Smoothed OBP: 0.345 (AB: 2)
+    - Tim Tawa: 0/1 BvP | Baseline (2026 Season OBP): 0.292 -> Smoothed OBP: 0.265 (AB: 1)
+  Aggregated Away OBP: 0.290 (Total AB: 91)
+  PROJECTION: San Diego Padres | 4.37% Edge
+--------------------------------------------------
 GAME: Houston Astros @ Athletics (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Athletics Hitting (vs Hayden Wesneski):
     - Henry Bolte: NO HISTORY | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.359
     - Lawrence Butler: NO HISTORY | Baseline (2026 Season OBP): 0.326 -> Smoothed OBP: 0.326
@@ -287,25 +313,25 @@ GAME: Houston Astros @ Athletics (G1)
     - Jose Altuve: 1/1 BvP | Baseline (2026 Season OBP): 0.304 -> Smoothed OBP: 0.367 (AB: 1)
     - Yainer Diaz: NO HISTORY | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.311
     - Christian Walker: 0/2 BvP | Baseline (2026 Season OBP): 0.296 -> Smoothed OBP: 0.247 (AB: 2)
-    - Cam Smith: 0/1 BvP | Baseline (2026 Season OBP): 0.275 -> Smoothed OBP: 0.250 (AB: 1)
     - Lucas Spence: NO HISTORY | Baseline (2026 Season OBP): 0.264 -> Smoothed OBP: 0.264
+    - Cam Smith: 0/1 BvP | Baseline (2026 Season OBP): 0.275 -> Smoothed OBP: 0.250 (AB: 1)
     - Taylor Trammell: 0/1 BvP | Baseline (2026 Season OBP): 0.287 -> Smoothed OBP: 0.261 (AB: 1)
   Aggregated Away OBP: 0.312 (Total AB: 5)
   PROJECTION: Athletics | 1.39% Edge
 --------------------------------------------------
 GAME: Los Angeles Angels @ Seattle Mariners (G1)
-  Lineup Source: Starters of Last Game
+  Lineup Source: Official Boxscore
   Seattle Mariners Hitting (vs Ryan Johnson):
+    - J.P. Crawford: 1/1 BvP | Baseline (2026 Season OBP): 0.334 -> Smoothed OBP: 0.395 (AB: 1)
     - Randy Arozarena: 1/1 BvP | Baseline (2026 Season OBP): 0.380 -> Smoothed OBP: 0.436 (AB: 1)
     - Dominic Canzone: NO HISTORY | Baseline (2026 Season OBP): 0.335 -> Smoothed OBP: 0.335
-    - Julio Rodríguez: NO HISTORY | Baseline (2026 Season OBP): 0.310 -> Smoothed OBP: 0.310
+    - Cal Raleigh: NO HISTORY | Baseline (2026 Season OBP): 0.294 -> Smoothed OBP: 0.294
     - Josh Naylor: NO HISTORY | Baseline (2026 Season OBP): 0.319 -> Smoothed OBP: 0.319
-    - Michael Arroyo: NO HISTORY | Baseline (2026 Season OBP): 0.400 -> Smoothed OBP: 0.400
     - Cole Young: NO HISTORY | Baseline (2026 Season OBP): 0.306 -> Smoothed OBP: 0.306
-    - Jhonny Pereda: NO HISTORY | Baseline (2026 Season OBP): 0.351 -> Smoothed OBP: 0.351
-    - Weston Wilson: NO HISTORY | Baseline (2026 Season OBP): 0.291 -> Smoothed OBP: 0.291
+    - Michael Arroyo: NO HISTORY | Baseline (2026 Season OBP): 0.400 -> Smoothed OBP: 0.400
     - Lazaro Montes: NO HISTORY | Baseline (2026 Season OBP): 0.291 -> Smoothed OBP: 0.291
-  Aggregated Home OBP: 0.338 (Total AB: 1)
+    - Leo Rivas: 1/1 BvP | Baseline (2026 Season OBP): 0.270 -> Smoothed OBP: 0.336 (AB: 1)
+  Aggregated Home OBP: 0.346 (Total AB: 3)
   Los Angeles Angels Hitting (vs Kade Anderson):
     - Zach Neto: NO HISTORY | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.329
     - Mike Trout: NO HISTORY | Baseline (2026 Season OBP): 0.384 -> Smoothed OBP: 0.384
@@ -317,5 +343,5 @@ GAME: Los Angeles Angels @ Seattle Mariners (G1)
     - Bryce Teodosio: NO HISTORY | Baseline (2026 Season OBP): 0.254 -> Smoothed OBP: 0.254
     - Tyler Heineman: NO HISTORY | Baseline (2026 Season OBP): 0.222 -> Smoothed OBP: 0.222
   Aggregated Away OBP: 0.297 (Total AB: 0)
-  PROJECTION: Seattle Mariners | 4.06% Edge
+  PROJECTION: Seattle Mariners | 4.87% Edge
 --------------------------------------------------
