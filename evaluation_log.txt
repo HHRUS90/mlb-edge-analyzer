@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 09/29/2026 (03:00 PM MDT)
+DETAILED EVALUATION LOG - 09/29/2026 (04:00 PM MDT)
 ==================================================
 📊 TODAY: 0/1 (0.0%) | -$100.00
 📊 YESTERDAY: 0/0 (0.0%) | $0.00
 LIFETIME: 771/1467 (52.6%) | -$693.46
 BEST PICKS LIFETIME: 62/112 (55.4%) | -$145.64
-ODDS-API: 456 Calls (Used: 459 | Rem: 41)
-MLB-STATS-API: 49 Total Calls
+ODDS-API: 457 Calls (Used: 460 | Rem: 40)
+MLB-STATS-API: 48 Total Calls
 ==================================================
 GAME: Philadelphia Phillies @ Atlanta Braves (G1)
   Lineup Source: Official Boxscore
@@ -88,16 +88,16 @@ GAME: Boston Red Sox @ New York Yankees (G1)
 GAME: Chicago Cubs @ San Diego Padres (G1)
   Lineup Source: Starters of Last Game
   San Diego Padres Hitting (vs Matthew Boyd):
-    - Dustin Harris: NO HISTORY | Baseline (2026 Season OBP): 0.353 -> Smoothed OBP: 0.353
+    - Fernando Tatis Jr.: 2/9 BvP | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.294 (AB: 9)
     - Samad Taylor: 1/2 BvP | Baseline (2026 Season OBP): 0.390 -> Smoothed OBP: 0.408 (AB: 2)
+    - Manny Machado: 8/17 BvP | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.409 (AB: 16)
     - Ty France: 4/10 BvP | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.382 (AB: 8)
-    - Luis Campusano: NO HISTORY | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.363
+    - Jackson Merrill: 1/6 BvP | Baseline (2026 Season OBP): 0.303 -> Smoothed OBP: 0.252 (AB: 6)
     - Austin Hays: 3/6 BvP | Baseline (2026 Season OBP): 0.305 -> Smoothed OBP: 0.378 (AB: 6)
+    - Xander Bogaerts: 6/20 BvP | Baseline (2026 Season OBP): 0.332 -> Smoothed OBP: 0.311 (AB: 18)
     - Jake Cronenworth: 0/2 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.257 (AB: 2)
-    - Freddy Fermin: 2/9 BvP | Baseline (2026 Season OBP): 0.274 -> Smoothed OBP: 0.249 (AB: 9)
-    - ID:823550: NO HISTORY | Baseline (2026 Season OBP): 0.291 -> Smoothed OBP: 0.291
-    - Jase Bowen: NO HISTORY | Baseline (2026 Season OBP): 0.188 -> Smoothed OBP: 0.188
-  Aggregated Home OBP: 0.319 (Total AB: 27)
+    - Luis Campusano: NO HISTORY | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.363
+  Aggregated Home OBP: 0.339 (Total AB: 67)
   Chicago Cubs Hitting (vs Michael King):
     - Tyrone Taylor: 0/2 BvP | Baseline (2026 Season OBP): 0.325 -> Smoothed OBP: 0.271 (AB: 2)
     - Alex Bregman: 9/10 BvP | Baseline (2026 Season OBP): 0.355 -> Smoothed OBP: 0.628 (AB: 8)
@@ -109,5 +109,5 @@ GAME: Chicago Cubs @ San Diego Padres (G1)
     - Dansby Swanson: 0/1 BvP | Baseline (2026 Season OBP): 0.297 -> Smoothed OBP: 0.270 (AB: 1)
     - Miguel Amaya: NO HISTORY | Baseline (2026 Season OBP): 0.340 -> Smoothed OBP: 0.340
   Aggregated Away OBP: 0.333 (Total AB: 28)
-  PROJECTION: Chicago Cubs | 1.42% Edge
+  PROJECTION: San Diego Padres | 0.62% Edge
 --------------------------------------------------
