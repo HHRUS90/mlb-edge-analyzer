@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 10/04/2026 (12:00 PM MDT)
+DETAILED EVALUATION LOG - 10/04/2026 (01:00 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 4/4 (100.0%) | +$236.80
 LIFETIME: 779/1479 (52.7%) | -$501.33
 BEST PICKS LIFETIME: 63/115 (54.8%) | -$302.16
-ODDS-API: 53 Calls (Used: 58 | Rem: 442)
-MLB-STATS-API: 23 Total Calls
+ODDS-API: 54 Calls (Used: 59 | Rem: 441)
+MLB-STATS-API: 58 Total Calls
 ==================================================
 GAME: San Diego Padres @ Milwaukee Brewers (G1)
   Lineup Source: Official Boxscore
@@ -32,4 +32,30 @@ GAME: San Diego Padres @ Milwaukee Brewers (G1)
     - Jake Cronenworth: NO HISTORY | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.308
   Aggregated Away OBP: 0.329 (Total AB: 0)
   PROJECTION: San Diego Padres | 2.67% Edge
+--------------------------------------------------
+GAME: Atlanta Braves @ Los Angeles Dodgers (G1)
+  Lineup Source: Starters of Last Game
+  Los Angeles Dodgers Hitting (vs Ray Kerr):
+    - ID:687221: NO HISTORY | Baseline (2026 Season OBP): 0.328 -> Smoothed OBP: 0.328
+    - Miguel Rojas: 0/1 BvP | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.284 (AB: 1)
+    - Enrique Hernández: 0/1 BvP | Baseline (2026 Season OBP): 0.271 -> Smoothed OBP: 0.246 (AB: 1)
+    - Kyle Tucker: 0/1 BvP | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.300 (AB: 1)
+    - ID:669743: NO HISTORY | Baseline (2026 Season OBP): 0.349 -> Smoothed OBP: 0.349
+    - Max Muncy: 0/3 BvP | Baseline (2026 Season OBP): 0.348 -> Smoothed OBP: 0.268 (AB: 2)
+    - Andy Pages: NO HISTORY | Baseline (2026 Season OBP): 0.343 -> Smoothed OBP: 0.343
+    - Hunter Feduccia: NO HISTORY | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.312
+    - Tommy Edman: NO HISTORY | Baseline (2026 Season OBP): 0.329 -> Smoothed OBP: 0.329
+  Aggregated Home OBP: 0.307 (Total AB: 5)
+  Atlanta Braves Hitting (vs Blake Snell):
+    - Mauricio Dubón: 2/6 BvP | Baseline (2026 Season OBP): 0.321 -> Smoothed OBP: 0.326 (AB: 5)
+    - ID:571657: 0/2 BvP | Baseline (2026 Season OBP): 0.211 -> Smoothed OBP: 0.176 (AB: 2)
+    - ID:642086: 2/8 BvP | Baseline (2026 Season OBP): 0.311 -> Smoothed OBP: 0.284 (AB: 8)
+    - ID:622694: NO HISTORY | Baseline (Rookie (League Default)): 0.310 -> Smoothed OBP: 0.310
+    - Mike Yastrzemski: 0/8 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.172 (AB: 8)
+    - Sean Murphy: 5/10 BvP | Baseline (2026 Season OBP): 0.256 -> Smoothed OBP: 0.378 (AB: 8)
+    - Ha-Seong Kim: 0/3 BvP | Baseline (2026 Season OBP): 0.219 -> Smoothed OBP: 0.168 (AB: 3)
+    - Brewer Hicklen: NO HISTORY | Baseline (2026 Season OBP): 0.383 -> Smoothed OBP: 0.383
+    - ID:680577: NO HISTORY | Baseline (2026 Season OBP): 0.200 -> Smoothed OBP: 0.200
+  Aggregated Away OBP: 0.266 (Total AB: 34)
+  PROJECTION: Los Angeles Dodgers | 4.02% Edge
 --------------------------------------------------
