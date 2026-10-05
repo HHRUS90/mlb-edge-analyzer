@@ -1,11 +1,11 @@
-DETAILED EVALUATION LOG - 10/05/2026 (01:00 PM MDT)
+DETAILED EVALUATION LOG - 10/05/2026 (03:10 PM MDT)
 ==================================================
 📊 TODAY: 0/0 (0.0%) | $0.00
 📊 YESTERDAY: 0/2 (0.0%) | -$200.00
 LIFETIME: 779/1481 (52.6%) | -$701.33
 BEST PICKS LIFETIME: 63/116 (54.3%) | -$402.16
-ODDS-API: 70 Calls (Used: 75 | Rem: 425)
-MLB-STATS-API: 24 Total Calls
+ODDS-API: 71 Calls (Used: 76 | Rem: 424)
+MLB-STATS-API: 34 Total Calls
 ==================================================
 GAME: Chicago White Sox @ Cleveland Guardians (G1)
   Lineup Source: Official Boxscore
@@ -32,4 +32,30 @@ GAME: Chicago White Sox @ Cleveland Guardians (G1)
     - Colson Montgomery: 1/2 BvP | Baseline (2026 Season OBP): 0.282 -> Smoothed OBP: 0.318 (AB: 1)
   Aggregated Away OBP: 0.331 (Total AB: 12)
   PROJECTION: Chicago White Sox | 1.24% Edge
+--------------------------------------------------
+GAME: New York Yankees @ Tampa Bay Rays (G1)
+  Lineup Source: Official Boxscore
+  Tampa Bay Rays Hitting (vs Cam Schlittler):
+    - Yandy Díaz: 3/9 BvP | Baseline (2026 Season OBP): 0.359 -> Smoothed OBP: 0.347 (AB: 7)
+    - Jonathan Aranda: 2/6 BvP | Baseline (2026 Season OBP): 0.358 -> Smoothed OBP: 0.349 (AB: 5)
+    - Junior Caminero: 3/9 BvP | Baseline (2026 Season OBP): 0.360 -> Smoothed OBP: 0.347 (AB: 9)
+    - Liam Hicks: 1/2 BvP | Baseline (2026 Season OBP): 0.367 -> Smoothed OBP: 0.389 (AB: 2)
+    - Chandler Simpson: 3/9 BvP | Baseline (2026 Season OBP): 0.333 -> Smoothed OBP: 0.333 (AB: 9)
+    - Victor Mesa Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.327 -> Smoothed OBP: 0.327
+    - Jonny DeLuca: NO HISTORY | Baseline (2026 Season OBP): 0.300 -> Smoothed OBP: 0.300
+    - Richie Palacios: 0/2 BvP | Baseline (2026 Season OBP): 0.330 -> Smoothed OBP: 0.275 (AB: 2)
+    - Taylor Walls: 3/4 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.435 (AB: 4)
+  Aggregated Home OBP: 0.345 (Total AB: 38)
+  New York Yankees Hitting (vs Freddy Peralta):
+    - Ben Rice: 2/5 BvP | Baseline (2026 Season OBP): 0.363 -> Smoothed OBP: 0.375 (AB: 5)
+    - Cody Bellinger: 10/18 BvP | Baseline (2026 Season OBP): 0.338 -> Smoothed OBP: 0.478 (AB: 14)
+    - Luis García Jr.: 3/12 BvP | Baseline (2026 Season OBP): 0.309 -> Smoothed OBP: 0.277 (AB: 12)
+    - Spencer Jones: 0/2 BvP | Baseline (2026 Season OBP): 0.313 -> Smoothed OBP: 0.261 (AB: 2)
+    - George Lombard Jr.: NO HISTORY | Baseline (2026 Season OBP): 0.285 -> Smoothed OBP: 0.285
+    - Jazz Chisholm Jr.: 6/15 BvP | Baseline (2026 Season OBP): 0.312 -> Smoothed OBP: 0.365 (AB: 11)
+    - Trent Grisham: 1/8 BvP | Baseline (2026 Season OBP): 0.308 -> Smoothed OBP: 0.227 (AB: 8)
+    - Austin Wells: 2/3 BvP | Baseline (2026 Season OBP): 0.292 -> Smoothed OBP: 0.378 (AB: 2)
+    - Ryan McMahon: 4/17 BvP | Baseline (2026 Season OBP): 0.279 -> Smoothed OBP: 0.251 (AB: 14)
+  Aggregated Away OBP: 0.322 (Total AB: 68)
+  PROJECTION: Tampa Bay Rays | 2.28% Edge
 --------------------------------------------------
